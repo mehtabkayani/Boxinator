@@ -19,9 +19,6 @@ public class User {
     public Integer id;
 
     @Column
-    public String username;
-
-    @Column
     public String firstName;
 
     @Column
@@ -49,13 +46,11 @@ public class User {
     @Column
     public AccountType accountType;
 
-    @OneToMany(mappedBy = "shipment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Shipment> shipments;
 
-    public User(){}
+    public User() {
+    }
 
     public User(String firstName, String lastName, String email, String password, String dateOfBirth, String countryOfResidence, String zipcode, String contactNumber, AccountType accountType) {
-        this.username = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -148,19 +143,5 @@ public class User {
         this.accountType = accountType;
     }
 
-    public Set<Shipment> getShipments() {
-        return shipments;
-    }
 
-    public void setShipments(Set<Shipment> shipments) {
-        this.shipments = shipments;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = this.getEmail();
-    }
 }

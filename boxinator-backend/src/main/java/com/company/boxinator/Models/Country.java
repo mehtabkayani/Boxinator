@@ -26,16 +26,14 @@ public class Country {
     @Column
     public String multiplyerNumber;
 
-    @OneToMany(mappedBy = "shipment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Shipment> shipments;
 
     public Country(){};
 
-    public Country(String countryCode, String countryName, String multiplyerNumber, Set<Shipment> shipments) {
+    public Country(String countryCode, String countryName, String multiplyerNumber) {
         this.countryCode = countryCode;
         this.countryName = countryName;
         this.multiplyerNumber = multiplyerNumber;
-        this.shipments = shipments;
+
     };
 
     public Integer getId() {
@@ -70,11 +68,4 @@ public class Country {
         this.multiplyerNumber = multiplyerNumber;
     }
 
-    public Set<Shipment> getShipments() {
-        return shipments;
-    }
-
-    public void setShipments(Set<Shipment> shipments) {
-        this.shipments = shipments;
-    }
 }
