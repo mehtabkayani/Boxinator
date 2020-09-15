@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Boxinator.iml" filepath="$PROJECT_DIR$/.idea/Boxinator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/boxinator-backend/boxinator.iml" filepath="$PROJECT_DIR$/boxinator-backend/boxinator.iml" />
     </modules>
   </component>
 </project>
