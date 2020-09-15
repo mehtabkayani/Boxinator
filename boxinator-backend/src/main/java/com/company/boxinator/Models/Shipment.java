@@ -35,20 +35,15 @@ public class Shipment {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "shipment_id", nullable = false)
-    private Shipment shipment;
-
     public Shipment(){};
 
-    public Shipment(String recieverName, float weight, String boxcolor, String creation_date, ShipmentStatus shipmentStatus, User user, Shipment shipment) {
+    public Shipment(String recieverName, float weight, String boxcolor, String creation_date, ShipmentStatus shipmentStatus, User user) {
         this.recieverName = recieverName;
         this.weight = weight;
         this.boxcolor = boxcolor;
         this.creation_date = creation_date;
         this.shipmentStatus = shipmentStatus;
         this.user = user;
-        this.shipment = shipment;
     };
 
     public Integer getId() {
@@ -105,14 +100,6 @@ public class Shipment {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Shipment getShipment() {
-        return shipment;
-    }
-
-    public void setShipment(Shipment shipment) {
-        this.shipment = shipment;
     }
 
 }
