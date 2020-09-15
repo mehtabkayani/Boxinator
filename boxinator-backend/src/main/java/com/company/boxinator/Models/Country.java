@@ -15,16 +15,16 @@ import java.util.Set;
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     @Column
-    public String countryCode;
+    private String countryCode;
 
     @Column
-    public String countryName;
+    private String countryName;
 
     @Column
-    public String multiplyerNumber;
+    private String multiplyerNumber;
 
 
     public Country(){};
@@ -33,7 +33,6 @@ public class Country {
         this.countryCode = countryCode;
         this.countryName = countryName;
         this.multiplyerNumber = multiplyerNumber;
-
     };
 
     public Integer getId() {
@@ -67,5 +66,4 @@ public class Country {
     public void setMultiplyerNumber(String multiplyerNumber) {
         this.multiplyerNumber = multiplyerNumber;
     }
-
 }

@@ -17,35 +17,41 @@ public class Shipment {
     public Integer id;
 
     @Column
-    public String recieverName;
+    private String recieverName;
 
     @Column
-    public float weight;
+    private float weight;
 
     @Column
-    public String boxcolor;
+    private String boxcolor;
 
     @Column
-    public String creation_date;
+    private String creation_date;
 
     @Column
-    public ShipmentStatus shipmentStatus;
+    private ShipmentStatus shipmentStatus;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
 
-    public Shipment(){};
+    public Shipment() {
+    }
+
+
 
     public Shipment(String recieverName, float weight, String boxcolor, String creation_date, ShipmentStatus shipmentStatus, User user) {
+
         this.recieverName = recieverName;
         this.weight = weight;
         this.boxcolor = boxcolor;
         this.creation_date = creation_date;
         this.shipmentStatus = shipmentStatus;
         this.user = user;
-    };
+
+    }
+
 
     public Integer getId() {
         return id;
@@ -102,6 +108,4 @@ public class Shipment {
     public void setUser(User user) {
         this.user = user;
     }
-
-
 }

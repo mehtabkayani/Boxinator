@@ -2,6 +2,7 @@ package com.company.boxinator.Models;
 
 import com.company.boxinator.Models.Enums.AccountType;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -27,6 +28,7 @@ public class User {
     private String email;
 
     @Column
+    @JsonIgnore
     private String password;
 
     @Column
@@ -44,10 +46,7 @@ public class User {
     @Column
     private AccountType accountType;
 
-
     public User() {
-    }
-    public User(String firstname, String lastname, String email, String password) {
     }
 
     public User(String firstname, String lastname, String email, String password, String dateOfBirth, String countryOfResidence, String zipcode, String contactNumber, AccountType accountType) {
@@ -60,7 +59,6 @@ public class User {
         this.zipcode = zipcode;
         this.contactNumber = contactNumber;
         this.accountType = accountType;
-
     }
 
     public Integer getId() {
@@ -70,6 +68,7 @@ public class User {
     public void setId(Integer id) {
         this.id = id;
     }
+
 
     public String getFirstname() {
         return firstname;
@@ -86,7 +85,6 @@ public class User {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-
     public String getEmail() {
         return email;
     }
@@ -142,6 +140,5 @@ public class User {
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
-
 
 }
