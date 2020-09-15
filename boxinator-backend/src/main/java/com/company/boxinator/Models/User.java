@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
-import java.util.Set;
+
 
 @Entity
 @JsonIdentityInfo(
@@ -46,7 +46,8 @@ public class User {
     @Column
     private AccountType accountType;
 
-    public User(){}
+    public User() {
+    }
 
     public User(String firstname, String lastname, String email, String password, String dateOfBirth, String countryOfResidence, String zipcode, String contactNumber, AccountType accountType) {
         this.firstname = firstname;
@@ -68,6 +69,22 @@ public class User {
         this.id = id;
     }
 
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
     public String getEmail() {
         return email;
     }
@@ -124,19 +141,4 @@ public class User {
         this.accountType = accountType;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
 }

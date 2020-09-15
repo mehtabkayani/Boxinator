@@ -10,6 +10,5 @@ import java.util.List;
 
 @Repository
 public interface ShipmentRepository extends JpaRepository<Shipment, Integer> {
-   // List<Shipment> findAllByUser(User user);
-   // List<Shipment> findAllByShipmentStatusContaining(ShipmentStatus shipmentStatus);
+
 }

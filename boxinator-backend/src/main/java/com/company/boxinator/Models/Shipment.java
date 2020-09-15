@@ -35,21 +35,23 @@ public class Shipment {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false)
-    private Country country;
 
-    public Shipment(){};
+    public Shipment() {
+    }
 
-    public Shipment(String recieverName, float weight, String boxcolor, String creation_date, ShipmentStatus shipmentStatus, User user, Country country) {
+
+
+    public Shipment(String recieverName, float weight, String boxcolor, String creation_date, ShipmentStatus shipmentStatus, User user) {
+
         this.recieverName = recieverName;
         this.weight = weight;
         this.boxcolor = boxcolor;
         this.creation_date = creation_date;
         this.shipmentStatus = shipmentStatus;
         this.user = user;
-        this.country = country;
-    };
+
+    }
+
 
     public Integer getId() {
         return id;
@@ -105,13 +107,5 @@ public class Shipment {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
     }
 }

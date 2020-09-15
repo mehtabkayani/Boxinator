@@ -26,6 +26,7 @@ public class Country {
     @Column
     private String multiplyerNumber;
 
+
     public Country(){};
 
     public Country(String countryCode, String countryName, String multiplyerNumber) {
