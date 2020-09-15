@@ -1,12 +1,12 @@
 package com.company.boxinator.Controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin()
 public class UserController {
-    @GetMapping("/user")
-    public String index(){
-        return "user active";
+    @RequestMapping(value = "/greeting", method = RequestMethod.GET)
+    public String getEmployees() {
+        return "Welcome!";
     }
 }

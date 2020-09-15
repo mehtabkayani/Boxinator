@@ -2,6 +2,7 @@ package com.company.boxinator.Models;
 
 import com.company.boxinator.Models.Enums.AccountType;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -18,6 +19,9 @@ public class User {
     public Integer id;
 
     @Column
+    public String username;
+
+    @Column
     public String firstName;
 
     @Column
@@ -27,6 +31,7 @@ public class User {
     public String email;
 
     @Column
+    @JsonIgnore
     public String password;
 
     @Column
@@ -47,9 +52,10 @@ public class User {
     @OneToMany(mappedBy = "shipment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Shipment> shipments;
 
-    public User(){};
+    public User(){}
 
-    public User(String firstName, String lastName, String email, String password, String dateOfBirth, String countryOfResidence, String zipcode, String contactNumber, AccountType accountType, Set<Shipment> shipments) {
+    public User(String firstName, String lastName, String email, String password, String dateOfBirth, String countryOfResidence, String zipcode, String contactNumber, AccountType accountType) {
+        this.username = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -59,7 +65,7 @@ public class User {
         this.zipcode = zipcode;
         this.contactNumber = contactNumber;
         this.accountType = accountType;
-        this.shipments = shipments;
+
     }
 
     public Integer getId() {
@@ -148,5 +154,13 @@ public class User {
 
     public void setShipments(Set<Shipment> shipments) {
         this.shipments = shipments;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = this.getEmail();
     }
 }
