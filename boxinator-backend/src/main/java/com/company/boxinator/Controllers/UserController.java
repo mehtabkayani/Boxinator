@@ -29,12 +29,28 @@ public class UserController {
     public String getEmployees() {
         return "Welcome!";
     }
-    @GetMapping("user/{id}")
+    @GetMapping("/user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
         Optional<User> userData = userRepository.findById(id);
-        if (userData.isPresent())
+        if (userData.isPresent()) {
+            System.out.println("userData is present");
             return new ResponseEntity<>(userData.get(), HttpStatus.OK);
-        else
+        }
+        else {
+            System.out.println("userData is NOT present");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @PostMapping("/register")
+    public String registerUser(@RequestBody User user){
+        String resMessage = "";
+        try {
+            userRepository.save(user);
+            resMessage = "succeded";
+        }catch (Exception ex)
+        {
+            resMessage = ex.getMessage();
+        }
+        return resMessage;
     }
 }
