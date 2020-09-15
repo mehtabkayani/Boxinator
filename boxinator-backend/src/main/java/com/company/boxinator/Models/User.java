@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
-import java.util.Set;
+
 
 @Entity
 @JsonIdentityInfo(
@@ -16,48 +16,42 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     @Column
-    public String username;
+    private String firstname;
 
     @Column
-    public String firstName;
+    private String lastname;
 
     @Column
-    public String lastName;
-
-    @Column
-    public String email;
+    private String email;
 
     @Column
     @JsonIgnore
-    public String password;
+    private String password;
 
     @Column
-    public String dateOfBirth;
+    private String dateOfBirth;
 
     @Column
-    public String countryOfResidence;
+    private String countryOfResidence;
 
     @Column
-    public String zipcode;
+    private String zipcode;
 
     @Column
-    public String contactNumber;
+    private String contactNumber;
 
     @Column
-    public AccountType accountType;
+    private AccountType accountType;
 
-    @OneToMany(mappedBy = "shipment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Shipment> shipments;
+    public User() {
+    }
 
-    public User(){}
-
-    public User(String firstName, String lastName, String email, String password, String dateOfBirth, String countryOfResidence, String zipcode, String contactNumber, AccountType accountType) {
-        this.username = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String firstname, String lastname, String email, String password, String dateOfBirth, String countryOfResidence, String zipcode, String contactNumber, AccountType accountType) {
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
@@ -65,7 +59,6 @@ public class User {
         this.zipcode = zipcode;
         this.contactNumber = contactNumber;
         this.accountType = accountType;
-
     }
 
     public Integer getId() {
@@ -76,22 +69,22 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
-
     public String getEmail() {
         return email;
     }
@@ -148,19 +141,4 @@ public class User {
         this.accountType = accountType;
     }
 
-    public Set<Shipment> getShipments() {
-        return shipments;
-    }
-
-    public void setShipments(Set<Shipment> shipments) {
-        this.shipments = shipments;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = this.getEmail();
-    }
 }

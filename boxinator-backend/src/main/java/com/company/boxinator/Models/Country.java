@@ -15,27 +15,24 @@ import java.util.Set;
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     @Column
-    public String countryCode;
+    private String countryCode;
 
     @Column
-    public String countryName;
+    private String countryName;
 
     @Column
-    public String multiplyerNumber;
+    private String multiplyerNumber;
 
-    @OneToMany(mappedBy = "shipment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Shipment> shipments;
 
     public Country(){};
 
-    public Country(String countryCode, String countryName, String multiplyerNumber, Set<Shipment> shipments) {
+    public Country(String countryCode, String countryName, String multiplyerNumber) {
         this.countryCode = countryCode;
         this.countryName = countryName;
         this.multiplyerNumber = multiplyerNumber;
-        this.shipments = shipments;
     };
 
     public Integer getId() {
@@ -68,13 +65,5 @@ public class Country {
 
     public void setMultiplyerNumber(String multiplyerNumber) {
         this.multiplyerNumber = multiplyerNumber;
-    }
-
-    public Set<Shipment> getShipments() {
-        return shipments;
-    }
-
-    public void setShipments(Set<Shipment> shipments) {
-        this.shipments = shipments;
     }
 }
