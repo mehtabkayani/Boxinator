@@ -2,6 +2,9 @@ package com.company.boxinator.Controllers;
 
 import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.UserRepository;
+import com.company.boxinator.Utils.JwtUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,8 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     UserRepository userRepository;
+
+    private JwtUtil jwtUtil = new JwtUtil();
 
     @GetMapping("/user")
     public String index() {
@@ -51,4 +56,15 @@ public class UserController {
         }
         return resMessage;
     }
+    @GetMapping("/getJWT")
+    public String getJwt(){
+        System.out.println("In getJwT");
+        return jwtUtil.createJWT("email", "ADMINISTRATOR");
+    }
+    @GetMapping("/parseJWT/{jwt}")
+    public Jws<Claims> parseJWT(@PathVariable("jwt") String jwt){
+        System.out.println("In parseJWT");
+        return jwtUtil.parseJWT(jwt, "ADMINISTRATOR");
+    }
+
 }
