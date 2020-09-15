@@ -19,42 +19,38 @@ public class User {
     public Integer id;
 
     @Column
-    public String username;
+    private String firstname;
 
     @Column
-    public String firstName;
+    private String lastname;
 
     @Column
-    public String lastName;
-
-    @Column
-    public String email;
+    private String email;
 
     @Column
     @JsonIgnore
-    public String password;
+    private String password;
 
     @Column
-    public String dateOfBirth;
+    private String dateOfBirth;
 
     @Column
-    public String countryOfResidence;
+    private String countryOfResidence;
 
     @Column
-    public String zipcode;
+    private String zipcode;
 
     @Column
-    public String contactNumber;
+    private String contactNumber;
 
     @Column
-    public AccountType accountType;
+    private AccountType accountType;
 
     public User(){}
 
-    public User(String firstName, String lastName, String email, String password, String dateOfBirth, String countryOfResidence, String zipcode, String contactNumber, AccountType accountType) {
-        this.username = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String firstname, String lastname, String email, String password, String dateOfBirth, String countryOfResidence, String zipcode, String contactNumber, AccountType accountType) {
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
@@ -70,22 +66,6 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -144,11 +124,19 @@ public class User {
         this.accountType = accountType;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setUsername(String username) {
-        this.username = this.getEmail();
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 }

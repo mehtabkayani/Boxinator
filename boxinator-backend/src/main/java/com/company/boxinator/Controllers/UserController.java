@@ -31,10 +31,10 @@ public class UserController {
     }
     @GetMapping("user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
-        /*Optional<User> userData = userRepository.findById(id);
+        Optional<User> userData = userRepository.findById(id);
         if (userData.isPresent())
             return new ResponseEntity<>(userData.get(), HttpStatus.OK);
-        else*/
+        else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
