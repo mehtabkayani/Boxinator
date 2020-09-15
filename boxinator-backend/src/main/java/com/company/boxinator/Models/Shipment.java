@@ -17,38 +17,38 @@ public class Shipment {
     public Integer id;
 
     @Column
-    public String recieverName;
+    private String recieverName;
 
     @Column
-    public float weight;
+    private float weight;
 
     @Column
-    public String boxcolor;
+    private String boxcolor;
 
     @Column
-    public String creation_date;
+    private String creation_date;
 
     @Column
-    public ShipmentStatus shipmentStatus;
+    private ShipmentStatus shipmentStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "shipment_id", nullable = false)
-    private Shipment shipment;
+    @ManyToOne
+    @JoinColumn(name = "country_id", nullable = false)
+    private Country country;
 
     public Shipment(){};
 
-    public Shipment(String recieverName, float weight, String boxcolor, String creation_date, ShipmentStatus shipmentStatus, User user, Shipment shipment) {
+    public Shipment(String recieverName, float weight, String boxcolor, String creation_date, ShipmentStatus shipmentStatus, User user, Country country) {
         this.recieverName = recieverName;
         this.weight = weight;
         this.boxcolor = boxcolor;
         this.creation_date = creation_date;
         this.shipmentStatus = shipmentStatus;
         this.user = user;
-        this.shipment = shipment;
+        this.country = country;
     };
 
     public Integer getId() {
@@ -107,12 +107,11 @@ public class Shipment {
         this.user = user;
     }
 
-    public Shipment getShipment() {
-        return shipment;
+    public Country getCountry() {
+        return country;
     }
 
-    public void setShipment(Shipment shipment) {
-        this.shipment = shipment;
+    public void setCountry(Country country) {
+        this.country = country;
     }
-
 }
