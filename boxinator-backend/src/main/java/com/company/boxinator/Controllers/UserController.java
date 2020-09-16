@@ -2,7 +2,8 @@ package com.company.boxinator.Controllers;
 
 import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.UserRepository;
-import com.company.boxinator.Utils.Jwt;
+import com.company.boxinator.Utils.JwtUtil;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,33 +24,20 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    Jwt jwt;
+
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
+    private JwtUtil jwtUtil = new JwtUtil();
 
 
     @PostMapping("/login")
     public String login(@RequestBody User userLogin) {
         User user = userRepository.findByEmail(userLogin.getEmail());
 
-        String signature = "Should be empty";
-        try{
-            if(bCryptPasswordEncoder.matches(userLogin.getPassword(),user.getPassword())){
-                System.out.println("BCRYPT");
-                signature = jwt.getToken("kalle@gmail.com");
-                System.out.println("Signature: " + signature);
-                }
-                System.out.println("Matches?" + bCryptPasswordEncoder.matches(userLogin.getPassword(),user.getPassword()));
-            }
-        catch (Exception e){
-            signature = e.getMessage();
-        }
+        return "";
 
-        //RETURN JWT String
-        return signature;
     }
-
-
 
 
     @GetMapping("/user/{id}")
@@ -76,6 +64,17 @@ public class UserController {
         return resMessage;
     }
 
+
+    @GetMapping("/getJWT")
+    public String getJwt(){
+        System.out.println("In getJwT");
+        return jwtUtil.createJWT("email", "ADMINISTRATOR");
+    }
+    @GetMapping("/parseJWT/{jwt}")
+    public Jws<Claims> parseJWT(@PathVariable("jwt") String jwt){
+        System.out.println("In parseJWT");
+        return jwtUtil.parseJWT(jwt, "ADMINISTRATOR");
+    }
 
 
 }

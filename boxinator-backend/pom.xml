@@ -39,7 +39,7 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
             <version>0.10.7</version>
-            <scope>compile</scope> <!-- Not runtime -->
+            <scope>runtime</scope> <!-- Not runtime -->
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
