@@ -37,7 +37,7 @@ public class UserController {
         if(bCryptPasswordEncoder.matches(userLogin.getPassword(), user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())){
 
             return user.get().getEmail() + " is logged in!";
-        }
+
         return "Wrong credentials!";
 
     }
@@ -94,6 +94,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CREATED).body(guestUser.getEmail() + " is now registered as a REGISTERED_USER!");
         }
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Something went wrong");
+
 
     }
 
