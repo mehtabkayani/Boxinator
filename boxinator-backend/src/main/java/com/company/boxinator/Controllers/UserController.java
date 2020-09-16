@@ -34,10 +34,10 @@ public class UserController {
     public String login(@RequestBody User userLogin) {
        Optional <User> user = userRepository.findByEmail(userLogin.getEmail());
 
-        if(bCryptPasswordEncoder.matches(userLogin.getPassword(), user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())){
+        if(bCryptPasswordEncoder.matches(userLogin.getPassword(), user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
 
             return user.get().getEmail() + " is logged in!";
-
+        }
         return "Wrong credentials!";
 
     }
