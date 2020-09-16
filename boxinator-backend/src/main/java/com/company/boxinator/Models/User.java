@@ -10,6 +10,11 @@ import javax.persistence.*;
 
 
 @Entity
+@Table(	name = "user",
+        uniqueConstraints = {
+
+                @UniqueConstraint(columnNames = "email")
+        })
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
@@ -59,6 +64,17 @@ public class User {
         this.zipcode = zipcode;
         this.contactNumber = contactNumber;
         this.accountType = accountType;
+    }
+    public User(String firstname, String lastname, String email, String password, String dateOfBirth, String countryOfResidence, String zipcode, String contactNumber) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.countryOfResidence = countryOfResidence;
+        this.zipcode = zipcode;
+        this.contactNumber = contactNumber;
+
     }
 
     public Integer getId() {
