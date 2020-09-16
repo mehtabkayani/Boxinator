@@ -16,6 +16,7 @@ import NavBar from "./components/navBar/NavBar";
 import HomePage from "./components/homePage/HomePage";
 import AddShipmentGuest from "./components/guest/AddShipmentGuest";
 
+
 function App() {
   return (
     <div className="App">
@@ -33,6 +34,7 @@ function App() {
               <Route path="/" component={HomePage} />
 
           </Switch>
+
       </Router>
     </div>
   );

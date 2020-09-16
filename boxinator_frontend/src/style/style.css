@@ -1,8 +1,6 @@
 
 .shipmentsTable {
-    border-collapse: collapse;
+    width: 50%;
 }
 
-.shipmentsTable, td, th {
-    border: 1px solid black;
-}
+
