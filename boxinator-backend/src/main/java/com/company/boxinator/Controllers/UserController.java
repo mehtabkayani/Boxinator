@@ -54,7 +54,6 @@ public class UserController {
             return listOfAllUsers;
     }
 
-
     @GetMapping("/user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
         Optional<User> userData = userRepository.findById(id);
