@@ -11,6 +11,7 @@ const NewShipment = () => {
     return (
         <div>
             <h1>New shipment: </h1>
+            <br></br>
             <form>
                 <div>
                     <label>Receiver name : </label>

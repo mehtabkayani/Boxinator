@@ -1,6 +1,35 @@
-
+/*Main page component*/
 .shipmentsTable {
     width: 50%;
+    margin-top: 5%;
+    margin-left: 2%;
+}
+/*Home component*/
+.homeContainer{
+    text-align: center;
+    margin-top: 10%;
+}
+/*User account component*/
+.accountContainer{
+    width: 50%;
+    margin-left: 2%;
+}
+/*Add shipment component*/
+/*Admin main page component*/
+
+/*Login component */
+.loginContainer{
+    width: 30%;
+    margin-left: 2%;
 }
 
+/*Register component*/
+.registerContainer{
+    width: 50%;
+    margin-left: 2%;
+}
+/*NavBar component*/
+.navContainer{
+    width: 100%;
+}
 

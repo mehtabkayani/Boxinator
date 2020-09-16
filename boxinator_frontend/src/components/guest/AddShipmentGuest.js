@@ -1,10 +1,17 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import Select from "react-select";
 
 const AddShipmentGuest = () => {
+    const options = [
+        { value: 'sweden', label: 'Sweden' },
+        { value: 'Denmark', label: 'Denmark' },
+        { value: 'norway', label: 'norway' }
+    ]
     return (
         <div>
             <h1>New shipment: </h1>
+            <br></br>
             <form>
                 <div>
                     <label>E-mail : </label>
@@ -25,7 +32,7 @@ const AddShipmentGuest = () => {
                 <div>
                     {/* Maybe have registered countries to chose from Shipment pris ??*/}
                     <label>Destination country: </label>
-                    <input type="text" placeholder="Enter country"/>
+                    <Select options={options} />
                 </div>
                 <br></br>
                 <div>

@@ -8,7 +8,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 import {Link} from "react-router-dom";
-import {Badge} from "@material-ui/core";
 
 function PaperComponent(props) {
     return (
@@ -32,7 +31,7 @@ export default function DraggableDialog() {
     return (
         <div>
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-               Add new shipment
+                Add new shipment
             </Button>
             <Dialog
                 open={open}
@@ -40,8 +39,8 @@ export default function DraggableDialog() {
                 PaperComponent={PaperComponent}
                 aria-labelledby="draggable-dialog-title"
             >
-                <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-                    Register !
+                <DialogTitle style={{cursor: 'move'}} id="draggable-dialog-title">
+                    Register
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -50,7 +49,7 @@ export default function DraggableDialog() {
                 </DialogContent>
                 <DialogActions>
                     <Link to="/register"><Button>Register</Button></Link>
-                    <Link to="/addShipmentGuest"><Button >Continue as guest</Button></Link>
+                    <Link to="/addShipmentGuest"><Button>Continue as a guest</Button></Link>
                 </DialogActions>
             </Dialog>
         </div>

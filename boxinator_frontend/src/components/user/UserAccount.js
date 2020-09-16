@@ -1,56 +1,75 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {Button, Form} from "react-bootstrap";
+import Col from "react-bootstrap/Col";
 
 const UserAccount = () => {
     return (
-        <div>
+        <div className="accountContainer">
             <h1>User Account : </h1>
-            <form>
-                <div>
-                    <label>First Name : </label>
-                    <input type="text" placeholder="Enter first name"/>
-                </div>
-                <div>
-                    <label>Last Name : </label>
-                    <input type="text" placeholder="Enter last name"/>
-                </div>
-                <div>
-                    <label>E-mail : </label>
-                    <input type="text" placeholder="Enter e-mail"/>
-                </div>
-                <div>
-                    <label>Password: </label>
-                    <input type="password" placeholder="Enter password"/>
-                    <div>
-                        <label>Repeat Password: </label>
-                        <input type="password" placeholder="Enter password"/>
-                    </div>
-                </div>
+            <br></br>
+            <Form>
+                <Form.Row>
+                    <Form.Group as={Col}>
+                        <Form.Label>Firstname</Form.Label>
+                        <Form.Control type="text" placeholder="Enter firstname"/>
+                    </Form.Group>
+
+                    <Form.Group as={Col}>
+                        <Form.Label>Lastname</Form.Label>
+                        <Form.Control type="text" placeholder="Lastname"/>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formGridEmail">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="email" placeholder="Enter email"/>
+                    </Form.Group>
+                </Form.Row>
                 <div>
                     <label>Date of birth: </label>
-                    <input type="text" placeholder="Enter e-mail"/>
+                    <input type="date" placeholder="Enter e-mail"/>
                 </div>
-                <div>
-                    <label>Country of residence : </label>
-                    <input type="text" placeholder="Enter e-mail"/>
-                </div>
-                <div>
-                    <label>Zip code/Postal code : </label>
-                    <input type="text" placeholder="Enter e-mail"/>
-                </div>
-                <div>
-                    <label>Contact number : </label>
-                    <input type="text" placeholder="Enter e-mail"/>
-                </div>
-                <div>Switch</div>
+                <Form.Row>
+                    <Form.Group controlId="formGridAddress">
+                        <Form.Label>Country of residence :</Form.Label>
+                        <Form.Control placeholder="1234 Main St"/>
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="formGridZip">
+                        <Form.Label>Zip code/Postal code :</Form.Label>
+                        <Form.Control/>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formGridEmail">
+                        <Form.Label>Contact number :</Form.Label>
+                        <Form.Control type="text" placeholder="Enter contact number"/>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" placeholder="password"/>
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Label>Repeat Password</Form.Label>
+                        <Form.Control type="password" placeholder="Password"/>
+                    </Form.Group>
+                </Form.Row>
+                <br></br>
+                <Form.Group id="formGridCheckbox">
+                    <Form.Label>Check only if you are an admin !</Form.Label>
+                    <Form.Check type="checkbox" label="Admin"/>
+                </Form.Group>
                 <br></br>
                 <div>
-                    <button>Save changes</button>
+                    <Button variant="secondary">Save changes</Button>
                 </div>
-            </form>
+            </Form>
 
                 <br></br>
-                <Link to="/mainPage"><button>Go back</button></Link>
+                <Link to="/"><Button variant="success">Home</Button></Link>
 
         </div>
     );

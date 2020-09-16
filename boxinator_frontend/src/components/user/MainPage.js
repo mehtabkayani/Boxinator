@@ -9,6 +9,7 @@ const MainPage = () => {
     return (
         <div className="shipmentsTable">
             <h1>Welcome to the Main page</h1>
+            <br></br>
             <p>Here can you see your shipments or add a new shipment by clicking on the button</p>
             <br></br>
             <Table striped bordered hover variant="dark" >
