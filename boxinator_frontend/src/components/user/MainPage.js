@@ -1,6 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import "../../style/style.css"
+import "../../style/style.css";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 
