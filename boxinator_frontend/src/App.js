@@ -15,6 +15,7 @@ import AdminMainPage from "./components/admin/AdminMainPage";
 import NavBar from "./components/navBar/NavBar";
 import HomePage from "./components/homePage/HomePage";
 import AddShipmentGuest from "./components/guest/AddShipmentGuest";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
               <Route path="/" component={HomePage} />
 
           </Switch>
+
       </Router>
     </div>
   );
