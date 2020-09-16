@@ -9,9 +9,7 @@ import com.company.boxinator.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +18,37 @@ import java.util.Optional;
 @RestController
 public class ShipmentController {
 
-    /*@Autowired
+    @Autowired
     ShipmentRepository shipmentRepository;
     @Autowired
-    UserRepository userRepository;*/
+    UserRepository userRepository;
+
+
+    @GetMapping("/shipment/{id}")
+    public ResponseEntity<Shipment> getUserById(@PathVariable("id") int id) {
+        Optional<Shipment> userData = shipmentRepository.findById(id);
+        if (userData.isPresent()) {
+            return new ResponseEntity<>(userData.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/shipment")
+    public String addShipment(@RequestBody Shipment shipment, Integer userId) {
+        User user = userRepository.getOne(userId);
+
+
+        String resMessage = "";
+        try {
+
+
+            resMessage = "succeded";
+        } catch (Exception ex) {
+            resMessage = ex.getMessage();
+        }
+        return resMessage;
+    }
 
     @GetMapping("/shipment")
     public String index(){
