@@ -77,6 +77,9 @@ public class User {
 
     }
 
+    public User(String email, AccountType guest) {
+    }
+
     public Integer getId() {
         return id;
     }

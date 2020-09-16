@@ -24,13 +24,10 @@ public class CountryController {
         return countryRepository.findAll();
     }
 
-
     @PostMapping("/country")
     public ResponseEntity addCountry(@RequestBody Country country){
 
         try {
-
-
             countryRepository.save(country);
             return  ResponseEntity.status(HttpStatus.CREATED).body(country.getCountryName() + " added");
         }catch(Exception e){
