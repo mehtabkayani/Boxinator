@@ -13,6 +13,8 @@ import NewShipment from "./components/user/NewShipment";
 import UserAccount from "./components/user/UserAccount";
 import AdminMainPage from "./components/admin/AdminMainPage";
 import NavBar from "./components/navBar/NavBar";
+import HomePage from "./components/homePage/HomePage";
+import AddShipmentGuest from "./components/guest/AddShipmentGuest";
 
 function App() {
   return (
@@ -20,12 +22,15 @@ function App() {
       <Router>
           <NavBar></NavBar>
           <Switch>
+
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
               <Route path="/mainPage" component={MainPage} />
               <Route path="/newShipment" component={NewShipment} />
               <Route path="/userAccount" component={UserAccount} />
               <Route path="/adminMainPage" component={AdminMainPage} />
+              <Route path="/addShipmentGuest" component={AddShipmentGuest} />
+              <Route path="/" component={HomePage} />
 
           </Switch>
       </Router>
