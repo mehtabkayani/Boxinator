@@ -107,4 +107,37 @@ public class UserController {
 
     }
 
+    @PostMapping("/testregister")
+    public String testRegister(@RequestBody User user){
+        userRepository.save(user);
+        return "Success";
+    }
+    @PostMapping("/testaddsession")
+    public String testAddSession(@RequestBody User user){
+        sessionUtil.addSession(user);
+        return "Success";
+    }
+    @PostMapping("/testremovesession/{id}")
+    public String testRemoveSession(@PathVariable("id") int id){
+        sessionUtil.removeSession(id);
+        return "Success";
+    }
+    @GetMapping("/testissessionvalid")
+    public boolean testIsSessionValid(){
+        return sessionUtil.isSessionValid(2, AccountType.ADMINISTRATOR);
+    }
+
+
+    @GetMapping("/getJWT")
+    public String getJwt(){
+        System.out.println("In getJwT");
+        return jwtUtil.createJWT("email", AccountType.ADMINISTRATOR);
+    }
+    @GetMapping("/parseJWT/{jwt}")
+    public Jws<Claims> parseJWT(@PathVariable("jwt") String jwt){
+        System.out.println("In parseJWT");
+        return jwtUtil.parseJWT(jwt, AccountType.ADMINISTRATOR);
+    }
+
+
 }
