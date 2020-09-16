@@ -9,46 +9,46 @@ import java.util.List;
 import java.util.Optional;
 
 public class SessionUtil {
-    private List<Session> sessions = new ArrayList<Session>();
+
     private JwtUtil jwtUtil = new JwtUtil();
 
-    public Session addSession(User user){
+    private List<Session> sessions = new ArrayList<Session>();
 
-//                    Optional<Session> sessionOpt = findSessionByUserId(user.getId());
-//
-//                    if(!sessionOpt.isPresent())
-//                        return sessionOpt;
-//
-//                    Session session = sessionOpt.get();
+
+    public void addSession(User user){
         Session session = new Session();
-
-        String token = jwtUtil.createJWT(user.getEmail(), user.getAccountType().toString());
+        String token = jwtUtil.createJWT(user.getEmail(), user.getAccountType());
         session.setAccount_id(user.getId());
         session.setToken(token);
-        return session;
+        sessions.add(session);
     }
     public boolean isSessionValid(Integer user_id, AccountType accountType){
         boolean isValid = false;
 
         Optional<Session> session = findSessionByUserId(user_id);
         if(!session.isPresent())
-            isValid = true;
+            return isValid;
 
         try {
             System.out.println("isSessionValid: try block");
-            jwtUtil.parseJWT(session.get().getToken(), accountType.toString());
+            jwtUtil.parseJWT(session.get().getToken(), accountType);
             isValid = true;
             System.out.println("isSessionValid: try block: IsValid: " + isValid);
         }catch (Exception ex){
             System.out.println("isSessionValid: catch block: " + ex.getMessage());
-            isValid = false;
         }
         return isValid;
     }
-    public List<Session> getSessionsList(){
-        return sessions;
-    }
     public Optional<Session> findSessionByUserId (Integer user_id) {
         return sessions.stream().filter(s -> s.getAccount_id().equals(user_id)).findFirst();
+    }
+    public void removeSession(Integer user_id){
+        System.out.println("Before session set");
+        Session session = findSessionByUserId(user_id).get();
+        System.out.println("In removeSession: " + session);
+        sessions.remove(session);
+    }
+    public List<Session> getSessionsList(){
+        return sessions;
     }
 }

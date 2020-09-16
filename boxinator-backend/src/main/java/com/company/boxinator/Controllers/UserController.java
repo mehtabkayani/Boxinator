@@ -29,7 +29,7 @@ public class UserController {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-//    private JwtUtil jwtUtil = new JwtUtil();
+    private JwtUtil jwtUtil = new JwtUtil();
     private SessionUtil sessionUtil = new SessionUtil();
 
     @PostMapping("/login")
@@ -37,12 +37,15 @@ public class UserController {
         User user = userRepository.findByEmail(userLogin.getEmail());
 
         if(bCryptPasswordEncoder.matches(userLogin.getPassword(), user.getPassword()) && userLogin.getEmail().equals(user.getEmail())){
-
+            sessionUtil.addSession(user);
             return user.getEmail() + " is logged in!";
         }
         return "Wrong credentials!";
     }
-
+    @GetMapping("/sessions")
+    public List<Session> getSessions(){
+        return sessionUtil.getSessionsList();
+    }
     @GetMapping("/user")
     public List<User> getUsers() {
         List<User> listOfAllUsers = userRepository.findAll();
@@ -66,11 +69,11 @@ public class UserController {
         String resMessage = "";
         try {
             Optional<User> userData = Optional.ofNullable(userRepository.findByEmail(user.getEmail()));
-
+            System.out.println("pass userData");
             //Check if email already exist and user is a REGISTERED_USER ADMINISTRATOR
             if(userData.isPresent() && userData.get().getAccountType() == AccountType.REGISTERED_USER || userData.get().getAccountType() == AccountType.ADMINISTRATOR ){
                 resMessage = "User is already registered!";
-
+                System.out.println(resMessage);
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(resMessage);
             }
 
@@ -97,23 +100,11 @@ public class UserController {
             resMessage = "A new user is registered successfully!";
 
         } catch (Exception ex) {
+            System.out.println("In catch");
             resMessage = ex.getMessage();
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(resMessage);
 
     }
-
-
-//                @GetMapping("/getJWT")
-//                public String getJwt(){
-//                    System.out.println("In getJwT");
-//                    return jwtUtil.createJWT("email", AccountType.ADMINISTRATOR.toString());
-//                }
-//                @GetMapping("/parseJWT/{jwt}")
-//                public Jws<Claims> parseJWT(@PathVariable("jwt") String jwt){
-//                    System.out.println("In parseJWT");
-//                    return jwtUtil.parseJWT(jwt, AccountType.ADMINISTRATOR.toString());
-//                }
-
 
 }
