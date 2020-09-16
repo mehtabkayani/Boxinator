@@ -56,10 +56,6 @@ public class ShipmentController {
         }
     }
 
-    @GetMapping("/shipment")
-    public String index(){
-        return "shipment active";
-    }
     @GetMapping("/shipments")
     public ResponseEntity<List<Shipment>> getAllShipmentsByUser(@RequestParam(required = false) Integer user_id) {
         /*List<Shipment> shipments = new ArrayList<Shipment>();

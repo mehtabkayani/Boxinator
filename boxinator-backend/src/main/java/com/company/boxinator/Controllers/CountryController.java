@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -24,7 +27,14 @@ public class CountryController {
 
     @PostMapping("/country")
     public ResponseEntity addCountry(@RequestBody Country country){
-        countryRepository.save(country);
-        return  ResponseEntity.status(HttpStatus.CREATED).body(country.getCountryName() + " Country added");
+
+        try {
+
+
+            countryRepository.save(country);
+            return  ResponseEntity.status(HttpStatus.CREATED).body(country.getCountryName() + " added");
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 }

@@ -31,6 +31,9 @@ public class Shipment {
     @Column
     private ShipmentStatus shipmentStatus;
 
+    @Column
+    private double shipmentCost;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -38,8 +41,6 @@ public class Shipment {
 
     public Shipment() {
     }
-
-
 
     public Shipment(String recieverName, float weight, String boxcolor, String creation_date, ShipmentStatus shipmentStatus, User user) {
 
@@ -49,7 +50,6 @@ public class Shipment {
         this.creation_date = creation_date;
         this.shipmentStatus = shipmentStatus;
         this.user = user;
-
     }
 
 
@@ -107,5 +107,13 @@ public class Shipment {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public double getShipmentCost() {
+        return shipmentCost;
+    }
+
+    public void setShipmentCost(double shipmentCost) {
+        this.shipmentCost = shipmentCost;
     }
 }
