@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api")
 public class ShipmentController {
 
     @Autowired
@@ -23,16 +24,11 @@ public class ShipmentController {
     @Autowired
     UserRepository userRepository;
 
-
-    @GetMapping("/shipment/{id}")
-    public ResponseEntity<Shipment> getUserById(@PathVariable("id") int id) {
-        Optional<Shipment> userData = shipmentRepository.findById(id);
-        if (userData.isPresent()) {
-            return new ResponseEntity<>(userData.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/shipment")
+    public List<Shipment> getAllShipments(){
+        return shipmentRepository.findAll();
     }
+
 
     @PostMapping("/shipment")
     public String addShipment(@RequestBody Shipment shipment, Integer userId) {
@@ -48,6 +44,16 @@ public class ShipmentController {
             resMessage = ex.getMessage();
         }
         return resMessage;
+    }
+
+    @GetMapping("/shipment/{id}")
+    public ResponseEntity<Shipment> getUserById(@PathVariable("id") int id) {
+        Optional<Shipment> userData = shipmentRepository.findById(id);
+        if (userData.isPresent()) {
+            return new ResponseEntity<>(userData.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/shipment")
