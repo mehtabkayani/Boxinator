@@ -1,9 +1,11 @@
 package com.company.boxinator.Controllers;
 
 import com.company.boxinator.Models.Enums.AccountType;
+import com.company.boxinator.Models.Session;
 import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.UserRepository;
 import com.company.boxinator.Utils.JwtUtil;
+import com.company.boxinator.Utils.SessionUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,19 +27,15 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-
-
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    private JwtUtil jwtUtil = new JwtUtil();
-
+//    private JwtUtil jwtUtil = new JwtUtil();
+    private SessionUtil sessionUtil = new SessionUtil();
 
     @PostMapping("/login")
-    public String login(@RequestBody User userLogin) {
-        User user = userRepository.findByEmail(userLogin.getEmail());
+    public ResponseEntity<User> login(@RequestBody User user) {
 
-        return "";
-
+        return null;
     }
 
 
@@ -66,16 +64,16 @@ public class UserController {
     }
 
 
-    @GetMapping("/getJWT")
-    public String getJwt(){
-        System.out.println("In getJwT");
-        return jwtUtil.createJWT("email", AccountType.ADMINISTRATOR.toString());
-    }
-    @GetMapping("/parseJWT/{jwt}")
-    public Jws<Claims> parseJWT(@PathVariable("jwt") String jwt){
-        System.out.println("In parseJWT");
-        return jwtUtil.parseJWT(jwt, "Något");
-    }
+//                @GetMapping("/getJWT")
+//                public String getJwt(){
+//                    System.out.println("In getJwT");
+//                    return jwtUtil.createJWT("email", AccountType.ADMINISTRATOR.toString());
+//                }
+//                @GetMapping("/parseJWT/{jwt}")
+//                public Jws<Claims> parseJWT(@PathVariable("jwt") String jwt){
+//                    System.out.println("In parseJWT");
+//                    return jwtUtil.parseJWT(jwt, AccountType.ADMINISTRATOR.toString());
+//                }
 
 
 }
