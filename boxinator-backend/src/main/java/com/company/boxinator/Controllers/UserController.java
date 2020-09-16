@@ -1,9 +1,13 @@
 package com.company.boxinator.Controllers;
 
 import com.company.boxinator.Models.Enums.AccountType;
+
+import com.company.boxinator.Models.Session;
+
 import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.UserRepository;
 import com.company.boxinator.Utils.JwtUtil;
+import com.company.boxinator.Utils.SessionUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,25 +27,26 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-
-
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     private JwtUtil jwtUtil = new JwtUtil();
-
+    private SessionUtil sessionUtil = new SessionUtil();
 
     @PostMapping("/login")
     public String login(@RequestBody User userLogin) {
        Optional <User> user = userRepository.findByEmail(userLogin.getEmail());
 
-        if(bCryptPasswordEncoder.matches(userLogin.getPassword(), user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
+            if(bCryptPasswordEncoder.matches(userLogin.getPassword(), user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
+                sessionUtil.addSession(user.get());
 
             return user.get().getEmail() + " is logged in!";
         }
         return "Wrong credentials!";
-
     }
-
+    @GetMapping("/sessions")
+    public List<Session> getSessions(){
+        return sessionUtil.getSessionsList();
+    }
     @GetMapping("/user")
     public List<User> getUsers() {
         List<User> listOfAllUsers = userRepository.findAll();
@@ -73,10 +78,8 @@ public class UserController {
         }
         //Check if the email is registered with an user or an admin
         if(userData.isPresent() && (userData.get().getAccountType() == AccountType.REGISTERED_USER || userData.get().getAccountType() == AccountType.ADMINISTRATOR) ){
-
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User is already registered!");
         }
-
         //Check if the email exists and that the account type is a GUEST then register user as Registered_USER
         if(userData.isPresent() && userData.get().getAccountType() == AccountType.GUEST){
             User guestUser =  userData.get();
@@ -94,20 +97,38 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CREATED).body(guestUser.getEmail() + " is now registered as a REGISTERED_USER!");
         }
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Something went wrong");
+    }
 
-
+    @PostMapping("/testregister")
+    public String testRegister(@RequestBody User user){
+        userRepository.save(user);
+        return "Success";
+    }
+    @PostMapping("/testaddsession")
+    public String testAddSession(@RequestBody User user){
+        sessionUtil.addSession(user);
+        return "Success";
+    }
+    @PostMapping("/testremovesession/{id}")
+    public String testRemoveSession(@PathVariable("id") int id){
+        sessionUtil.removeSession(id);
+        return "Success";
+    }
+    @GetMapping("/testissessionvalid")
+    public boolean testIsSessionValid(){
+        return sessionUtil.isSessionValid(2, AccountType.ADMINISTRATOR);
     }
 
 
     @GetMapping("/getJWT")
     public String getJwt(){
         System.out.println("In getJwT");
-        return jwtUtil.createJWT("email", "ADMINISTRATOR");
+        return jwtUtil.createJWT("email", AccountType.ADMINISTRATOR);
     }
     @GetMapping("/parseJWT/{jwt}")
     public Jws<Claims> parseJWT(@PathVariable("jwt") String jwt){
         System.out.println("In parseJWT");
-        return jwtUtil.parseJWT(jwt, "ADMINISTRATOR");
+        return jwtUtil.parseJWT(jwt, AccountType.ADMINISTRATOR);
     }
 
 
