@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Unversioned files">
+      <change afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/guest/AddShipmentGuest.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/homePage/DraggableDialog.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/homePage/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/NewShipment.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/NewShipment.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2\plugins\maven\lib\maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1hUxvNLvVIx6Un1xk8YrUvYT1rQ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/boxinator-backend" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\mbdewi\Documents\GitHub\Boxinator\boxinator_frontend\src\components\admin" />
+      <recent name="C:\Users\mbdewi\Documents\GitHub\Boxinator\boxinator_frontend\src\components\user" />
+      <recent name="C:\Users\mbdewi\Documents\GitHub\Boxinator\boxinator_frontend\src\components\accountAuth" />
+      <recent name="C:\Users\mbdewi\Documents\GitHub\Boxinator\boxinator_frontend\src\components" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="" />
+      <created>1600079701765</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1600079701765</updated>
+      <workItem from="1600079702959" duration="16121000" />
+    </task>
+    <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
+      <created>1600094762706</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1600094762706</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600177377489" />
+    <state x="-1194" y="382" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600240644769">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1194" y="382" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600240644769" />
+    <state x="-1180" y="335" key="FileChooserDialogImpl" timestamp="1600177476179">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1180" y="335" key="FileChooserDialogImpl/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600177476179" />
+    <state x="368" y="147" key="Vcs.Push.Dialog.v2" timestamp="1600107083819">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600094778518" />
+    <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1600107083819" />
+  </component>
+</project>
