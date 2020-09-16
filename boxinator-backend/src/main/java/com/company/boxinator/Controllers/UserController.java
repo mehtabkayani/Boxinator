@@ -1,5 +1,6 @@
 package com.company.boxinator.Controllers;
 
+import com.company.boxinator.Models.Enums.AccountType;
 import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.UserRepository;
 import com.company.boxinator.Utils.JwtUtil;
@@ -59,12 +60,12 @@ public class UserController {
     @GetMapping("/getJWT")
     public String getJwt(){
         System.out.println("In getJwT");
-        return jwtUtil.createJWT("email", "ADMINISTRATOR");
+        return jwtUtil.createJWT("email", AccountType.ADMINISTRATOR.toString());
     }
     @GetMapping("/parseJWT/{jwt}")
     public Jws<Claims> parseJWT(@PathVariable("jwt") String jwt){
         System.out.println("In parseJWT");
-        return jwtUtil.parseJWT(jwt, "ADMINISTRATOR");
+        return jwtUtil.parseJWT(jwt, "Något");
     }
 
 }
