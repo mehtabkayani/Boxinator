@@ -19,16 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Unversioned files">
-      <change afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/guest/AddShipmentGuest.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/homePage/DraggableDialog.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/homePage/HomePage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/App.js" afterDir="false" />
+    <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Added a dialog component so that user can chose between register and guest, added home component, added newShipmentGuest component">
       <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/NewShipment.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/NewShipment.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,10 +127,10 @@
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
     <state x="-1180" y="335" key="FileChooserDialogImpl/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600177476179" />
-    <state x="368" y="147" key="Vcs.Push.Dialog.v2" timestamp="1600107083819">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1600248735847">
+      <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600094778518" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600248735847" />
     <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1600107083819" />
   </component>
 </project>

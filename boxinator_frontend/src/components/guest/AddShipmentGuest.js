@@ -1,37 +1,45 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import Select from "react-select";
+import {Button, Form} from "react-bootstrap";
 
 const AddShipmentGuest = () => {
+    const options = [
+        { value: 'sweden', label: 'Sweden' },
+        { value: 'Denmark', label: 'Denmark' },
+        { value: 'norway', label: 'norway' }
+    ]
     return (
-        <div>
+        <div className="newShipmentContainer">
             <h1>New shipment: </h1>
-            <form>
-                <div>
-                    <label>E-mail : </label>
-                    <input type="text" placeholder="Enter e-mail"/>
-                </div>
-                <div>
-                    <label>Receiver name : </label>
-                    <input type="text" placeholder="Enter name"/>
-                </div>
-                <div>
-                    <label>Weight (kg): </label>
-                    <input type="number" placeholder="Enter weight"/>kg
-                </div>
-                <div>
-                    <label>Box colour: </label>
-                    <input type="color"/>
-                </div>
-                <div>
-                    {/* Maybe have registered countries to chose from Shipment pris ??*/}
-                    <label>Destination country: </label>
-                    <input type="text" placeholder="Enter country"/>
-                </div>
-                <br></br>
-                <div>
-                    <button>Add shipment</button>
-                </div>
-            </form>
+            <br></br>
+                <Form>
+                    <Form.Group controlId="formBasicEmail">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control type="email" placeholder="Enter email" />
+                    </Form.Group>
+                    <div>
+                        <Form.Label>Receiver name : </Form.Label>
+                        <Form.Control type="text" placeholder="Enter name" />
+                    </div>
+                    <div>
+                        <Form.Label>Weight (kg): </Form.Label>
+                        <Form.Control type="number" placeholder="Enter weight" />
+                    </div>
+                    <div>
+                        <Form.Label>Box colour: </Form.Label>
+                        <Form.Control type="color"  />
+                    </div>
+                    <div>
+                        {/* Maybe have registered countries to chose from */}
+                        <label>Destination country: </label>
+                        <Select options={options} />
+                    </div>
+                    <br></br>
+                    <div>
+                        <Button variant="outline-danger">Add shipment</Button>
+                    </div>
+                </Form>
             <br></br>
             <Link to="/"> <button>Go back</button></Link>
         </div>
