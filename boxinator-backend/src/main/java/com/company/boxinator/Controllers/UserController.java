@@ -23,8 +23,6 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-
-
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     private JwtUtil jwtUtil = new JwtUtil();
