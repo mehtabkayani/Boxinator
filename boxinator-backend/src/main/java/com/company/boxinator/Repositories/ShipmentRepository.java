@@ -1,5 +1,7 @@
 package com.company.boxinator.Repositories;
 
+import java.util.*;
+
 import com.company.boxinator.Models.Enums.ShipmentStatus;
 import com.company.boxinator.Models.Shipment;
 import com.company.boxinator.Models.User;
@@ -11,6 +13,5 @@ import java.util.Optional;
 
 @Repository
 public interface ShipmentRepository extends JpaRepository<Shipment, Integer> {
-
     Optional<Shipment> findByUserId(Integer integer);
 }

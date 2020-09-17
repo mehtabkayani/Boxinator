@@ -61,7 +61,6 @@ public class ShipmentController {
         shipmentRepository.save(shipmentUtil.setShipment(shipment, userDB.get()));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userDB.get().getEmail() + " added a new shipment");
-
     }
 
 
@@ -69,6 +68,7 @@ public class ShipmentController {
     public Optional<Shipment> getAllShipmentsByShipmentId(@PathVariable("shipment_id") Integer shipment_id) {
         return shipmentRepository.findById(shipment_id);
     }
+
 
     @GetMapping("shipments/complete/{shipment_id}")
     public Shipment getOneCompletedShipment(@PathVariable("shipment_id") Integer shipment_id){
