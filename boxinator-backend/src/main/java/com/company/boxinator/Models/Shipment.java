@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @JsonIdentityInfo(
@@ -55,6 +53,18 @@ public class Shipment {
         this.boxcolor = boxcolor;
         this.country = country;
         this.user = user;
+    }
+
+    public Shipment(Integer id, String recieverName, float weight, String boxcolor, LocalDateTime creation_date, ShipmentStatus shipmentStatus, double shipmentCost, Country country) {
+        this.id = id;
+        this.recieverName = recieverName;
+        this.weight = weight;
+        this.boxcolor = boxcolor;
+        this.creation_date = creation_date;
+        this.shipmentStatus = shipmentStatus;
+        this.shipmentCost = shipmentCost;
+        this.country = country;
+
     }
 
 
