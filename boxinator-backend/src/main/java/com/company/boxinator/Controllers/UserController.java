@@ -8,6 +8,7 @@ import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.UserRepository;
 import com.company.boxinator.Utils.JwtUtil;
 import com.company.boxinator.Utils.SessionUtil;
+import com.company.boxinator.Utils.UserUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     UserRepository userRepository;
+
+    private UserUtil userUtil = new UserUtil();
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -81,16 +84,7 @@ public class UserController {
         }
         //Check if the email exists and that the account type is a GUEST then register user as Registered_USER
         if(userData.isPresent() && userData.get().getAccountType() == AccountType.GUEST){
-            User guestUser =  userData.get();
-            guestUser.setContactNumber(user.getContactNumber());
-            guestUser.setCountryOfResidence(user.getCountryOfResidence());
-            guestUser.setDateOfBirth(user.getDateOfBirth());
-            guestUser.setEmail(user.getEmail());
-            guestUser.setFirstname(user.getFirstname());
-            guestUser.setLastname(user.getLastname());
-            guestUser.setZipcode(user.getZipcode());
-            guestUser.setAccountType(AccountType.REGISTERED_USER);
-            guestUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            User guestUser =  userUtil.setUser(userData.get());
             userRepository.save(guestUser);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(guestUser.getEmail() + " is now registered as a REGISTERED_USER!");
