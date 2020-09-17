@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @JsonIdentityInfo(
@@ -26,30 +29,32 @@ public class Shipment {
     private String boxcolor;
 
     @Column
-    private String creation_date;
+    private LocalDateTime creation_date;
 
     @Column
     private ShipmentStatus shipmentStatus;
 
+    @Column
+    private double shipmentCost;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    @ManyToOne
+    @JoinColumn(name = "country_id", nullable = false)
+    private Country country;
 
 
     public Shipment() {
     }
 
-
-
-    public Shipment(String recieverName, float weight, String boxcolor, String creation_date, ShipmentStatus shipmentStatus, User user) {
+    public Shipment(String recieverName, float weight, String boxcolor, User user, Country country) {
 
         this.recieverName = recieverName;
         this.weight = weight;
         this.boxcolor = boxcolor;
-        this.creation_date = creation_date;
-        this.shipmentStatus = shipmentStatus;
+        this.country = country;
         this.user = user;
-
     }
 
 
@@ -85,11 +90,11 @@ public class Shipment {
         this.boxcolor = boxcolor;
     }
 
-    public String getCreation_date() {
+    public LocalDateTime getCreation_date() {
         return creation_date;
     }
 
-    public void setCreation_date(String creation_date) {
+    public void setCreation_date(LocalDateTime creation_date) {
         this.creation_date = creation_date;
     }
 
@@ -107,5 +112,21 @@ public class Shipment {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public double getShipmentCost() {
+        return shipmentCost;
+    }
+
+    public void setShipmentCost(double shipmentCost) {
+        this.shipmentCost = shipmentCost;
     }
 }

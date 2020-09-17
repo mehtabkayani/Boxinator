@@ -1,9 +1,13 @@
 package com.company.boxinator.Controllers;
 
 import com.company.boxinator.Models.Enums.AccountType;
+
+import com.company.boxinator.Models.Session;
+
 import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.UserRepository;
 import com.company.boxinator.Utils.JwtUtil;
+import com.company.boxinator.Utils.SessionUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,25 +27,26 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-
-
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     private JwtUtil jwtUtil = new JwtUtil();
-
+    private SessionUtil sessionUtil = new SessionUtil();
 
     @PostMapping("/login")
     public String login(@RequestBody User userLogin) {
-        User user = userRepository.findByEmail(userLogin.getEmail());
+       Optional <User> user = userRepository.findByEmail(userLogin.getEmail());
 
-        if(bCryptPasswordEncoder.matches(userLogin.getPassword(), user.getPassword()) && userLogin.getEmail().equals(user.getEmail())){
+            if(bCryptPasswordEncoder.matches(userLogin.getPassword(), user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
+                sessionUtil.addSession(user.get());
 
-            return user.getEmail() + " is logged in!";
+            return user.get().getEmail() + " is logged in!";
         }
         return "Wrong credentials!";
-
     }
-
+    @GetMapping("/sessions")
+    public List<Session> getSessions(){
+        return sessionUtil.getSessionsList();
+    }
     @GetMapping("/user")
     public List<User> getUsers() {
         List<User> listOfAllUsers = userRepository.findAll();
@@ -61,57 +66,69 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerUser(@RequestBody User user) {
-        String resMessage = "";
-        try {
-            Optional<User> userData = Optional.ofNullable(userRepository.findByEmail(user.getEmail()));
+    public ResponseEntity addUser(@RequestBody User user){
+        Optional<User> userData = userRepository.findByEmail(user.getEmail());
 
-            //Check if email already exist and user is a REGISTERED_USER ADMINISTRATOR
-            if(userData.isPresent() && userData.get().getAccountType() == AccountType.REGISTERED_USER || userData.get().getAccountType() == AccountType.ADMINISTRATOR ){
-                resMessage = "User is already registered!";
-
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(resMessage);
-            }
-
-                //Check if a guest is registering
-            if(userData.isPresent() && userData.get().getAccountType() == AccountType.GUEST){
-               User guestUser =  userData.get();
-               guestUser.setContactNumber(user.getContactNumber());
-                guestUser.setCountryOfResidence(user.getCountryOfResidence());
-                guestUser.setDateOfBirth(user.getDateOfBirth());
-                guestUser.setEmail(user.getEmail());
-                guestUser.setFirstname(user.getFirstname());
-                guestUser.setLastname(user.getLastname());
-                guestUser.setZipcode(user.getZipcode());
-                guestUser.setAccountType(AccountType.REGISTERED_USER);
-                guestUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-                userRepository.save(guestUser);
-
-                resMessage = guestUser.getEmail() + " is now registered as a REGISTERED_USER!";
-                    return ResponseEntity.status(HttpStatus.CREATED).body(resMessage);
-            }
-
+        //Check if there is no email registered then register a new user
+        if(userData.isEmpty()){
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            user.setAccountType(AccountType.REGISTERED_USER);
             userRepository.save(user);
-            resMessage = "A new user is registered successfully!";
-
-        } catch (Exception ex) {
-            resMessage = ex.getMessage();
+            return ResponseEntity.status(HttpStatus.CREATED).body("A New user is registered!");
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(resMessage);
+        //Check if the email is registered with an user or an admin
+        if(userData.isPresent() && (userData.get().getAccountType() == AccountType.REGISTERED_USER || userData.get().getAccountType() == AccountType.ADMINISTRATOR) ){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("User is already registered!");
+        }
+        //Check if the email exists and that the account type is a GUEST then register user as Registered_USER
+        if(userData.isPresent() && userData.get().getAccountType() == AccountType.GUEST){
+            User guestUser =  userData.get();
+            guestUser.setContactNumber(user.getContactNumber());
+            guestUser.setCountryOfResidence(user.getCountryOfResidence());
+            guestUser.setDateOfBirth(user.getDateOfBirth());
+            guestUser.setEmail(user.getEmail());
+            guestUser.setFirstname(user.getFirstname());
+            guestUser.setLastname(user.getLastname());
+            guestUser.setZipcode(user.getZipcode());
+            guestUser.setAccountType(AccountType.REGISTERED_USER);
+            guestUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            userRepository.save(guestUser);
 
+            return ResponseEntity.status(HttpStatus.CREATED).body(guestUser.getEmail() + " is now registered as a REGISTERED_USER!");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Something went wrong");
+    }
+
+    @PostMapping("/testregister")
+    public String testRegister(@RequestBody User user){
+        userRepository.save(user);
+        return "Success";
+    }
+    @PostMapping("/testaddsession")
+    public String testAddSession(@RequestBody User user){
+        sessionUtil.addSession(user);
+        return "Success";
+    }
+    @PostMapping("/testremovesession/{id}")
+    public String testRemoveSession(@PathVariable("id") int id){
+        sessionUtil.removeSession(id);
+        return "Success";
+    }
+    @GetMapping("/testissessionvalid")
+    public boolean testIsSessionValid(){
+        return sessionUtil.isSessionValid(2, AccountType.ADMINISTRATOR);
     }
 
 
     @GetMapping("/getJWT")
     public String getJwt(){
         System.out.println("In getJwT");
-        return jwtUtil.createJWT("email", "ADMINISTRATOR");
+        return jwtUtil.createJWT("email", AccountType.ADMINISTRATOR);
     }
     @GetMapping("/parseJWT/{jwt}")
     public Jws<Claims> parseJWT(@PathVariable("jwt") String jwt){
         System.out.println("In parseJWT");
-        return jwtUtil.parseJWT(jwt, "ADMINISTRATOR");
+        return jwtUtil.parseJWT(jwt, AccountType.ADMINISTRATOR);
     }
 
 
