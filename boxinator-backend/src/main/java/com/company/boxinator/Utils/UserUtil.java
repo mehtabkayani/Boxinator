@@ -9,8 +9,7 @@ public class UserUtil {
     private UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    public User setUser(User user){
-        User newUser = new User();
+    public User setUser(User user, User newUser){
         newUser.setContactNumber(user.getContactNumber());
         newUser.setCountryOfResidence(user.getCountryOfResidence());
         newUser.setDateOfBirth(user.getDateOfBirth());
@@ -19,7 +18,8 @@ public class UserUtil {
         newUser.setLastname(user.getLastname());
         newUser.setZipcode(user.getZipcode());
         newUser.setAccountType(AccountType.REGISTERED_USER);
-        newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        newUser.setPassword("test");
         return newUser;
     }
 }
+//bCryptPasswordEncoder.encode(user.getPassword())

@@ -46,10 +46,7 @@ public class UserController {
         }
         return "Wrong credentials!";
     }
-    @GetMapping("/sessions")
-    public List<Session> getSessions(){
-        return sessionUtil.getSessionsList();
-    }
+
     @GetMapping("/user")
     public List<User> getUsers() {
         List<User> listOfAllUsers = userRepository.findAll();
@@ -66,8 +63,22 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @PutMapping("/user/{id}")
+    public ResponseEntity updateUserById(@RequestBody User user, @PathVariable("id") Integer id){
+        Optional<User> userData = userRepository.findById(id);
+        if(!userData.isPresent())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-    @PostMapping("/register")
+        User updatedUser = userUtil.setUser(user, userData.get());
+        try {
+            userRepository.save(updatedUser);
+        }catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Not accepted");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Updated user");
+    }
+
+    @PostMapping("/user")
     public ResponseEntity addUser(@RequestBody User user){
         Optional<User> userData = userRepository.findByEmail(user.getEmail());
 
@@ -84,45 +95,20 @@ public class UserController {
         }
         //Check if the email exists and that the account type is a GUEST then register user as Registered_USER
         if(userData.isPresent() && userData.get().getAccountType() == AccountType.GUEST){
-            User guestUser =  userUtil.setUser(userData.get());
+            User guestUser =  userUtil.setUser(userData.get(), new User());
             userRepository.save(guestUser);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(guestUser.getEmail() + " is now registered as a REGISTERED_USER!");
         }
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Something went wrong");
     }
-
-    @PostMapping("/testregister")
-    public String testRegister(@RequestBody User user){
-        userRepository.save(user);
-        return "Success";
+    @DeleteMapping("/user")
+    public ResponseEntity deleteUser(@RequestBody User user){
+        try{
+            userRepository.delete(user);
+        } catch (Exception ex){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Delete failed");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Delete succeded");
     }
-    @PostMapping("/testaddsession")
-    public String testAddSession(@RequestBody User user){
-        sessionUtil.addSession(user);
-        return "Success";
-    }
-    @PostMapping("/testremovesession/{id}")
-    public String testRemoveSession(@PathVariable("id") int id){
-        sessionUtil.removeSession(id);
-        return "Success";
-    }
-    @GetMapping("/testissessionvalid")
-    public boolean testIsSessionValid(){
-        return sessionUtil.isSessionValid(2, AccountType.ADMINISTRATOR);
-    }
-
-
-    @GetMapping("/getJWT")
-    public String getJwt(){
-        System.out.println("In getJwT");
-        return jwtUtil.createJWT("email", AccountType.ADMINISTRATOR);
-    }
-    @GetMapping("/parseJWT/{jwt}")
-    public Jws<Claims> parseJWT(@PathVariable("jwt") String jwt){
-        System.out.println("In parseJWT");
-        return jwtUtil.parseJWT(jwt, AccountType.ADMINISTRATOR);
-    }
-
-
 }

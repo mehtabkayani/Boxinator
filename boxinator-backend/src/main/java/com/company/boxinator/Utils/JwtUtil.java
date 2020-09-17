@@ -35,5 +35,4 @@ public class JwtUtil {
                 .setSigningKey(Keys.hmacShaKeyFor(secret))
                 .parseClaimsJws(jwt);
     }
-
 }

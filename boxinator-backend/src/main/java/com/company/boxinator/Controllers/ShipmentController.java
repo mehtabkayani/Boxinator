@@ -42,42 +42,23 @@ public class ShipmentController {
 
         Optional<User> userDB = userRepository.findByEmail(shipment.getUser().getEmail());
 
-        User newUser = new User();
-
-        Shipment newShipment = new Shipment();
-
-
         if (userDB.isEmpty()) {
             User user = shipmentUtil.addGuestUser(shipment);
             userRepository.save(user);
             shipmentRepository.save(shipmentUtil.setShipment(shipment, user));
             return ResponseEntity.status(HttpStatus.CREATED).body("New Guest added and shipment created");
         }
-
-
-        newShipment.setUser(userDB.get());
-        newShipment.setRecieverName(shipment.getRecieverName());
-        newShipment.setBoxcolor(shipment.getBoxcolor());
-        newShipment.setCountry(shipment.getCountry());
-        newShipment.setWeight(shipment.getWeight());
-        double cost = newShipment.getWeight() * newShipment.getCountry().getMultiplyerNumber();
-        newShipment.setShipmentCost(cost);
-        newShipment.setShipmentStatus(ShipmentStatus.CREATED);
-        newShipment.setCreation_date(LocalDateTime.now());
-        shipmentRepository.save(newShipment);
+        shipmentRepository.save(shipmentUtil.setShipment(shipment, userDB.get()));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userDB.get().getEmail() + " added a new shipment");
-
     }
 
     @GetMapping("/shipment/{id}")
-    public ResponseEntity<Shipment> getUserById(@PathVariable("id") int id) {
-        Optional<Shipment> userData = shipmentRepository.findById(id);
-        if (userData.isPresent()) {
-            return new ResponseEntity<>(userData.get(), HttpStatus.OK);
-        } else {
+    public ResponseEntity getUserById(@PathVariable("id") int id) {
+        List<Shipment> userData = shipmentRepository.findAllByUserId(id);
+        if (userData.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(userData);
     }
 
     @GetMapping("/shipments")
