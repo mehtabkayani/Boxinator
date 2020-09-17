@@ -16,6 +16,7 @@ import NavBar from "./components/navBar/NavBar";
 import HomePage from "./components/homePage/HomePage";
 import AddShipmentGuest from "./components/guest/AddShipmentGuest";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import CountryCost from "./components/admin/CountryCost";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               <Route path="/userAccount" component={UserAccount} />
               <Route path="/adminMainPage" component={AdminMainPage} />
               <Route path="/addShipmentGuest" component={AddShipmentGuest} />
+              <Route path="/country" component={CountryCost} />
               <Route path="/" component={HomePage} />
 
           </Switch>

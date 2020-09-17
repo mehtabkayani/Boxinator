@@ -12,13 +12,14 @@ const MainPage = () => {
             <br></br>
             <p>Here can you see your shipments or add a new shipment by clicking on the button</p>
             <br></br>
-            <Table striped bordered hover variant="dark" >
+            <Table striped bordered hover variant="dark">
                 <thead>
                 <tr>
                     <th>Receiver name</th>
                     <th>Weight (kg)</th>
                     <th>Box colour</th>
                     <th>Destination Country</th>
+                    <th>status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -27,17 +28,20 @@ const MainPage = () => {
                     <td>34kg</td>
                     <td>red</td>
                     <td>Sweden</td>
+                    <td>Completed</td>
+
                 </tr>
                 <tr>
                     <td>Peter</td>
                     <td>34kg</td>
                     <td>red</td>
                     <td>Sweden</td>
+                    <td>not completed</td>
                 </tr>
                 </tbody>
             </Table>
             <br></br>
-           <Link to="/newShipment"><Button variant="outline-secondary">Add new shipment</Button></Link>
+            <Link to="/newShipment"><Button variant="outline-secondary">Add new shipment</Button></Link>
         </div>
     );
 }

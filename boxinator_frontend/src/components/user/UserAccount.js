@@ -3,7 +3,6 @@ import {Link} from "react-router-dom";
 import {Button, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 
-
 const UserAccount = () => {
     return (
         <div className="accountContainer">
@@ -68,10 +67,8 @@ const UserAccount = () => {
                     <Button variant="secondary">Save changes</Button>
                 </div>
             </Form>
-
-                <br></br>
-                <Link to="/"><Button variant="success">Home</Button></Link>
-
+            <br></br>
+            <Link to="/"><Button variant="success">Home</Button></Link>
         </div>
     );
 }
