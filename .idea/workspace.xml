@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -19,13 +22,25 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Added a dialog component so that user can chose between register and guest, added home component, added newShipmentGuest component">
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" afterDir="false" />
+    <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Unversioned files">
+      <change afterPath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Utils/UserUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/UserController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -48,10 +63,16 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/boxinator-backend" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
@@ -74,6 +95,71 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="boxinator" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="boxinator" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BoxinatorApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="boxinator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.company.boxinator.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.company.boxinator.BoxinatorApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.BoxinatorApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -127,10 +213,50 @@
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
     <state x="-1180" y="335" key="FileChooserDialogImpl/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600177476179" />
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1600248735847">
-      <screen x="-1920" y="0" width="1920" height="1160" />
+    <state width="1877" height="139" key="GridCell.Tab.0.bottom" timestamp="1600268171529">
+      <screen x="1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600248735847" />
+    <state width="1237" height="247" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690495" />
+    <state width="1877" height="139" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171529" />
+    <state width="1877" height="139" key="GridCell.Tab.0.center" timestamp="1600268171529">
+      <screen x="1920" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1237" height="247" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690494" />
+    <state width="1877" height="139" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171529" />
+    <state width="1877" height="139" key="GridCell.Tab.0.left" timestamp="1600268171529">
+      <screen x="1920" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1237" height="247" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690493" />
+    <state width="1877" height="139" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171529" />
+    <state width="1877" height="139" key="GridCell.Tab.0.right" timestamp="1600268171529">
+      <screen x="1920" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1237" height="247" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690495" />
+    <state width="1877" height="139" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171529" />
+    <state width="1877" height="139" key="GridCell.Tab.1.bottom" timestamp="1600268171531">
+      <screen x="1920" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1237" height="247" key="GridCell.Tab.1.bottom/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690496" />
+    <state width="1877" height="139" key="GridCell.Tab.1.bottom/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171531" />
+    <state width="1877" height="139" key="GridCell.Tab.1.center" timestamp="1600268171529">
+      <screen x="1920" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1237" height="247" key="GridCell.Tab.1.center/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690496" />
+    <state width="1877" height="139" key="GridCell.Tab.1.center/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171529" />
+    <state width="1877" height="139" key="GridCell.Tab.1.left" timestamp="1600268171529">
+      <screen x="1920" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1237" height="247" key="GridCell.Tab.1.left/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690496" />
+    <state width="1877" height="139" key="GridCell.Tab.1.left/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171529" />
+    <state width="1877" height="139" key="GridCell.Tab.1.right" timestamp="1600268171530">
+      <screen x="1920" y="0" width="1920" height="1160" />
+    </state>
+    <state width="1237" height="247" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690496" />
+    <state width="1877" height="139" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171530" />
+    <state x="368" y="147" key="Vcs.Push.Dialog.v2" timestamp="1600107083819">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600094778518" />
     <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1600107083819" />
   </component>
 </project>
