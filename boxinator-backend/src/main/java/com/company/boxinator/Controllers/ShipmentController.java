@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,6 +35,7 @@ public class ShipmentController {
     @GetMapping("shipments/complete")
     public List<Shipment> getCompletedShipments(){
         //Retrieve a list of completed shipments relevant to the authenticated user (as with previous).
+
         return null;
     }
 
@@ -84,20 +86,40 @@ public class ShipmentController {
 
         Stream<Shipment> userListOfShipment = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == customer_id);
 
+        //List<Shipment> result = userListOfShipment.map(shipment -> {
+//            Shipment shipmentDetail = new Shipment();
+//            shipmentDetail.setId(shipment.getId());
+//            shipmentDetail.setRecieverName(shipment.getRecieverName());
+//            shipmentDetail.setWeight(shipment.getWeight());
+//            shipmentDetail.setBoxcolor(shipment.getBoxcolor());
+//            shipmentDetail.setCreation_date(shipment.getCreation_date());
+//            shipmentDetail.setShipmentStatus(shipment.getShipmentStatus());
+//            shipmentDetail.setShipmentCost(shipment.getShipmentCost());
+//            shipmentDetail.setCountry(shipment.getCountry());
+//
+//            return shipmentDetail;
+//        }).filter(Objects::nonNull).collect(Collectors.toList());
+
+        //Stream<Shipment> filteredResult = result.stream().filter(Objects::nonNull);
+
+//        this.id = id;
+//        this.recieverName = recieverName;
+//        this.weight = weight;
+//        this.boxcolor = boxcolor;
+//        this.creation_date = creation_date;
+//        this.shipmentStatus = shipmentStatus;
+//        this.shipmentCost = shipmentCost;
+//        this.country = country;
+
         List<Shipment> result = userListOfShipment.map(shipment -> {
-            Shipment shipmentDetail = new Shipment();
-            shipmentDetail.setId(shipment.getId());
-            shipmentDetail.setRecieverName(shipment.getRecieverName());
-            shipmentDetail.setWeight(shipment.getWeight());
-            shipmentDetail.setBoxcolor(shipment.getBoxcolor());
-            shipmentDetail.setCreation_date(shipment.getCreation_date());
-            shipmentDetail.setShipmentStatus(shipment.getShipmentStatus());
-            shipmentDetail.setShipmentCost(shipment.getShipmentCost());
-            shipmentDetail.setUser(shipment.getUser());
-            shipmentDetail.getUser().setPassword("");
-            shipmentDetail.setCountry(shipment.getCountry());
-            return shipmentDetail;
+            return new Shipment(
+                    shipment.getId(), shipment.getRecieverName(), shipment.getWeight(),
+                    shipment.getBoxcolor(), shipment.getCreation_date(), shipment.getShipmentStatus(),
+                    shipment.getShipmentCost(), shipment.getCountry()
+            );
         }).collect(Collectors.toList());
+
+
         return result;
     }
 
@@ -111,6 +133,7 @@ public class ShipmentController {
     @GetMapping("shipments/{customer_id}/{shipment_id}")
     public Shipment getShipmentByCustomerIdAndShipmentId(@PathVariable("customer_id") Integer customer_id, @PathVariable("shipment_id") Integer shipment_id){
         //Retrieve the details of a specific shipment made by a specific customer
+
         return null;
     }
 
@@ -126,6 +149,7 @@ public class ShipmentController {
     public Shipment deleteShipmentById(@PathVariable("shipment_id") Integer shipment_id){
         //This  endpoint  is  used  to  delete  a  shipment  only  in  extreme  situations,  and only accessible by an Administrator.
         // (This will also delete completed/cancelled shipments.)
+
         return null;
     }
 

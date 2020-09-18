@@ -1,8 +1,9 @@
 package com.company.boxinator.Utils;
 
-import com.company.boxinator.Models.Enums.AccountType;
 import com.company.boxinator.Models.Session;
 import com.company.boxinator.Models.User;
+import com.company.boxinator.Repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,9 @@ import java.util.Optional;
 
 public class SessionUtil {
 
+
+    @Autowired
+    UserRepository userRepository;
     private JwtUtil jwtUtil = new JwtUtil();
 
     private List<Session> sessions = new ArrayList<Session>();
@@ -17,26 +21,29 @@ public class SessionUtil {
 
     public void addSession(User user){
         Session session = new Session();
-        String token = jwtUtil.createJWT(user.getEmail(), user.getAccountType());
+        String token = jwtUtil.createJWT(user.getAccountType());
         session.setAccount_id(user.getId());
         session.setToken(token);
         sessions.add(session);
     }
-    public boolean isSessionValid(Integer user_id, AccountType accountType){
+    public Optional<Session> getSession(Integer userId){
+        return sessions.stream().filter(session -> session.getAccount_id() == userId).findFirst();
+    }
+    public boolean isSessionValid(String jwt){
         boolean isValid = false;
 
-        Optional<Session> session = findSessionByUserId(user_id);
-        if(!session.isPresent())
-            return isValid;
+        System.out.println("In isSessionValid");
 
-        try {
-            System.out.println("isSessionValid: try block");
-            jwtUtil.parseJWT(session.get().getToken(), accountType);
-            isValid = true;
-            System.out.println("isSessionValid: try block: IsValid: " + isValid);
-        }catch (Exception ex){
-            System.out.println("isSessionValid: catch block: " + ex.getMessage());
+        Optional<Session> optSessions = sessions.stream().filter(session -> session.getToken().equals(jwt)).findFirst();
+
+        if(!optSessions.isPresent()) {
+            return isValid;
         }
+        if(jwtUtil.isJwtValid(optSessions.get().getToken()))
+            isValid = true;
+        else
+            sessions.remove(optSessions.get());
+
         return isValid;
     }
     public Optional<Session> findSessionByUserId (Integer user_id) {
