@@ -38,10 +38,10 @@ public class Shipment {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
     @ManyToOne
     @JoinColumn(name = "country_id", nullable = false)
     private Country country;
-
 
     public Shipment() {
     }
@@ -66,7 +66,6 @@ public class Shipment {
         this.country = country;
 
     }
-
 
     public Integer getId() {
         return id;

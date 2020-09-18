@@ -36,15 +36,14 @@ public class UserController {
     private SessionUtil sessionUtil = new SessionUtil();
 
     @PostMapping("/login")
-    public String login(@RequestBody User userLogin) {
+    public ResponseEntity<Session> login(@RequestBody User userLogin) {
        Optional <User> user = userRepository.findByEmail(userLogin.getEmail());
 
             if(bCryptPasswordEncoder.matches(userLogin.getPassword(), user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
                 sessionUtil.addSession(user.get());
-
-            return user.get().getEmail() + " is logged in!";
+            return new ResponseEntity<>(sessionUtil.getSession(user.get().getId()).get(), HttpStatus.OK);
         }
-        return "Wrong credentials!";
+        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping("/user")
@@ -110,5 +109,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Delete failed");
         }
         return ResponseEntity.status(HttpStatus.OK).body("Delete succeded");
+    }
+    @GetMapping("/jwt/{jwtw}")
+    public boolean isSessionValid(@PathVariable("jwtw") String jwt){
+        return sessionUtil.isSessionValid(jwt);
+    }
+    @GetMapping("/sessions")
+    public List<Session> sessions(){
+        return sessionUtil.getSessionsList();
+    }
+    @GetMapping("/removesession/{session_id}")
+    public void s(@PathVariable("session_id") Integer id){
+        sessionUtil.removeSession(id);
     }
 }
