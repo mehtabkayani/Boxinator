@@ -14,4 +14,5 @@ import java.util.Optional;
 @Repository
 public interface ShipmentRepository extends JpaRepository<Shipment, Integer> {
     Optional<Shipment> findByUserId(Integer integer);
+    Optional<Shipment> findShipmentByIdAndUser(Integer shipmentId, User user);
 }
