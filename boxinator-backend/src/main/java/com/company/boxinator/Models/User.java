@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(	name = "user",
+@Table(name = "user",
         uniqueConstraints = {
 
                 @UniqueConstraint(columnNames = "email")
@@ -65,6 +65,7 @@ public class User {
         this.contactNumber = contactNumber;
         this.accountType = accountType;
     }
+
     public User(String firstname, String lastname, String email, String password, String dateOfBirth, String countryOfResidence, String zipcode, String contactNumber) {
         this.firstname = firstname;
         this.lastname = lastname;
@@ -112,7 +113,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public String getPassword() {
         return password;

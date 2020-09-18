@@ -17,9 +17,10 @@ public class JwtUtil {
     private Instant instant = Instant.now();
 
     //Recieves the email of the user and sets the audience according the accountype
-    public String createJWT(AccountType accountType){
+    public String createJWT(AccountType accountType, Integer id){
         return Jwts.
                 builder()
+                .setId(id.toString())
                 .setSubject(accountType.toString())
                 .claim("ld20", new Random().nextInt(20) + 1)
                 .setIssuedAt(Date.from(instant))
@@ -53,6 +54,7 @@ public class JwtUtil {
             case "REGISTERED_USER":
                 return AccountType.REGISTERED_USER;
             default:
+                System.out.println("Default");
                 return null;
         }
     }
