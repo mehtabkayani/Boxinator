@@ -1,24 +1,57 @@
-import React from "react";
+import React, {useState}  from "react";
 import { Link } from 'react-router-dom';
 import {Form, Button} from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const Login = () => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const onSubmitForm = async e => {
+     e.preventDefault();
+
+            const body = { password, email };
+            fetch("http://localhost:8080/api/login",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json",
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                     }).then((res)=>{
+                    res.json().then((result) =>{
+                        console.log('result', result)
+                        localStorage.setItem('login',JSON.stringify({
+                            login:true,
+                            token:result.token
+                        })
+                        )
+                        })
+                    })
+    };
+
+    const onEmailChanged = ev => setEmail(ev.target.value.trim());
+    const onPasswordChanged = ev => setPassword(ev.target.value.trim());
+
+
     return (
         <div className="loginContainer">
             <h2>Login</h2>
             <br></br>
-            <Form>
+            <Form onSubmit={onSubmitForm}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
+                    <Form.Control type="email" placeholder="Enter email" onChange={onEmailChanged} />
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
+                    <Form.Control type="password" placeholder="Password" onChange={onPasswordChanged}/>
                 </Form.Group>
                 <br></br>
                 <div>
-                    <Button variant="secondary" >Login</Button>
+                    <Button type="submit" variant="secondary" >Login</Button>
                 </div>
             </Form>
             <br></br>
