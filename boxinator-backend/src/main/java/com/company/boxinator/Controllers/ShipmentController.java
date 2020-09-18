@@ -1,5 +1,5 @@
 package com.company.boxinator.Controllers;
-
+import com.company.boxinator.ErrorHandling.HandleError;
 import com.company.boxinator.Models.Shipment;
 import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.ShipmentRepository;
@@ -10,45 +10,48 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 @RestController
 @RequestMapping("/api")
 public class ShipmentController {
-
     @Autowired
     ShipmentRepository shipmentRepository;
     @Autowired
     UserRepository userRepository;
 
+
     private SessionUtil sessionUtil = SessionUtil.getInstance();
+
     private ShipmentUtil shipmentUtil = new ShipmentUtil();
 
+    private HandleError handleError;
     @GetMapping("/shipments")
     public ResponseEntity<List<Shipment>> getAllShipments(@RequestHeader("Authorization") String jwt) {
-        System.out.println("JWT: " + jwt);
+
         if(!sessionUtil.isSessionValid(jwt))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-
-        System.out.println("Is valid");
         return new ResponseEntity<>(shipmentRepository.findAll(), HttpStatus.OK);
     }
 
+
     @GetMapping("shipments/complete")
-    public List<Shipment> getCompletedShipments(@RequestHeader("Authorization") String jwt){
+    public ResponseEntity<List<Shipment>> getCompletedShipments(@RequestHeader("Authorization")String jwt){
         //Retrieve a list of completed shipments relevant to the authenticated user (as with previous).
+        //handleError.HandleInvalidJwt(jwt);
+        if(!sessionUtil.isSessionValid(jwt)){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<>(shipmentRepository.findAll(), HttpStatus.OK);
 
-        return null;
     }
-
     @GetMapping("shipments/cancelledRetrieve")
     public List<Shipment> getCancelledShipments(@RequestHeader("Authorization") String jwt){
     //Retrieve  a  list  of *completed||cancelled?* shipments  relevant  to  the authenticated user (as with previous
+
         return null;
     }
 
@@ -57,27 +60,21 @@ public class ShipmentController {
         if(shipment.getUser().getEmail() == null || shipment.getCountry() == null ) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a email or country");
         }
-
         Optional<User> userDB = userRepository.findByEmail(shipment.getUser().getEmail());
-
         if (userDB.isEmpty()) {
             User user = shipmentUtil.addGuestUser(shipment);
             userRepository.save(user);
             shipmentRepository.save(shipmentUtil.setShipment(shipment, user));
             return ResponseEntity.status(HttpStatus.CREATED).body("New Guest added and shipment created");
         }
-
         shipmentRepository.save(shipmentUtil.setShipment(shipment, userDB.get()));
-
         return ResponseEntity.status(HttpStatus.CREATED).body(userDB.get().getEmail() + " added a new shipment");
     }
-
 
     @GetMapping("/shipments/{shipment_id}")
     public Optional<Shipment> getAllShipmentsByShipmentId(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt) {
         return shipmentRepository.findById(shipment_id);
     }
-
 
     @GetMapping("shipments/complete/{shipment_id}")
     public Shipment getOneCompletedShipment(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
@@ -88,7 +85,6 @@ public class ShipmentController {
     @GetMapping("/shipment/{customer_id}")
     public List<Shipment> getShipmentsUserById(@PathVariable("customer_id") Integer customer_id, @RequestHeader("Authorization") String jwt) {
         // Retrieve the details of all the shipments a given customer has made.
-
         List<Shipment> listOfShipments = shipmentRepository.findAll();
         Stream<Shipment> userListOfShipment = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == customer_id);
 
@@ -101,10 +97,10 @@ public class ShipmentController {
             shipmentDetail.setCreation_date(shipment.getCreation_date());
             shipmentDetail.setShipmentStatus(shipment.getShipmentStatus());
             shipmentDetail.setShipmentCost(shipment.getShipmentCost());
+            shipmentDetail.setUser(shipment.getUser());
             shipmentDetail.setCountry(shipment.getCountry());
-
             return shipmentDetail;
-        }).collect(Collectors.toList());
+            }).collect(Collectors.toList());
 
         return result;
     }
@@ -130,7 +126,7 @@ public class ShipmentController {
         //This endpoint is used to update a shipment, but a non-Administrator user may only cancel a shipment.
         // An administrator can make any changes they wish to a shipment.
         // The administrator will use this to mark a shipment as completed.2.
-    return null;
+        return null;
     }
 
     @DeleteMapping("shipments/{shipment_id}")
@@ -141,30 +137,4 @@ public class ShipmentController {
         return null;
     }
 
-
-
-
-//
-//    @GetMapping("/shipments")
-//    public ResponseEntity<List<Shipment>> getAllShipmentsByUser(@RequestParam(required = false) Integer user_id) {
-//        /*List<Shipment> shipments = new ArrayList<Shipment>();
-//        try {
-//            User user = userRepository.findUserBy(user_id);
-//
-//            if (user.accountType == AccountType.ADMINISTRATOR)
-//                shipmentRepository.findAllByUser(user).forEach(shipments::add);
-//            else if (user.accountType == AccountType.REGISTERED_USER) {
-//                shipmentRepository.findAllByShipmentStatusContaining(ShipmentStatus.CANCELLED).forEach(shipments::add);
-//                shipmentRepository.findAllByShipmentStatusContaining(ShipmentStatus.CREATED).forEach(shipments::add);
-//            }
-//            if (shipments.isEmpty())
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            return new ResponseEntity<>(shipments, HttpStatus.OK);
-//        } catch (Exception ex) {
-//            System.out.println(ex);
-//        }*/
-//        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-//    }
-
 }
-
