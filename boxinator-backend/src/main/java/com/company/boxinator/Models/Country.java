@@ -8,6 +8,12 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(	name = "country",
+        uniqueConstraints = {
+
+                @UniqueConstraint(columnNames = "countryCode"),
+                @UniqueConstraint(columnNames = "countryName")
+        })
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
@@ -24,12 +30,12 @@ public class Country {
     private String countryName;
 
     @Column
-    private String multiplyerNumber;
+    private Integer multiplyerNumber;
 
 
     public Country(){};
 
-    public Country(String countryCode, String countryName, String multiplyerNumber) {
+    public Country(String countryCode, String countryName, Integer multiplyerNumber) {
         this.countryCode = countryCode;
         this.countryName = countryName;
         this.multiplyerNumber = multiplyerNumber;
@@ -59,11 +65,11 @@ public class Country {
         this.countryName = countryName;
     }
 
-    public String getMultiplyerNumber() {
+    public Integer getMultiplyerNumber() {
         return multiplyerNumber;
     }
 
-    public void setMultiplyerNumber(String multiplyerNumber) {
+    public void setMultiplyerNumber(Integer multiplyerNumber) {
         this.multiplyerNumber = multiplyerNumber;
     }
 }

@@ -1,18 +1,24 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link} from "react-router-dom"
+import Navbar from "react-bootstrap/cjs/Navbar";
+import {Form, Button, Nav} from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const NavBar = () => {
     return (
-        <div>
-            <ul>
-
-                <Link to="/login"><button>Login here</button></Link>
-                <Link to="/register"><button>register new account</button></Link>
-                <Link to="/mainPage"><button>Main page</button></Link>
-                <Link to="/userAccount"><button>User account</button></Link>
-                <Link to="/adminMainPage"><button>admin page</button></Link>
-
-            </ul>
+        <div className="navContainer">
+            <Navbar bg="dark" variant="dark">
+                <Navbar.Brand href="/">Boxinator</Navbar.Brand>
+                <Nav className="mr-auto">
+                    <Nav.Link><Link to="/">Home</Link></Nav.Link>
+                    <Nav.Link><Link to="/mainPage">Main page</Link></Nav.Link>
+                    <Nav.Link><Link to="/userAccount">User account</Link></Nav.Link>
+                    <Nav.Link><Link to="/adminMainPage">admin page</Link></Nav.Link>
+                </Nav>
+                <Form inline>
+                    <Link to="/login"><Button variant="outline-info">Login</Button></Link>
+                </Form>
+            </Navbar>
         </div>
     );
 }

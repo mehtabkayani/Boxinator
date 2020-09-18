@@ -1,35 +1,43 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import Select from 'react-select';
+import {Button, Form} from "react-bootstrap";
 
 const NewShipment = () => {
+    const options = [
+        { value: 'sweden', label: 'Sweden' },
+        { value: 'Denmark', label: 'Denmark' },
+        { value: 'norway', label: 'norway' }
+    ]
     return (
-        <div>
+        <div className="newShipmentContainer">
             <h1>New shipment: </h1>
-            <form>
+            <br></br>
+            <Form>
                 <div>
-                    <label>Receiver name : </label>
-                    <input type="text" placeholder="Enter name"/>
+                    <Form.Label>Receiver name : </Form.Label>
+                    <Form.Control type="text" placeholder="Enter name" />
                 </div>
                 <div>
-                    <label>Weight (kg): </label>
-                    <input type="number" placeholder="Enter weight"/>kg
+                    <Form.Label>Weight (kg): </Form.Label>
+                    <Form.Control type="number" placeholder="Enter weight" />
                 </div>
                 <div>
-                    <label>Box colour: </label>
-                    <input type="color"/>
+                    <Form.Label>Box colour: </Form.Label>
+                    <Form.Control type="color"  />
                 </div>
                 <div>
                     {/* Maybe have registered countries to chose from */}
                     <label>Destination country: </label>
-                    <input type="text" placeholder="Enter country"/>
+                    <Select options={options} />
                 </div>
                 <br></br>
                 <div>
-                    <button>Add shipment</button>
+                    <Button variant="outline-danger">Add shipment</Button>
                 </div>
-            </form>
+            </Form>
             <br></br>
-            <Link to="/mainPage"> <button>Go back</button></Link>
+            <Link to="/mainPage"> <Button variant="secondary">Go back</Button></Link>
         </div>
     );
 }

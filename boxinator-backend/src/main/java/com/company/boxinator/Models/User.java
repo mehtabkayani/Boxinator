@@ -3,12 +3,18 @@ package com.company.boxinator.Models;
 import com.company.boxinator.Models.Enums.AccountType;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
 
 @Entity
+@Table(	name = "user",
+        uniqueConstraints = {
+
+                @UniqueConstraint(columnNames = "email")
+        })
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
@@ -28,7 +34,6 @@ public class User {
     private String email;
 
     @Column
-    @JsonIgnore
     private String password;
 
     @Column
@@ -60,6 +65,20 @@ public class User {
         this.contactNumber = contactNumber;
         this.accountType = accountType;
     }
+    public User(String firstname, String lastname, String email, String password, String dateOfBirth, String countryOfResidence, String zipcode, String contactNumber) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.countryOfResidence = countryOfResidence;
+        this.zipcode = zipcode;
+        this.contactNumber = contactNumber;
+
+    }
+
+    public User(String email, AccountType guest) {
+    }
 
     public Integer getId() {
         return id;
@@ -85,6 +104,7 @@ public class User {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+
     public String getEmail() {
         return email;
     }
@@ -93,10 +113,12 @@ public class User {
         this.email = email;
     }
 
+
     public String getPassword() {
         return password;
     }
 
+    //@JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
