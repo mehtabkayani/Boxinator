@@ -22,4 +22,3 @@ public class UserUtil {
         return newUser;
     }
 }
-//bCryptPasswordEncoder.encode(user.getPassword())

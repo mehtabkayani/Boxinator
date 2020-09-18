@@ -33,7 +33,7 @@ public class UserController {
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     private JwtUtil jwtUtil = new JwtUtil();
-    private SessionUtil sessionUtil = new SessionUtil();
+    private SessionUtil sessionUtil = SessionUtil.getInstance();
 
     @PostMapping("/login")
     public ResponseEntity<Session> login(@RequestBody User userLogin) {
@@ -46,15 +46,18 @@ public class UserController {
         return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
-    @GetMapping("/user")
-    public List<User> getUsers() {
-        List<User> listOfAllUsers = userRepository.findAll();
+    @GetMapping("/users")
+    public ResponseEntity<List<User>> getUsers(@RequestHeader("Authorization") String jwt) {
+        if(!sessionUtil.isSessionValid(jwt))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
-            return listOfAllUsers;
+//        List<User> listOfAllUsers = userRepository.findAll();
+
+        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") int id) {
+    public ResponseEntity<User> getUserById(@PathVariable("id") int id, @RequestHeader("Authorization") String jwt) {
         Optional<User> userData = userRepository.findById(id);
         if (userData.isPresent()) {
             return new ResponseEntity<>(userData.get(), HttpStatus.OK);
@@ -63,7 +66,7 @@ public class UserController {
         }
     }
     @PutMapping("/user/{id}")
-    public ResponseEntity updateUserById(@RequestBody User user, @PathVariable("id") Integer id){
+    public ResponseEntity updateUserById(@RequestBody User user, @PathVariable("id") Integer id, @RequestHeader("Authorization") String jwt){
         Optional<User> userData = userRepository.findById(id);
         if(!userData.isPresent())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -78,11 +81,11 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity addUser(@RequestBody User user){
+    public ResponseEntity addUser(@RequestBody User user, @RequestHeader("Authorization") String jwt){
         Optional<User> userData = userRepository.findByEmail(user.getEmail());
 
         //Check if there is no email registered then register a new user
-        if(userData.isEmpty()){
+        if(userData.isPresent()){
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             user.setAccountType(AccountType.REGISTERED_USER);
             userRepository.save(user);
@@ -102,7 +105,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Something went wrong");
     }
     @DeleteMapping("/user")
-    public ResponseEntity deleteUser(@RequestBody User user){
+    public ResponseEntity deleteUser(@RequestBody User user, @RequestHeader("Authorization") String jwt){
         try{
             userRepository.delete(user);
         } catch (Exception ex){

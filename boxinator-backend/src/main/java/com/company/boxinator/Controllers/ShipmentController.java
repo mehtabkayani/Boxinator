@@ -4,6 +4,7 @@ import com.company.boxinator.Models.Shipment;
 import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.ShipmentRepository;
 import com.company.boxinator.Repositories.UserRepository;
+import com.company.boxinator.Utils.SessionUtil;
 import com.company.boxinator.Utils.ShipmentUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,28 +26,34 @@ public class ShipmentController {
     @Autowired
     UserRepository userRepository;
 
+    private SessionUtil sessionUtil = SessionUtil.getInstance();
     private ShipmentUtil shipmentUtil = new ShipmentUtil();
 
     @GetMapping("/shipments")
-    public List<Shipment> getAllShipments() {
-        return shipmentRepository.findAll();
+    public ResponseEntity<List<Shipment>> getAllShipments(@RequestHeader("Authorization") String jwt) {
+        System.out.println("JWT: " + jwt);
+        if(!sessionUtil.isSessionValid(jwt))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+        System.out.println("Is valid");
+        return new ResponseEntity<>(shipmentRepository.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("shipments/complete")
-    public List<Shipment> getCompletedShipments(){
+    public List<Shipment> getCompletedShipments(@RequestHeader("Authorization") String jwt){
         //Retrieve a list of completed shipments relevant to the authenticated user (as with previous).
 
         return null;
     }
 
     @GetMapping("shipments/cancelledRetrieve")
-    public List<Shipment> getCancelledShipments(){
+    public List<Shipment> getCancelledShipments(@RequestHeader("Authorization") String jwt){
     //Retrieve  a  list  of *completed||cancelled?* shipments  relevant  to  the authenticated user (as with previous
         return null;
     }
 
     @PostMapping("/shipment")
-    public ResponseEntity addShipment(@RequestBody Shipment shipment) {
+    public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader("Authorization") String jwt) {
         if(shipment.getUser().getEmail() == null || shipment.getCountry() == null ) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a email or country");
         }
@@ -67,78 +74,59 @@ public class ShipmentController {
 
 
     @GetMapping("/shipments/{shipment_id}")
-    public Optional<Shipment> getAllShipmentsByShipmentId(@PathVariable("shipment_id") Integer shipment_id) {
+    public Optional<Shipment> getAllShipmentsByShipmentId(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt) {
         return shipmentRepository.findById(shipment_id);
     }
 
 
     @GetMapping("shipments/complete/{shipment_id}")
-    public Shipment getOneCompletedShipment(@PathVariable("shipment_id") Integer shipment_id){
+    public Shipment getOneCompletedShipment(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
         //Retrieve the details of a single completed shipment
         return null;
     }
 
     @GetMapping("/shipment/{customer_id}")
-    public List<Shipment> getShipmentsUserById(@PathVariable("customer_id") Integer customer_id) {
+    public List<Shipment> getShipmentsUserById(@PathVariable("customer_id") Integer customer_id, @RequestHeader("Authorization") String jwt) {
         // Retrieve the details of all the shipments a given customer has made.
 
         List<Shipment> listOfShipments = shipmentRepository.findAll();
-
         Stream<Shipment> userListOfShipment = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == customer_id);
 
-        //List<Shipment> result = userListOfShipment.map(shipment -> {
-//            Shipment shipmentDetail = new Shipment();
-//            shipmentDetail.setId(shipment.getId());
-//            shipmentDetail.setRecieverName(shipment.getRecieverName());
-//            shipmentDetail.setWeight(shipment.getWeight());
-//            shipmentDetail.setBoxcolor(shipment.getBoxcolor());
-//            shipmentDetail.setCreation_date(shipment.getCreation_date());
-//            shipmentDetail.setShipmentStatus(shipment.getShipmentStatus());
-//            shipmentDetail.setShipmentCost(shipment.getShipmentCost());
-//            shipmentDetail.setCountry(shipment.getCountry());
-//
-//            return shipmentDetail;
-//        }).filter(Objects::nonNull).collect(Collectors.toList());
-
-        //Stream<Shipment> filteredResult = result.stream().filter(Objects::nonNull);
-
-//        this.id = id;
-//        this.recieverName = recieverName;
-//        this.weight = weight;
-//        this.boxcolor = boxcolor;
-//        this.creation_date = creation_date;
-//        this.shipmentStatus = shipmentStatus;
-//        this.shipmentCost = shipmentCost;
-//        this.country = country;
-
         List<Shipment> result = userListOfShipment.map(shipment -> {
-            return new Shipment(
-                    shipment.getId(), shipment.getRecieverName(), shipment.getWeight(),
-                    shipment.getBoxcolor(), shipment.getCreation_date(), shipment.getShipmentStatus(),
-                    shipment.getShipmentCost(), shipment.getCountry()
-            );
-        }).collect(Collectors.toList());
+            Shipment shipmentDetail = new Shipment();
+            shipmentDetail.setId(shipment.getId());
+            shipmentDetail.setRecieverName(shipment.getRecieverName());
+            shipmentDetail.setWeight(shipment.getWeight());
+            shipmentDetail.setBoxcolor(shipment.getBoxcolor());
+            shipmentDetail.setCreation_date(shipment.getCreation_date());
+            shipmentDetail.setShipmentStatus(shipment.getShipmentStatus());
+            shipmentDetail.setShipmentCost(shipment.getShipmentCost());
+            shipmentDetail.setCountry(shipment.getCountry());
 
+            return shipmentDetail;
+        }).collect(Collectors.toList());
 
         return result;
     }
 
     @GetMapping("shipments/complete/{customer_id}")
-    public List<Shipment> getAllCompletedShipmentsByCustomerId(@PathVariable("customer_id") Integer customer_id){
+    public List<Shipment> getAllCompletedShipmentsByCustomerId(@PathVariable("customer_id") Integer customer_id, @RequestHeader("Authorization") String jwt){
         //Retrieve the details of all the completed shipments a given customer has made.
         // NOTE:You will need to ensure that a customer_id can be differentiated from a shipment_id by using a regex expression.
         return null;
     }
 
     @GetMapping("shipments/{customer_id}/{shipment_id}")
-    public Shipment getShipmentByCustomerIdAndShipmentId(@PathVariable("customer_id") Integer customer_id, @PathVariable("shipment_id") Integer shipment_id){
+    public Shipment getShipmentByCustomerIdAndShipmentId(@PathVariable("customer_id") Integer customer_id,
+                                                         @PathVariable("shipment_id") Integer shipment_id,
+                                                         @RequestHeader("Authorization") String jwt){
         //Retrieve the details of a specific shipment made by a specific customer
 
         return null;
     }
 
     @PostMapping("shipments/{shipment_id}")
-    public Shipment updateAShipmentById(@PathVariable("shipment_id") Integer shipment_id){
+    public Shipment updateAShipmentById(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
         //This endpoint is used to update a shipment, but a non-Administrator user may only cancel a shipment.
         // An administrator can make any changes they wish to a shipment.
         // The administrator will use this to mark a shipment as completed.2.
@@ -146,7 +134,7 @@ public class ShipmentController {
     }
 
     @DeleteMapping("shipments/{shipment_id}")
-    public Shipment deleteShipmentById(@PathVariable("shipment_id") Integer shipment_id){
+    public Shipment deleteShipmentById(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
         //This  endpoint  is  used  to  delete  a  shipment  only  in  extreme  situations,  and only accessible by an Administrator.
         // (This will also delete completed/cancelled shipments.)
 
