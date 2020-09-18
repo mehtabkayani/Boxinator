@@ -20,50 +20,55 @@ public class SessionUtil {
 
     private static volatile SessionUtil single_session = new SessionUtil();
 
-    private SessionUtil(){};
+    private SessionUtil() {
+    }
 
-    public static SessionUtil getInstance(){
+    public static SessionUtil getInstance() {
         return single_session;
     }
 
-    public void addSession(User user){
+    public void addSession(User user) {
         Session session = new Session();
         String token = jwtUtil.createJWT(user.getAccountType(), user.getId());
         session.setAccount_id(user.getId());
         session.setToken(token);
         sessions.add(session);
     }
-    public Optional<Session> getSession(Integer userId){
+
+    public Optional<Session> getSession(Integer userId) {
         return sessions.stream().filter(session -> session.getAccount_id() == userId).findFirst();
     }
-    public boolean isSessionValid(String jwt){
+
+    public boolean isSessionValid(String jwt) {
         boolean isValid = false;
 
         Optional<Session> optSessions = sessions.stream().filter(session -> session.getToken().equals(jwt)).findFirst();
 
-        if(!optSessions.isPresent()) {
+        if (!optSessions.isPresent()) {
             return isValid;
         }
 
-        if(jwtUtil.isJwtValid(optSessions.get().getToken())) {
+        if (jwtUtil.isJwtValid(optSessions.get().getToken())) {
             isValid = true;
-        }
-        else{
+        } else {
             sessions.remove(optSessions.get());
         }
 
         return isValid;
     }
-    public Optional<Session> findSessionByUserId (Integer user_id) {
+
+    public Optional<Session> findSessionByUserId(Integer user_id) {
         return sessions.stream().filter(s -> s.getAccount_id().equals(user_id)).findFirst();
     }
-    public void removeSession(Integer user_id){
+
+    public void removeSession(Integer user_id) {
         System.out.println("Before session set");
         Session session = findSessionByUserId(user_id).get();
         System.out.println("In removeSession: " + session);
         sessions.remove(session);
     }
-    public List<Session> getSessionsList(){
+
+    public List<Session> getSessionsList() {
         return sessions;
     }
 }
