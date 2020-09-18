@@ -1,14 +1,17 @@
 package com.company.boxinator.Controllers;
+import com.company.boxinator.ErrorHandling.HandleError;
 import com.company.boxinator.Models.Shipment;
 import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.ShipmentRepository;
 import com.company.boxinator.Repositories.UserRepository;
+import com.company.boxinator.Utils.SessionUtil;
 import com.company.boxinator.Utils.ShipmentUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,15 +22,33 @@ public class ShipmentController {
     ShipmentRepository shipmentRepository;
     @Autowired
     UserRepository userRepository;
+
+    private SessionUtil sessionUtil = new SessionUtil();
     private ShipmentUtil shipmentUtil = new ShipmentUtil();
+
+    private HandleError handleError;
     @GetMapping("/shipments")
-    public List<Shipment> getAllShipments(@RequestHeader("Autorization")String jwt) {
-        return shipmentRepository.findAll();
+    public ResponseEntity<List<Shipment>> getAllShipments(@RequestHeader("Authorization") String jwt) {
+
+        //handleError.HandleInvalidJwt(jwt);
+        System.out.println(jwt);
+        if(!sessionUtil.isSessionValid(jwt)){
+            System.out.println("Shipment Controller: Not valid");
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<>(shipmentRepository.findAll(), HttpStatus.OK);
     }
+
+
     @GetMapping("shipments/complete")
-    public List<Shipment> getCompletedShipments(){
+    public ResponseEntity<List<Shipment>> getCompletedShipments(@RequestHeader("Authorization")String jwt){
         //Retrieve a list of completed shipments relevant to the authenticated user (as with previous).
-        return null;
+        //handleError.HandleInvalidJwt(jwt);
+        if(!sessionUtil.isSessionValid(jwt)){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<>(shipmentRepository.findAll(), HttpStatus.OK);
+
     }
     @GetMapping("shipments/cancelledRetrieve")
     public List<Shipment> getCancelledShipments(){
@@ -63,6 +84,7 @@ public class ShipmentController {
         // Retrieve the details of all the shipments a given customer has made.
         List<Shipment> listOfShipments = shipmentRepository.findAll();
         Stream<Shipment> userListOfShipment = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == customer_id);
+
         List<Shipment> result = userListOfShipment.map(shipment -> {
             Shipment shipmentDetail = new Shipment();
             shipmentDetail.setId(shipment.getId());
@@ -75,7 +97,9 @@ public class ShipmentController {
             shipmentDetail.setUser(shipment.getUser());
             shipmentDetail.setCountry(shipment.getCountry());
             return shipmentDetail;
-        }).collect(Collectors.toList());
+            }).collect(Collectors.toList());
+
+
         return result;
     }
     @GetMapping("shipments/complete/{customer_id}")
@@ -87,6 +111,7 @@ public class ShipmentController {
     @GetMapping("shipments/{customer_id}/{shipment_id}")
     public Shipment getShipmentByCustomerIdAndShipmentId(@PathVariable("customer_id") Integer customer_id, @PathVariable("shipment_id") Integer shipment_id){
         //Retrieve the details of a specific shipment made by a specific customer
+
         return null;
     }
     @PostMapping("shipments/{shipment_id}")
@@ -100,6 +125,7 @@ public class ShipmentController {
     public Shipment deleteShipmentById(@PathVariable("shipment_id") Integer shipment_id){
         //This  endpoint  is  used  to  delete  a  shipment  only  in  extreme  situations,  and only accessible by an Administrator.
         // (This will also delete completed/cancelled shipments.)
+
         return null;
     }
 //
