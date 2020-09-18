@@ -18,6 +18,13 @@ public class SessionUtil {
 
     private List<Session> sessions = new ArrayList<Session>();
 
+    private static volatile SessionUtil single_session = new SessionUtil();
+
+    private SessionUtil(){};
+
+    public static SessionUtil getInstance(){
+        return single_session;
+    }
 
     public void addSession(User user){
         Session session = new Session();
@@ -32,17 +39,18 @@ public class SessionUtil {
     public boolean isSessionValid(String jwt){
         boolean isValid = false;
 
-        System.out.println("In isSessionValid");
-
         Optional<Session> optSessions = sessions.stream().filter(session -> session.getToken().equals(jwt)).findFirst();
 
         if(!optSessions.isPresent()) {
             return isValid;
         }
-        if(jwtUtil.isJwtValid(optSessions.get().getToken()))
+
+        if(jwtUtil.isJwtValid(optSessions.get().getToken())) {
             isValid = true;
-        else
+        }
+        else{
             sessions.remove(optSessions.get());
+        }
 
         return isValid;
     }
