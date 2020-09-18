@@ -23,19 +23,17 @@ public class ShipmentController {
     @Autowired
     UserRepository userRepository;
 
-    private SessionUtil sessionUtil = new SessionUtil();
+
+    private SessionUtil sessionUtil = SessionUtil.getInstance();
+
     private ShipmentUtil shipmentUtil = new ShipmentUtil();
 
     private HandleError handleError;
     @GetMapping("/shipments")
     public ResponseEntity<List<Shipment>> getAllShipments(@RequestHeader("Authorization") String jwt) {
 
-        //handleError.HandleInvalidJwt(jwt);
-        System.out.println(jwt);
-        if(!sessionUtil.isSessionValid(jwt)){
-            System.out.println("Shipment Controller: Not valid");
+        if(!sessionUtil.isSessionValid(jwt))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
         return new ResponseEntity<>(shipmentRepository.findAll(), HttpStatus.OK);
     }
 
@@ -51,12 +49,14 @@ public class ShipmentController {
 
     }
     @GetMapping("shipments/cancelledRetrieve")
-    public List<Shipment> getCancelledShipments(){
-        //Retrieve  a  list  of *completed||cancelled?* shipments  relevant  to  the authenticated user (as with previous
+    public List<Shipment> getCancelledShipments(@RequestHeader("Authorization") String jwt){
+    //Retrieve  a  list  of *completed||cancelled?* shipments  relevant  to  the authenticated user (as with previous
+
         return null;
     }
+
     @PostMapping("/shipment")
-    public ResponseEntity addShipment(@RequestBody Shipment shipment) {
+    public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader("Authorization") String jwt) {
         if(shipment.getUser().getEmail() == null || shipment.getCountry() == null ) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a email or country");
         }
@@ -70,17 +70,20 @@ public class ShipmentController {
         shipmentRepository.save(shipmentUtil.setShipment(shipment, userDB.get()));
         return ResponseEntity.status(HttpStatus.CREATED).body(userDB.get().getEmail() + " added a new shipment");
     }
+
     @GetMapping("/shipments/{shipment_id}")
-    public Optional<Shipment> getAllShipmentsByShipmentId(@PathVariable("shipment_id") Integer shipment_id) {
+    public Optional<Shipment> getAllShipmentsByShipmentId(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt) {
         return shipmentRepository.findById(shipment_id);
     }
+
     @GetMapping("shipments/complete/{shipment_id}")
-    public Shipment getOneCompletedShipment(@PathVariable("shipment_id") Integer shipment_id){
+    public Shipment getOneCompletedShipment(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
         //Retrieve the details of a single completed shipment
         return null;
     }
+
     @GetMapping("/shipment/{customer_id}")
-    public List<Shipment> getShipmentsUserById(@PathVariable("customer_id") Integer customer_id) {
+    public List<Shipment> getShipmentsUserById(@PathVariable("customer_id") Integer customer_id, @RequestHeader("Authorization") String jwt) {
         // Retrieve the details of all the shipments a given customer has made.
         List<Shipment> listOfShipments = shipmentRepository.findAll();
         Stream<Shipment> userListOfShipment = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == customer_id);
@@ -99,54 +102,39 @@ public class ShipmentController {
             return shipmentDetail;
             }).collect(Collectors.toList());
 
-
         return result;
     }
+
     @GetMapping("shipments/complete/{customer_id}")
-    public List<Shipment> getAllCompletedShipmentsByCustomerId(@PathVariable("customer_id") Integer customer_id){
+    public List<Shipment> getAllCompletedShipmentsByCustomerId(@PathVariable("customer_id") Integer customer_id, @RequestHeader("Authorization") String jwt){
         //Retrieve the details of all the completed shipments a given customer has made.
         // NOTE:You will need to ensure that a customer_id can be differentiated from a shipment_id by using a regex expression.
         return null;
     }
+
     @GetMapping("shipments/{customer_id}/{shipment_id}")
-    public Shipment getShipmentByCustomerIdAndShipmentId(@PathVariable("customer_id") Integer customer_id, @PathVariable("shipment_id") Integer shipment_id){
+    public Shipment getShipmentByCustomerIdAndShipmentId(@PathVariable("customer_id") Integer customer_id,
+                                                         @PathVariable("shipment_id") Integer shipment_id,
+                                                         @RequestHeader("Authorization") String jwt){
         //Retrieve the details of a specific shipment made by a specific customer
 
         return null;
     }
+
     @PostMapping("shipments/{shipment_id}")
-    public Shipment updateAShipmentById(@PathVariable("shipment_id") Integer shipment_id){
+    public Shipment updateAShipmentById(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
         //This endpoint is used to update a shipment, but a non-Administrator user may only cancel a shipment.
         // An administrator can make any changes they wish to a shipment.
         // The administrator will use this to mark a shipment as completed.2.
         return null;
     }
+
     @DeleteMapping("shipments/{shipment_id}")
-    public Shipment deleteShipmentById(@PathVariable("shipment_id") Integer shipment_id){
+    public Shipment deleteShipmentById(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
         //This  endpoint  is  used  to  delete  a  shipment  only  in  extreme  situations,  and only accessible by an Administrator.
         // (This will also delete completed/cancelled shipments.)
 
         return null;
     }
-//
-//    @GetMapping("/shipments")
-//    public ResponseEntity<List<Shipment>> getAllShipmentsByUser(@RequestParam(required = false) Integer user_id) {
-//        /*List<Shipment> shipments = new ArrayList<Shipment>();
-//        try {
-//            User user = userRepository.findUserBy(user_id);
-//
-//            if (user.accountType == AccountType.ADMINISTRATOR)
-//                shipmentRepository.findAllByUser(user).forEach(shipments::add);
-//            else if (user.accountType == AccountType.REGISTERED_USER) {
-//                shipmentRepository.findAllByShipmentStatusContaining(ShipmentStatus.CANCELLED).forEach(shipments::add);
-//                shipmentRepository.findAllByShipmentStatusContaining(ShipmentStatus.CREATED).forEach(shipments::add);
-//            }
-//            if (shipments.isEmpty())
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            return new ResponseEntity<>(shipments, HttpStatus.OK);
-//        } catch (Exception ex) {
-//            System.out.println(ex);
-//        }*/
-//        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-//    }
+
 }
