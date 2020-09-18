@@ -44,6 +44,7 @@ public class UserController {
             return new ResponseEntity<>(sessionUtil.getSession(user.get().getId()).get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+
     }
 
     @GetMapping("/users")
