@@ -1,11 +1,25 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import "../../style/style.css";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
 
 
 const MainPage = () => {
+    const [shipments, setShipments]= useState([]);
+
+    useEffect(()=>{
+        axios.get('http://localhost:8080/api/shipments')
+            .then(res=>{
+                console.log(res);
+                setShipments(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+    })
     return (
         <div className="shipmentsTable">
             <h1>Welcome to the Main page</h1>
@@ -24,11 +38,11 @@ const MainPage = () => {
                 </thead>
                 <tbody>
                 <tr>
-                    <td>Peter</td>
-                    <td>34kg</td>
-                    <td>red</td>
-                    <td>Sweden</td>
-                    <td>Completed</td>
+                    {
+                        shipments.map(shipment => (
+                            <td key={shipment.id}>{shipment.recieverName}</td>
+                        ))  }
+
 
                 </tr>
                 <tr>

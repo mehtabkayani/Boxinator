@@ -1,36 +1,68 @@
-import React, {useState}  from "react";
-import { Link } from 'react-router-dom';
+import React, {useState} from "react";
+import  { Link} from 'react-router-dom';
 import {Form, Button} from "react-bootstrap";
-import { toast } from "react-toastify";
 
-const Login = () => {
+
+
+
+const Login = ({setAuth}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const onSubmitForm = async e => {
-     e.preventDefault();
 
+    const onSubmitForm = async e => {
+        e.preventDefault();
+        try {
             const body = { password, email };
-            fetch("http://localhost:8080/api/login",
+            const response = await fetch(
+                "http://localhost:8080/api/login",
                 {
                     method: "POST",
                     headers: {
-                        "Content-type": "application/json",
-                        'Accept': 'application/json'
+                        "Content-type": "application/json"
                     },
                     body: JSON.stringify(body)
-                     }).then((res)=>{
-                    res.json().then((result) =>{
-                        console.log('result', result)
-                        localStorage.setItem('login',JSON.stringify({
-                            login:true,
-                            token:result.token
-                        })
-                        )
-                        })
-                    })
+                }
+            );
+            const parseRes = await response.json();
+            console.log('result', parseRes);
+
+            if (parseRes) {
+                localStorage.setItem("token", parseRes);
+                setAuth(true);
+
+            } else {
+                setAuth(false);
+            }
+
+        } catch (err) {
+            console.error(err.message);
+        }
     };
+ /* const onSubmitForm = async e => {
+
+        e.preventDefault();
+
+        const body = {password, email};
+        fetch("http://localhost:8080/api/login",
+            {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }).then((res) => {
+            res.json().then((result) => {
+                console.log('result', result)
+                localStorage.setItem('login', JSON.stringify({
+                        login: true,
+                        token: result.token
+                    }))
+            })
+        })
+    }*/
 
     const onEmailChanged = ev => setEmail(ev.target.value.trim());
     const onPasswordChanged = ev => setPassword(ev.target.value.trim());
@@ -38,12 +70,14 @@ const Login = () => {
 
     return (
         <div className="loginContainer">
+
+                    <div>
             <h2>Login</h2>
             <br></br>
             <Form onSubmit={onSubmitForm}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" onChange={onEmailChanged} />
+                    <Form.Control type="email" placeholder="Enter email" onChange={onEmailChanged}/>
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
@@ -51,11 +85,12 @@ const Login = () => {
                 </Form.Group>
                 <br></br>
                 <div>
-                    <Button type="submit" variant="secondary" >Login</Button>
+                    <Button type="submit" variant="secondary">Login</Button>
                 </div>
             </Form>
             <br></br>
             <Link to="/register">Does not have an account ! register new account</Link>
+                    </div>
         </div>
     );
 }
