@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +37,7 @@ public class CountryController {
     }
     @PutMapping("/countries/{country_id}")
     public ResponseEntity getCountryById(@RequestBody Country country, @PathVariable("country_id") Integer countryId){
-        Optional <Country> findCountry = countryRepository.findById(countryId);
+        Optional<Country> findCountry = countryRepository.findById(countryId);
         if(!findCountry.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
 

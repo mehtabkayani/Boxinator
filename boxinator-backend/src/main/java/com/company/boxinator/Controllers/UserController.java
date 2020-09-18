@@ -44,6 +44,7 @@ public class UserController {
 
             return user.get().getEmail() + " is logged in!";
         }
+
         return "Wrong credentials!";
     }
 
