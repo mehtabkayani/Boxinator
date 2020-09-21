@@ -86,7 +86,7 @@ public class UserController {
         Optional<User> userData = userRepository.findByEmail(user.getEmail());
 
         //Check if there is no email registered then register a new user
-        if(userData.isPresent()){
+        if(!userData.isPresent()){
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             user.setAccountType(AccountType.REGISTERED_USER);
             userRepository.save(user);

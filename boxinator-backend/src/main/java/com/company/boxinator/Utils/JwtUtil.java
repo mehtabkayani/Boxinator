@@ -54,6 +54,7 @@ public class JwtUtil {
             case "REGISTERED_USER":
                 return AccountType.REGISTERED_USER;
             default:
+                System.out.println("Default");
                 return null;
         }
     }
