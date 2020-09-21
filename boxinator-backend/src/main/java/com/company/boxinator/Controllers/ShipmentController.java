@@ -42,12 +42,22 @@ public class ShipmentController {
 
     @GetMapping("/shipments")
     public ResponseEntity<List<Shipment>> getAllShipments(@RequestHeader("Authorization") String jwt) {
+        List<Shipment> listOfShipments = shipmentRepository.findAll();
+
         //ADMIN
-
         String accountType = jwtUtil.parseJWT(jwt).toString();
-
         if (sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
-            return new ResponseEntity<>(shipmentRepository.findAll(), HttpStatus.OK);
+            List<Shipment> filteredList = listOfShipments.stream()
+                    .filter(shipment -> shipment.getShipmentStatus() != ShipmentStatus.CANCELLED && shipment.getShipmentStatus() != ShipmentStatus.COMPLETED).collect(Collectors.toList());
+            return new ResponseEntity<>(filteredList, HttpStatus.OK);
+        }
+
+        //User
+        Integer id = jwtUtil.getJwtId(jwt);
+        if(sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.REGISTERED_USER){
+            List<Shipment> filteredList = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == id).collect(Collectors.toList());
+            return new ResponseEntity<>(filteredList, HttpStatus.OK);
+
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
@@ -85,7 +95,7 @@ public class ShipmentController {
             }
         }
         Optional<User> userDB = userRepository.findByEmail(shipment.getUser().getEmail());
-        if (userDB.isEmpty()) {
+        if (userDB.isEmpty() || userDB.get().getAccountType() == AccountType.GUEST) {
           
             User user = shipmentUtil.addGuestUser(shipment);
 
