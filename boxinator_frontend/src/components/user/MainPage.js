@@ -8,11 +8,10 @@ import axios from "axios";
 
 const MainPage = () => {
     const [shipments, setShipments]= useState([]);
+    const accountId = localStorage.getItem('id')
 
     useEffect(()=>{
-
-
-         axios.get('http://localhost:8080/api/shipment/1 ', { headers: {'Authorization': localStorage.getItem('token')} })
+         axios.get('http://localhost:8080/api/shipment/ '+ accountId, { headers: {'Authorization': localStorage.getItem('token')} })
                 .then(res=>{
                     console.log(res.data);
                     setShipments(res.data)
@@ -22,6 +21,21 @@ const MainPage = () => {
                 })
 
     })
+
+    const rows = shipments.map(shipment => (
+
+            <tr key={shipment.id}>
+                <td >{shipment.recieverName}</td>
+                <td >{shipment.weight}</td>
+                <td >{shipment.boxcolor}</td>
+                <td >{shipment.creation_date}</td>
+                <td >{shipment.country.countryName}</td>
+                <td >{shipment.shipmentStatus}</td>
+                <td>{shipment.shipmentCost}</td>
+
+
+            </tr>
+        ));
     return (
         <div className="shipmentsTable">
             <h1>Welcome to the Main page</h1>
@@ -40,31 +54,7 @@ const MainPage = () => {
                     <th>Cost</th>
                 </tr>
                 </thead>
-                <tbody>
-                {
-
-                    shipments.map(shipment => (
-
-                     <tr key={shipment.id}>
-                        <td >{shipment.recieverName}</td>
-                       <td >{shipment.weight}</td>
-                        <td >{shipment.boxcolor}</td>
-                        <td >{shipment.creation_date}</td>
-                         <td >{shipment.country.countryName}</td>
-                        <td >{shipment.shipmentStatus}</td>
-                        <td>{shipment.shipmentCost}</td>
-
-
-                </tr>
-                    ))  }
-                <tr>
-                    <td>Peter</td>
-                    <td>34kg</td>
-                    <td>red</td>
-                    <td>Sweden</td>
-                    <td>not completed</td>
-                </tr>
-                </tbody>
+                <tbody>{rows}</tbody>
             </Table>
             <br></br>
             <Link to="/newShipment"><Button variant="outline-secondary">Add new shipment</Button></Link>
