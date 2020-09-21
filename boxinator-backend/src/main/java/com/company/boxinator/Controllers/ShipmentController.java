@@ -164,7 +164,7 @@ public class ShipmentController {
 
     }
 
-    @GetMapping("/shipments/{customer_id}")
+    @GetMapping("/shipment/{customer_id}")
     public List<Shipment> getShipmentsUserById(@PathVariable("customer_id") Integer customer_id, @RequestHeader(value = "Authorization") String jwt) {
         // Retrieve the details of all the shipments a given customer has made.
         List<Shipment> listOfShipments = shipmentRepository.findAll();
