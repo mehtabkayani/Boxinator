@@ -89,27 +89,28 @@ public class ShipmentController {
 
     @PostMapping("/shipment")
     public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader(value = "Authorization",required = false) String jwt) {
-        if(jwt == null){
-            if(shipment.getUser().getEmail() == null || shipment.getCountry() == null ) {
+        if(jwt == null) {
+            if (shipment.getUser().getEmail() == null || shipment.getCountry() == null) {
                 return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a email or country");
             }
-        }
-        Optional<User> userDB = userRepository.findByEmail(shipment.getUser().getEmail());
-        if (userDB.isEmpty() || userDB.get().getAccountType() == AccountType.GUEST) {
-          
-            User user = shipmentUtil.addGuestUser(shipment);
 
-            if(!userRepository.existsByEmail(user.getEmail())){
-                userRepository.save(user);
-                shipmentRepository.save(shipmentUtil.setShipment(shipment, user));
-            } else {
-                shipmentRepository.save(shipmentUtil.setShipment(shipment, userRepository.findByEmail(shipment.getUser().getEmail()).get()));
+            Optional<User> userDB = userRepository.findByEmail(shipment.getUser().getEmail());
+            if (userDB.isEmpty() || userDB.get().getAccountType() == AccountType.GUEST) {
+
+                User user = shipmentUtil.addGuestUser(shipment);
+
+                if (!userRepository.existsByEmail(user.getEmail())) {
+                    userRepository.save(user);
+                    shipmentRepository.save(shipmentUtil.setShipment(shipment, user));
+                } else {
+                    shipmentRepository.save(shipmentUtil.setShipment(shipment, userRepository.findByEmail(shipment.getUser().getEmail()).get()));
+                }
+                return ResponseEntity.status(HttpStatus.CREATED).body("New Guest added and shipment created");
             }
-            return ResponseEntity.status(HttpStatus.CREATED).body("New Guest added and shipment created");
         }
 
         if(!sessionUtil.isSessionValid(jwt))
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User has been logged out, sign in again");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sign in to place an order");
 
         if(shipment.getCountry() == null ) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a country");
