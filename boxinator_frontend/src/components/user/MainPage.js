@@ -27,7 +27,7 @@ const MainPage = () => {
                 <td >{shipment.recieverName}</td>
                 <td >{shipment.weight}</td>
                 <td >{shipment.boxcolor}</td>
-                <td >{shipment.creation_date}</td>
+                <td >{shipment.creation_date}</td>{/*Fix date format*/}
                 <td >{shipment.country.countryName}</td>
                 <td >{shipment.shipmentStatus}</td>
                 <td>{shipment.shipmentCost}</td>
