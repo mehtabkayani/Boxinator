@@ -35,6 +35,9 @@ public class Shipment {
     @Column
     private double shipmentCost;
 
+    @Column
+    private Integer shipmentMultiplyerNumber;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -97,6 +100,14 @@ public class Shipment {
 
     public void setBoxcolor(String boxcolor) {
         this.boxcolor = boxcolor;
+    }
+
+    public Integer getShipmentMultiplyerNumber() {
+        return shipmentMultiplyerNumber;
+    }
+
+    public void setShipmentMultiplyerNumber(Integer shipmentMultiplyerNumber) {
+        this.shipmentMultiplyerNumber = shipmentMultiplyerNumber;
     }
 
     public LocalDateTime getCreation_date() {
