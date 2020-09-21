@@ -29,7 +29,7 @@ public class SessionUtil {
 
     public void addSession(User user) {
         Session session = new Session();
-        String token = jwtUtil.createJWT(user.getAccountType());
+        String token = jwtUtil.createJWT(user.getAccountType(), user.getId());
         session.setAccount_id(user.getId());
         session.setToken(token);
         sessions.add(session);

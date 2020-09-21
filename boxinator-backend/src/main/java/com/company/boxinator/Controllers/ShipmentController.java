@@ -1,9 +1,13 @@
 package com.company.boxinator.Controllers;
+
+import com.company.boxinator.Models.Enums.AccountType;
+import com.company.boxinator.Models.Enums.ShipmentStatus;
 import com.company.boxinator.ErrorHandling.HandleError;
 import com.company.boxinator.Models.Shipment;
 import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.ShipmentRepository;
 import com.company.boxinator.Repositories.UserRepository;
+import com.company.boxinator.Utils.JwtUtil;
 import com.company.boxinator.Utils.SessionUtil;
 import com.company.boxinator.Utils.ShipmentUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,7 @@ public class ShipmentController {
     private SessionUtil sessionUtil = SessionUtil.getInstance();
 
     private ShipmentUtil shipmentUtil = new ShipmentUtil();
+    private JwtUtil jwtUtil = new JwtUtil();
 
     private HandleError handleError;
     @GetMapping("/shipments")
@@ -56,19 +61,35 @@ public class ShipmentController {
     }
 
     @PostMapping("/shipment")
-    public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader("Authorization") String jwt) {
-        if(shipment.getUser().getEmail() == null || shipment.getCountry() == null ) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a email or country");
-        }
-        Optional<User> userDB = userRepository.findByEmail(shipment.getUser().getEmail());
-        if (userDB.isEmpty()) {
+    public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader(value = "Authorization", required = false) String jwt) {
+        if(jwt == null){
+            if(shipment.getUser().getEmail() == null || shipment.getCountry() == null ) {
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a email or country");
+            }
             User user = shipmentUtil.addGuestUser(shipment);
-            userRepository.save(user);
-            shipmentRepository.save(shipmentUtil.setShipment(shipment, user));
+
+            if(!userRepository.existsByEmail(user.getEmail())){
+                userRepository.save(user);
+                shipmentRepository.save(shipmentUtil.setShipment(shipment, user));
+            } else {
+                shipmentRepository.save(shipmentUtil.setShipment(shipment, userRepository.findByEmail(shipment.getUser().getEmail()).get()));
+            }
             return ResponseEntity.status(HttpStatus.CREATED).body("New Guest added and shipment created");
         }
-        shipmentRepository.save(shipmentUtil.setShipment(shipment, userDB.get()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDB.get().getEmail() + " added a new shipment");
+
+        if(!sessionUtil.isSessionValid(jwt))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User has been logged out, sign in again");
+
+        if(shipment.getCountry() == null ) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a country");
+        }
+
+        Integer userId = jwtUtil.getJwtId(jwt);
+        User user = userRepository.getOne(userId);
+
+        shipmentRepository.save(shipmentUtil.setShipment(shipment, user));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(user.getEmail() + " added a new shipment");
     }
 
     @GetMapping("/shipments/{shipment_id}")
@@ -113,16 +134,41 @@ public class ShipmentController {
     }
 
     @GetMapping("shipments/{customer_id}/{shipment_id}")
-    public Shipment getShipmentByCustomerIdAndShipmentId(@PathVariable("customer_id") Integer customer_id,
+    public ResponseEntity<Shipment> getShipmentByCustomerIdAndShipmentId(@PathVariable("customer_id") Integer customer_id,
                                                          @PathVariable("shipment_id") Integer shipment_id,
                                                          @RequestHeader("Authorization") String jwt){
-        //Retrieve the details of a specific shipment made by a specific customer
+        if(!jwtUtil.isJwtValid(jwt))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
-        return null;
+        Optional<User> user = userRepository.findById(customer_id);
+        if (user.isPresent())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        Optional<Shipment> shipment = shipmentRepository.findShipmentByIdAndUser(shipment_id, user.get());
+
+        if(!shipment.isPresent())
+            return new ResponseEntity<>(shipment.get(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("shipments/{shipment_id}")
-    public Shipment updateAShipmentById(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
+    @PutMapping("shipments/{shipment_id}")
+    public ResponseEntity<Shipment> updateAShipmentById(@RequestBody Shipment shipment,@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
+        if(!sessionUtil.isSessionValid(jwt))
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+        if(!(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR)){
+            if (shipment.getShipmentStatus() == ShipmentStatus.CANCELLED){
+                Optional<Shipment> s = shipmentRepository.findById(shipment_id);
+                s.get().setShipmentStatus(shipment.getShipmentStatus());
+                shipmentRepository.save(s.get());
+                return new ResponseEntity<>(HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+        }
+        //FORTSÄTT HÄR PÅ MÅNDAG :)
+
+
+        
         //This endpoint is used to update a shipment, but a non-Administrator user may only cancel a shipment.
         // An administrator can make any changes they wish to a shipment.
         // The administrator will use this to mark a shipment as completed.2.
