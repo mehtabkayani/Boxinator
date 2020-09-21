@@ -32,10 +32,11 @@ public class ShipmentController {
     @Autowired
     UserRepository userRepository;
 
-
     private SessionUtil sessionUtil = SessionUtil.getInstance();
 
     private ShipmentUtil shipmentUtil = new ShipmentUtil();
+
+    private JwtUtil jwtUtil = new JwtUtil();
 
     private HandleError handleError;
 
