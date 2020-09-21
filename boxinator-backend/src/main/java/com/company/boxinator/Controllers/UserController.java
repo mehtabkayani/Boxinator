@@ -49,22 +49,40 @@ public class UserController {
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers(@RequestHeader("Authorization") String jwt) {
-        if(!sessionUtil.isSessionValid(jwt))
+        if(!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
-//        List<User> listOfAllUsers = userRepository.findAll();
+        if(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
+            return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+        }
 
-        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping("/user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int id, @RequestHeader("Authorization") String jwt) {
+
+        if(!sessionUtil.isSessionValid(jwt)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         Optional<User> userData = userRepository.findById(id);
-        if (userData.isPresent()) {
-            return new ResponseEntity<>(userData.get(), HttpStatus.OK);
-        } else {
+        if(!userData.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        if(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
+            return new ResponseEntity<>(userRepository.findById(id).get(), HttpStatus.OK);
+        }
+
+        Integer userId = jwtUtil.getJwtId(jwt);
+        if(userId == id){
+            return new ResponseEntity<>(userRepository.findById(id).get(), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+
     }
     @PutMapping("/user/{id}")
     public ResponseEntity updateUserById(@RequestBody User user, @PathVariable("id") Integer id, @RequestHeader("Authorization") String jwt){

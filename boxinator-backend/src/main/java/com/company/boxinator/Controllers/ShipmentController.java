@@ -35,7 +35,6 @@ public class ShipmentController {
     private SessionUtil sessionUtil = SessionUtil.getInstance();
 
     private ShipmentUtil shipmentUtil = new ShipmentUtil();
-    private JwtUtil jwtUtil = new JwtUtil();
 
     private JwtUtil jwtUtil = new JwtUtil();
 
@@ -84,6 +83,7 @@ public class ShipmentController {
         if(jwt == null){
             if(shipment.getUser().getEmail() == null || shipment.getCountry() == null ) {
                 return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a email or country");
+            }
         }
         Optional<User> userDB = userRepository.findByEmail(shipment.getUser().getEmail());
         if (userDB.isEmpty()) {
