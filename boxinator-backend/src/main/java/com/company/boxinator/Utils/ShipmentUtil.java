@@ -34,4 +34,16 @@ public class ShipmentUtil {
         user.setAccountType(AccountType.GUEST);
         return user;
     }
+    public Shipment updateShipment(Shipment oldShipment, Shipment newShipment, User user){
+        newShipment.setUser(user);
+        newShipment.setRecieverName(oldShipment.getRecieverName());
+        newShipment.setBoxcolor(oldShipment.getBoxcolor());
+        newShipment.setCountry(oldShipment.getCountry());
+        newShipment.setWeight(oldShipment.getWeight());
+        double cost = newShipment.getWeight() * newShipment.getCountry().getMultiplyerNumber();
+        newShipment.setShipmentCost(cost);
+        newShipment.setShipmentMultiplyerNumber(oldShipment.getCountry().getMultiplyerNumber());
+        newShipment.setShipmentStatus(oldShipment.getShipmentStatus());
+        return newShipment;
+    }
 }
