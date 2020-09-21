@@ -1,0 +1,3 @@
+GET http://localhost:8080/api/shipments
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjUsImlhdCI6MTYwMDY3NjM4NywiZXhwIjoxNjAwNjcyNzg3fQ.Uc26HV_d4BkBPkpmWzGboOJe8YILEsHBxJwo0FYYgvs

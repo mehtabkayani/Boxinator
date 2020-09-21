@@ -1,0 +1,45 @@
+###LOGIN Admin
+POST http://localhost:8080/api/login
+Content-Type: application/json
+
+{
+  "email": "kayani@gmail.com",
+  "password": "adam"
+}
+
+###LOGIN normal user
+POST http://localhost:8080/api/login
+Content-Type: application/json
+
+{
+  "email": "john@gmail.com",
+  "password": "doe"
+}
+
+###REGISTER
+POST http://localhost:8080/api/user
+Content-Type: application/json
+
+{
+  "firstname": "John",
+  "lastname": "Doe",
+  "email": "john@gmail.com",
+  "password": "doe",
+  "contactNumber": "0786785645",
+  "countryOfResidence": "Sweden",
+  "zipcode": "19535",
+  "dateOfBirth": "19890711"
+}
+
+###ADMIN- get all users
+GET http://localhost:8080/api/users
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyNiIsInN1YiI6IlJFR0lTVEVSRURfVVNFUiIsImxkMjAiOjE2LCJpYXQiOjE2MDA2NzY3MzUsImV4cCI6MTYwMDY3MzEzNX0.1dW4rIvUjM-hBc9PCAdg-7_XxQ8VAhTdwtcaY5gERr4
+
+###
+GET http://localhost:8080/api/user/13
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyNiIsInN1YiI6IlJFR0lTVEVSRURfVVNFUiIsImxkMjAiOjE2LCJpYXQiOjE2MDA2NzY3MzUsImV4cCI6MTYwMDY3MzEzNX0.1dW4rIvUjM-hBc9PCAdg-7_XxQ8VAhTdwtcaY5gERr4
+
+
+
