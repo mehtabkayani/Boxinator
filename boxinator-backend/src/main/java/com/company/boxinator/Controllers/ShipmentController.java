@@ -36,7 +36,6 @@ public class ShipmentController {
     private SessionUtil sessionUtil = SessionUtil.getInstance();
 
     private ShipmentUtil shipmentUtil = new ShipmentUtil();
-    private JwtUtil jwtUtil = new JwtUtil();
 
     private HandleError handleError;
 

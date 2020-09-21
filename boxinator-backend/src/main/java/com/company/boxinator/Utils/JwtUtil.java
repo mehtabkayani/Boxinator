@@ -58,6 +58,7 @@ public class JwtUtil {
                 return null;
         }
     }
+
     public Integer getJwtId(String jwt){
         return Integer.parseInt(parseJWT(jwt).getBody().getId());
     }
