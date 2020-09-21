@@ -75,7 +75,7 @@ public class ShipmentController {
         return new ResponseEntity<>(completedShipments, HttpStatus.OK);
     }
 
-    @GetMapping("shipments/cancelledRetrieve")
+    @GetMapping("shipments/cancelled")
     public ResponseEntity<List<Shipment>> getCancelledShipments(@RequestHeader("Authorization") String jwt) {
         //Retrieve  a  list  of *completed||cancelled?* shipments  relevant  to  the authenticated user (as with previous)
         if (!sessionUtil.isSessionValid(jwt)) {
@@ -90,38 +90,41 @@ public class ShipmentController {
     @PostMapping("/shipment")
 
     public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader(value = "Authorization",required = false) String jwt) {
-        if(jwt == null){
-            if(shipment.getUser().getEmail() == null || shipment.getCountry() == null ) {
+        if(jwt == null) {
+            if (shipment.getUser().getEmail() == null || shipment.getCountry() == null) {
                 return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a email or country");
             }
-        }
-        Optional<User> userDB = userRepository.findByEmail(shipment.getUser().getEmail());
-        if (userDB.isEmpty() || userDB.get().getAccountType() == AccountType.GUEST) {
-          
-            User user = shipmentUtil.addGuestUser(shipment);
 
-            if(!userRepository.existsByEmail(user.getEmail())){
-                userRepository.save(user);
-                shipmentRepository.save(shipmentUtil.setShipment(shipment, user));
-            } else {
-                shipmentRepository.save(shipmentUtil.setShipment(shipment, userRepository.findByEmail(shipment.getUser().getEmail()).get()));
+            Optional<User> userDB = userRepository.findByEmail(shipment.getUser().getEmail());
+
+            if (userDB.isEmpty() || userDB.get().getAccountType() == AccountType.GUEST) {
+
+                User user = shipmentUtil.addGuestUser(shipment);
+
+                if (!userRepository.existsByEmail(user.getEmail())) {
+                    userRepository.save(user);
+                    shipmentRepository.save(shipmentUtil.setShipment(shipment, user));
+                } else {
+                    shipmentRepository.save(shipmentUtil.setShipment(shipment, userRepository.findByEmail(shipment.getUser().getEmail()).get()));
+                }
+                return ResponseEntity.status(HttpStatus.CREATED).body("New Guest added and shipment created");
             }
-            return ResponseEntity.status(HttpStatus.CREATED).body("New Guest added and shipment created");
         }
 
-        if(!sessionUtil.isSessionValid(jwt))
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User has been logged out, sign in again");
+            if (!sessionUtil.isSessionValid(jwt)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sign in to place an order!");
+            }
 
-        if(shipment.getCountry() == null ) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a country");
-        }
+            if (shipment.getCountry() == null) {
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a country");
+            }
 
-        Integer userId = jwtUtil.getJwtId(jwt);
-        User user = userRepository.getOne(userId);
+            Integer userId = jwtUtil.getJwtId(jwt);
+            User user = userRepository.getOne(userId);
 
-        shipmentRepository.save(shipmentUtil.setShipment(shipment, user));
+            shipmentRepository.save(shipmentUtil.setShipment(shipment, user));
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(user.getEmail() + " added a new shipment");
+            return ResponseEntity.status(HttpStatus.CREATED).body(user.getEmail() + " added a new shipment");
     }
 
     @GetMapping("/shipments/{shipment_id}")
