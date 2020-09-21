@@ -44,9 +44,9 @@ public class JwtUtil {
         } catch (Exception ex){
             System.out.println("In catch");
         }
-
         return isValid;
     }
+
     public AccountType tokenAccountType(String jwt) {
         switch (parseJWT(jwt).getBody().getSubject()) {
             case "ADMINISTRATOR":
@@ -57,5 +57,8 @@ public class JwtUtil {
                 System.out.println("Default");
                 return null;
         }
+    }
+    public Integer getJwtId(String jwt){
+        return Integer.parseInt(parseJWT(jwt).getBody().getId());
     }
 }
