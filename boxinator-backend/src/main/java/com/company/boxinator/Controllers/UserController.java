@@ -82,7 +82,7 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity addUser(@RequestBody User user, @RequestHeader("Authorization") String jwt){
+    public ResponseEntity addUser(@RequestBody User user){
         Optional<User> userData = userRepository.findByEmail(user.getEmail());
 
         //Check if there is no email registered then register a new user
