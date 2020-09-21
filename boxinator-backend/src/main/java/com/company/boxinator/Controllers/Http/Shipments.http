@@ -27,7 +27,7 @@ Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6NCwiaWF0IjoxNjAwNjgzODI5LCJleHAiOjE2MDA2ODAyMjl9.EM1V53mE9aG1D9XkgbykhSEdmYXUAY8k3o4M0nHUMJ4
 
 ###Get all cancelled shipments by user
-GET http://localhost:8080/api/shipments/cancelledRetrieve
+GET http://localhost:8080/api/shipments/cancelled
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MywiaWF0IjoxNjAwNjg0MTQ5LCJleHAiOjE2MDA2ODA1NDl9.3WAlPlh0-R-cF0K2DPytStIJflcAzXkra_xBV1dLWNg
 
@@ -54,16 +54,23 @@ Content-Type: application/json
 ###POST Shipment as a Registered User
 POST http://localhost:8080/api/shipment
 Content-Type: application/json
+<<<<<<< HEAD
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MiwiaWF0IjoxNjAwNjkwNDU1LCJleHAiOjE2MDA2ODY4NTV9.SmambEY7WsrQzQnlLNC98PXT7dNgi5GTFTPPiwnKwEk
+=======
 //Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjE3LCJpYXQiOjE2MDA2ODk0MTAsImV4cCI6MTYwMDY4NTgxMH0.q7MuF8Lub-EHyip7ZN8RuRvARBYlztO0k-Sf6TvXZqI
+>>>>>>> bbb0c878c0cbce49e43ef55d6e85fdd6f8c5149a
 
 {
   "recieverName": "Adam",
   "weight": 12.0,
   "boxcolor": "Yellow",
 
+<<<<<<< HEAD
+=======
   "user": {
     "email": "ad@gmail.com"
   },
+>>>>>>> bbb0c878c0cbce49e43ef55d6e85fdd6f8c5149a
   "country": {
     "id": 2,
     "countryCode": "NO",

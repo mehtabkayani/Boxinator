@@ -53,14 +53,15 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoiQURNSU5JU1RSQVRPUiIs
 }
 
 ###UPDATE FROM USER
-PUT http://localhost:8080/api/user/3
+PUT http://localhost:8080/api/user/29
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzIiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MTIsImlhdCI6MTYwMDY4ODQxNCwiZXhwIjoxNjAwNjg0ODE0fQ.5lEL1NbR8sah0TBf7BlkEQpokKQE_tpez1aRtvAoX1U
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyOSIsInN1YiI6IlJFR0lTVEVSRURfVVNFUiIsImxkMjAiOjQsImlhdCI6MTYwMDY4ODc2MiwiZXhwIjoxNjAwNjg1MTYyfQ.NpzgkyYuSLFt7Jjl1xiNBW0FdX9pkR3jDkBlwHaImCI
+
 
 {
   "firstname": "John",
   "lastname": "Doe",
-  "email": "john@gmail.com",
+  "email": "johndoe2@gmail.com",
   "password": "doe",
   "contactNumber": "0786785645",
   "countryOfResidence": "Sweden",
