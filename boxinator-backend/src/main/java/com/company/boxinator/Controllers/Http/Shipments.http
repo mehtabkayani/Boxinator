@@ -3,8 +3,8 @@ POST http://localhost:8080/api/login
 Content-Type: application/json
 
 {
-  "email": "kayani@gmail.com",
-  "password": "adam"
+  "email": "admin2@gmail.com",
+  "password": "password"
 }
 
 ###LOGIN normal user
@@ -19,7 +19,7 @@ Content-Type: application/json
 ###Get all shipments
 GET http://localhost:8080/api/shipments
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjE1LCJpYXQiOjE2MDA2ODM1ODMsImV4cCI6MTYwMDY3OTk4M30.tXRXjpdf6f94xFfkI27GbhCqqOP8EVCckSmxhnXKGTg
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjIwLCJpYXQiOjE2MDA2ODg0MTQsImV4cCI6MTYwMDY4NDgxNH0.79gvaRjamXS6jkvGh1etbPgbdDX_8IOwud9RTm69eDU
 
 ###Get all completed shipments by user
 GET http://localhost:8080/api/shipments/complete
@@ -41,7 +41,7 @@ Content-Type: application/json
   "boxcolor": "Yellow",
 
   "user": {
-    "email": "guest@gmail.com"
+    "email": "gueds@gmail.com"
   },
   "country": {
     "id": 2,
@@ -54,13 +54,40 @@ Content-Type: application/json
 ###POST Shipment as a Registered User
 POST http://localhost:8080/api/shipment
 Content-Type: application/json
+<<<<<<< HEAD
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MiwiaWF0IjoxNjAwNjkwNDU1LCJleHAiOjE2MDA2ODY4NTV9.SmambEY7WsrQzQnlLNC98PXT7dNgi5GTFTPPiwnKwEk
+=======
+//Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjE3LCJpYXQiOjE2MDA2ODk0MTAsImV4cCI6MTYwMDY4NTgxMH0.q7MuF8Lub-EHyip7ZN8RuRvARBYlztO0k-Sf6TvXZqI
+>>>>>>> bbb0c878c0cbce49e43ef55d6e85fdd6f8c5149a
 
 {
   "recieverName": "Adam",
   "weight": 12.0,
   "boxcolor": "Yellow",
 
+<<<<<<< HEAD
+=======
+  "user": {
+    "email": "ad@gmail.com"
+  },
+>>>>>>> bbb0c878c0cbce49e43ef55d6e85fdd6f8c5149a
+  "country": {
+    "id": 2,
+    "countryCode": "NO",
+    "countryName": "Norway",
+    "multiplyerNumber": 2
+  }
+}
+
+###POST Shipment as a Registered User
+POST http://localhost:8080/api/shipment
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjE3LCJpYXQiOjE2MDA2OTEwNzEsImV4cCI6MTYwMDY4NzQ3MX0.Zsoa4PdglupwBVG5pC2CqLmYT2GVYGZZnl95hsYbHlQ
+
+{
+  "recieverName": "Adam",
+  "weight": 12.0,
+  "boxcolor": "Yellow",
   "country": {
     "id": 2,
     "countryCode": "NO",

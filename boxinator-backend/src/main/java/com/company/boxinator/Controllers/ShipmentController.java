@@ -24,13 +24,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 public class ShipmentController {
     @Autowired
     ShipmentRepository shipmentRepository;
     @Autowired
     UserRepository userRepository;
-
 
     private SessionUtil sessionUtil = SessionUtil.getInstance();
 
@@ -88,7 +88,6 @@ public class ShipmentController {
     }
 
     @PostMapping("/shipment")
-
     public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader(value = "Authorization",required = false) String jwt) {
         if(jwt == null) {
             if (shipment.getUser().getEmail() == null || shipment.getCountry() == null) {
@@ -217,26 +216,52 @@ public class ShipmentController {
     }
 
     @PutMapping("shipments/{shipment_id}")
-    public ResponseEntity<Shipment> updateAShipmentById(@RequestBody Shipment shipment,@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
+    public ResponseEntity<Shipment> updateAShipmentById(@RequestBody Shipment shipment, @PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
         if(!sessionUtil.isSessionValid(jwt))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
+        System.out.println("JWT: " + jwt);
+        System.out.println("PathVariable: " + shipment_id);
+
+        Optional<Shipment> oldShipment = shipmentRepository.findById(shipment_id);
+        if(!oldShipment.isPresent())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
         if(!(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR)){
             if (shipment.getShipmentStatus() == ShipmentStatus.CANCELLED){
-                Optional<Shipment> s = shipmentRepository.findById(shipment_id);
-                s.get().setShipmentStatus(shipment.getShipmentStatus());
-                shipmentRepository.save(s.get());
+                oldShipment.get().setShipmentStatus(shipment.getShipmentStatus());
+                shipmentRepository.save(oldShipment.get());
                 return new ResponseEntity<>(HttpStatus.OK);
             }else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
         }
+
+        Optional<User> user = userRepository.findById(jwtUtil.getJwtId(jwt));
+
+        if(!user.isPresent())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        System.out.println("Found userid: " + user.get().getId());
+
+        Shipment newShipment = shipmentUtil.updateShipment(shipment, oldShipment.get(), user.get());
+        try{
+            shipmentRepository.save(newShipment);
+        }catch (Exception exception){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+
+
         //FORTSÄTT HÄR PÅ MÅNDAG :)
 
         //This endpoint is used to update a shipment, but a non-Administrator user may only cancel a shipment.
         // An administrator can make any changes they wish to a shipment.
         // The administrator will use this to mark a shipment as completed.2.
-        return null;
+
     }
 
     @DeleteMapping("shipments/{shipment_id}")
