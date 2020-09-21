@@ -10,14 +10,16 @@ const MainPage = () => {
     const [shipments, setShipments]= useState([]);
 
     useEffect(()=>{
-        axios.get('http://localhost:8080/api/shipments')
-            .then(res=>{
-                console.log(res);
-                setShipments(res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            })
+
+
+         axios.get('http://localhost:8080/api/shipment/1 ', { headers: {'Authorization': localStorage.getItem('token')} })
+                .then(res=>{
+                    console.log(res.data);
+                    setShipments(res.data)
+                })
+                .catch(err => {
+                    console.log(err);
+                })
 
     })
     return (
@@ -32,19 +34,29 @@ const MainPage = () => {
                     <th>Receiver name</th>
                     <th>Weight (kg)</th>
                     <th>Box colour</th>
+                    <th>Date</th>
                     <th>Destination Country</th>
                     <th>status</th>
+                    <th>Cost</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    {
-                        shipments.map(shipment => (
-                            <td key={shipment.id}>{shipment.recieverName}</td>
-                        ))  }
+                {
+
+                    shipments.map(shipment => (
+
+                     <tr key={shipment.id}>
+                        <td >{shipment.recieverName}</td>
+                       <td >{shipment.weight}</td>
+                        <td >{shipment.boxcolor}</td>
+                        <td >{shipment.creation_date}</td>
+                         <td >{shipment.country.countryName}</td>
+                        <td >{shipment.shipmentStatus}</td>
+                        <td>{shipment.shipmentCost}</td>
 
 
                 </tr>
+                    ))  }
                 <tr>
                     <td>Peter</td>
                     <td>34kg</td>

@@ -26,10 +26,10 @@ const Login = ({setAuth}) => {
                 }
             );
             const parseRes = await response.json();
-            console.log('result', parseRes);
+            console.log("result", parseRes);
 
-            if (parseRes) {
-                localStorage.setItem("token", parseRes);
+            if (parseRes.account_id && parseRes.token) {
+                localStorage.setItem(parseRes.account_id, parseRes.token)
                 setAuth(true);
 
             } else {
