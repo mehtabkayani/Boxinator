@@ -6,6 +6,7 @@ import '../../style/style.css';
 const HomePage = () => {
     return (
         <div className="homeContainer">
+
             <h1>Welcome to Boxinator</h1>
             <p>Here can you send shipments to whichever place you choose</p>
             <br></br>

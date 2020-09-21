@@ -5,9 +5,9 @@ import {Button, Form} from "react-bootstrap";
 
 const NewShipment = () => {
     const options = [
-        { value: 'sweden', label: 'Sweden' },
-        { value: 'Denmark', label: 'Denmark' },
-        { value: 'norway', label: 'norway' }
+        {value: 'sweden', label: 'Sweden'},
+        {value: 'Denmark', label: 'Denmark'},
+        {value: 'norway', label: 'norway'}
     ]
     return (
         <div className="newShipmentContainer">
@@ -16,20 +16,20 @@ const NewShipment = () => {
             <Form>
                 <div>
                     <Form.Label>Receiver name : </Form.Label>
-                    <Form.Control type="text" placeholder="Enter name" />
+                    <Form.Control type="text" placeholder="Enter name"/>
                 </div>
                 <div>
                     <Form.Label>Weight (kg): </Form.Label>
-                    <Form.Control type="number" placeholder="Enter weight" />
+                    <Form.Control type="number" placeholder="Enter weight"/>
                 </div>
                 <div>
                     <Form.Label>Box colour: </Form.Label>
-                    <Form.Control type="color"  />
+                    <Form.Control type="color"/>
                 </div>
                 <div>
                     {/* Maybe have registered countries to chose from */}
                     <label>Destination country: </label>
-                    <Select options={options} />
+                    <Select options={options}/>
                 </div>
                 <br></br>
                 <div>

@@ -23,9 +23,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Unversioned files">
-      <change afterPath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Utils/UserUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/ShipmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/ShipmentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/MainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/MainPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +73,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/boxinator-backend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -84,17 +87,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="boxinator" />
       <option name="VM_PARAMETERS" />
@@ -170,6 +162,8 @@
       <option name="presentableId" value="Default" />
       <updated>1600079701765</updated>
       <workItem from="1600079702959" duration="16121000" />
+      <workItem from="1600414522333" duration="21088000" />
+      <workItem from="1600669503680" duration="9131000" />
     </task>
     <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
       <created>1600094762706</created>
@@ -178,7 +172,56 @@
       <option name="project" value="LOCAL" />
       <updated>1600094762706</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added some bootstrap">
+      <created>1600257176769</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1600257176770</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fixed the styl of the 10 components">
+      <created>1600262968472</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1600262968473</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fixed the style of new shipment components">
+      <created>1600264102205</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1600264102206</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Changed the color of Boxinator in navbar">
+      <created>1600264274592</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1600264274592</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added two components, added completed, not completed radio">
+      <created>1600353954868</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1600353954869</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fixed token in frontend">
+      <created>1600421649608</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1600421649610</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fixed login authentication with jwt token, trying to get the users shipments and render them">
+      <created>1600439524977</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1600439524978</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,7 +241,14 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css" />
+    <MESSAGE value="Added some bootstrap" />
+    <MESSAGE value="Fixed the styl of the 10 components" />
+    <MESSAGE value="Fixed the style of new shipment components" />
+    <MESSAGE value="Changed the color of Boxinator in navbar" />
+    <MESSAGE value="Added two components, added completed, not completed radio" />
+    <MESSAGE value="Fixed token in frontend" />
+    <MESSAGE value="Fixed login authentication with jwt token, trying to get the users shipments and render them" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed login authentication with jwt token, trying to get the users shipments and render them" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -209,10 +259,10 @@
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
     <state x="-1194" y="382" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600240644769" />
-    <state x="-1180" y="335" key="FileChooserDialogImpl" timestamp="1600177476179">
+    <state x="-1180" y="335" key="FileChooserDialogImpl" timestamp="1600421315957">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1180" y="335" key="FileChooserDialogImpl/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600177476179" />
+    <state x="-1180" y="335" key="FileChooserDialogImpl/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600421315957" />
     <state width="1877" height="139" key="GridCell.Tab.0.bottom" timestamp="1600268171529">
       <screen x="1920" y="0" width="1920" height="1160" />
     </state>
@@ -253,10 +303,14 @@
     </state>
     <state width="1237" height="247" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690496" />
     <state width="1877" height="139" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171530" />
-    <state x="368" y="147" key="Vcs.Push.Dialog.v2" timestamp="1600107083819">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1600439546019">
+      <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600094778518" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600439546019" />
     <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1600107083819" />
+    <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600668436136" />
   </component>
 </project>
