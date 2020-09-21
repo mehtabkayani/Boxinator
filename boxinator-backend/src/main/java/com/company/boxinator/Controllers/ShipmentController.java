@@ -1,10 +1,11 @@
 package com.company.boxinator.Controllers;
 
+import com.company.boxinator.ErrorHandling.HandleError;
 import com.company.boxinator.Models.Enums.AccountType;
 import com.company.boxinator.Models.Enums.ShipmentStatus;
-import com.company.boxinator.ErrorHandling.HandleError;
 import com.company.boxinator.Models.Shipment;
 import com.company.boxinator.Models.User;
+import com.company.boxinator.Models.UserDTO;
 import com.company.boxinator.Repositories.ShipmentRepository;
 import com.company.boxinator.Repositories.UserRepository;
 import com.company.boxinator.Utils.JwtUtil;
@@ -14,11 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -32,41 +36,69 @@ public class ShipmentController {
     private SessionUtil sessionUtil = SessionUtil.getInstance();
 
     private ShipmentUtil shipmentUtil = new ShipmentUtil();
+
     private JwtUtil jwtUtil = new JwtUtil();
 
     private HandleError handleError;
+
     @GetMapping("/shipments")
     public ResponseEntity<List<Shipment>> getAllShipments(@RequestHeader("Authorization") String jwt) {
+        List<Shipment> listOfShipments = shipmentRepository.findAll();
 
-        if(!sessionUtil.isSessionValid(jwt))
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        return new ResponseEntity<>(shipmentRepository.findAll(), HttpStatus.OK);
+        //ADMIN
+        String accountType = jwtUtil.parseJWT(jwt).toString();
+        if (sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
+            List<Shipment> filteredList = listOfShipments.stream()
+                    .filter(shipment -> shipment.getShipmentStatus() != ShipmentStatus.CANCELLED && shipment.getShipmentStatus() != ShipmentStatus.COMPLETED).collect(Collectors.toList());
+            return new ResponseEntity<>(filteredList, HttpStatus.OK);
+        }
+
+        //User
+        Integer id = jwtUtil.getJwtId(jwt);
+        if(sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.REGISTERED_USER){
+            List<Shipment> filteredList = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == id).collect(Collectors.toList());
+            return new ResponseEntity<>(filteredList, HttpStatus.OK);
+
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
 
     @GetMapping("shipments/complete")
-    public ResponseEntity<List<Shipment>> getCompletedShipments(@RequestHeader("Authorization")String jwt){
+    public ResponseEntity<List<Shipment>> getCompletedShipments(@RequestHeader("Authorization") String jwt) {
         //Retrieve a list of completed shipments relevant to the authenticated user (as with previous).
-        //handleError.HandleInvalidJwt(jwt);
-        if(!sessionUtil.isSessionValid(jwt)){
+        if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity<>(shipmentRepository.findAll(), HttpStatus.OK);
-
+        String userId = jwtUtil.parseJWT(jwt).getBody().getId();
+        List<Shipment> listOfShipments = shipmentRepository.findAllByUserId(Integer.parseInt(userId)).get();
+        List<Shipment> completedShipments = listOfShipments.stream().filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.COMPLETED).collect(Collectors.toList());
+        return new ResponseEntity<>(completedShipments, HttpStatus.OK);
     }
-    @GetMapping("shipments/cancelledRetrieve")
-    public List<Shipment> getCancelledShipments(@RequestHeader("Authorization") String jwt){
-    //Retrieve  a  list  of *completed||cancelled?* shipments  relevant  to  the authenticated user (as with previous
 
-        return null;
+    @GetMapping("shipments/cancelledRetrieve")
+    public ResponseEntity<List<Shipment>> getCancelledShipments(@RequestHeader("Authorization") String jwt) {
+        //Retrieve  a  list  of *completed||cancelled?* shipments  relevant  to  the authenticated user (as with previous)
+        if (!sessionUtil.isSessionValid(jwt)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        String userId = jwtUtil.parseJWT(jwt).getBody().getId();
+        List<Shipment> listOfShipments = shipmentRepository.findAllByUserId(Integer.parseInt(userId)).get();
+        List<Shipment> cancelledShipments = listOfShipments.stream().filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.CANCELLED).collect(Collectors.toList());
+        return new ResponseEntity<>(cancelledShipments, HttpStatus.OK);
     }
 
     @PostMapping("/shipment")
-    public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader(value = "Authorization", required = false) String jwt) {
+
+    public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader(value = "Authorization",required = false) String jwt) {
         if(jwt == null){
             if(shipment.getUser().getEmail() == null || shipment.getCountry() == null ) {
                 return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a email or country");
             }
+        }
+        Optional<User> userDB = userRepository.findByEmail(shipment.getUser().getEmail());
+        if (userDB.isEmpty() || userDB.get().getAccountType() == AccountType.GUEST) {
+          
             User user = shipmentUtil.addGuestUser(shipment);
 
             if(!userRepository.existsByEmail(user.getEmail())){
@@ -94,18 +126,47 @@ public class ShipmentController {
     }
 
     @GetMapping("/shipments/{shipment_id}")
-    public Optional<Shipment> getAllShipmentsByShipmentId(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt) {
-        return shipmentRepository.findById(shipment_id);
+    public ResponseEntity<Shipment> getShipmentByShipmentId(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt) {
+        if (!sessionUtil.isSessionValid(jwt)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        String userId = jwtUtil.parseJWT(jwt).getBody().getId();
+        System.out.println(userId);
+        Optional<Shipment> shipment = shipmentRepository.findById(shipment_id);
+        System.out.println(shipment.get().getUser().getId());
+
+        if(shipment.get().getUser().getId() == Integer.parseInt(userId)){
+            return new ResponseEntity<>(shipment.get(),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
-    @GetMapping("shipments/complete/{shipment_id}")
-    public Shipment getOneCompletedShipment(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
+    @GetMapping("shipments/completed/{shipment_id}")
+    public ResponseEntity<Shipment> getOneCompletedShipment(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt) {
+        //ADMIN
         //Retrieve the details of a single completed shipment
-        return null;
+
+        String accountType = jwtUtil.parseJWT(jwt).toString();
+        System.out.println(accountType);
+        System.out.println("Acoount type?: " + AccountType.ADMINISTRATOR);
+
+        if (sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
+            Optional<Shipment> shipment = shipmentRepository.findById(shipment_id);
+            if(!shipment.isPresent()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            if(shipment.get().getShipmentStatus() == ShipmentStatus.COMPLETED) {
+                return new ResponseEntity<>(shipment.get(),HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
     }
 
-    @GetMapping("/shipment/{customer_id}")
-    public List<Shipment> getShipmentsUserById(@PathVariable("customer_id") Integer customer_id, @RequestHeader("Authorization") String jwt) {
+    @GetMapping("/shipments/{customer_id}")
+    public List<Shipment> getShipmentsUserById(@PathVariable("customer_id") Integer customer_id, @RequestHeader(value = "Authorization") String jwt) {
         // Retrieve the details of all the shipments a given customer has made.
         List<Shipment> listOfShipments = shipmentRepository.findAll();
         Stream<Shipment> userListOfShipment = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == customer_id);
@@ -122,13 +183,13 @@ public class ShipmentController {
             shipmentDetail.setUser(shipment.getUser());
             shipmentDetail.setCountry(shipment.getCountry());
             return shipmentDetail;
-            }).collect(Collectors.toList());
+        }).collect(Collectors.toList());
 
         return result;
     }
 
-    @GetMapping("shipments/complete/{customer_id}")
-    public List<Shipment> getAllCompletedShipmentsByCustomerId(@PathVariable("customer_id") Integer customer_id, @RequestHeader("Authorization") String jwt){
+    @GetMapping("shipment/complete/{customer_id}")
+    public List<Shipment> getAllCompletedShipmentsByCustomerId(@PathVariable("customer_id") Integer customer_id, @RequestHeader("Authorization") String jwt) {
         //Retrieve the details of all the completed shipments a given customer has made.
         // NOTE:You will need to ensure that a customer_id can be differentiated from a shipment_id by using a regex expression.
         return null;
@@ -138,8 +199,10 @@ public class ShipmentController {
     public ResponseEntity<Shipment> getShipmentByCustomerIdAndShipmentId(@PathVariable("customer_id") Integer customer_id,
                                                          @PathVariable("shipment_id") Integer shipment_id,
                                                          @RequestHeader("Authorization") String jwt){
+       //Retrieve the details of a specific shipment made by a specific customer
         if(!jwtUtil.isJwtValid(jwt))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
 
         Optional<User> user = userRepository.findById(customer_id);
         if (user.isPresent())
@@ -168,8 +231,6 @@ public class ShipmentController {
         }
         //FORTSÄTT HÄR PÅ MÅNDAG :)
 
-
-        
         //This endpoint is used to update a shipment, but a non-Administrator user may only cancel a shipment.
         // An administrator can make any changes they wish to a shipment.
         // The administrator will use this to mark a shipment as completed.2.
@@ -177,7 +238,7 @@ public class ShipmentController {
     }
 
     @DeleteMapping("shipments/{shipment_id}")
-    public Shipment deleteShipmentById(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
+    public Shipment deleteShipmentById(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt) {
         //This  endpoint  is  used  to  delete  a  shipment  only  in  extreme  situations,  and only accessible by an Administrator.
         // (This will also delete completed/cancelled shipments.)
 
