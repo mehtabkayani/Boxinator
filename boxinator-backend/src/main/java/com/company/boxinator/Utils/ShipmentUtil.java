@@ -16,13 +16,6 @@ public class ShipmentUtil {
 
     public Shipment setShipment(Shipment shipment, User user){
         Shipment newShipment = new Shipment();
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setFirstname(user.getFirstname());
-        userDTO.setLastname(user.getLastname());
-        userDTO.setEmail(user.getEmail());
-
-
         newShipment.setUser(user);
         newShipment.setRecieverName(shipment.getRecieverName());
         newShipment.setBoxcolor(shipment.getBoxcolor());
