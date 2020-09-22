@@ -31,7 +31,6 @@ const AddShipmentGuest = () => {
                         <Form.Control type="color"  />
                     </div>
                     <div>
-                        {/* Maybe have registered countries to chose from */}
                         <label>Destination country: </label>
                         <Select options={options} />
                     </div>

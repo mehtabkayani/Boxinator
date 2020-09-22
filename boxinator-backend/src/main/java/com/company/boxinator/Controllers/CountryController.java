@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/settings")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CountryController {
 
     @Autowired

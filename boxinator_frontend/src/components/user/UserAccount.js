@@ -20,7 +20,6 @@ const UserAccount = () => {
             })
     })
     const onUserInfoChanged = ev => setUserInfo(ev.target.value.trim());
-    {/*Not completed maybe show information in another way !! */}
     return (
 
         <div className="accountContainer">

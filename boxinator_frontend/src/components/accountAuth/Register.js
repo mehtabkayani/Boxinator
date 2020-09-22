@@ -3,10 +3,9 @@ import {Link} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Form, Button} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-import axios from "axios";
 
 
-const Register = ({setAuth}) => {
+const Register = () => {
 
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
