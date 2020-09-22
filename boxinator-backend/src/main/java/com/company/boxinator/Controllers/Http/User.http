@@ -3,8 +3,8 @@ POST http://localhost:8080/api/login
 Content-Type: application/json
 
 {
-  "email": "kayani@gmail.com",
-  "password": "adam"
+  "email": "stjernqvist.david@gmail.com",
+  "password": "password"
 }
 
 ###LOGIN normal user
@@ -23,8 +23,8 @@ Content-Type: application/json
 {
   "firstname": "delete",
   "lastname": "Doe",
-  "email": "delete@gmail.com",
-  "password": "delete",
+  "email": "stjernqvist.david@gmail.com",
+  "password": "password",
   "contactNumber": "0786785645",
   "countryOfResidence": "Sweden",
   "zipcode": "19535",
@@ -84,3 +84,7 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyOSIsInN1YiI6IlJFR0lTVEVSRURfVVNF
   "dateOfBirth": "19890711"
 }
 
+###Send email user
+GET http://localhost:8080/api/sendemail
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MTYsImlhdCI6MTYwMDc3NjMxNSwiZXhwIjoxNjAwNzcyNzE1fQ.5BiyXYlETPT2gSSA51mE7fBKzuMYxmuQqXVR9Ss7xB8

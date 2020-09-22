@@ -142,7 +142,7 @@ public class ShipmentController {
     }
 
 
-    @GetMapping("shipments/complete/{shipment_id}")
+    @GetMapping("/shipments/complete/{shipment_id}")
     public ResponseEntity<Shipment> getOneCompletedShipment(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt) {
         //ADMIN
         //Retrieve the details of a single completed shipment
@@ -190,7 +190,7 @@ public class ShipmentController {
     }
 
 
-    @GetMapping("shipments/customer/complete/{customer_id}")
+    @GetMapping("/shipments/customer/complete/{customer_id}")
     public ResponseEntity<Shipment> getAllCompletedShipmentsByCustomerId(@PathVariable("customer_id") Integer customer_id, @RequestHeader("Authorization") String jwt) {
         //Admin
         //Retrieve the details of all the completed shipments a given customer has made.
@@ -213,7 +213,7 @@ public class ShipmentController {
 
     }
 
-    @GetMapping("shipments/{customer_id}/{shipment_id}")
+    @GetMapping("/shipments/{customer_id}/{shipment_id}")
     public ResponseEntity<Shipment> getShipmentByCustomerIdAndShipmentId(@PathVariable("customer_id") Integer customer_id,
                                                          @PathVariable("shipment_id") Integer shipment_id,
                                                          @RequestHeader("Authorization") String jwt){
@@ -240,7 +240,7 @@ public class ShipmentController {
 
     }
 
-    @PutMapping("shipments/{shipment_id}")
+    @PutMapping("/shipments/{shipment_id}")
     public ResponseEntity<Shipment> updateAShipmentById(@RequestBody Shipment shipment, @PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
         if(!sessionUtil.isSessionValid(jwt))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -280,7 +280,7 @@ public class ShipmentController {
 
     }
 
-    @DeleteMapping("shipments/{shipment_id}")
+    @DeleteMapping("/shipments/{shipment_id}")
     public ResponseEntity<Shipment> deleteShipmentById(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt) {
         //This  endpoint  is  used  to  delete  a  shipment  only  in  extreme  situations,  and only accessible by an Administrator.
         // (This will also delete completed/cancelled shipments.)
