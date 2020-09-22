@@ -76,11 +76,6 @@ const UserAccount = () => {
                     </Form.Group>
                 </Form.Row>
                 <br></br>
-                <Form.Group id="formGridCheckbox">
-                    <Form.Label>Check only if you are an admin !</Form.Label>
-                    <Form.Check type="checkbox" label="Admin"/>
-                </Form.Group>
-                <br></br>
                 <div>
                     <Button variant="secondary">Save changes</Button>
                 </div>

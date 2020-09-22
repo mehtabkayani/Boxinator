@@ -38,7 +38,7 @@ const AdminMainPage = () => {
             <h1>Admin main page : </h1>
             <br></br>
             <Link to="/country"><Button>Change country cost</Button></Link>
-            <br></br>
+            <Link to="/allUsers"><Button>Update user</Button></Link>
             <Table striped bordered hover variant="dark">
                 <thead>
                 <tr>

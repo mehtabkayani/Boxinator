@@ -17,6 +17,7 @@ import HomePage from "./components/homePage/HomePage";
 import AddShipmentGuest from "./components/guest/AddShipmentGuest";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CountryCost from "./components/admin/CountryCost";
+import AllUsers from "./components/admin/AllUsers";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -41,13 +42,7 @@ function App() {
                              <Redirect to="/mainPage" />
                          )
                      } />
-              <Route exact path="/register" render={props =>
-                  !isAuthenticated ? (
-                      <Register {...props} setAuth={setAuth} />
-                  ) : (
-                      <Redirect to="/mainPage" />
-                  )
-              }/>
+
               <Route path="/register" component={Register} />
               <Route path="/mainPage" component={MainPage} />
               <Route path="/newShipment" component={NewShipment} />
@@ -55,6 +50,7 @@ function App() {
               <Route path="/adminMainPage" component={AdminMainPage} />
               <Route path="/addShipmentGuest" component={AddShipmentGuest} />
               <Route path="/country" component={CountryCost} />
+              <Route path="/allUsers" component={AllUsers} />
               <Route path="/" component={HomePage} />
 
           </Switch>

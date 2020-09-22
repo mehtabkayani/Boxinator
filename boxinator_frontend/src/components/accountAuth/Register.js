@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import axios from "axios";
 
 
-const Register = () => {
+const Register = ({setAuth}) => {
 
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
@@ -20,7 +20,16 @@ const Register = () => {
     const onSubmitForm = async e => {
         e.preventDefault();
         try {
-            const body = {firstname, lastname, email, dateOfBirth, countryOfResidence, zipcode, contactNumber, password};
+            const body = {
+                firstname,
+                lastname,
+                email,
+                dateOfBirth,
+                countryOfResidence,
+                zipcode,
+                contactNumber,
+                password
+            };
            await fetch(
                 "http://localhost:8080/api/user",
                 {
@@ -32,7 +41,8 @@ const Register = () => {
 
                 }
             ).then(response => response.text())
-                .then(text => alert(text));
+                .then(text => alert(text))
+            document.getElementById("registerForm").reset();//Find a better way
 
         } catch (err) {
             console.error(err.message);
@@ -51,7 +61,7 @@ const Register = () => {
         <div className="registerContainer">
             <h2>Register new account : </h2>
             <br></br>
-            <Form onSubmit={onSubmitForm}>
+            <Form onSubmit={onSubmitForm} id="registerForm">
                 <Form.Row>
                     <Form.Group as={Col}>
                         <Form.Label>Firstname</Form.Label>
@@ -80,7 +90,7 @@ const Register = () => {
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridZip">
                         <Form.Label>Zip code/Postal code :</Form.Label>
-                        <Form.Control type="text" onChange={onZipcodeChanged}/>
+                        <Form.Control type="text" placeholder="Zip code" onChange={onZipcodeChanged}/>
                     </Form.Group>
                 </Form.Row>
 
@@ -101,11 +111,6 @@ const Register = () => {
                         <Form.Control type="password" placeholder="Password" onChange={onPasswordChanged}/>
                     </Form.Group>
                 </Form.Row>
-                <br></br>
-                <Form.Group id="formGridCheckbox">
-                    <Form.Label>Check only if you are an admin !</Form.Label>
-                    <Form.Check type="checkbox" label="Admin"/>
-                </Form.Group>
                 <br></br>
                 <div>
                     <Button variant="secondary" type="submit">Register</Button>
