@@ -26,8 +26,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/ShipmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/ShipmentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AdminMainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AdminMainPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/MainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/MainPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -163,7 +163,7 @@
       <updated>1600079701765</updated>
       <workItem from="1600079702959" duration="16121000" />
       <workItem from="1600414522333" duration="21088000" />
-      <workItem from="1600669503680" duration="19352000" />
+      <workItem from="1600669503680" duration="27295000" />
     </task>
     <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
       <created>1600094762706</created>
@@ -242,7 +242,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600694002223</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Get user info but not completed, get user-shipments, And get all the shipments in the admin page but it is not completed some parts need to be fixed">
+      <created>1600697544062</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1600697544064</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,7 +278,8 @@
     <MESSAGE value="Fixed login authentication with jwt token, trying to get the users shipments and render them" />
     <MESSAGE value="Get shipments for inlogged user, save the token with user id in the localstorage" />
     <MESSAGE value="Fixed the issue with account id" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the issue with account id" />
+    <MESSAGE value="Get user info but not completed, get user-shipments, And get all the shipments in the admin page but it is not completed some parts need to be fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Get user info but not completed, get user-shipments, And get all the shipments in the admin page but it is not completed some parts need to be fixed" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -334,10 +342,10 @@
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
     <state x="-1204" y="282" key="RollbackChangesDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600688768629" />
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1600694090023">
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1600697562926">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600694090023" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600697562926" />
     <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1600107083819" />
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
       <screen x="-1920" y="0" width="1920" height="1160" />

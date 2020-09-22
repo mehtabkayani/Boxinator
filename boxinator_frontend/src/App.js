@@ -41,6 +41,13 @@ function App() {
                              <Redirect to="/mainPage" />
                          )
                      } />
+              <Route exact path="/register" render={props =>
+                  !isAuthenticated ? (
+                      <Register {...props} setAuth={setAuth} />
+                  ) : (
+                      <Redirect to="/mainPage" />
+                  )
+              }/>
               <Route path="/register" component={Register} />
               <Route path="/mainPage" component={MainPage} />
               <Route path="/newShipment" component={NewShipment} />
