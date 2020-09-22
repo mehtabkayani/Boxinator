@@ -9,8 +9,6 @@ import com.company.boxinator.Repositories.UserRepository;
 import com.company.boxinator.Utils.JwtUtil;
 import com.company.boxinator.Utils.SessionUtil;
 import com.company.boxinator.Utils.UserUtil;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
