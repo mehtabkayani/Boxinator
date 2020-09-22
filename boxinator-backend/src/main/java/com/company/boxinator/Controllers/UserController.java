@@ -1,11 +1,14 @@
 package com.company.boxinator.Controllers;
 
+import com.company.boxinator.Models.AuthToken;
 import com.company.boxinator.Models.Enums.AccountType;
 
 import com.company.boxinator.Models.Session;
 
 import com.company.boxinator.Models.User;
+import com.company.boxinator.Repositories.AuthTokenRepository;
 import com.company.boxinator.Repositories.UserRepository;
+import com.company.boxinator.GoogleAuth2FA.Google2FA;
 import com.company.boxinator.Utils.JwtUtil;
 import com.company.boxinator.Utils.SessionUtil;
 import com.company.boxinator.Utils.UserUtil;
@@ -25,19 +28,41 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    private AuthTokenRepository authTokenRepository;
 
     private UserUtil userUtil = new UserUtil();
+    private Google2FA google2FA = new Google2FA();
+
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     private JwtUtil jwtUtil = new JwtUtil();
     private SessionUtil sessionUtil = SessionUtil.getInstance();
 
+    @PostMapping("/google2fa")
+    public ResponseEntity<String> authenticate2fa(@RequestBody(required = false) String google2fa){
+        Google2FA google2FA = new Google2FA();
+        String code = google2FA.runGoogle2fa();
+
+
+        if(code.equals(google2fa)){
+            System.out.println("Entered code: " + google2fa);
+            System.out.println("Generated code: " + code);
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<Session> login(@RequestBody User userLogin) {
         Optional<User> user = userRepository.findByEmail(userLogin.getEmail());
 
         if (bCryptPasswordEncoder.matches(userLogin.getPassword(), user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
+
+            //Auth 2FA
+
             sessionUtil.addSession(user.get());
             return new ResponseEntity<>(sessionUtil.getSession(user.get().getId()).get(), HttpStatus.OK);
         }
@@ -131,7 +156,15 @@ public class UserController {
         if (!userData.isPresent()) {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             user.setAccountType(AccountType.REGISTERED_USER);
+
+            AuthToken authToken = new AuthToken();
+            String secret = google2FA.generateSecretKey();
+
             userRepository.save(user);
+            authToken.setToken(secret);
+            authToken.setUser(user);
+
+            authToken.setToken("");
             return ResponseEntity.status(HttpStatus.CREATED).body("A New user is registered!");
         }
         //Check if the email is registered with an user or an admin
