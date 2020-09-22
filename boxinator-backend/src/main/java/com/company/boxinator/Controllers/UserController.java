@@ -6,16 +6,19 @@ import com.company.boxinator.Models.Session;
 
 import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.UserRepository;
+import com.company.boxinator.Services.EmailService;
 import com.company.boxinator.Utils.JwtUtil;
 import com.company.boxinator.Utils.SessionUtil;
 import com.company.boxinator.Utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +28,9 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     private UserUtil userUtil = new UserUtil();
 
@@ -183,5 +189,18 @@ public class UserController {
     @GetMapping("/removesession/{session_id}")
     public void s(@PathVariable("session_id") Integer id) {
         sessionUtil.removeSession(id);
+    }
+    @GetMapping("/sendemail")
+    public ResponseEntity sendEmail(@RequestHeader("Authorization") String jwt){
+        Optional<User> user = userRepository.findById(jwtUtil.getJwtId(jwt));
+        if(!user.isPresent())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Couldnt find");
+
+        try{
+            emailService.sendAuthenticationEmail(user.get());
+        } catch (MailException | MalformedURLException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Check email");
     }
 }
