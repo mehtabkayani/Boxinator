@@ -3,8 +3,8 @@ POST http://localhost:8080/api/login
 Content-Type: application/json
 
 {
-  "email": "admin2@gmail.com",
-  "password": "password"
+  "email": "kayani@gmail.com",
+  "password": "adam"
 }
 
 ###LOGIN normal user
@@ -54,34 +54,6 @@ Content-Type: application/json
 ###POST Shipment as a Registered User
 POST http://localhost:8080/api/shipment
 Content-Type: application/json
-<<<<<<< HEAD
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MiwiaWF0IjoxNjAwNjkwNDU1LCJleHAiOjE2MDA2ODY4NTV9.SmambEY7WsrQzQnlLNC98PXT7dNgi5GTFTPPiwnKwEk
-=======
-//Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjE3LCJpYXQiOjE2MDA2ODk0MTAsImV4cCI6MTYwMDY4NTgxMH0.q7MuF8Lub-EHyip7ZN8RuRvARBYlztO0k-Sf6TvXZqI
->>>>>>> bbb0c878c0cbce49e43ef55d6e85fdd6f8c5149a
-
-{
-  "recieverName": "Adam",
-  "weight": 12.0,
-  "boxcolor": "Yellow",
-
-<<<<<<< HEAD
-=======
-  "user": {
-    "email": "ad@gmail.com"
-  },
->>>>>>> bbb0c878c0cbce49e43ef55d6e85fdd6f8c5149a
-  "country": {
-    "id": 2,
-    "countryCode": "NO",
-    "countryName": "Norway",
-    "multiplyerNumber": 2
-  }
-}
-
-###POST Shipment as a Registered User
-POST http://localhost:8080/api/shipment
-Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjE3LCJpYXQiOjE2MDA2OTEwNzEsImV4cCI6MTYwMDY4NzQ3MX0.Zsoa4PdglupwBVG5pC2CqLmYT2GVYGZZnl95hsYbHlQ
 
 {
@@ -95,3 +67,35 @@ Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoiQURNSU5JU1RSQVRPUiIs
     "multiplyerNumber": 2
   }
 }
+
+###Get shipments by shipment id as a USER
+GET http://localhost:8080/api/shipments/23
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MywiaWF0IjoxNjAwNjkyNDg2LCJleHAiOjE2MDA2ODg4ODZ9.EtHoUa0tZYHsgZULgqSGdUpbzvq2L8nYpUBGzoRYJWQ
+
+###Get shipments by cutomer id as a USER
+GET http://localhost:8080/api/shipments/customer/8
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MTQsImlhdCI6MTYwMDY5MzQwMCwiZXhwIjoxNjAwNjg5ODAwfQ.G_rxriF4k03cjOMMdgGf73LBP-doG91cCFir50G0rmM
+
+###Get details of a single completed shipment by shipment id
+GET http://localhost:8080/api/shipments/complete/26
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjEsImlhdCI6MTYwMDY5MjQ4NiwiZXhwIjoxNjAwNjg4ODg2fQ.oEoCnWo6lJgsUgrwKEnzrqsZt3QwNTSffSIReBZmLj8
+
+###Get details of a single completed shipment by customer id
+GET http://localhost:8080/api/shipments/customer/complete/8
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjExLCJpYXQiOjE2MDA2OTY5MTAsImV4cCI6MTYwMDY5MzMxMH0.-TQ47ywPlUVzNgskg3HwQtAMIFCbspsaW2J9mBiEqoA
+
+
+###Get shipment details by customer id and shipment id
+GET http://localhost:8080/api/shipments/8/26
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjcsImlhdCI6MTYwMDY5ODU2OSwiZXhwIjoxNjAwNjk0OTY5fQ.5nZIBItKrhj429YfgB7Vc65GnyPYbbdUpqOniYHaG0E
+
+
+###Delete shipment by shipment id
+DELETE http://localhost:8080/api/shipments/28
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjEwLCJpYXQiOjE2MDA3NTc2NjEsImV4cCI6MTYwMDc1NDA2MX0.NcwxuBF483M8mIbLhUBI1Ilj543iXHyacZgX7OuNbQ0
