@@ -18,7 +18,7 @@ public class UserUtil {
         newUser.setLastname(user.getLastname());
         newUser.setZipcode(user.getZipcode());
         newUser.setAccountType(AccountType.REGISTERED_USER);
-        newUser.setPassword("test");
+        newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return newUser;
     }
 }
