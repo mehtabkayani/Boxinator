@@ -1,24 +1,24 @@
 package com.company.boxinator.Controllers;
-
 import com.company.boxinator.Models.AuthToken;
 import com.company.boxinator.Models.Enums.AccountType;
-
 import com.company.boxinator.Models.Session;
-
 import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.AuthTokenRepository;
 import com.company.boxinator.Repositories.UserRepository;
-import com.company.boxinator.GoogleAuth2FA.Google2FA;
+import com.company.boxinator.Services.Google2FAService;
+import com.company.boxinator.Services.EmailService;
 import com.company.boxinator.Utils.JwtUtil;
 import com.company.boxinator.Utils.SessionUtil;
 import com.company.boxinator.Utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +31,13 @@ public class UserController {
     @Autowired
     private AuthTokenRepository authTokenRepository;
 
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private Google2FAService google2FAService;
+
     private UserUtil userUtil = new UserUtil();
-    private Google2FA google2FA = new Google2FA();
 
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -41,13 +46,13 @@ public class UserController {
     private SessionUtil sessionUtil = SessionUtil.getInstance();
 
     @PostMapping("/google2fa")
-    public ResponseEntity<String> authenticate2fa(@RequestBody(required = false) String google2fa){
-        Google2FA google2FA = new Google2FA();
-        String code = google2FA.runGoogle2fa();
+    public ResponseEntity<String> authenticate2fa(@RequestBody(required = false) AuthToken authToken){
+        Google2FAService google2FAService = new Google2FAService();
+
+        String code = google2FAService.runGoogle2fa(authToken.getToken());
 
 
-        if(code.equals(google2fa)){
-            System.out.println("Entered code: " + google2fa);
+        if(code.equals(authToken.getToken())){
             System.out.println("Generated code: " + code);
             return new ResponseEntity<>(HttpStatus.OK);
 
@@ -56,12 +61,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Session> login(@RequestBody User userLogin) {
+    public ResponseEntity<Session> login(@RequestBody User userLogin, @RequestHeader("Authorization") String code) {
         Optional<User> user = userRepository.findByEmail(userLogin.getEmail());
+        Optional<AuthToken> Token = authTokenRepository.findByUserId(user.get().getId());
 
-        if (bCryptPasswordEncoder.matches(userLogin.getPassword(), user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
+        String sixDigitCode = google2FAService.runGoogle2fa(Token.get().getToken());
 
-            //Auth 2FA
+
+        if (sixDigitCode.equals(code) && bCryptPasswordEncoder.matches(userLogin.getPassword(),user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
 
             sessionUtil.addSession(user.get());
             return new ResponseEntity<>(sessionUtil.getSession(user.get().getId()).get(), HttpStatus.OK);
@@ -156,15 +163,15 @@ public class UserController {
         if (!userData.isPresent()) {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             user.setAccountType(AccountType.REGISTERED_USER);
+            userRepository.save(user);
 
             AuthToken authToken = new AuthToken();
-            String secret = google2FA.generateSecretKey();
-
-            userRepository.save(user);
+            String secret = google2FAService.generateSecretKey();
             authToken.setToken(secret);
             authToken.setUser(user);
+            authTokenRepository.save(authToken);
 
-            authToken.setToken("");
+            emailService.sendLoginTwoFactorCode(user,secret);
             return ResponseEntity.status(HttpStatus.CREATED).body("A New user is registered!");
         }
         //Check if the email is registered with an user or an admin
@@ -216,5 +223,18 @@ public class UserController {
     @GetMapping("/removesession/{session_id}")
     public void s(@PathVariable("session_id") Integer id) {
         sessionUtil.removeSession(id);
+    }
+    @GetMapping("/sendemail")
+    public ResponseEntity sendEmail(@RequestHeader("Authorization") String jwt){
+        Optional<User> user = userRepository.findById(jwtUtil.getJwtId(jwt));
+        if(!user.isPresent())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Couldnt find");
+
+        try{
+            emailService.sendAuthenticationEmail(user.get());
+        } catch (MailException | MalformedURLException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Check email");
     }
 }
