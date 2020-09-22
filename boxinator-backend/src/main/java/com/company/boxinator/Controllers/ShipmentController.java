@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ShipmentController {
@@ -252,16 +251,7 @@ public class ShipmentController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-
         return new ResponseEntity<>(HttpStatus.OK);
-
-
-
-        //FORTSÄTT HÄR PÅ MÅNDAG :)
-
-        //This endpoint is used to update a shipment, but a non-Administrator user may only cancel a shipment.
-        // An administrator can make any changes they wish to a shipment.
-        // The administrator will use this to mark a shipment as completed.2.
 
     }
 
