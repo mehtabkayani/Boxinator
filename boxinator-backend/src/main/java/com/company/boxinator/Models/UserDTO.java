@@ -1,37 +1,28 @@
 package com.company.boxinator.Models;
 
 public class UserDTO {
-    private Integer id;
-    private String firstname;
-    private String lastname;
     private String email;
+    private String password;
+    private String code;
 
 
     public UserDTO() {
     }
 
-    public Integer getId() {
-        return id;
+    public String getPassword() {
+        return password;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getCode() {
+        return code;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getEmail() {
