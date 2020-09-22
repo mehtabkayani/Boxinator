@@ -8,7 +8,7 @@ import axios from "axios";
 
 const MainPage = () => {
     const [shipments, setShipments]= useState([]);
-    const accountId = localStorage.getItem('id')
+    const accountId = localStorage.getItem('id');
 
     useEffect(()=>{
          axios.get('http://localhost:8080/api/shipment/ '+ accountId, { headers: {'Authorization': localStorage.getItem('token')} })
@@ -19,7 +19,6 @@ const MainPage = () => {
                 .catch(err => {
                     console.log(err);
                 })
-
     })
 
     const rows = shipments.map(shipment => (
@@ -28,12 +27,10 @@ const MainPage = () => {
                 <td >{shipment.recieverName}</td>
                 <td >{shipment.weight}</td>
                 <td >{shipment.boxcolor}</td>
-                <td >{shipment.creation_date}</td>
+                <td >{shipment.creation_date}</td>{/*Fix date format*/}
                 <td >{shipment.country.countryName}</td>
                 <td >{shipment.shipmentStatus}</td>
                 <td>{shipment.shipmentCost}</td>
-
-
             </tr>
         ));
     return (

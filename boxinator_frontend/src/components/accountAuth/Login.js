@@ -41,29 +41,6 @@ const Login = ({setAuth}) => {
             console.error(err.message);
         }
     };
- /* const onSubmitForm = async e => {
-
-        e.preventDefault();
-
-        const body = {password, email};
-        fetch("http://localhost:8080/api/login",
-            {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(body)
-            }).then((res) => {
-            res.json().then((result) => {
-                console.log('result', result)
-                localStorage.setItem('login', JSON.stringify({
-                        login: true,
-                        token: result.token
-                    }))
-            })
-        })
-    }*/
 
     const onEmailChanged = ev => setEmail(ev.target.value.trim());
     const onPasswordChanged = ev => setPassword(ev.target.value.trim());

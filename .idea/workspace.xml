@@ -24,11 +24,13 @@
   <component name="ChangeListManager">
     <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Unversioned files">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/CountryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/CountryController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/ShipmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/ShipmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/MainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/MainPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/guest/AddShipmentGuest.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/guest/AddShipmentGuest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/NewShipment.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/NewShipment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,6 +89,17 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="boxinator" />
       <option name="VM_PARAMETERS" />
@@ -163,7 +176,7 @@
       <updated>1600079701765</updated>
       <workItem from="1600079702959" duration="16121000" />
       <workItem from="1600414522333" duration="21088000" />
-      <workItem from="1600669503680" duration="9131000" />
+      <workItem from="1600669503680" duration="41561000" />
     </task>
     <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
       <created>1600094762706</created>
@@ -221,7 +234,49 @@
       <option name="project" value="LOCAL" />
       <updated>1600439524978</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Get shipments for inlogged user, save the token with user id in the localstorage">
+      <created>1600681844264</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1600681844266</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Fixed the issue with account id">
+      <created>1600687753419</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1600687753421</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Fixed the issue with account id">
+      <created>1600694002221</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1600694002223</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Get user info but not completed, get user-shipments, And get all the shipments in the admin page but it is not completed some parts need to be fixed">
+      <created>1600697544062</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1600697544064</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Fixed register and view user account in a better way">
+      <created>1600763665969</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1600763665969</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Added AllUsers component witch renders all the users(only admin kan view them), fixed register method, Deleted code that is not used">
+      <created>1600776186113</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1600776186115</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,7 +303,12 @@
     <MESSAGE value="Added two components, added completed, not completed radio" />
     <MESSAGE value="Fixed token in frontend" />
     <MESSAGE value="Fixed login authentication with jwt token, trying to get the users shipments and render them" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed login authentication with jwt token, trying to get the users shipments and render them" />
+    <MESSAGE value="Get shipments for inlogged user, save the token with user id in the localstorage" />
+    <MESSAGE value="Fixed the issue with account id" />
+    <MESSAGE value="Get user info but not completed, get user-shipments, And get all the shipments in the admin page but it is not completed some parts need to be fixed" />
+    <MESSAGE value="Fixed register and view user account in a better way" />
+    <MESSAGE value="Added AllUsers component witch renders all the users(only admin kan view them), fixed register method, Deleted code that is not used" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added AllUsers component witch renders all the users(only admin kan view them), fixed register method, Deleted code that is not used" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -259,6 +319,10 @@
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
     <state x="-1194" y="382" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600240644769" />
+    <state x="-1337" y="212" width="1040" height="744" key="DiffContextDialog" timestamp="1600688756931">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1337" y="212" width="1040" height="744" key="DiffContextDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600688756931" />
     <state x="-1180" y="335" key="FileChooserDialogImpl" timestamp="1600421315957">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
@@ -303,14 +367,22 @@
     </state>
     <state width="1237" height="247" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690496" />
     <state width="1877" height="139" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171530" />
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1600439546019">
+    <state x="-1204" y="282" key="RollbackChangesDialog" timestamp="1600688768629">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600439546019" />
+    <state x="-1204" y="282" key="RollbackChangesDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600688768629" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1600776204774">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600776204774" />
     <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1600107083819" />
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600668436136" />
+    <state x="-1297" y="255" key="search.everywhere.popup" timestamp="1600768038883">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1297" y="255" key="search.everywhere.popup/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600768038883" />
   </component>
 </project>
