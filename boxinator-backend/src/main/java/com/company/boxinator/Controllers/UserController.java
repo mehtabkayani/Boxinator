@@ -22,8 +22,8 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 public class UserController {
     @Autowired
@@ -126,9 +126,9 @@ public class UserController {
 
 
     }
-
     @PutMapping("/user/{id}")
     public ResponseEntity updateUserById(@RequestBody User user, @PathVariable("id") Integer id, @RequestHeader("Authorization") String jwt) {
+        System.out.println("In updateUserById");
 
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

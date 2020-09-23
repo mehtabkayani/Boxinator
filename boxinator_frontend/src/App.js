@@ -22,7 +22,6 @@ import AllUsers from "./components/admin/AllUsers";
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-
     const setAuth = boolean => {
         setIsAuthenticated(boolean);
     };
