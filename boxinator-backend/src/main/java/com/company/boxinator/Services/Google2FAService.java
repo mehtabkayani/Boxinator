@@ -16,7 +16,7 @@ public class Google2FAService {
         while (true) {
             String code = getTOTPCode(secretKey);
             if (!code.equals(lastCode)) {
-                System.out.println(code);
+                System.out.println("Code: " + code);
                 return code;
             }
             lastCode = code;
@@ -34,7 +34,7 @@ public class Google2FAService {
         return base32.encodeToString(bytes);
     }
 
-    public static String getTOTPCode(String secretKey) {
+    public String getTOTPCode(String secretKey) {
         Base32 base32 = new Base32();
         byte[] bytes = base32.decode(secretKey);
         String hexKey = Hex.encodeHexString(bytes);

@@ -25,7 +25,7 @@ Content-Type: application/json
 {
   "firstname": "delete",
   "lastname": "Doe",
-  "email": "stjernqvist.david@gmail.com",
+  "email": "mehtab.kayani@gmail.com",
   "password": "password",
   "contactNumber": "0786785645",
   "countryOfResidence": "Sweden",
