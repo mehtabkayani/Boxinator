@@ -45,9 +45,9 @@ const NewShipment = () => {
         }
     };
 
-      const options = country.map(country => (
+      const options = () => country.map(country => (
 
-          <option key={country.id} value={country.countryName} >{country.countryName}</option>
+          <option key={country.id} value={country}>{country.countryName}</option>
 
     //{ value: country.countryName , label: country.countryName}
         ))
@@ -75,7 +75,7 @@ const NewShipment = () => {
                     <Form.Label>Box colour: </Form.Label>
                     <Form.Control type="color" onChange={onBoxColourChange}/>
                 </div>
-                <select>
+                <select onChange={onDestinationCountryChange}>
                     {options}
                 </select>
 
