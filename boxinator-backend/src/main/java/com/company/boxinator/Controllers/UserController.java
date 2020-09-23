@@ -61,14 +61,25 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Session> login(@RequestBody User userLogin, @RequestHeader("Authorization") String code){
+
         Optional<User> user = userRepository.findByEmail(userLogin.getEmail());
+        if(!user.isPresent())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
         Optional<AuthToken> Token = authTokenRepository.findByUserId(user.get().getId());
+        if(!Token.isPresent())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         String sixDigitCode = google2FAService.runGoogle2fa(Token.get().getToken());
+        String test = google2FAService.getTOTPCode(Token.get().getToken());
+        System.out.println("sixDigitCode: " + sixDigitCode);
+        System.out.println("Auth code: " + code);
 
+        System.out.println(sixDigitCode.equals(code));
 
-        if (sixDigitCode.equals(code) && bCryptPasswordEncoder.matches(userLogin.getPassword(),user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
-
+        //sixDigitCode.equals(code) && ADD THIS TO IF STATEMENT LATER
+        if (bCryptPasswordEncoder.matches(userLogin.getPassword(),user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
+            System.out.println("In if statement");
             sessionUtil.addSession(user.get());
             return new ResponseEntity<>(sessionUtil.getSession(user.get().getId()).get(), HttpStatus.OK);
         }

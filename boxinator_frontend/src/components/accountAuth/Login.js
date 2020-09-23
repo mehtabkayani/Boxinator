@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import  {Link} from 'react-router-dom';
 import {Form, Button} from "react-bootstrap";
-
+import axios from 'axios';
 
 
 
@@ -12,44 +12,30 @@ const Login = ({setAuth}) => {
     const [code, setCode] = useState('');
 
 
+
+
     const onSubmitForm = async e => {
         e.preventDefault();
-        try {
-            const body = { password, email };
-            const response = await fetch(
-                "http://localhost:8080/api/login",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json",
-                        "Authorization": code,
-                        "Access-Control-Allow-Origin": "*"
-                    },
-                    body: JSON.stringify(body)
-                }
-            );
-            const parseRes = await response.json();
-            console.log("result", parseRes);
 
-            if ( parseRes.token) {
-                localStorage.setItem('token', parseRes.token);
-                localStorage.setItem('id', parseRes.account_id);
-                setAuth(true);
+            const body = { password, email }
 
-            } else {
-                setAuth(false);
-            }
-
-        } catch (err) {
-            console.error(err.message);
-        }
+            await axios.post("http://localhost:8080/api/login", body, { headers: {'Authorization': code} })
+            .then(res=>{
+               localStorage.setItem('id', res.data.account_id);
+               localStorage.setItem('token', res.data.token);
+            })
+            .catch(err => {
+                console.log("Error: ", err);
+            })
     };
+
 
     const onEmailChanged = e => setEmail(e.target.value.trim());
     const onPasswordChanged = e => setPassword(e.target.value.trim());
-    const onCodeChange = (e) => {
+    const onCodeChanged = (e) => {
         setCode(e.target.value);
     }
+
 
 
     return (
@@ -69,7 +55,9 @@ const Login = ({setAuth}) => {
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Code</Form.Label>
-                    <Form.Control type="text" placeholder="6-digit code" onChange={onCodeChange}/>
+
+                    <Form.Control type="text" placeholder="6-digit code" onChange={onCodeChanged}/>
+
                 </Form.Group>
                 <br></br>
                 <div>

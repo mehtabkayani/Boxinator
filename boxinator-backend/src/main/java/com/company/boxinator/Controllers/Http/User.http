@@ -23,8 +23,13 @@ POST http://localhost:8080/api/user
 Content-Type: application/json
 
 {
+<<<<<<< HEAD
   "firstname": "mehtab",
   "lastname": "kayani",
+=======
+  "firstname": "delete",
+  "lastname": "Doe",
+>>>>>>> 3715277208972dfd4306260f2bdfa14ca0f71262
   "email": "mehtab.kayani@gmail.com",
   "password": "password",
   "contactNumber": "0786785645",
