@@ -4,7 +4,6 @@ import com.company.boxinator.Models.Enums.AccountType;
 import com.company.boxinator.Models.Enums.ShipmentStatus;
 import com.company.boxinator.Models.Shipment;
 import com.company.boxinator.Models.User;
-import com.company.boxinator.Models.UserDTO;
 import com.company.boxinator.Repositories.ShipmentRepository;
 import com.company.boxinator.Repositories.UserRepository;
 
@@ -17,7 +16,7 @@ public class ShipmentUtil {
     public Shipment setShipment(Shipment shipment, User user){
         Shipment newShipment = new Shipment();
         newShipment.setUser(user);
-        newShipment.setRecieverName(shipment.getRecieverName());
+        newShipment.setReceiverName(shipment.getReceiverName());
         newShipment.setBoxcolor(shipment.getBoxcolor());
         newShipment.setCountry(shipment.getCountry());
         newShipment.setWeight(shipment.getWeight());
@@ -36,7 +35,7 @@ public class ShipmentUtil {
     }
     public Shipment updateShipment(Shipment oldShipment, Shipment newShipment, User user){
         newShipment.setUser(user);
-        newShipment.setRecieverName(oldShipment.getRecieverName());
+        newShipment.setReceiverName(oldShipment.getReceiverName());
         newShipment.setBoxcolor(oldShipment.getBoxcolor());
         newShipment.setCountry(oldShipment.getCountry());
         newShipment.setWeight(oldShipment.getWeight());
