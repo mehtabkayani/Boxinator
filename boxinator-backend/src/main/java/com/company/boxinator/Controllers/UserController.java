@@ -61,8 +61,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Session> login(@RequestBody User userLogin, @RequestHeader("Authorization") String code) {
-
+    public ResponseEntity<Session> login(@RequestBody User userLogin, @RequestHeader("Authorization") String code){
 
         Optional<User> user = userRepository.findByEmail(userLogin.getEmail());
         if(!user.isPresent())

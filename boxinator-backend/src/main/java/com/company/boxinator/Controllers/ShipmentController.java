@@ -1,11 +1,12 @@
 package com.company.boxinator.Controllers;
 
 import com.company.boxinator.ErrorHandling.HandleError;
+import com.company.boxinator.Models.Country;
 import com.company.boxinator.Models.Enums.AccountType;
 import com.company.boxinator.Models.Enums.ShipmentStatus;
 import com.company.boxinator.Models.Shipment;
 import com.company.boxinator.Models.User;
-import com.company.boxinator.Models.UserDTO;
+import com.company.boxinator.Repositories.CountryRepository;
 import com.company.boxinator.Repositories.ShipmentRepository;
 import com.company.boxinator.Repositories.UserRepository;
 import com.company.boxinator.Utils.JwtUtil;
@@ -29,6 +30,8 @@ public class ShipmentController {
     ShipmentRepository shipmentRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    CountryRepository countryRepository;
 
     private SessionUtil sessionUtil = SessionUtil.getInstance();
 
@@ -88,6 +91,16 @@ public class ShipmentController {
     @PostMapping("/shipment")
     public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader(value = "Authorization",required = false) String jwt) {
         if(jwt == null) {
+            System.out.println(shipment.getUser().getEmail());
+            System.out.println(shipment.getCountry().getId());
+            System.out.println(shipment.getBoxcolor());
+            System.out.println(shipment.getReceiverName());
+            System.out.println(shipment.getWeight());
+            Optional<Country> country = countryRepository.findById(shipment.getCountry().getId());
+            if(!country.isPresent()){
+                return null;
+            }
+            shipment.setCountry(country.get());
             if (shipment.getUser().getEmail() == null || shipment.getCountry() == null) {
                 return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a email or country");
             }
@@ -104,7 +117,7 @@ public class ShipmentController {
                 } else {
                     shipmentRepository.save(shipmentUtil.setShipment(shipment, userRepository.findByEmail(shipment.getUser().getEmail()).get()));
                 }
-                return ResponseEntity.status(HttpStatus.CREATED).body("New Guest added and shipment created");
+                return ResponseEntity.status(HttpStatus.CREATED).body("Your shipment order has been placed!");
             }
         }
 
@@ -175,7 +188,7 @@ public class ShipmentController {
         List<Shipment> result = userListOfShipment.map(shipment -> {
             Shipment shipmentDetail = new Shipment();
             shipmentDetail.setId(shipment.getId());
-            shipmentDetail.setRecieverName(shipment.getRecieverName());
+            shipmentDetail.setReceiverName(shipment.getReceiverName());
             shipmentDetail.setWeight(shipment.getWeight());
             shipmentDetail.setBoxcolor(shipment.getBoxcolor());
             shipmentDetail.setCreation_date(shipment.getCreation_date());
