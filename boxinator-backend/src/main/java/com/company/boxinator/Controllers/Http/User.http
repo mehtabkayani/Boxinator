@@ -10,10 +10,10 @@ Content-Type: application/json
 ###LOGIN with Google2FA user
 POST http://localhost:8080/api/login
 Content-Type: application/json
-Authorization: 465040
+Authorization: 278027
 
 {
-  "email": "stjernqvist.david@gmail.com",
+  "email": "mehtab.kayani@gmail.com",
   "password": "password"
 
 }
@@ -23,9 +23,9 @@ POST http://localhost:8080/api/user
 Content-Type: application/json
 
 {
-  "firstname": "delete",
-  "lastname": "Doe",
-  "email": "stjernqvist.david@gmail.com",
+  "firstname": "mehtab",
+  "lastname": "kayani",
+  "email": "mehtab.kayani@gmail.com",
   "password": "password",
   "contactNumber": "0786785645",
   "countryOfResidence": "Sweden",

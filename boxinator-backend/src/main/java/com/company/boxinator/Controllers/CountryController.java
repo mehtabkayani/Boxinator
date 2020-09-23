@@ -13,9 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/settings")
-@CrossOrigin(origins = "http://localhost:3000")
 public class CountryController {
 
     @Autowired
@@ -26,7 +24,7 @@ public class CountryController {
     private SessionUtil sessionUtil = SessionUtil.getInstance();
 
     @GetMapping("/countries")
-    public List<Country> getCountries(@RequestHeader("Authorization") String jwt) {
+    public List<Country> getCountries() {
         return countryRepository.findAll();
     }
 
