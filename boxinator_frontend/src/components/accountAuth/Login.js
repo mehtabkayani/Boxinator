@@ -18,7 +18,8 @@ const Login = ({setAuth}) => {
 
             await axios.post("http://localhost:8080/api/login", body, { headers: {'Authorization': code} })
             .then(res=>{
-                console.log("Res ", res);
+               localStorage.setItem('id', res.data.account_id);
+               localStorage.setItem('token', res.data.token);
             })
             .catch(err => {
                 console.log("Error: ", err);
