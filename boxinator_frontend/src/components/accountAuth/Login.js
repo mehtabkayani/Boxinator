@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import  { Link} from 'react-router-dom';
+import  {Link} from 'react-router-dom';
 import {Form, Button} from "react-bootstrap";
 
 
@@ -9,6 +9,7 @@ const Login = ({setAuth}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [code, setCode] = useState('');
 
 
     const onSubmitForm = async e => {
@@ -20,7 +21,9 @@ const Login = ({setAuth}) => {
                 {
                     method: "POST",
                     headers: {
-                        "Content-type": "application/json"
+                        "Content-type": "application/json",
+                        "Authorization": code,
+                        "Access-Control-Allow-Origin": "*"
                     },
                     body: JSON.stringify(body)
                 }
@@ -42,8 +45,11 @@ const Login = ({setAuth}) => {
         }
     };
 
-    const onEmailChanged = ev => setEmail(ev.target.value.trim());
-    const onPasswordChanged = ev => setPassword(ev.target.value.trim());
+    const onEmailChanged = e => setEmail(e.target.value.trim());
+    const onPasswordChanged = e => setPassword(e.target.value.trim());
+    const onCodeChange = (e) => {
+        setCode(e.target.value);
+    }
 
 
     return (
@@ -60,6 +66,10 @@ const Login = ({setAuth}) => {
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" onChange={onPasswordChanged}/>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Code</Form.Label>
+                    <Form.Control type="text" placeholder="6-digit code" onChange={onCodeChange}/>
                 </Form.Group>
                 <br></br>
                 <div>
