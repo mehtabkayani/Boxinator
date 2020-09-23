@@ -5,7 +5,12 @@ import Col from "react-bootstrap/Col";
 import axios from "axios";
 
 const UserAccount = () => {
-    const [userInfo, setUserInfo] = useState([])
+    const [userInfo, setUserInfo] = useState({})
+
+
+    const [firstname, setFirstName] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const accountId = localStorage.getItem('id');
 
@@ -18,8 +23,11 @@ const UserAccount = () => {
             .catch(err => {
                 console.log(err);
             })
-    })
+    }, [accountId])
     const onUserInfoChanged = ev => setUserInfo(ev.target.value.trim());
+    const onPasswordChanged = ev => setPassword(ev.target.value.trim());
+    const onConfirmPasswordChanged = ev => setConfirmPassword(ev.target.value.trim());
+
     return (
 
         <div className="accountContainer">
@@ -66,17 +74,17 @@ const UserAccount = () => {
                 <Form.Row>
                     <Form.Group as={Col} controlId="formGridPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="password"/>
+                        <Form.Control type="password" placeholder="password" onChange={onPasswordChanged}/>
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridPassword">
                         <Form.Label>Repeat Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password"/>
+                        <Form.Control type="password" placeholder="Password" onChange={onConfirmPasswordChanged}/>
                     </Form.Group>
                 </Form.Row>
                 <br></br>
                 <div>
-                    <Button variant="secondary">Save changes</Button>
+                    <Button type="submit" variant="secondary">Save changes</Button>
                 </div>
             </Form>
             <br></br>
