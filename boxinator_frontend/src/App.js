@@ -56,7 +56,7 @@ console.log('isAdmin test',isAdmin)
     return (
         <div className="App">
             <Router>
-                <NavBar></NavBar>
+                <NavBar isAuthenticated={userInfo.accountType} setAuth={setAuth}></NavBar>
                 <h1>{userInfo.accountType}</h1>
                 <Switch>
 
