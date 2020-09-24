@@ -22,7 +22,6 @@ import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -72,7 +71,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         String sixDigitCode = google2FAService.runGoogle2fa(Token.get().getToken());
-        String test = google2FAService.getTOTPCode(Token.get().getToken());
+
         System.out.println("sixDigitCode: " + sixDigitCode);
         System.out.println("Auth code: " + code);
 
