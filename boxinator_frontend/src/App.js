@@ -20,6 +20,8 @@ import CountryCost from "./components/admin/CountryCost";
 import AllUsers from "./components/admin/AllUsers";
 import axios from "axios";
 
+import SpecificShipment from './components/admin/SpecificShipment';
+
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userInfo, setUserInfo] = useState({});
@@ -35,6 +37,8 @@ function App() {
                 console.log(err);
             })
     }, [accountId])
+
+
 
 
     const setAuth = boolean => {
@@ -115,7 +119,7 @@ function App() {
                             return <Redirect to="/login"/>
                         }
                     }}/>
-
+                    <Route path="/specificShipment" component={SpecificShipment} />
                     <Route path="/addShipmentGuest" component={AddShipmentGuest}/>
                     <Route path="/" component={HomePage}/>
 

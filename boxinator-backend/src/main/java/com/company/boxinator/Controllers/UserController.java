@@ -69,7 +69,7 @@ public class UserController {
         Optional<AuthToken> Token = authTokenRepository.findByUserId(user.get().getId());
         if(!Token.isPresent())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
+        System.out.println("Generated code from token: " + Token.get().getToken());
         String sixDigitCode = google2FAService.runGoogle2fa(Token.get().getToken());
 
         System.out.println("sixDigitCode: " + sixDigitCode);
