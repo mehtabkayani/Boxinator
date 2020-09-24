@@ -79,7 +79,7 @@ public class UserController {
         System.out.println(sixDigitCode.equals(code));
 
         //sixDigitCode.equals(code) && ADD THIS TO IF STATEMENT LATER
-        if (bCryptPasswordEncoder.matches(userLogin.getPassword(),user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
+        if (sixDigitCode.equals(code) && bCryptPasswordEncoder.matches(userLogin.getPassword(),user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
             System.out.println("In if statement");
             sessionUtil.addSession(user.get());
             return new ResponseEntity<>(sessionUtil.getSession(user.get().getId()).get(), HttpStatus.OK);

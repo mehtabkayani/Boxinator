@@ -15,7 +15,7 @@ const UserAccount = () => {
     const accountId = localStorage.getItem('id');
 
     useEffect(()=>{
-        axios.get('http://localhost:8080/api/user/ '+ accountId, { headers: {'Authorization': localStorage.getItem('token')} })
+        axios.get(`http://localhost:8080/api/user/${accountId}`, { headers: {'Authorization': localStorage.getItem('token')} })
             .then(res=>{
                 console.log(res.data);
                 setUserInfo(res.data)
@@ -33,13 +33,9 @@ const UserAccount = () => {
             setErrorMessage('');
 
             const body = {firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, zipcode: userInfo.zipcode,
-            contactNumber: userInfo.contactNumber, password: userInfo.password};
+            contactNumber: userInfo.contactNumber, dateOfBirth: userInfo.dateOfBirth, countryOfResidence: userInfo.countryOfResidence};
 
-            console.log("User: ", userInfo);
-            console.log("Body: ", body);
-
-            // setUserInfo(prevState => ({...prevState, ["password"]: password)})))
-            await axios.put(`http://localhost:8080/api/login/${userInfo.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
+            await axios.put(`http://localhost:8080/api/user/${userInfo.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
             .then(res=>{
                console.log(res);
             })
@@ -84,7 +80,7 @@ const UserAccount = () => {
                 </Form.Row>
                 <div>
                     <label>Date of birth: </label>
-                    <input name="dateOfBirth" type="text" placeholder={userInfo.dateOfBirth} value={userInfo.dateOfBirth} onChange={onUserInfoChanged}/>
+                    <input name="dateOfBirth" type="date" placeholder={userInfo.dateOfBirth} value={userInfo.dateOfBirth} onChange={onUserInfoChanged}/>
                 </div>
                 <Form.Row>
                     <Form.Group controlId="formGridAddress">
@@ -105,12 +101,12 @@ const UserAccount = () => {
                 <Form.Row>
                     <Form.Group as={Col} controlId="formGridPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="password" onChange={onPasswordChanged}/>
+                        <Form.Control type="password" placeholder="Enter password..." onChange={onPasswordChanged}/>
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="formGridPassword">
                         <Form.Label>Repeat Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" onChange={onConfirmPasswordChanged}/>
+                        <Form.Control type="password" placeholder="Confirm password..." onChange={onConfirmPasswordChanged}/>
                     </Form.Group>
                 </Form.Row>
                 <div>
