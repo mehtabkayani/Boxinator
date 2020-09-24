@@ -25,7 +25,6 @@ const UserAccount = () => {
             })
     }, [accountId])
 
-
     const onSubmitForm = async e => {
         e.preventDefault();
 
@@ -51,6 +50,7 @@ const UserAccount = () => {
         const {name, value} = e.target;
         setUserInfo(prevState => ({...prevState, [name]: value}));
     };
+
 
     const onPasswordChanged = ev => setPassword(ev.target.value.trim());
     const onConfirmPasswordChanged = ev => setConfirmPassword(ev.target.value.trim());
