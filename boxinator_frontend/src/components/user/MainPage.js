@@ -11,7 +11,15 @@ const MainPage = () => {
     const accountId = localStorage.getItem('id');
 
     useEffect(()=>{
-         axios.get('http://localhost:8080/api/shipment/ '+ accountId, { headers: {'Authorization': localStorage.getItem('token')} })
+         axios.get('http://localhost:8080/api/shipment/ '+ accountId, { 
+             headers: 
+             {
+                'Access-Control-Allow-Origin' : '*',
+                'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                 'Access-Control-Allow-Credentials':true,
+                 'crossorigin':true,
+                 'Authorization': localStorage.getItem('token')
+                }})
                 .then(res=>{
                     console.log(res.data);
                     setShipments(res.data)
@@ -24,7 +32,7 @@ const MainPage = () => {
     const rows = shipments.map(shipment => (
 
             <tr key={shipment.id}>
-                <td >{shipment.recieverName}</td>
+                <td >{shipment.receiverName}</td>
                 <td >{shipment.weight}</td>
                 <td >{shipment.boxcolor}</td>
                 <td >{shipment.creation_date}</td>{/*Fix date format*/}

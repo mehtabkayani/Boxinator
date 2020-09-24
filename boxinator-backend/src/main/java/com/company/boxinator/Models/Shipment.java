@@ -18,7 +18,7 @@ public class Shipment {
     public Integer id;
 
     @Column
-    private String recieverName;
+    private String receiverName;
 
     @Column
     private float weight;
@@ -49,18 +49,18 @@ public class Shipment {
     public Shipment() {
     }
 
-    public Shipment(String recieverName, float weight, String boxcolor, User user, Country country) {
+    public Shipment(String receiverName, float weight, String boxcolor, User user, Country country) {
 
-        this.recieverName = recieverName;
+        this.receiverName = receiverName;
         this.weight = weight;
         this.boxcolor = boxcolor;
         this.country = country;
         this.user = user;
     }
 
-    public Shipment(Integer id, String recieverName, float weight, String boxcolor, LocalDateTime creation_date, ShipmentStatus shipmentStatus, double shipmentCost, Country country) {
+    public Shipment(Integer id, String receiverName, float weight, String boxcolor, LocalDateTime creation_date, ShipmentStatus shipmentStatus, double shipmentCost, Country country) {
         this.id = id;
-        this.recieverName = recieverName;
+        this.receiverName = receiverName;
         this.weight = weight;
         this.boxcolor = boxcolor;
         this.creation_date = creation_date;
@@ -78,12 +78,12 @@ public class Shipment {
         this.id = id;
     }
 
-    public String getRecieverName() {
-        return recieverName;
+    public String getReceiverName() {
+        return receiverName;
     }
 
-    public void setRecieverName(String recieverName) {
-        this.recieverName = recieverName;
+    public void setReceiverName(String recieverName) {
+        this.receiverName = recieverName;
     }
 
     public float getWeight() {
