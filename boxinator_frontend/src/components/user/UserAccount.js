@@ -24,6 +24,7 @@ const UserAccount = () => {
                 console.log(err);
             })
     }, [accountId])
+
     const onUserInfoChanged = ev => setUserInfo(ev.target.value.trim());
     const onPasswordChanged = ev => setPassword(ev.target.value.trim());
     const onConfirmPasswordChanged = ev => setConfirmPassword(ev.target.value.trim());

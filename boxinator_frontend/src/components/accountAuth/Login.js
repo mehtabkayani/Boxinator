@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 
-const Login = ({setAuth}) => {
+const Login = ({setAuth}, props) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,8 +21,14 @@ const Login = ({setAuth}) => {
 
             await axios.post("http://localhost:8080/api/login", body, { headers: {'Authorization': code} })
             .then(res=>{
+                console.log("token", res)
                localStorage.setItem('id', res.data.account_id);
                localStorage.setItem('token', res.data.token);
+               if(res.data.token && res.data.account_id){
+                   setAuth(true);
+               }else{
+                   setAuth(false);
+               }
             })
             .catch(err => {
                 console.log("Error: ", err);
