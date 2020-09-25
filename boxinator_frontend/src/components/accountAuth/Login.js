@@ -4,16 +4,11 @@ import {Form, Button} from "react-bootstrap";
 import axios from 'axios';
 import history from '../../history';
 
-
-
-const Login = ({setAuth}) => {
+const Login = ({setAuth, getRouts}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [code, setCode] = useState('');
-
-
-
 
     const onSubmitForm = async e => {
         e.preventDefault();
@@ -22,11 +17,22 @@ const Login = ({setAuth}) => {
 
             await axios.post("http://localhost:8080/api/login", body, { headers: {'Authorization': code} })
             .then(res=>{
+                console.log("token", res)
                localStorage.setItem('id', res.data.account_id);
                localStorage.setItem('token', res.data.token);
-                window.location = '/mainPage';
+
             // history.push('/mainPage')
             
+               if(res.data.token && res.data.account_id){
+                   getRouts(res.data.account_id);
+                   setAuth(true);
+                   //window.location = '/mainPage';
+
+               }else{
+                   setAuth(false);
+               }
+
+
             })
             .catch(err => {
                 console.log("Error: ", err);
@@ -39,8 +45,6 @@ const Login = ({setAuth}) => {
     const onCodeChanged = (e) => {
         setCode(e.target.value);
     }
-
-
 
     return (
         <div className="loginContainer">
