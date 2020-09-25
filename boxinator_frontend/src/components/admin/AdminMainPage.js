@@ -22,7 +22,7 @@ const AdminMainPage = () => {
     const rows = shipments.map(shipment => (
 
         <tr key={shipment.id}>
-            <td >{shipment.recieverName}</td>
+            <td >{shipment.receiverName}</td>
             <td >{shipment.weight}</td>
             <td >{shipment.boxcolor}</td>
             <td >{shipment.creation_date}</td>{/*Fix date format*/}

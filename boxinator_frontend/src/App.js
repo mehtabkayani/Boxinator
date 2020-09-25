@@ -24,32 +24,41 @@ import SpecificShipment from './components/admin/SpecificShipment';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isUser, setIsUser] = useState(false);
     const [userInfo, setUserInfo] = useState({});
-    const accountId = localStorage.getItem('id');
+    //const accountId = localStorage.getItem('id');
 
-    useEffect(() => {
-        axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': localStorage.getItem('token')}})
+  const getRouts  = async accountId=>{
+       await axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': localStorage.getItem('token')}})
             .then(res => {
                 console.log(res.data);
-                setUserInfo(res.data)
-            })
+                setUserInfo(res.data);
+
+        })
             .catch(err => {
                 console.log(err);
             })
-    }, [accountId])
-
-
-
+    
 
     const setAuth = boolean => {
         setIsAuthenticated(boolean);
     };
 
+  const setAdmin =(boolean)=>{
+        setIsAdmin(boolean);
+    };
+    const setUser =(boolean)=>{
+        setIsUser(boolean);
+    };
+
+
+console.log('isAdmin test',isAdmin)
 
     return (
         <div className="App">
             <Router>
-                <NavBar></NavBar>
+                <NavBar isAuthenticated={userInfo.accountType} setAuth={setAuth}></NavBar>
                 <h1>{userInfo.accountType}</h1>
                 <Switch>
 
@@ -57,12 +66,12 @@ function App() {
                            path="/login"
                            render={props => {
                                if (!isAuthenticated) {
-                                   return <Login{...props} setAuth={setAuth} accountType={userInfo.accountType}/>
+                                   return <Login{...props} setAuth={setAuth} getRouts={getRouts} />
                                }
-                               if (isAuthenticated && userInfo.accountType === "ADMINISTRATOR") {
+                               else if (isAuthenticated && userInfo.accountType === "ADMINISTRATOR" ) {console.log(isAdmin)
                                    return <Redirect to="/adminMainPage"/>
                                }
-                               if (isAuthenticated && userInfo.accountType === "REGISTERED_USER") {
+                               else if (isAuthenticated && userInfo.accountType === "REGISTERED_USER") {
                                    return <Redirect to="/mainPage"/>
                                }
                            }
@@ -86,42 +95,61 @@ function App() {
 
                     <Route exact path="/mainPage" render={props => {
                         if (isAuthenticated && userInfo.accountType === "REGISTERED_USER") {
-                            return <MainPage {...props} setAuth={setAuth}/>
+                            return <MainPage />
                         } else {
                             return <Redirect to="/"/>
                         }
                     }}/>
                     <Route exact path="/newShipment" render={props => {
                         if (isAuthenticated && userInfo.accountType === "REGISTERED_USER") {
-                            return <NewShipment {...props} setAuth={setAuth}/>
+                            return <NewShipment />
                         } else {
                             return <Redirect to="/"/>
                         }
                     }}/>
                     <Route exact path="/adminMainPage" render={props => {
                         if (isAuthenticated && userInfo.accountType === "ADMINISTRATOR") {
-                            return <AdminMainPage {...props} setAuth={setAuth}/>
+                            return <AdminMainPage />
                         } else {
                             return <Redirect to="/"/>
                         }
                     }}/>
                     <Route exact path="/country" render={props => {
                         if (isAuthenticated && userInfo.accountType === "ADMINISTRATOR") {
-                            return <CountryCost {...props} setAuth={setAuth}/>
+                            return <CountryCost />
                         } else {
                             return <Redirect to="/login"/>
                         }
                     }}/>
                     <Route exact path="/allUsers" render={props => {
                         if (isAuthenticated && userInfo.accountType === "ADMINISTRATOR") {
-                            return <AllUsers {...props} setAuth={setAuth}/>
+                            return <AllUsers />
                         } else {
                             return <Redirect to="/login"/>
                         }
                     }}/>
+
+
+                    <Route exact path="/addShipmentGuest" render={props => {
+                        if (!isAuthenticated) {
+                            return <AddShipmentGuest/>
+                        } else {
+                            return <Redirect to="/userAccount"/>
+                        }
+                    }}/>
+                    <Route exact path="/" render={props => {
+                        if (!isAuthenticated) {
+                            return <HomePage/>
+                        } else {
+                            return <Redirect to="/userAccount"/>
+                        }
+                    }}/>
+
+
                     <Route path="/specificShipment" component={SpecificShipment} />
                     <Route path="/addShipmentGuest" component={AddShipmentGuest}/>
                     <Route path="/" component={HomePage}/>
+
 
                 </Switch>
 
