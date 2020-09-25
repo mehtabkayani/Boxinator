@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @Entity
@@ -17,7 +18,7 @@ import javax.persistence.*;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
 )
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
