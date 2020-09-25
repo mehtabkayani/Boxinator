@@ -1,15 +1,18 @@
 import React, {useState} from "react";
-import  { Link} from 'react-router-dom';
+import  {Link} from 'react-router-dom';
 import {Form, Button} from "react-bootstrap";
 import axios from 'axios';
 
 
 
-const Login = ({setAuth}, props) => {
+const Login = ({setAuth, getRouts}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [code, setCode] = useState('');
+
+
+
 
     const onSubmitForm = async e => {
         e.preventDefault();
@@ -21,21 +24,28 @@ const Login = ({setAuth}, props) => {
                 console.log("token", res)
                localStorage.setItem('id', res.data.account_id);
                localStorage.setItem('token', res.data.token);
+
                if(res.data.token && res.data.account_id){
+                   getRouts(res.data.account_id);
                    setAuth(true);
+                   console.log(res.data.account_id);
+
                }else{
                    setAuth(false);
                }
+
             })
             .catch(err => {
                 console.log("Error: ", err);
             })
     };
 
-    const onEmailChanged = ev => setEmail(ev.target.value.trim());
-    const onPasswordChanged = ev => setPassword(ev.target.value.trim());
-    const onCodeChanged = ev => setCode(ev.target.value.trim());
 
+    const onEmailChanged = e => setEmail(e.target.value.trim());
+    const onPasswordChanged = e => setPassword(e.target.value.trim());
+    const onCodeChanged = (e) => {
+        setCode(e.target.value);
+    }
 
     return (
         <div className="loginContainer">
@@ -54,7 +64,9 @@ const Login = ({setAuth}, props) => {
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Code</Form.Label>
-                    <Form.Control type="text" placeholder="Enter code" onChange={onCodeChanged}/>
+
+                    <Form.Control type="text" placeholder="6-digit code" onChange={onCodeChanged}/>
+
                 </Form.Group>
                 <br></br>
                 <div>
