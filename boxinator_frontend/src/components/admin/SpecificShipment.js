@@ -5,7 +5,7 @@ const SpecificShipment = ({ shipmentId }) => {
 
     //Comment out shipmentId and pass in id as props
     //For development use only
-    shipmentId = 1;
+    // shipmentId = 78;
 
     const [shipment, setShipment] = useState({});
     const [countryList, setCountryList] = useState([]);

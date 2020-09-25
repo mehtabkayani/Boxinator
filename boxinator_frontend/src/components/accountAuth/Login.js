@@ -4,16 +4,11 @@ import {Form, Button} from "react-bootstrap";
 import axios from 'axios';
 import history from '../../history';
 
-
-
 const Login = ({setAuth, getRouts}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [code, setCode] = useState('');
-
-
-
 
     const onSubmitForm = async e => {
         e.preventDefault();
@@ -26,14 +21,14 @@ const Login = ({setAuth, getRouts}) => {
                localStorage.setItem('id', res.data.account_id);
                localStorage.setItem('token', res.data.token);
 
-             
+
             // history.push('/mainPage')
-
-
+            
                if(res.data.token && res.data.account_id){
                    getRouts(res.data.account_id);
                    setAuth(true);
-                  //window.location = '/mainPage';
+                   //window.location = '/mainPage';
+
                }else{
                    setAuth(false);
                }

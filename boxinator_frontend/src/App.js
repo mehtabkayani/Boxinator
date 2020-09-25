@@ -42,7 +42,9 @@ function App() {
             .catch(err => {
                 console.log(err);
             })
+
         }
+
     const setAuth = boolean => {
         setIsAuthenticated(boolean);
     };
@@ -148,7 +150,13 @@ console.log('isAdmin test',isAdmin)
                     }}/>
 
 
-                    <Route path="/specificShipment" component={SpecificShipment} />
+                    <Route path="/specificShipment"  render={props => {
+                        if (!isAuthenticated) {
+                            return <SpecificShipment {...props}/>
+                        } else {
+                            return <Redirect to="/userAccount"/>
+                        }
+                    }}/>
                     <Route path="/addShipmentGuest" component={AddShipmentGuest}/>
                     <Route path="/" component={HomePage}/>
 

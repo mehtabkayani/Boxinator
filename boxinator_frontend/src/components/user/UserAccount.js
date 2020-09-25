@@ -7,7 +7,6 @@ import axios from "axios";
 const UserAccount = () => {
     const [userInfo, setUserInfo] = useState({})
     const [firstname, setFirstName] = useState('');
-
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');

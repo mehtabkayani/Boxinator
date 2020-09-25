@@ -58,7 +58,7 @@ Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjE3LCJpYXQiOjE2MDA2OTEwNzEsImV4cCI6MTYwMDY4NzQ3MX0.Zsoa4PdglupwBVG5pC2CqLmYT2GVYGZZnl95hsYbHlQ
 
 {
-  "recieverName": "Adam",
+  "receiverName": "Adam",
   "weight": 12.0,
   "boxcolor": "Yellow",
   "country": {
