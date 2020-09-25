@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios';
+import {READ, UPDATE, READDEFAULT} from '../../api/CRUD';
 
 const SpecificShipment = ({ shipmentId }) => {
 
@@ -13,28 +13,13 @@ const SpecificShipment = ({ shipmentId }) => {
     //const statusList = ["CREATED", "RECIEVED", "INTRANSIT", "COMPLETED", "CANCELLED"]
 
     useEffect(() => {
-        const fetchShipments = async () => {
-            await axios.get(`http://localhost:8080/api/shipments/${shipmentId}`, { headers: { 'Authorization': localStorage.getItem('token') } })
-            .then(res => {
-                console.log(res.data);
-                setShipment(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-        }
-        const fetchCountries = async () => {
-            axios.get(`http://localhost:8080/api/settings/countries`)
-            .then(res => {
-                console.log(res.data);
-                setCountryList(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-        }
-        fetchShipments();
-        fetchCountries();
+        
+        READ(`/shipments/${shipmentId}`).then(res => setShipment(res.data))
+            .catch(err => console.log(err))
+        
+        READDEFAULT('/settings/countries').then(res => setCountryList(res.data))
+            .catch(err => console.log(err));
+        
             
     }, [shipmentId])
 
@@ -49,13 +34,10 @@ const SpecificShipment = ({ shipmentId }) => {
 
         //Passing ID recieves error 400 in api endpoint
         const body = {boxcolor: shipment.boxcolor, country: {id: shipment.country.id}, shipmentStatus: shipment.shipmentStatus, receiverName: shipment.receiverName}
-        axios.put(`http://localhost:8080/api/shipments/${shipmentId}`, body, { headers: { 'Authorization': localStorage.getItem('token') } })
-            .then(res => {
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+
+        await UPDATE(`/shipments/${shipmentId}`, body).then(res => console.log(res))
+                .catch(err=> console.log(err));
+        
     }
 
     // const printStatusList = countryList.map((status, index) => (<option key={status} value={index}>{status}</option>))

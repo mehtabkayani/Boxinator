@@ -11,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import {Link} from "react-router-dom";
+import {READ} from '../../api/CRUD'
 
 const columns = [
   { id: 'id', label: '#ID', minWidth: 170 },
@@ -64,20 +65,9 @@ export default function MainPage2() {
   const accountId = localStorage.getItem('id');
 
   useEffect(()=>{
-       axios.get('http://localhost:8080/api/shipments/customer/ '+ accountId, { 
-           headers: 
-           {
-              
-               'Authorization': localStorage.getItem('token')
-              }})
-              .then(res=>{
-                  console.log(res.data);
-                  setShipments(res.data)
-              })
-              .catch(err => {
-                  console.log(err);
-              })
-  },[])
+          READ(`/shipments/customer/${accountId}`).then(res => setShipments(res.data))
+          .catch(err => console.log(err))
+  },[accountId])
 
   const rows = shipments.map(shipment => (
     createData(shipment.id,shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight,shipment.creation_date)
