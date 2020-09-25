@@ -42,8 +42,7 @@ function App() {
             .catch(err => {
                 console.log(err);
             })
-    
-
+        }
     const setAuth = boolean => {
         setIsAuthenticated(boolean);
     };
@@ -98,7 +97,7 @@ console.log('isAdmin test',isAdmin)
 
                     <Route exact path="/mainPage" render={props => {
                         if (isAuthenticated && userInfo.accountType === "REGISTERED_USER") {
-                            return <MainPage />
+                            return <MainPage2 />
                         } else {
                             return <Redirect to="/"/>
                         }
@@ -144,7 +143,7 @@ console.log('isAdmin test',isAdmin)
                         if (!isAuthenticated) {
                             return <HomePage/>
                         } else {
-                            return <Redirect to="/userAccount"/>
+                            return <Redirect to="/userAccount" />
                         }
                     }}/>
 
@@ -159,6 +158,6 @@ console.log('isAdmin test',isAdmin)
             </Router>
         </div>
     );
-}}
+}
 
 export default App;

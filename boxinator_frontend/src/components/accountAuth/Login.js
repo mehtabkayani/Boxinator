@@ -33,7 +33,7 @@ const Login = ({setAuth, getRouts}) => {
                if(res.data.token && res.data.account_id){
                    getRouts(res.data.account_id);
                    setAuth(true);
-                  window.location = '/mainPage';
+                  //window.location = '/mainPage';
                }else{
                    setAuth(false);
                }
