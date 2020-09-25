@@ -22,6 +22,7 @@ const AdminMainPage = () => {
     const rows = shipments.map(shipment => (
 
         <tr key={shipment.id}>
+            <td >{shipment.id}</td>
             <td >{shipment.receiverName}</td>
             <td >{shipment.weight}</td>
             <td >{shipment.boxcolor}</td>
@@ -42,6 +43,7 @@ const AdminMainPage = () => {
             <Table striped bordered hover variant="dark">
                 <thead>
                 <tr>
+                    <th>#ID</th>
                     <th>Receiver name</th>
                     <th>Weight (kg)</th>
                     <th>Box colour</th>

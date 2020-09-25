@@ -67,17 +67,35 @@ export default function MainPage2() {
   const [shipments, setShipments]= useState([]);
   const [shipment, setShipment]= useState({});
   const accountId = localStorage.getItem('id');
+  const [statusOption, setStatusOption] = useState('');
 
   useEffect(()=>{
-          READ(`/shipments/customer/${accountId}`).then(res => setShipments(res.data))
-          .catch(err => console.log(err))
-  },[accountId])
+          allShipments();
+  },[])
 
   const rows = shipments.map(shipment => (
     createData(shipment.id,shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight,shipment.creation_date)
    
 ));
 
+const allShipments = async () => await READ(`/shipments/customer/${accountId}`).then(res => setShipments(res.data)).catch(err => console.log(err))
+
+const apiCall =  async(status) => {
+  console.log(status)
+
+  await READ(`/shipments/${status}`).then(res => setShipments(res.data)).catch(err => console.log(err));
+  //await axios.get(`http://localhost:8080/api/shipments/${status}`, { headers: {'Authorization': localStorage.getItem('token')} }).then(setShipments(res => res.data))
+
+}
+
+
+const onStatusOptionChanged = (e) =>{
+  if(e.target.value === "all"){
+    allShipments();
+  }else{
+    apiCall(e.target.value);
+  }
+} 
 
 
   const handleChangePage = (event, newPage) => {
@@ -95,13 +113,18 @@ export default function MainPage2() {
    alert("You have cancelled the shipment!")
     
     const body = {shipmentStatus: "CANCELLED" };
-   await axios.put(`http://localhost:8080/api/shipments/${currentShipment.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
+   await axios.put(`http://localhost:8080/api/shipments/${row}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
 
   }
   
   return (
       <>
             <Link to="/newShipment"><Button variant="contained" color="primary">Add new shipment</Button></Link>
+            <select onChange={onStatusOptionChanged}>
+              <option value="all" defaultChecked>All</option>
+              <option value="complete">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
             <br/>
             <br/>
     <Paper className={classes.root}>
