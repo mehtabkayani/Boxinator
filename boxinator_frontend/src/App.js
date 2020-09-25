@@ -33,6 +33,7 @@ function App() {
     const [userInfo, setUserInfo] = useState({});
     //const accountId = localStorage.getItem('id');
 
+
   const getRouts  = async accountId=> {
       await axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': localStorage.getItem('token')}})
           .then(res => {
@@ -43,6 +44,7 @@ function App() {
               console.log(err);
           })
   }
+
 
     const setAuth = boolean => {
         setIsAuthenticated(boolean);
@@ -154,12 +156,18 @@ console.log('isAdmin test',isAdmin)
                         if (!isAuthenticated) {
                             return <HomePage/>
                         } else {
-                            return <Redirect to="/userAccount"/>
+                            return <Redirect to="/userAccount" />
                         }
                     }}/>
 
 
-                    <Route path="/specificShipment" component={SpecificShipment} />
+                    <Route path="/specificShipment"  render={props => {
+                        if (!isAuthenticated) {
+                            return <SpecificShipment {...props}/>
+                        } else {
+                            return <Redirect to="/userAccount"/>
+                        }
+                    }}/>
                     <Route path="/addShipmentGuest" component={AddShipmentGuest}/>
                     <Route path="/mainPage2" component={MainPage}/>
                     <Route path="/addCountry" component={AddCountry}/>

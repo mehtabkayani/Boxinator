@@ -10,7 +10,11 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import {Link} from "react-router-dom";
+import {Link,Redirect} from "react-router-dom";
+import SpecificShipment from '../admin/SpecificShipment';
+import history from '../../history';
+import {READ} from '../../api/CRUD'
+
 
 const columns = [
   { id: 'id', label: '#ID', minWidth: 170 },
@@ -61,23 +65,13 @@ export default function MainPage2() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [shipments, setShipments]= useState([]);
+  const [shipment, setShipment]= useState({});
   const accountId = localStorage.getItem('id');
 
   useEffect(()=>{
-       axios.get('http://localhost:8080/api/shipments/customer/ '+ accountId, { 
-           headers: 
-           {
-              
-               'Authorization': localStorage.getItem('token')
-              }})
-              .then(res=>{
-                  console.log(res.data);
-                  setShipments(res.data)
-              })
-              .catch(err => {
-                  console.log(err);
-              })
-  },[])
+          READ(`/shipments/customer/${accountId}`).then(res => setShipments(res.data))
+          .catch(err => console.log(err))
+  },[accountId])
 
   const rows = shipments.map(shipment => (
     createData(shipment.id,shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight,shipment.creation_date)
@@ -95,6 +89,16 @@ export default function MainPage2() {
     setPage(0);
   };
 
+  const handleCancelShipment = async (row)=> {
+   let s = shipments.filter(shipment => shipment.id === row)
+   let currentShipment = s[0];
+   alert("You have cancelled the shipment!")
+    
+    const body = {shipmentStatus: "CANCELLED" };
+   await axios.put(`http://localhost:8080/api/shipments/${currentShipment.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
+
+  }
+  
   return (
       <>
             <Link to="/newShipment"><Button variant="contained" color="primary">Add new shipment</Button></Link>
@@ -113,6 +117,7 @@ export default function MainPage2() {
                   style={{ minWidth: column.minWidth }}
                 >
                   {column.label}
+                  
                 </TableCell>
               ))}
             </TableRow>
@@ -127,8 +132,11 @@ export default function MainPage2() {
                       <TableCell key={column.id} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}
                       </TableCell>
+                      
                     );
-                  })}
+                  })}        
+                           
+                <Button onClick={() => handleCancelShipment(row.id)}>Cancel</Button>
                 </TableRow>
               );
             })}

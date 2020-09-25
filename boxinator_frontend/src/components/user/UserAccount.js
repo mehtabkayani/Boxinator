@@ -7,7 +7,6 @@ import axios from "axios";
 const UserAccount = () => {
     const [userInfo, setUserInfo] = useState({})
     const [firstname, setFirstName] = useState('');
-
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -34,7 +33,7 @@ const UserAccount = () => {
             setErrorMessage('');
 
             const body = {firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, zipcode: userInfo.zipcode,
-            contactNumber: userInfo.contactNumber, dateOfBirth: userInfo.dateOfBirth, countryOfResidence: userInfo.countryOfResidence, password};
+            contactNumber: userInfo.contactNumber, dateOfBirth: userInfo.dateOfBirth, countryOfResidence: userInfo.countryOfResidence, accountType: userInfo.accountType, password};
 
             await axios.put(`http://localhost:8080/api/user/${userInfo.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
             .then(res=>{
