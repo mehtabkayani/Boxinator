@@ -10,10 +10,7 @@ const SpecificShipment = ({ shipmentId }) => {
     const [shipment, setShipment] = useState({});
     const [countryList, setCountryList] = useState([]);
 
-
-    const [shipmentUpdate, setShipmentUpdate] = useState({});
-
-    const statusList = ["CREATED", "RECIEVED", "INTRANSIT", "COMPLETED", "CANCELLED"]
+    //const statusList = ["CREATED", "RECIEVED", "INTRANSIT", "COMPLETED", "CANCELLED"]
 
     useEffect(() => {
         const fetchShipments = async () => {
