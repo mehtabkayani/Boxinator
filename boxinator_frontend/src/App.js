@@ -156,6 +156,6 @@ console.log('isAdmin test',isAdmin)
             </Router>
         </div>
     );
-}
+}}
 
 export default App;
