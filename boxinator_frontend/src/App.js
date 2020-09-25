@@ -20,6 +20,8 @@ import CountryCost from "./components/admin/CountryCost";
 import AllUsers from "./components/admin/AllUsers";
 import axios from "axios";
 
+import SpecificShipment from './components/admin/SpecificShipment';
+
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -37,9 +39,9 @@ function App() {
             .catch(err => {
                 console.log(err);
             })
-    }
+    
 
-    const setAuth = (boolean) => {
+    const setAuth = boolean => {
         setIsAuthenticated(boolean);
     };
 
@@ -127,6 +129,7 @@ console.log('isAdmin test',isAdmin)
                         }
                     }}/>
 
+
                     <Route exact path="/addShipmentGuest" render={props => {
                         if (!isAuthenticated) {
                             return <AddShipmentGuest/>
@@ -141,6 +144,11 @@ console.log('isAdmin test',isAdmin)
                             return <Redirect to="/userAccount"/>
                         }
                     }}/>
+
+
+                    <Route path="/specificShipment" component={SpecificShipment} />
+                    <Route path="/addShipmentGuest" component={AddShipmentGuest}/>
+                    <Route path="/" component={HomePage}/>
 
 
                 </Switch>

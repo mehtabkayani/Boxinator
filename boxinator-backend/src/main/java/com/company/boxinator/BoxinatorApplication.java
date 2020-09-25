@@ -2,6 +2,7 @@ package com.company.boxinator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class BoxinatorApplication {
@@ -10,11 +11,5 @@ public class BoxinatorApplication {
         SpringApplication.run(BoxinatorApplication.class, args);
 //        Google2FA google2FA = new Google2FA();
 //        google2FA.runGoogle2fa("2AFJDAYB5IR6FJ5HDQPERRHTYIARINVL");
-
-
-
-
-
-
     }
 }
