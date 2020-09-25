@@ -6,7 +6,7 @@ import axios from "axios";
 
 const UserAccount = () => {
     const [userInfo, setUserInfo] = useState({})
-
+    const [firstname, setFirstName] = useState('');
 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -23,6 +23,8 @@ const UserAccount = () => {
             .catch(err => {
                 console.log(err);
             })
+    
+
     }, [accountId])
 
     const onSubmitForm = async e => {
@@ -104,7 +106,7 @@ const UserAccount = () => {
                         <Form.Control type="password" placeholder="Enter password..." onChange={onPasswordChanged}/>
                     </Form.Group>
 
-                    <Form.Group as={Col} controlId="formGridPassword">
+                    <Form.Group as={Col} controlId="formGridPassword2">
                         <Form.Label>Repeat Password</Form.Label>
                         <Form.Control type="password" placeholder="Confirm password..." onChange={onConfirmPasswordChanged}/>
                     </Form.Group>

@@ -6,26 +6,34 @@ import axios from "axios";
 
 const NewShipment = () => {
     const [receiverName, setReceiverName] = useState('');
-    const [weight, setWeight] = useState('');
-    const [boxColour, setBoxColour] = useState('');
-    const [country, setDestinationCountry] = useState([]);
+    const [weight, setWeight] = useState();
+    const [boxcolor, setBoxColor] = useState("#050505");
+    const [countries, setCountries] = useState([]);
+    const [country, setCountry] = useState({})
 
 
     useEffect(()=>{
         axios.get('http://localhost:8080/api/settings/countries ', { headers: {'Authorization': localStorage.getItem('token')} })
             .then(res=>{
-                console.log(res.data);
-                setDestinationCountry(res.data)
+                setCountries(res.data);
+                console.log(res.data[0].id)
+                setCountry({id: res.data[0].id})
             })
             .catch(err => {
                 console.log(err);
             })
-    })
+    },[])
+
+  
 
     const onSubmitForm = async e => {
+        console.log(receiverName)
+        console.log(weight)
+        console.log(boxcolor)
+        console.log(country)
         e.preventDefault();
         try {
-            const body = {receiverName, weight, boxColour,  country};
+            const body = {receiverName, weight, boxcolor, country};
             await fetch(
                 "http://localhost:8080/api/shipment",
                 {
@@ -45,45 +53,50 @@ const NewShipment = () => {
         }
     };
 
-      const options = () => country.map(country => (
 
-          <option key={country.id} value={country}>{country.countryName}</option>
+        const onReceiverNameChanged = e =>{
+            setReceiverName(e.target.value.trim());
+        } 
 
-    //{ value: country.countryName , label: country.countryName}
-        ))
-
-
-    const onReceiverNameChange = ev => setReceiverName(ev.target.value.trim());
-    const onWeightChange = ev => setWeight(ev.target.value.trim());
-    const onBoxColourChange = ev => setBoxColour(ev.target.value.trim());
-    const onDestinationCountryChange = ev => setDestinationCountry(ev.target.value.trim());
+        const onWeightChanged = e => {
+            setWeight(e.target.value);
+        }
+        const onBoxColorChanged = (e) => {
+            setBoxColor(e.target.value);
+        }
+    
+        const onDestinationCountryChanged = (e) =>{
+            let id = parseInt(e.target.value)
+             setCountry({id})
+            };
 
     return (
         <div className="newShipmentContainer">
             <h1>New shipment: </h1>
             <br></br>
             <Form onSubmit={onSubmitForm}>
-                <div>
-                    <Form.Label>Receiver name : </Form.Label>
-                    <Form.Control type="text" placeholder="Enter name" onChange={onReceiverNameChange}/>
-                </div>
-                <div>
-                    <Form.Label>Weight (kg): </Form.Label>
-                    <Form.Control type="number" placeholder="Enter weight" onChange={onWeightChange}/>
-                </div>
-                <div>
-                    <Form.Label>Box colour: </Form.Label>
-                    <Form.Control type="color" onChange={onBoxColourChange}/>
-                </div>
-                <select onChange={onDestinationCountryChange}>
-                    {options}
-                </select>
-
-             {/*       <div >
-                    <label>Destination country: </label>
-
-                    <Select options={options} />
-                    </div>*/}
+            <div>
+                        <Form.Label>Receiver name : </Form.Label>
+                        <Form.Control type="text" placeholder="Enter name" onChange={onReceiverNameChanged} required/>
+                    </div>
+                    <div>
+                        <Form.Label>Weight (kg): </Form.Label>
+                        <Form.Control type="number" placeholder="Enter weight" onChange={onWeightChanged} required/>
+                    </div>
+                    <div>
+                        <Form.Label>Box colour: </Form.Label>
+                        <Form.Control type="color" value={boxcolor}  onChange={onBoxColorChanged} required/>
+                    </div>
+                    <div>
+                        <label>Destination country: </label>
+                    <br></br>
+                        
+                        <select onChange={onDestinationCountryChanged} required>
+                        
+                            {countries.map(name => (<option key={name.id} value={name.id} required>{name.countryName}</option>))}
+                            </select> 
+                    </div>
+                    <br></br>
 
                 <br></br>
                 <div>

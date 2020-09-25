@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import  {Link} from 'react-router-dom';
 import {Form, Button} from "react-bootstrap";
 import axios from 'axios';
+import history from '../../history';
 
 
 
@@ -25,11 +26,14 @@ const Login = ({setAuth, getRouts}) => {
                localStorage.setItem('id', res.data.account_id);
                localStorage.setItem('token', res.data.token);
 
+             
+            // history.push('/mainPage')
+
+
                if(res.data.token && res.data.account_id){
                    getRouts(res.data.account_id);
                    setAuth(true);
-                   console.log(res.data.account_id);
-
+                  window.location = '/mainPage';
                }else{
                    setAuth(false);
                }

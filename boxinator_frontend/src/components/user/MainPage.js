@@ -11,13 +11,13 @@ const MainPage = () => {
     const accountId = localStorage.getItem('id');
 
     useEffect(()=>{
-         axios.get('http://localhost:8080/api/shipment/ '+ accountId, { 
+         axios.get('http://localhost:8080/api/shipments/customer/ '+ accountId, { 
              headers: 
              {
-                'Access-Control-Allow-Origin' : '*',
-                'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-                 'Access-Control-Allow-Credentials':true,
-                 'crossorigin':true,
+                // 'Access-Control-Allow-Origin' : '*',
+                // 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                //  'Access-Control-Allow-Credentials':true,
+                //  'crossorigin':true,
                  'Authorization': localStorage.getItem('token')
                 }})
                 .then(res=>{
@@ -27,7 +27,7 @@ const MainPage = () => {
                 .catch(err => {
                     console.log(err);
                 })
-    })
+    },[])
 
     const rows = shipments.map(shipment => (
 

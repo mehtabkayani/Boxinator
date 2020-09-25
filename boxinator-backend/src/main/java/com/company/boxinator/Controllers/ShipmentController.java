@@ -54,7 +54,7 @@ public class ShipmentController {
 
         //User
         Integer id = jwtUtil.getJwtId(jwt);
-        if(sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.REGISTERED_USER){
+        if (sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.REGISTERED_USER) {
             List<Shipment> filteredList = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == id).collect(Collectors.toList());
             return new ResponseEntity<>(filteredList, HttpStatus.OK);
 
@@ -88,15 +88,15 @@ public class ShipmentController {
     }
 
     @PostMapping("/shipment")
-    public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader(value = "Authorization",required = false) String jwt) {
-        if(jwt == null) {
-            System.out.println(shipment.getUser().getEmail());
-            System.out.println(shipment.getCountry().getId());
-            System.out.println(shipment.getBoxcolor());
-            System.out.println(shipment.getReceiverName());
-            System.out.println(shipment.getWeight());
+    public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader(value = "Authorization", required = false) String jwt) {
+
+        System.out.println(shipment.getCountry().getId());
+        System.out.println(shipment.getBoxcolor());
+        System.out.println(shipment.getReceiverName());
+        System.out.println(shipment.getWeight());
+        if (jwt == null) {
             Optional<Country> country = countryRepository.findById(shipment.getCountry().getId());
-            if(!country.isPresent()){
+            if (!country.isPresent()) {
                 return null;
             }
             shipment.setCountry(country.get());
@@ -120,20 +120,25 @@ public class ShipmentController {
             }
         }
 
-            if (!sessionUtil.isSessionValid(jwt)) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sign in to place an order!");
-            }
+        if (!sessionUtil.isSessionValid(jwt)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sign in to place an order!");
+        }
 
-            if (shipment.getCountry() == null) {
-                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a country");
-            }
+        if (shipment.getCountry() == null) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a country");
+        }
 
-            Integer userId = jwtUtil.getJwtId(jwt);
-            User user = userRepository.getOne(userId);
+        Integer userId = jwtUtil.getJwtId(jwt);
+        User user = userRepository.getOne(userId);
+        Optional<Country> country = countryRepository.findById(shipment.getCountry().getId());
+        if (!country.isPresent()) {
+            return null;
+        }
+        shipment.setCountry(country.get());
 
-            shipmentRepository.save(shipmentUtil.setShipment(shipment, user));
+        shipmentRepository.save(shipmentUtil.setShipment(shipment, user));
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(user.getEmail() + " added a new shipment");
+        return ResponseEntity.status(HttpStatus.CREATED).body(user.getEmail() + " added a new shipment");
     }
 
 
@@ -147,7 +152,7 @@ public class ShipmentController {
         Optional<Shipment> shipment = shipmentRepository.findById(shipment_id);
         System.out.println(shipment.get().getUser().getId());
 
-        if(shipment.get().getUser().getId() == Integer.parseInt(userId)){
+        if(shipment.get().getUser().getId() == Integer.parseInt(userId) || jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
             return new ResponseEntity<>(shipment.get(),HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -165,12 +170,12 @@ public class ShipmentController {
 
         if (sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
             Optional<Shipment> shipment = shipmentRepository.findById(shipment_id);
-            if(!shipment.isPresent()){
+            if (!shipment.isPresent()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            if(shipment.get().getShipmentStatus() == ShipmentStatus.COMPLETED) {
-                return new ResponseEntity<>(shipment.get(),HttpStatus.OK);
-            }else {
+            if (shipment.get().getShipmentStatus() == ShipmentStatus.COMPLETED) {
+                return new ResponseEntity<>(shipment.get(), HttpStatus.OK);
+            } else {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
         }
@@ -198,7 +203,10 @@ public class ShipmentController {
             return shipmentDetail;
         }).collect(Collectors.toList());
 
+
+
         return result;
+
     }
 
 
@@ -212,14 +220,14 @@ public class ShipmentController {
         }
 
         Optional<User> user = userRepository.findById(customer_id);
-        if(!user.isPresent()){
+        if (!user.isPresent()) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        if (jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
+        if (jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
             List<Shipment> listOfShipments = shipmentRepository.findAllByUserId(customer_id).get();
             List<Shipment> filteredList = listOfShipments.stream().filter(shipments -> shipments.getShipmentStatus() == ShipmentStatus.COMPLETED).collect(Collectors.toList());
 
-            return new ResponseEntity(filteredList,HttpStatus.OK);
+            return new ResponseEntity(filteredList, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
@@ -227,25 +235,25 @@ public class ShipmentController {
 
     @GetMapping("/shipments/{customer_id}/{shipment_id}")
     public ResponseEntity<Shipment> getShipmentByCustomerIdAndShipmentId(@PathVariable("customer_id") Integer customer_id,
-                                                         @PathVariable("shipment_id") Integer shipment_id,
-                                                         @RequestHeader("Authorization") String jwt){
-       //Retrieve the details of a specific shipment made by a specific customer
+                                                                         @PathVariable("shipment_id") Integer shipment_id,
+                                                                         @RequestHeader("Authorization") String jwt) {
+        //Retrieve the details of a specific shipment made by a specific customer
 
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         Optional<User> user = userRepository.findById(customer_id);
-        if(!user.isPresent()){
+        if (!user.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        if (jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
-           Optional<Shipment> shipment = shipmentRepository.findById(shipment_id);
-           if(!shipment.isPresent()){
-               return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-           }
-            if(shipment.get().getUser().getId() == user.get().getId()){
-                return new ResponseEntity(shipment,HttpStatus.OK);
+        if (jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
+            Optional<Shipment> shipment = shipmentRepository.findById(shipment_id);
+            if (!shipment.isPresent()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            if (shipment.get().getUser().getId() == user.get().getId()) {
+                return new ResponseEntity(shipment, HttpStatus.OK);
             }
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -253,38 +261,42 @@ public class ShipmentController {
     }
 
     @PutMapping("/shipments/{shipment_id}")
-    public ResponseEntity<Shipment> updateAShipmentById(@RequestBody Shipment shipment, @PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt){
-        if(!sessionUtil.isSessionValid(jwt))
+    public ResponseEntity<Shipment> updateAShipmentById(@RequestBody Shipment shipment, @PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt) {
+        if (!sessionUtil.isSessionValid(jwt))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         System.out.println("JWT: " + jwt);
         System.out.println("PathVariable: " + shipment_id);
 
         Optional<Shipment> oldShipment = shipmentRepository.findById(shipment_id);
-        if(!oldShipment.isPresent())
+        if (!oldShipment.isPresent())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-        if(!(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR)){
-            if (shipment.getShipmentStatus() == ShipmentStatus.CANCELLED){
+        if (!(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR)) {
+            if (shipment.getShipmentStatus() == ShipmentStatus.CANCELLED) {
                 oldShipment.get().setShipmentStatus(shipment.getShipmentStatus());
                 shipmentRepository.save(oldShipment.get());
                 return new ResponseEntity<>(HttpStatus.OK);
-            }else {
+            } else {
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
         }
 
         Optional<User> user = userRepository.findById(jwtUtil.getJwtId(jwt));
 
-        if(!user.isPresent())
+        if (!user.isPresent())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
+        Optional<Country> country = countryRepository.findById(shipment.getCountry().getId());
+        if(!country.isPresent())
+            return null;
+        shipment.setCountry(country.get());
         System.out.println("Found userid: " + user.get().getId());
 
         Shipment newShipment = shipmentUtil.updateShipment(shipment, oldShipment.get(), user.get());
-        try{
+        try {
             shipmentRepository.save(newShipment);
-        }catch (Exception exception){
+        } catch (Exception exception) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
@@ -297,11 +309,11 @@ public class ShipmentController {
         //This  endpoint  is  used  to  delete  a  shipment  only  in  extreme  situations,  and only accessible by an Administrator.
         // (This will also delete completed/cancelled shipments.)
 
-        if (sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
+        if (sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
             shipmentRepository.deleteById(shipment_id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
     }
 
