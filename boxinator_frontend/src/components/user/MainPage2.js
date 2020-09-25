@@ -13,6 +13,7 @@ import axios from 'axios';
 import {Link,Redirect} from "react-router-dom";
 import SpecificShipment from '../admin/SpecificShipment';
 import history from '../../history';
+import {READ} from '../../api/CRUD'
 
 
 const columns = [
@@ -68,20 +69,9 @@ export default function MainPage2() {
   const accountId = localStorage.getItem('id');
 
   useEffect(()=>{
-       axios.get('http://localhost:8080/api/shipments/customer/ '+ accountId, { 
-           headers: 
-           {
-              
-               'Authorization': localStorage.getItem('token')
-              }})
-              .then(res=>{
-                  console.log(res.data);
-                  setShipments(res.data)
-              })
-              .catch(err => {
-                  console.log(err);
-              })
-  },[])
+          READ(`/shipments/customer/${accountId}`).then(res => setShipments(res.data))
+          .catch(err => console.log(err))
+  },[accountId])
 
   const rows = shipments.map(shipment => (
     createData(shipment.id,shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight,shipment.creation_date)

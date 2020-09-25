@@ -42,12 +42,12 @@ function App() {
             .catch(err => {
                 console.log(err);
             })
-    
+
         }
+
     const setAuth = boolean => {
         setIsAuthenticated(boolean);
     };
-
 
   const setAdmin =(boolean)=>{
         setIsAdmin(boolean);
@@ -145,7 +145,7 @@ console.log('isAdmin test',isAdmin)
                         if (!isAuthenticated) {
                             return <HomePage/>
                         } else {
-                            return <Redirect to="/userAccount"/>
+                            return <Redirect to="/userAccount" />
                         }
                     }}/>
 

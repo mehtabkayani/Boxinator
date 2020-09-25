@@ -21,6 +21,7 @@ const Login = ({setAuth, getRouts}) => {
                localStorage.setItem('id', res.data.account_id);
                localStorage.setItem('token', res.data.token);
 
+
             // history.push('/mainPage')
             
                if(res.data.token && res.data.account_id){
@@ -31,7 +32,6 @@ const Login = ({setAuth, getRouts}) => {
                }else{
                    setAuth(false);
                }
-
 
             })
             .catch(err => {
