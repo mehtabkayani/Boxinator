@@ -24,7 +24,8 @@ const Login = ({setAuth, getRouts}) => {
             .then(res=>{
                 console.log("token", res)
                localStorage.setItem('id', res.data.account_id);
-               localStorage.setItem('token', res.data.token);
+              localStorage.setItem('token', res.data.token);
+               // localStorage.setItem('user', res.data);
 
              
             // history.push('/mainPage')

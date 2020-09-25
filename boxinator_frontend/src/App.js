@@ -38,7 +38,6 @@ function App() {
           .then(res => {
               console.log(res.data);
               setUserInfo(res.data);
-
           })
           .catch(err => {
               console.log(err);
@@ -56,6 +55,16 @@ function App() {
         setIsUser(boolean);
     };
 
+useEffect(()=>{
+   const isLoggedin = localStorage.getItem('token');
+   const isLogged = localStorage.getItem('id');
+   if(isLoggedin && isLogged && getRouts(isLogged)) {
+           setIsAuthenticated(true);
+   }
+   else{
+       setIsAuthenticated(false);
+   }
+    },[])
 
 console.log('isAdmin test',isAdmin)
 
