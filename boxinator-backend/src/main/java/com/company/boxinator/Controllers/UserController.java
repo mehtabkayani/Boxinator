@@ -69,9 +69,9 @@ public class UserController {
         Optional<AuthToken> Token = authTokenRepository.findByUserId(user.get().getId());
         if(!Token.isPresent())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
+        System.out.println("Generated code from token: " + Token.get().getToken());
         String sixDigitCode = google2FAService.runGoogle2fa(Token.get().getToken());
-        String test = google2FAService.getTOTPCode(Token.get().getToken());
+
         System.out.println("sixDigitCode: " + sixDigitCode);
         System.out.println("Auth code: " + code);
 
@@ -124,9 +124,9 @@ public class UserController {
 
 
     }
-
     @PutMapping("/user/{id}")
     public ResponseEntity updateUserById(@RequestBody User user, @PathVariable("id") Integer id, @RequestHeader("Authorization") String jwt) {
+        System.out.println("In updateUserById");
 
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

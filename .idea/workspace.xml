@@ -22,15 +22,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Unversioned files">
+    <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/CountryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/CountryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/ShipmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/ShipmentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/guest/AddShipmentGuest.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/guest/AddShipmentGuest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/NewShipment.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/NewShipment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AllUsers.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AllUsers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/MainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/MainPage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,17 +86,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="boxinator" />
       <option name="VM_PARAMETERS" />
@@ -176,7 +162,10 @@
       <updated>1600079701765</updated>
       <workItem from="1600079702959" duration="16121000" />
       <workItem from="1600414522333" duration="21088000" />
-      <workItem from="1600669503680" duration="41561000" />
+      <workItem from="1600669503680" duration="49965000" />
+      <workItem from="1600853594185" duration="2138000" />
+      <workItem from="1600859691520" duration="1310000" />
+      <workItem from="1600861130885" duration="31676000" />
     </task>
     <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
       <created>1600094762706</created>
@@ -276,7 +265,42 @@
       <option name="project" value="LOCAL" />
       <updated>1600776186115</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
+      <created>1600784176931</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1600784176932</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Fixed router so that only the users with authenticated role can access their pages">
+      <created>1600873653911</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1600873653911</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Fixed router so that only the users with authenticated role can access their pages">
+      <created>1600873717167</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1600873717167</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Fixed router so that only the users with authenticated role can access their pages, but when the pages refreshes so gets the user no access anymore&quot;need to be fixed &quot;">
+      <created>1600953536388</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1600953536388</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Fixed loggout method, changed receiver name in admin page">
+      <created>1600958467621</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1600958467621</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -308,7 +332,11 @@
     <MESSAGE value="Get user info but not completed, get user-shipments, And get all the shipments in the admin page but it is not completed some parts need to be fixed" />
     <MESSAGE value="Fixed register and view user account in a better way" />
     <MESSAGE value="Added AllUsers component witch renders all the users(only admin kan view them), fixed register method, Deleted code that is not used" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added AllUsers component witch renders all the users(only admin kan view them), fixed register method, Deleted code that is not used" />
+    <MESSAGE value="Trying with add shipments method, added CORS in countryController, deleted code that is not used" />
+    <MESSAGE value="Fixed router so that only the users with authenticated role can access their pages" />
+    <MESSAGE value="Fixed router so that only the users with authenticated role can access their pages, but when the pages refreshes so gets the user no access anymore&quot;need to be fixed &quot;" />
+    <MESSAGE value="Fixed loggout method, changed receiver name in admin page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed loggout method, changed receiver name in admin page" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -319,10 +347,11 @@
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
     <state x="-1194" y="382" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600240644769" />
-    <state x="-1337" y="212" width="1040" height="744" key="DiffContextDialog" timestamp="1600688756931">
-      <screen x="-1920" y="0" width="1920" height="1160" />
+    <state x="242" y="101" width="1040" height="744" key="DiffContextDialog" timestamp="1600851492304">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="-1337" y="212" width="1040" height="744" key="DiffContextDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600688756931" />
+    <state x="-1337" y="212" width="1040" height="744" key="DiffContextDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600784345380" />
+    <state x="242" y="101" key="DiffContextDialog/0.0.1280.680@0.0.1280.680" timestamp="1600851492304" />
     <state x="-1180" y="335" key="FileChooserDialogImpl" timestamp="1600421315957">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
@@ -367,19 +396,32 @@
     </state>
     <state width="1237" height="247" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690496" />
     <state width="1877" height="139" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171530" />
-    <state x="-1204" y="282" key="RollbackChangesDialog" timestamp="1600688768629">
+    <state x="477" y="86" key="RollbackChangesDialog" timestamp="1600860684369">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="-1204" y="282" key="RollbackChangesDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600784350701" />
+    <state x="477" y="86" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1600860684369" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1600958478562">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1204" y="282" key="RollbackChangesDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600688768629" />
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1600776204774">
-      <screen x="-1920" y="0" width="1920" height="1160" />
-    </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600776204774" />
-    <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1600107083819" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600958478562" />
+    <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1600873723637" />
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600668436136" />
+    <state x="-1920" y="0" width="1566" height="945" key="dock-window-1" timestamp="1600937523544">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1920" y="0" width="1566" height="945" key="dock-window-1/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600937523544" />
+    <state x="-1253" y="179" width="585" height="801" key="find.popup" timestamp="1600957956692">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1253" y="179" width="585" height="801" key="find.popup/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600957956692" />
+    <state x="297" y="151" key="run.anything.popup" timestamp="1600868666340">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="297" y="151" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1600868666340" />
     <state x="-1297" y="255" key="search.everywhere.popup" timestamp="1600768038883">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
