@@ -24,6 +24,7 @@ import AllUsers from "./components/admin/AllUsers";
 import axios from "axios";
 
 import SpecificShipment from './components/admin/SpecificShipment';
+import AddCountry from "./components/admin/AddCountry";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -98,7 +99,7 @@ console.log('isAdmin test',isAdmin)
 
                     <Route exact path="/mainPage" render={props => {
                         if (isAuthenticated && userInfo.accountType === "REGISTERED_USER") {
-                            return <MainPage />
+                            return <MainPage2 />
                         } else {
                             return <Redirect to="/"/>
                         }
@@ -151,6 +152,8 @@ console.log('isAdmin test',isAdmin)
 
                     <Route path="/specificShipment" component={SpecificShipment} />
                     <Route path="/addShipmentGuest" component={AddShipmentGuest}/>
+                    <Route path="/mainPage2" component={MainPage}/>
+                    <Route path="/addCountry" component={AddCountry}/>
                     <Route path="/" component={HomePage}/>
 
 
@@ -159,6 +162,6 @@ console.log('isAdmin test',isAdmin)
             </Router>
         </div>
     );
-}}
+}
 
 export default App;
