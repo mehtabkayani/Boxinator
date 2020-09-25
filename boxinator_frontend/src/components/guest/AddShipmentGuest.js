@@ -1,14 +1,31 @@
 import React, {useState,useEffect} from "react";
 import {Link} from "react-router-dom";
-import Select from "react-select";
+// import Select from "react-select";
 import {Button, Form} from "react-bootstrap";
 import axios from "axios";
 import '../../style/style.css';
 
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
 
 
 const AddShipmentGuest = () => {
-    
+    const classes = useStyles();
     const [receiverName, setReceiverName] = useState('');
     const [weight, setWeight] = useState();
     const [boxcolor, setBoxColor] = useState("#050505");
@@ -78,7 +95,8 @@ const AddShipmentGuest = () => {
          setCountry({id})
    
         };
-   
+
+     
     return (
         <div className="newShipmentContainer">
             <h1>Add new shipment as guest: </h1>
@@ -104,6 +122,7 @@ const AddShipmentGuest = () => {
                     <div>
                         <label>Destination country: </label>
                     <br></br>
+    
                         
                         <select onChange={onDestinationCountryChange} required>
                         

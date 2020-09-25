@@ -10,10 +10,11 @@ Content-Type: application/json
 ###LOGIN normal user
 POST http://localhost:8080/api/login
 Content-Type: application/json
+Authorization: 436386
 
 {
-  "email": "guest@gmail.com",
-  "password": "niklas"
+  "email": "mehtab.kayani@gmail.com",
+  "password": "password"
 }
 
 ###Get all shipments
@@ -74,9 +75,9 @@ Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MywiaWF0IjoxNjAwNjkyNDg2LCJleHAiOjE2MDA2ODg4ODZ9.EtHoUa0tZYHsgZULgqSGdUpbzvq2L8nYpUBGzoRYJWQ
 
 ###Get shipments by cutomer id as a USER
-GET http://localhost:8080/api/shipments/customer/8
+GET http://localhost:8080/api/shipments/customer/52
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MTQsImlhdCI6MTYwMDY5MzQwMCwiZXhwIjoxNjAwNjg5ODAwfQ.G_rxriF4k03cjOMMdgGf73LBP-doG91cCFir50G0rmM
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI1MiIsInN1YiI6IlJFR0lTVEVSRURfVVNFUiIsImxkMjAiOjksImlhdCI6MTYwMDk0ODUyMiwiZXhwIjoxNjAwOTQ0OTIyfQ.12VNLpTbyeBk2czsytAAXEn7FbipAo5eH3O-pZClBm0
 
 ###Get details of a single completed shipment by shipment id
 GET http://localhost:8080/api/shipments/complete/26

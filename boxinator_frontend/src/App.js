@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
+import history from './history';
 import {
-    BrowserRouter as Router,
+     BrowserRouter as Router,
+    // Router,
     Switch,
     Route,
     Redirect
@@ -9,6 +11,7 @@ import {
 import Login from "./components/accountAuth/Login";
 import Register from "./components/accountAuth/Register";
 import MainPage from "./components/user/MainPage";
+import MainPage2 from "./components/user/MainPage2";
 import NewShipment from "./components/user/NewShipment";
 import UserAccount from "./components/user/UserAccount";
 import AdminMainPage from "./components/admin/AdminMainPage";
@@ -44,7 +47,7 @@ function App() {
                      } />
 
               <Route path="/register" component={Register} />
-              <Route path="/mainPage" component={MainPage} />
+              <Route path="/mainPage" component={MainPage2} />
               <Route path="/newShipment" component={NewShipment} />
               <Route path="/userAccount" component={UserAccount} />
               <Route path="/adminMainPage" component={AdminMainPage} />

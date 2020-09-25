@@ -1,10 +1,14 @@
 package com.company.boxinator.Models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,11 +18,11 @@ import java.util.Set;
                 @UniqueConstraint(columnNames = "countryCode"),
                 @UniqueConstraint(columnNames = "countryName")
         })
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
-public class Country {
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id"
+//)
+public class Country implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -31,7 +35,6 @@ public class Country {
 
     @Column
     private Integer multiplyerNumber;
-
 
     public Country(){};
 

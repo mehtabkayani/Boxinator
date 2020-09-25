@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import  {Link} from 'react-router-dom';
 import {Form, Button} from "react-bootstrap";
 import axios from 'axios';
+import history from '../../history';
 
 
 
@@ -23,6 +24,9 @@ const Login = ({setAuth}) => {
             .then(res=>{
                localStorage.setItem('id', res.data.account_id);
                localStorage.setItem('token', res.data.token);
+                window.location = '/mainPage';
+            // history.push('/mainPage')
+            
             })
             .catch(err => {
                 console.log("Error: ", err);
