@@ -147,7 +147,7 @@ public class ShipmentController {
         Optional<Shipment> shipment = shipmentRepository.findById(shipment_id);
         System.out.println(shipment.get().getUser().getId());
 
-        if(shipment.get().getUser().getId() == Integer.parseInt(userId)){
+        if(shipment.get().getUser().getId() == Integer.parseInt(userId) || jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
             return new ResponseEntity<>(shipment.get(),HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -279,6 +279,10 @@ public class ShipmentController {
         if(!user.isPresent())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
+        Optional<Country> country = countryRepository.findById(shipment.getCountry().getId());
+        if(!country.isPresent())
+            return null;
+        shipment.setCountry(country.get());
         System.out.println("Found userid: " + user.get().getId());
 
         Shipment newShipment = shipmentUtil.updateShipment(shipment, oldShipment.get(), user.get());
