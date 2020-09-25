@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 
-const Login = ({setAuth}, props) => {
+const Login = ({setAuth, getRouts}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -24,11 +24,16 @@ const Login = ({setAuth}, props) => {
                 console.log("token", res)
                localStorage.setItem('id', res.data.account_id);
                localStorage.setItem('token', res.data.token);
+
                if(res.data.token && res.data.account_id){
+                   getRouts(res.data.account_id);
                    setAuth(true);
+                   console.log(res.data.account_id);
+
                }else{
                    setAuth(false);
                }
+
             })
             .catch(err => {
                 console.log("Error: ", err);
@@ -41,8 +46,6 @@ const Login = ({setAuth}, props) => {
     const onCodeChanged = (e) => {
         setCode(e.target.value);
     }
-
-
 
     return (
         <div className="loginContainer">
