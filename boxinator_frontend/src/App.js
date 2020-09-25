@@ -29,17 +29,17 @@ function App() {
     const [userInfo, setUserInfo] = useState({});
     //const accountId = localStorage.getItem('id');
 
-  const getRouts  = async accountId=>{
-       await axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': localStorage.getItem('token')}})
-            .then(res => {
-                console.log(res.data);
-                setUserInfo(res.data);
+  const getRouts  = async accountId=> {
+      await axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': localStorage.getItem('token')}})
+          .then(res => {
+              console.log(res.data);
+              setUserInfo(res.data);
 
-        })
-            .catch(err => {
-                console.log(err);
-            })
-    
+          })
+          .catch(err => {
+              console.log(err);
+          })
+  }
 
     const setAuth = boolean => {
         setIsAuthenticated(boolean);
