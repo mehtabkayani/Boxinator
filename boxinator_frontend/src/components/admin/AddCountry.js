@@ -1,8 +1,6 @@
-import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import Select from 'react-select';
+import React, { useState} from "react";
 import {Button, Form} from "react-bootstrap";
-import axios from "axios";
+
 
 const AddCountry = () => {
     const [countryName, setCountryName] = useState('');
@@ -45,7 +43,7 @@ const AddCountry = () => {
     }
 
     return (
-        <div className="newShipmentContainer">
+        <div >
             <h1>New shipment: </h1>
             <br></br>
             <Form onSubmit={onSubmitForm}>
@@ -55,11 +53,11 @@ const AddCountry = () => {
                 </div>
                 <div>
                     <Form.Label>Country Code </Form.Label>
-                    <Form.Control type="text" placeholder="Enter weight" onChange={onCountryCodeChanged} required/>
+                    <Form.Control type="text" placeholder="Enter code" onChange={onCountryCodeChanged} required/>
                 </div>
                 <div>
-                    <Form.Label>Number </Form.Label>
-                    <Form.Control type="number"   onChange={onNumberChanged} required/>
+                    <Form.Label>Multiplying Number </Form.Label>
+                    <Form.Control type="number"  onChange={onNumberChanged} required/>
                 </div>
                 <br></br>
 
