@@ -152,8 +152,10 @@ public class ShipmentController {
         Optional<Shipment> shipment = shipmentRepository.findById(shipment_id);
         System.out.println(shipment.get().getUser().getId());
 
+
         if(shipment.get().getUser().getId() == Integer.parseInt(userId) || jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
             return new ResponseEntity<>(shipment.get(),HttpStatus.OK);
+
         }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
@@ -267,17 +269,18 @@ public class ShipmentController {
 
         System.out.println("JWT: " + jwt);
         System.out.println("PathVariable: " + shipment_id);
-
+        System.out.println(shipment.getShipmentStatus());
         Optional<Shipment> oldShipment = shipmentRepository.findById(shipment_id);
         if (!oldShipment.isPresent())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         if (!(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR)) {
-            if (shipment.getShipmentStatus() == ShipmentStatus.CANCELLED) {
+            if (shipment.getShipmentStatus() != ShipmentStatus.CANCELLED) {
                 oldShipment.get().setShipmentStatus(shipment.getShipmentStatus());
                 shipmentRepository.save(oldShipment.get());
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
+                System.out.println("Forbidden");
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
         }
