@@ -25,9 +25,8 @@
     <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AllUsers.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AllUsers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/MainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/MainPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/CountryCost.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/CountryCost.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,6 +85,17 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <module name="boxinator" />
       <option name="VM_PARAMETERS" />
@@ -165,7 +175,7 @@
       <workItem from="1600669503680" duration="49965000" />
       <workItem from="1600853594185" duration="2138000" />
       <workItem from="1600859691520" duration="1310000" />
-      <workItem from="1600861130885" duration="31676000" />
+      <workItem from="1600861130885" duration="54898000" />
     </task>
     <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
       <created>1600094762706</created>
@@ -300,7 +310,42 @@
       <option name="project" value="LOCAL" />
       <updated>1600958467621</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Fixed the navbar so that right user has the right access but it needs som fixes">
+      <created>1600959326535</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1600959326536</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Fixed the navbar so that right user has the right access but it needs som fixes">
+      <created>1600959387240</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1600959387240</updated>
+    </task>
+    <task id="LOCAL-00022" summary="}">
+      <created>1601015771115</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1601015771115</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Veiw all countries, tying to update country(not working yet), fixed add country method">
+      <created>1601039184062</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1601039184063</updated>
+    </task>
+    <task id="LOCAL-00024" summary="fixed add country method">
+      <created>1601039377741</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1601039377741</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -336,7 +381,11 @@
     <MESSAGE value="Fixed router so that only the users with authenticated role can access their pages" />
     <MESSAGE value="Fixed router so that only the users with authenticated role can access their pages, but when the pages refreshes so gets the user no access anymore&quot;need to be fixed &quot;" />
     <MESSAGE value="Fixed loggout method, changed receiver name in admin page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed loggout method, changed receiver name in admin page" />
+    <MESSAGE value="Fixed the navbar so that right user has the right access but it needs som fixes" />
+    <MESSAGE value="}" />
+    <MESSAGE value="Veiw all countries, tying to update country(not working yet), fixed add country method" />
+    <MESSAGE value="fixed add country method" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed add country method" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -396,16 +445,16 @@
     </state>
     <state width="1237" height="247" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690496" />
     <state width="1877" height="139" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171530" />
-    <state x="477" y="86" key="RollbackChangesDialog" timestamp="1600860684369">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="-1204" y="282" key="RollbackChangesDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600784350701" />
-    <state x="477" y="86" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1600860684369" />
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1600958478562">
+    <state x="-1204" y="282" key="RollbackChangesDialog" timestamp="1601016854297">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600958478562" />
-    <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1600873723637" />
+    <state x="-1204" y="282" key="RollbackChangesDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601016854297" />
+    <state x="477" y="86" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1600860684369" />
+    <state x="368" y="147" key="Vcs.Push.Dialog.v2" timestamp="1601039384484">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601015780668" />
+    <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1601039384484" />
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
@@ -426,5 +475,16 @@
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
     <state x="-1297" y="255" key="search.everywhere.popup/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600768038883" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/boxinator_frontend/src/components/admin/AdminMainPage.js</url>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
