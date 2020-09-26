@@ -25,8 +25,8 @@
     <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/CountryCost.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/CountryCost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +175,7 @@
       <workItem from="1600669503680" duration="49965000" />
       <workItem from="1600853594185" duration="2138000" />
       <workItem from="1600859691520" duration="1310000" />
-      <workItem from="1600861130885" duration="54898000" />
+      <workItem from="1600861130885" duration="56534000" />
     </task>
     <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
       <created>1600094762706</created>
@@ -345,7 +345,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601039377741</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Fixed the issue with that user lose access when the page refreshes">
+      <created>1601045963358</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1601045963358</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -385,7 +392,8 @@
     <MESSAGE value="}" />
     <MESSAGE value="Veiw all countries, tying to update country(not working yet), fixed add country method" />
     <MESSAGE value="fixed add country method" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed add country method" />
+    <MESSAGE value="Fixed the issue with that user lose access when the page refreshes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed the issue with that user lose access when the page refreshes" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -450,11 +458,11 @@
     </state>
     <state x="-1204" y="282" key="RollbackChangesDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601016854297" />
     <state x="477" y="86" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1600860684369" />
-    <state x="368" y="147" key="Vcs.Push.Dialog.v2" timestamp="1601039384484">
+    <state x="368" y="147" key="Vcs.Push.Dialog.v2" timestamp="1601045974330">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601015780668" />
-    <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1601039384484" />
+    <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1601045974330" />
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
