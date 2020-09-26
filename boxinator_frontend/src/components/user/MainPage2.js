@@ -41,15 +41,19 @@ const columns = [
     align: 'right',
     format: (value) => value.toFixed(2),
   },
+  {
+    id: 'shipmentStatus',
+    label: 'Shipment Status',
+    minWidth: 170,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  }
 ];
 
-function createData(id,to, country, price, weight,creationDate) {
-  
-  return { id,to, country, price, weight,creationDate };
+function createData(id,to, country, price, weight,creationDate,shipmentStatus) {
+
+  return { id,to, country, price, weight,creationDate,shipmentStatus};
 }
-
-
-
 
 const useStyles = makeStyles({
   root: {
@@ -74,7 +78,7 @@ export default function MainPage2() {
   },[])
 
   const rows = shipments.map(shipment => (
-    createData(shipment.id,shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight,shipment.creation_date)
+    createData(shipment.id,shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight,shipment.creation_date,shipment.shipmentStatus)
    
 ));
 
@@ -113,7 +117,8 @@ const onStatusOptionChanged = (e) =>{
    alert("You have cancelled the shipment!")
     
     const body = {shipmentStatus: "CANCELLED" };
-   await axios.put(`http://localhost:8080/api/shipments/${row}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
+  console.log(localStorage.getItem("token"))
+   await axios.put(`http://localhost:8080/api/shipments/${currentShipment.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
 
   }
   
@@ -151,6 +156,7 @@ const onStatusOptionChanged = (e) =>{
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                   {columns.map((column) => {
                     const value = row[column.id];
+                    console.log(value)
                     return (
                       <TableCell key={column.id} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}
@@ -158,8 +164,8 @@ const onStatusOptionChanged = (e) =>{
                       
                     );
                   })}        
-                           
-                <Button onClick={() => handleCancelShipment(row.id)}>Cancel</Button>
+                         {(row.shipmentStatus === "CREATED" || row.shipmentStatus === "INSTRANSIT") && <Button onClick={() => handleCancelShipment(row.id)}>Cancel</Button>}  
+                {/* <Button onClick={() => handleCancelShipment(row.id)}>Cancel</Button> */}
                 </TableRow>
               );
             })}
