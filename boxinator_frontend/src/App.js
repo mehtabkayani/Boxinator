@@ -58,9 +58,9 @@ function App() {
     };
 
 useEffect(()=>{
-   const isLoggedin = localStorage.getItem('token');
-   const isLogged = localStorage.getItem('id');
-   if(isLoggedin && isLogged && getRouts(isLogged)) {
+   const isToken = localStorage.getItem('token');
+   const isId = localStorage.getItem('id');
+   if(isToken && isId && getRouts(isId)) {
            setIsAuthenticated(true);
    }
    else{
@@ -73,7 +73,7 @@ console.log('isAdmin test',isAdmin)
     return (
         <div className="App">
             <Router>
-                <NavBar isAuthenticated={userInfo.accountType} setAuth={setAuth}></NavBar>
+                <NavBar isAccountType={userInfo.accountType} setAuth={setAuth} isAuthenticated={isAuthenticated}></NavBar>
                 <h1>{userInfo.accountType}</h1>
                 <Switch>
 

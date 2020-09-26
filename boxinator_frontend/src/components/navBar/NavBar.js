@@ -4,7 +4,7 @@ import Navbar from "react-bootstrap/cjs/Navbar";
 import {Form, Button, Nav} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const NavBar = ({setAuth, isAuthenticated}) => {
+const NavBar = ({setAuth, isAccountType, isAuthenticated}) => {
     const logout = e => {
         e.preventDefault();
         try {
@@ -22,21 +22,18 @@ const NavBar = ({setAuth, isAuthenticated}) => {
                 <Navbar.Brand href="/">Boxinator</Navbar.Brand>
                 {/*Not done yet, just testing !! */}
                 {
-                    isAuthenticated === "ADMINISTRATOR" ?(
+                   isAuthenticated && isAccountType === "ADMINISTRATOR" ? (
                         <Fragment>
-                        <Nav className="mr-auto">
-                        <Nav.Link><Link to="/">Home</Link></Nav.Link>
-                        <Nav.Link><Link to="/userAccount">User account</Link></Nav.Link>
-                        <Nav.Link><Link to="/adminMainPage">admin page</Link></Nav.Link>
-                    </Nav>
-                    <Form inline>
-                    <Link to="/login"><Button variant="outline-info">Login</Button></Link>
-                    </Form>
-                    <Form inline>
-                    <Button variant="outline-info" onClick={logout}>Logout</Button>
-                    </Form>
+                            <Nav className="mr-auto">
+                                <Nav.Link><Link to="/">Home</Link></Nav.Link>
+                                <Nav.Link><Link to="/adminMainPage">admin page</Link></Nav.Link>
+                                <Nav.Link><Link to="/userAccount">User account</Link></Nav.Link>
+                            </Nav>
+                            <Form inline>
+                                <Button variant="outline-info" onClick={logout}>Logout</Button>
+                            </Form>
                         </Fragment>
-                    ):isAuthenticated === "REGISTERED_USER" ?(
+                    ) : isAuthenticated && isAccountType === "REGISTERED_USER" ? (
                         <Fragment>
                             <Nav className="mr-auto">
                                 <Nav.Link><Link to="/">Home</Link></Nav.Link>
@@ -48,7 +45,7 @@ const NavBar = ({setAuth, isAuthenticated}) => {
                                 <Button variant="outline-info" onClick={logout}>Logout</Button>
                             </Form>
                         </Fragment>
-                    ):(
+                    ) : (
                         <Fragment>
                             <Nav className="mr-auto">
                                 <Nav.Link><Link to="/">Home</Link></Nav.Link>
