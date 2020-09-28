@@ -8,6 +8,7 @@ const CountryCost = () => {
     const [countries, setCountryList] = useState([]);
 
 
+
     useEffect(()=>{
         axios.get(`http://localhost:8080/api/settings/countries`)
             .then(res => {
@@ -19,14 +20,19 @@ const CountryCost = () => {
             })
     },[])
 
+
+    const url = "/updateCountry"
+
     const rows = countries.map(country => (
-        <tr key={countries.id}>
-            <td>{country.countryName}</td>
+
+        <tr key={country.id}>
+            <Link to={`${url}/${country.id}/${country.countryName}/${country.multiplyerNumber}/${country.countryCode}`}>{country.countryName}</Link>
             <td>{country.multiplyerNumber}</td>
         </tr>
-    ))
+    ));
     return(
         <div>
+
             <Table>
                 <thead>
                 <th>Country</th>
