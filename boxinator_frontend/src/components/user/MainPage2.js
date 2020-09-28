@@ -12,12 +12,14 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import {Link,Redirect} from "react-router-dom";
 import SpecificShipment from '../admin/SpecificShipment';
-import history from '../../history';
+import { useHistory } from "react-router-dom";
+
 import {READ} from '../../api/CRUD'
 
 
 const columns = [
   { id: 'id', label: '#ID', minWidth: 170 },
+  { id: 'color', label: 'Color', minWidth: 170 },
   { id: 'to', label: 'To', minWidth: 170 },
   { id: 'country', label: 'Country', minWidth: 100 },
   {
@@ -50,9 +52,9 @@ const columns = [
   }
 ];
 
-function createData(id,to, country, price, weight,creationDate,shipmentStatus) {
+function createData(id,color,to, country, price, weight,creationDate,shipmentStatus) {
 
-  return { id,to, country, price, weight,creationDate,shipmentStatus};
+  return { id,color,to, country, price, weight,creationDate,shipmentStatus};
 }
 
 const useStyles = makeStyles({
@@ -65,6 +67,7 @@ const useStyles = makeStyles({
 });
 
 export default function MainPage2() {
+  
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -78,17 +81,18 @@ export default function MainPage2() {
   },[])
 
   const rows = shipments.map(shipment => (
-    createData(shipment.id,shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight,shipment.creation_date,shipment.shipmentStatus)
+    createData(shipment.id,shipment.boxcolor, shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight,shipment.creation_date,shipment.shipmentStatus)
    
 ));
 
 const allShipments = async () => await READ(`/shipments/customer/${accountId}`).then(res => setShipments(res.data)).catch(err => console.log(err))
 
 const apiCall =  async(status) => {
-  console.log(status)
-
+  
+//let t = localStorage.getItem('token');
+//console.log(t);
   await READ(`/shipments/${status}`).then(res => setShipments(res.data)).catch(err => console.log(err));
-  //await axios.get(`http://localhost:8080/api/shipments/${status}`, { headers: {'Authorization': localStorage.getItem('token')} }).then(setShipments(res => res.data))
+  //await axios.get(`http://localhost:8080/api/shipments/${status}`, { headers: {'Authorization': eval(localStorage.getItem('token'))} }).then(res => setShipments(res.data))
 
 }
 
@@ -119,6 +123,7 @@ const onStatusOptionChanged = (e) =>{
     const body = {shipmentStatus: "CANCELLED" };
   console.log(localStorage.getItem("token"))
    await axios.put(`http://localhost:8080/api/shipments/${currentShipment.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
+   await allShipments();
 
   }
   
@@ -144,6 +149,7 @@ const onStatusOptionChanged = (e) =>{
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
+                  
                   {column.label}
                   
                 </TableCell>
@@ -156,7 +162,7 @@ const onStatusOptionChanged = (e) =>{
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                   {columns.map((column) => {
                     const value = row[column.id];
-                    console.log(value)
+                    
                     return (
                       <TableCell key={column.id} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}

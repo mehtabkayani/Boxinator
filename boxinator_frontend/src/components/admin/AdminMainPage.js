@@ -22,7 +22,7 @@ const AdminMainPage = () => {
     useEffect(() => {
         axios.get('http://localhost:8080/api/shipments', {headers: {'Authorization': localStorage.getItem('token')}})
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 setShipments(res.data)
             })
             .catch(err => {

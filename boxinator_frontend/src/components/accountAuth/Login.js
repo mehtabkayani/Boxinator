@@ -4,7 +4,7 @@ import {Form, Button} from "react-bootstrap";
 import axios from 'axios';
 import history from '../../history';
 
-const Login = ({setAuth, getRouts}) => {
+const Login = ({ getUser}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -26,14 +26,11 @@ const Login = ({setAuth, getRouts}) => {
             // history.push('/mainPage')
             
                if(res.data.token && res.data.account_id){
-                   getRouts(res.data.account_id);
-                   setAuth(true);
+                   getUser(res.data.account_id);
 
                    //window.location = '/mainPage';
 
 
-               }else{
-                   setAuth(false);
                }
 
             })
