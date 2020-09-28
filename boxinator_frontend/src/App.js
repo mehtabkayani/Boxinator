@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import history from './history';
 import {
-     BrowserRouter as Router,
+    BrowserRouter as Router,
     // Router,
     Switch,
     Route,
@@ -24,6 +24,8 @@ import AllUsers from "./components/admin/AllUsers";
 import axios from "axios";
 import SpecificShipment from './components/admin/SpecificShipment';
 import AddCountry from "./components/admin/AddCountry";
+import UpdateCountry from "./components/admin/UpdateCountry";
+
 function App() {
     // const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userInfo, setUserInfo] = useState({});
@@ -63,15 +65,18 @@ return (
         <div className="App">
             <Router>
                 <NavBar  userInfo={userInfo} clearUserInfo={clearUserInfo} ></NavBar>
+
                 <h1>{userInfo.accountType}</h1>
                 <Switch>
                     <Route exact
                            path="/login"
                            render={props => {
+
                                if (userInfo.accountType === "ADMINISTRATOR" ) {
                                    return <Redirect to="/adminMainPage"/>
                                }
                                else if (userInfo.accountType === "REGISTERED_USER") {
+
                                    return <Redirect to="/mainPage"/>
                                }
                                else
@@ -93,36 +98,46 @@ return (
                         }
                     }}/>
                     <Route exact path="/mainPage" render={props => {
+
                         if (isUser) {
                             return <MainPage2 />
+
                         } else {
                             return <Redirect to="/"/>
                         }
                     }}/>
                     <Route exact path="/newShipment" render={props => {
+
                         if (isUser) {
                             return <NewShipment />
+
                         } else {
                             return <Redirect to="/"/>
                         }
                     }}/>
                     <Route exact path="/adminMainPage" render={props => {
+
                         if (isAdmin) {
                             return <AdminMainPage />
+
                         } else {
                             return <Redirect to="/"/>
                         }
                     }}/>
                     <Route exact path="/country" render={props => {
+
                         if (isAdmin) {
                             return <CountryCost />
+
                         } else {
                             return <Redirect to="/login"/>
                         }
                     }}/>
                     <Route exact path="/allUsers" render={props => {
+
                         if (isAdmin) {
                             return <AllUsers />
+
                         } else {
                             return <Redirect to="/login"/>
                         }
@@ -135,6 +150,7 @@ return (
                         }
                     }}/>
                     <Route exact path="/" render={props => {
+
                         if (isAdminOrUser) {
                             return <Redirect to="/userAccount" />
                         } else {
@@ -143,11 +159,13 @@ return (
                     }}/>
                     <Route path="/specificShipment"  render={props => {
                         if (isAdminOrUser) {
+
                             return <Redirect to="/userAccount"/>
                         } else {
                             return <SpecificShipment {...props}/>
                         }
                     }}/>
+                    <Route exact path="/updateCountry/:id/:name/:number/:code" render={props => <UpdateCountry />}/>
                     <Route path="/addShipmentGuest" component={AddShipmentGuest}/>
                     <Route path="/mainPage2" component={MainPage}/>
                     <Route path="/addCountry" component={AddCountry}/>
