@@ -3,26 +3,37 @@ import {Link} from "react-router-dom"
 import Navbar from "react-bootstrap/cjs/Navbar";
 import {Form, Button, Nav} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { UPDATE } from "../../api/CRUD";
+import axios from 'axios'
+import { useHistory } from "react-router-dom";
 
-const NavBar = ({setAuth, isAccountType, isAuthenticated}) => {
-    const logout = e => {
+
+// const NavBar = ({setAuth, isAccountType, isAuthenticated}) => {
+    const NavBar = ({userInfo, clearUserInfo}) => {
+        let history = useHistory();
+    const logout = async (e) => {
+      let t =  localStorage.getItem('token');
         e.preventDefault();
-        try {
-            localStorage.removeItem("token");
-            localStorage.removeItem("id");
-            setAuth(false);
-        } catch (err) {
-            console.error(err.message);
-        }
+           //axios.post(`http://localhost:8080/api/logout/`, { headers: {'Authorization': localStorage.getItem('token')} }).then(res => console.log(res));
+
+           
+            await axios.post("http://localhost:8080/api/logout/", null, { headers: {'Authorization': t} })
+            .then( res => {
+            localStorage.setItem("token","");
+            localStorage.setItem("id","");
+            clearUserInfo();
+            history.push("/")
+            })
+      
     };
     return (
         <div className="navContainer">
             <Navbar bg="dark" variant="dark">
 
                 <Navbar.Brand href="/">Boxinator</Navbar.Brand>
-                {/*Not done yet, just testing !! */}
+{userInfo.accountType}
                 {
-                   isAuthenticated && isAccountType === "ADMINISTRATOR" ? (
+                   userInfo.accountType === "ADMINISTRATOR" ? (
                         <Fragment>
                             <Nav className="mr-auto">
                                 <Nav.Link><Link to="/">Home</Link></Nav.Link>
@@ -33,7 +44,7 @@ const NavBar = ({setAuth, isAccountType, isAuthenticated}) => {
                                 <Button variant="outline-info" onClick={logout}>Logout</Button>
                             </Form>
                         </Fragment>
-                    ) : isAuthenticated && isAccountType === "REGISTERED_USER" ? (
+                    ) : userInfo.accountType === "REGISTERED_USER" ? (
                         <Fragment>
                             <Nav className="mr-auto">
                                 <Nav.Link><Link to="/">Home</Link></Nav.Link>

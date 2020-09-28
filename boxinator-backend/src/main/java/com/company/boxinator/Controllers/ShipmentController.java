@@ -48,7 +48,7 @@ public class ShipmentController {
         String accountType = jwtUtil.parseJWT(jwt).toString();
         if (sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
             List<Shipment> filteredList = listOfShipments.stream()
-                    .filter(shipment -> shipment.getShipmentStatus() != ShipmentStatus.CANCELLED && shipment.getShipmentStatus() != ShipmentStatus.COMPLETED).collect(Collectors.toList());
+                    .filter(shipment -> (shipment.getShipmentStatus() != ShipmentStatus.CANCELLED) && (shipment.getShipmentStatus() != ShipmentStatus.COMPLETED)).collect(Collectors.toList());
             return new ResponseEntity<>(filteredList, HttpStatus.OK);
         }
 
@@ -66,6 +66,8 @@ public class ShipmentController {
     @GetMapping("shipments/complete")
     public ResponseEntity<List<Shipment>> getCompletedShipments(@RequestHeader("Authorization") String jwt) {
         //Retrieve a list of completed shipments relevant to the authenticated user (as with previous).
+        String userT = jwtUtil.parseJWT(jwt).getBody().getId();
+        System.out.println(userT);
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -275,7 +277,7 @@ public class ShipmentController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         if (!(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR)) {
-            if (shipment.getShipmentStatus() != ShipmentStatus.CANCELLED) {
+            if (shipment.getShipmentStatus() == ShipmentStatus.CANCELLED) {
                 oldShipment.get().setShipmentStatus(shipment.getShipmentStatus());
                 shipmentRepository.save(oldShipment.get());
                 return new ResponseEntity<>(HttpStatus.OK);
