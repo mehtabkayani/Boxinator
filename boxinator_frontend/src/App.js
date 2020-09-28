@@ -24,6 +24,7 @@ import AllUsers from "./components/admin/AllUsers";
 import axios from "axios";
 
 import SpecificShipment from './components/admin/SpecificShipment';
+import AddCountry from "./components/admin/AddCountry";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -32,18 +33,18 @@ function App() {
     const [userInfo, setUserInfo] = useState({});
     //const accountId = localStorage.getItem('id');
 
-  const getRouts  = async accountId=>{
-       await axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': localStorage.getItem('token')}})
-            .then(res => {
-                console.log(res.data);
-                setUserInfo(res.data);
 
-        })
-            .catch(err => {
-                console.log(err);
-            })
+  const getRouts  = async accountId=> {
+      await axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': localStorage.getItem('token')}})
+          .then(res => {
+              console.log(res.data);
+              setUserInfo(res.data);
+          })
+          .catch(err => {
+              console.log(err);
+          })
+  }
 
-        }
 
     const setAuth = boolean => {
         setIsAuthenticated(boolean);
@@ -56,13 +57,23 @@ function App() {
         setIsUser(boolean);
     };
 
+useEffect(()=>{
+   const isToken = localStorage.getItem('token');
+   const isId = localStorage.getItem('id');
+   if(isToken && isId && getRouts(isId)) {
+           setIsAuthenticated(true);
+   }
+   else{
+       setIsAuthenticated(false);
+   }
+    },[])
 
 console.log('isAdmin test',isAdmin)
 
     return (
         <div className="App">
             <Router>
-                <NavBar isAuthenticated={userInfo.accountType} setAuth={setAuth}></NavBar>
+                <NavBar isAccountType={userInfo.accountType} setAuth={setAuth} isAuthenticated={isAuthenticated}></NavBar>
                 <h1>{userInfo.accountType}</h1>
                 <Switch>
 
@@ -158,6 +169,8 @@ console.log('isAdmin test',isAdmin)
                         }
                     }}/>
                     <Route path="/addShipmentGuest" component={AddShipmentGuest}/>
+                    <Route path="/mainPage2" component={MainPage}/>
+                    <Route path="/addCountry" component={AddCountry}/>
                     <Route path="/" component={HomePage}/>
 
 
