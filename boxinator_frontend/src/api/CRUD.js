@@ -9,9 +9,9 @@ export const UPDATE = async (endpoint, object) => await instance.put(endpoint, o
 
 export const DELETE = async (endpoint, object) => await instance.delete(endpoint, object);
 
-export const READDEFAULT = async (endpoint, object) => await axiosDefault(endpoint, object);
+export const READDEFAULT = async (endpoint, object) => await axiosDefault.get(endpoint, object);
 
 export const UPDATELOGIN = async (endpoint, object , code) => {
-    await axiosDefault(endpoint, object, {headers: {'Authorization': code}});
+    await axiosDefault.put(endpoint, object, {headers: {'Authorization': code}});
 }
 

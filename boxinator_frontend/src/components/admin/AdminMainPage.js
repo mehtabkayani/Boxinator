@@ -17,6 +17,8 @@ const AdminMainPage = () => {
             .catch(err => {
                 console.log(err);
             })
+
+
     },[])
 
     const rows = shipments.map(shipment => (
