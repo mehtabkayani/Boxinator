@@ -96,7 +96,7 @@ public class UserController {
 
     }
 
-    @PostMapping("/logout")
+  @PostMapping("/logout")
     public ResponseEntity login(@RequestHeader("Authorization") String jwt){
         System.out.println("JWTOken: "+ jwt);
         Integer userId = jwtUtil.getJwtId(jwt);
@@ -112,8 +112,8 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/users")
 
-        @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers(@RequestHeader("Authorization") String jwt) {
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

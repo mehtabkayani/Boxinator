@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 import Navbar from "react-bootstrap/cjs/Navbar";
 import {Form, Button, Nav} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { UPDATE } from "../../api/CRUD";
+import { POSTLOGOUT } from "../../api/CRUD";
 import axios from 'axios'
 import { useHistory } from "react-router-dom";
 
@@ -12,18 +12,23 @@ import { useHistory } from "react-router-dom";
     const NavBar = ({userInfo, clearUserInfo}) => {
         let history = useHistory();
     const logout = async (e) => {
-      let t =  localStorage.getItem('token');
+      //let t =  localStorage.getItem('token');
         e.preventDefault();
            //axios.post(`http://localhost:8080/api/logout/`, { headers: {'Authorization': localStorage.getItem('token')} }).then(res => console.log(res));
-
-           
-            await axios.post("http://localhost:8080/api/logout/", null, { headers: {'Authorization': t} })
-            .then( res => {
+           await POSTLOGOUT('/logout').then(res =>{
             localStorage.setItem("token","");
             localStorage.setItem("id","");
             clearUserInfo();
             history.push("/")
-            })
+           }).catch(err => console.log(err));
+           
+            // await axios.post("http://localhost:8080/api/logout/", null, { headers: {'Authorization': t} })
+            // .then( res => {
+            // localStorage.setItem("token","");
+            // localStorage.setItem("id","");
+            // clearUserInfo();
+            // history.push("/")
+            // })
       
     };
     return (
@@ -31,6 +36,7 @@ import { useHistory } from "react-router-dom";
             <Navbar bg="dark" variant="dark">
 
                 <Navbar.Brand><Link to="/">Boxinator</Link></Navbar.Brand>
+
                 {
                    userInfo.accountType === "ADMINISTRATOR" ? (
                         <Fragment>

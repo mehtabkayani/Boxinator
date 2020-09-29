@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {READ, UPDATE, READDEFAULT} from '../../api/CRUD';
+import {GET, PUT, GETDEFAULT} from '../../api/CRUD';
 
 const SpecificShipment = ({ shipmentId }) => {
 
@@ -14,10 +14,10 @@ const SpecificShipment = ({ shipmentId }) => {
 
     useEffect(() => {
         
-        READ(`/shipments/${shipmentId}`).then(res => setShipment(res.data))
+        GET(`/shipments/${shipmentId}`).then(res => setShipment(res.data))
             .catch(err => console.log(err))
         
-        READDEFAULT('/settings/countries').then(res => setCountryList(res.data))
+        GETDEFAULT('/settings/countries').then(res => setCountryList(res.data))
             .catch(err => console.log(err));
         
             
@@ -35,7 +35,7 @@ const SpecificShipment = ({ shipmentId }) => {
         //Passing ID recieves error 400 in api endpoint
         const body = {boxcolor: shipment.boxcolor, country: {id: shipment.country.id}, shipmentStatus: shipment.shipmentStatus, receiverName: shipment.receiverName}
 
-        await UPDATE(`/shipments/${shipmentId}`, body).then(res => console.log(res))
+        await PUT(`/shipments/${shipmentId}`, body).then(res => console.log(res))
                 .catch(err=> console.log(err));
         
     }

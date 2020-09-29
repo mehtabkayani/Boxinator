@@ -3,19 +3,23 @@ import Table from "react-bootstrap/Table";
 import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
 import axios from "axios";
+import {GET} from '../../api/CRUD'
 
 const AllUsers = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/users', {headers: {'Authorization': localStorage.getItem('token')}})
-            .then(res => {
-                console.log(res.data);
-                setUsers(res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            })
+
+        GET('/users').then(res => setUsers(res.data)).catch(err => console.log(err));
+
+        // axios.get('http://localhost:8080/api/users', {headers: {'Authorization': localStorage.getItem('token')}})
+        //     .then(res => {
+        //         console.log(res.data);
+        //         setUsers(res.data)
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
     })
 
     const rows = users.map(user => (
