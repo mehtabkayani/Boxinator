@@ -151,6 +151,13 @@ return (
                             return <AddShipmentGuest/>
                         }
                     }}/>
+                    {/* <Route path="/specificShipment/:id" render={props => {
+                        if (userInfo.accountType === "ADMINISTRATOR" || userInfo.accountType === "REGISTERED_USER") {
+                            return <SpecificShipment />
+                        } else {
+                            return <Redirect to="/"/> 
+                        }
+                    }}/> */}
                     <Route exact path="/" render={props => {
                             if(userInfo.accountType === "ADMINISTRATOR"){
                                 return <Redirect to="/adminMainPage"/>
@@ -163,13 +170,7 @@ return (
                             return <HomePage/>
                         }
                     }}/>
-                    {/* <Route path="/specificShipment"  render={props => {
-                        if (isAdminOrUser) {
-                            return <Redirect to="/userAccount"/>
-                        } else {
-                            return <SpecificShipment {...props}/>
-                        }
-                    }}/> */}
+                    
                     <Route exact path="/specificShipment/:id" component={SpecificShipment} />
                     <Route exact path="/updateCountry/:id/:name/:number/:code" render={props => <UpdateCountry />}/>
                     <Route path="/addShipmentGuest" component={AddShipmentGuest}/>
