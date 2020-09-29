@@ -23,6 +23,11 @@ public class CountryController {
 
     private SessionUtil sessionUtil = SessionUtil.getInstance();
 
+    @GetMapping("/country/{id}")
+    public Country getCountry(@PathVariable ("id") Integer id) {
+        return countryRepository.findById(id).get();
+    }
+
     @GetMapping("/countries")
     public List<Country> getCountries() {
         return countryRepository.findAll();

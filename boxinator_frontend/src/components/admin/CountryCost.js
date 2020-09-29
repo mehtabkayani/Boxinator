@@ -26,7 +26,7 @@ const CountryCost = () => {
     const rows = countries.map(country => (
 
         <tr key={country.id}>
-            <Link to={`${url}/${country.id}/${country.countryName}/${country.multiplyerNumber}/${country.countryCode}`}>{country.countryName}</Link>
+            <Link to={`/updateCountry/${country.id}`}>{country.countryName}</Link>
             <td>{country.multiplyerNumber}</td>
         </tr>
     ));
