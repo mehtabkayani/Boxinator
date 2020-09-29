@@ -31,7 +31,8 @@ function App() {
     const [userInfo, setUserInfo] = useState({});
     //const accountId = localStorage.getItem('id');
   const getUser = async accountId=> {
-      await axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': localStorage.getItem('token')}})
+    let token = localStorage.getItem('token');
+      await axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': token}})
           .then(res => {
               console.log(res.data);
               setUserInfo(res.data);
@@ -44,10 +45,10 @@ function App() {
     //     setIsAuthenticated(boolean);
     // };
 useEffect(()=>{
-   const isToken = localStorage.getItem('token');
-   const isId = localStorage.getItem('id');
-   if(isToken && isId) {
-    getUser(isId)
+   let token = localStorage.getItem('token');
+   let id = localStorage.getItem('id');
+   if(token && id) {
+    getUser(id)
    }
 //    else{
 //        setIsAuthenticated(false);
@@ -66,7 +67,7 @@ return (
             <Router>
                 <NavBar  userInfo={userInfo} clearUserInfo={clearUserInfo} ></NavBar>
 
-                <h1>{userInfo.accountType}</h1>
+                {/* <h1>{userInfo.accountType}</h1> */}
                 <Switch>
                     <Route exact
                            path="/login"
@@ -84,9 +85,11 @@ return (
                            }
                            }/>
                     <Route exact path="/register" render={props => {
-                        if (isAdminOrUser) {
-                            return <Redirect to="/userAccount"/>
-                        } else {
+                        if (userInfo.accountType === "ADMINISTRATOR") {
+                            return <Redirect to="/adminMainPage"/>
+                        } else if(userInfo.accountType === "REGISTERED_USER") {
+                            return <Redirect to="/mainPage"/>
+                        }else{
                             return <Register/>
                         }
                     }}/>
@@ -99,7 +102,7 @@ return (
                     }}/>
                     <Route exact path="/mainPage" render={props => {
 
-                        if (isUser) {
+                        if (userInfo.accountType === "REGISTERED_USER") {
                             return <MainPage2 />
 
                         } else {
@@ -108,7 +111,7 @@ return (
                     }}/>
                     <Route exact path="/newShipment" render={props => {
 
-                        if (isUser) {
+                        if (userInfo.accountType === "REGISTERED_USER") {
                             return <NewShipment />
 
                         } else {
@@ -117,7 +120,7 @@ return (
                     }}/>
                     <Route exact path="/adminMainPage" render={props => {
 
-                        if (isAdmin) {
+                        if (userInfo.accountType === "ADMINISTRATOR") {
                             return <AdminMainPage />
 
                         } else {
@@ -126,7 +129,7 @@ return (
                     }}/>
                     <Route exact path="/country" render={props => {
 
-                        if (isAdmin) {
+                        if (userInfo.accountType === "ADMINISTRATOR") {
                             return <CountryCost />
 
                         } else {
@@ -135,7 +138,7 @@ return (
                     }}/>
                     <Route exact path="/allUsers" render={props => {
 
-                        if (isAdmin) {
+                        if (userInfo.accountType === "ADMINISTRATOR") {
                             return <AllUsers />
 
                         } else {
@@ -143,17 +146,23 @@ return (
                         }
                     }}/>
                     <Route exact path="/addShipmentGuest" render={props => {
-                        if (isAdminOrUser) {
-                            return <Redirect to="/userAccount"/>
-                        } else {
-                            return <AddShipmentGuest />
+                         if (userInfo.accountType === "ADMINISTRATOR") {
+                            return <Redirect to="/adminMainPage"/>
+                        } else if(userInfo.accountType === "REGISTERED_USER") {
+                            return <Redirect to="/mainPage"/>
+                        }else{
+                            return <AddShipmentGuest/>
                         }
                     }}/>
                     <Route exact path="/" render={props => {
-
-                        if (isAdminOrUser) {
-                            return <Redirect to="/userAccount" />
-                        } else {
+                            if(userInfo.accountType === "ADMINISTRATOR"){
+                                return <Redirect to="/adminMainPage"/>
+                                }else if(userInfo.accountType === "REGISTERED_USER"){
+                                return <Redirect to="/mainPage"/>
+    
+                                }
+                            // return <Redirect to="/userAccount" />
+                         else {
                             return <HomePage/>
                         }
                     }}/>

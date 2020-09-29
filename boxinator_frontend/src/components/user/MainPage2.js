@@ -89,19 +89,19 @@ const allShipments = async () => await READ(`/shipments/customer/${accountId}`).
 
 const apiCall =  async(status) => {
   
-//let t = localStorage.getItem('token');
+let token = localStorage.getItem('token');
 //console.log(t);
-  await READ(`/shipments/${status}`).then(res => setShipments(res.data)).catch(err => console.log(err));
-  //await axios.get(`http://localhost:8080/api/shipments/${status}`, { headers: {'Authorization': eval(localStorage.getItem('token'))} }).then(res => setShipments(res.data))
+  //await READ(`/shipments/${status}`).then(res => setShipments(res.data)).catch(err => console.log(err));
+  await axios.get(`http://localhost:8080/api/shipments/${status}`, { headers: {'Authorization': token} }).then(res => setShipments(res.data))
 
 }
 
 
-const onStatusOptionChanged = (e) =>{
+const onStatusOptionChanged = async (e) =>{
   if(e.target.value === "all"){
     allShipments();
   }else{
-    apiCall(e.target.value);
+     apiCall(e.target.value);
   }
 } 
 
@@ -122,7 +122,8 @@ const onStatusOptionChanged = (e) =>{
     
     const body = {shipmentStatus: "CANCELLED" };
   console.log(localStorage.getItem("token"))
-   await axios.put(`http://localhost:8080/api/shipments/${currentShipment.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
+  let token = localStorage.getItem('token');
+   await axios.put(`http://localhost:8080/api/shipments/${currentShipment.id}`, body, { headers: {'Authorization': token} })
    await allShipments();
 
   }
@@ -132,6 +133,9 @@ const onStatusOptionChanged = (e) =>{
             <Link to="/newShipment"><Button variant="contained" color="primary">Add new shipment</Button></Link>
             <select onChange={onStatusOptionChanged}>
               <option value="all" defaultChecked>All</option>
+              <option value="created">Created</option>
+              <option value="received">Received</option>
+              <option value="intransit">Intransit</option>
               <option value="complete">Completed</option>
               <option value="cancelled">Cancelled</option>
             </select>
@@ -162,9 +166,10 @@ const onStatusOptionChanged = (e) =>{
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                   {columns.map((column) => {
                     const value = row[column.id];
-                    
                     return (
-                      <TableCell key={column.id} align={column.align}>
+                      
+                        
+                      <TableCell key={column.id} align={column.align} style={{backgroundColor: value, color: value}}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}
                       </TableCell>
                       
