@@ -22,17 +22,20 @@ const AllUsers = () => {
         //     })
     },[])
 
+    const url = "/updateUser";
     const rows = users.map(user => (
-
-        <tr key={user.id}>
-            <td>{user.firstname}</td>
-            <td>{user.lastname}</td>
-            <td>{user.dateOfBirth}</td>
-            <td>{user.email}</td>
-            <td>{user.countryOfResidence}</td>
-            <td>{user.contactNumber}</td>
-            <Button variant="secondary">Update</Button>
-        </tr>
+        <Link
+            to={`${url}/${user.id}`}>
+            <tr key={user.id}>
+                <td>{user.firstname}</td>
+                <td>{user.lastname}</td>
+                <td>{user.dateOfBirth}</td>
+                <td>{user.email}</td>
+                <td>{user.countryOfResidence}</td>
+                <td>{user.contactNumber}</td>
+                <Button variant="secondary">Update</Button>
+            </tr>
+        </Link>
     ));
 
     return (

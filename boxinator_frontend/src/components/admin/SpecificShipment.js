@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import {GET, PUT, GETDEFAULT} from '../../api/CRUD';
+import {useParams} from "react-router";
 
-const SpecificShipment = ({ shipmentId }) => {
+const SpecificShipment = () => {
+
+    const {id} = useParams();
 
     //Comment out shipmentId and pass in id as props
     //For development use only
@@ -14,14 +17,14 @@ const SpecificShipment = ({ shipmentId }) => {
 
     useEffect(() => {
         
-        GET(`/shipments/${shipmentId}`).then(res => setShipment(res.data))
+        GET(`/shipments/${id}`).then(res => setShipment(res.data))
             .catch(err => console.log(err))
         
         GETDEFAULT('/settings/countries').then(res => setCountryList(res.data))
             .catch(err => console.log(err));
         
             
-    }, [shipmentId])
+    }, [])
 
     const onShipmentChanged = e => {
         const {name, value} = e.target;
@@ -35,7 +38,7 @@ const SpecificShipment = ({ shipmentId }) => {
         //Passing ID recieves error 400 in api endpoint
         const body = {boxcolor: shipment.boxcolor, country: {id: shipment.country.id}, shipmentStatus: shipment.shipmentStatus, receiverName: shipment.receiverName}
 
-        await PUT(`/shipments/${shipmentId}`, body).then(res => console.log(res))
+        await PUT(`/shipments/${id}`, body).then(res => console.log(res))
                 .catch(err=> console.log(err));
         
     }
