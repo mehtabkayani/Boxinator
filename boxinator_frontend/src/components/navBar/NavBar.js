@@ -34,13 +34,13 @@ import { useHistory } from "react-router-dom";
     return (
         <div className="navContainer">
             <Navbar bg="dark" variant="dark">
-                <Navbar.Brand href="/">Boxinator</Navbar.Brand>
-                {userInfo.accountType}
+
+                <Navbar.Brand><Link to="/">Boxinator</Link></Navbar.Brand>
+
                 {
                    userInfo.accountType === "ADMINISTRATOR" ? (
                         <Fragment>
                             <Nav className="mr-auto">
-                                <Nav.Link><Link to="/">Home</Link></Nav.Link>
                                 <Nav.Link><Link to="/adminMainPage">admin page</Link></Nav.Link>
                                 <Nav.Link><Link to="/userAccount">User account</Link></Nav.Link>
                             </Nav>
@@ -51,7 +51,8 @@ import { useHistory } from "react-router-dom";
                     ) : userInfo.accountType === "REGISTERED_USER" ? (
                         <Fragment>
                             <Nav className="mr-auto">
-                                <Nav.Link><Link to="/">Home</Link></Nav.Link>
+                            
+                            {/* <Nav.Link><Link to="/">Boxinator</Link></Nav.Link> */}
                                 <Nav.Link><Link to="/mainPage">Main page</Link></Nav.Link>
                                 <Nav.Link><Link to="/userAccount">User account</Link></Nav.Link>
                             </Nav>
@@ -63,7 +64,7 @@ import { useHistory } from "react-router-dom";
                     ) : (
                         <Fragment>
                             <Nav className="mr-auto">
-                                <Nav.Link><Link to="/">Home</Link></Nav.Link>
+                                {/* <Nav.Link><Link to="/">Home</Link></Nav.Link> */}
                             </Nav>
                             <Form inline>
                                 <Link to="/login"><Button variant="outline-info">Login</Button></Link>

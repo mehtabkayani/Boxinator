@@ -66,6 +66,7 @@ public class ShipmentController {
     @GetMapping("shipments/complete")
     public ResponseEntity<List<Shipment>> getCompletedShipments(@RequestHeader("Authorization") String jwt) {
         //Retrieve a list of completed shipments relevant to the authenticated user (as with previous).
+        System.out.println(jwt);
         String userT = jwtUtil.parseJWT(jwt).getBody().getId();
         System.out.println(userT);
         if (!sessionUtil.isSessionValid(jwt)) {
@@ -75,6 +76,42 @@ public class ShipmentController {
         List<Shipment> listOfShipments = shipmentRepository.findAllByUserId(Integer.parseInt(userId)).get();
         List<Shipment> completedShipments = listOfShipments.stream().filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.COMPLETED).collect(Collectors.toList());
         return new ResponseEntity<>(completedShipments, HttpStatus.OK);
+    }
+
+    @GetMapping("shipments/created")
+    public ResponseEntity<List<Shipment>> getCreatedShipments(@RequestHeader("Authorization") String jwt) {
+        //Retrieve  a  list  of *completed||cancelled?* shipments  relevant  to  the authenticated user (as with previous)
+        if (!sessionUtil.isSessionValid(jwt)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        String userId = jwtUtil.parseJWT(jwt).getBody().getId();
+        List<Shipment> listOfShipments = shipmentRepository.findAllByUserId(Integer.parseInt(userId)).get();
+        List<Shipment> createdShipments = listOfShipments.stream().filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.CREATED).collect(Collectors.toList());
+        return new ResponseEntity<>(createdShipments, HttpStatus.OK);
+    }
+
+    @GetMapping("shipments/received")
+    public ResponseEntity<List<Shipment>> getReceivedShipments(@RequestHeader("Authorization") String jwt) {
+        //Retrieve  a  list  of *completed||cancelled?* shipments  relevant  to  the authenticated user (as with previous)
+        if (!sessionUtil.isSessionValid(jwt)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        String userId = jwtUtil.parseJWT(jwt).getBody().getId();
+        List<Shipment> listOfShipments = shipmentRepository.findAllByUserId(Integer.parseInt(userId)).get();
+        List<Shipment> receivedShipments = listOfShipments.stream().filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.RECEIVED).collect(Collectors.toList());
+        return new ResponseEntity<>(receivedShipments, HttpStatus.OK);
+    }
+
+    @GetMapping("shipments/intransit")
+    public ResponseEntity<List<Shipment>> getIntransitShipments(@RequestHeader("Authorization") String jwt) {
+        //Retrieve  a  list  of *completed||cancelled?* shipments  relevant  to  the authenticated user (as with previous)
+        if (!sessionUtil.isSessionValid(jwt)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        String userId = jwtUtil.parseJWT(jwt).getBody().getId();
+        List<Shipment> listOfShipments = shipmentRepository.findAllByUserId(Integer.parseInt(userId)).get();
+        List<Shipment> intransitShipments = listOfShipments.stream().filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.INTRANSIT).collect(Collectors.toList());
+        return new ResponseEntity<>(intransitShipments, HttpStatus.OK);
     }
 
     @GetMapping("shipments/cancelled")
@@ -276,7 +313,7 @@ public class ShipmentController {
         if (!oldShipment.isPresent())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-        if (!(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR)) {
+        if ((jwtUtil.tokenAccountType(jwt) == AccountType.REGISTERED_USER)) {
             if (shipment.getShipmentStatus() == ShipmentStatus.CANCELLED) {
                 oldShipment.get().setShipmentStatus(shipment.getShipmentStatus());
                 shipmentRepository.save(oldShipment.get());
