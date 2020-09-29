@@ -20,7 +20,7 @@ const AllUsers = () => {
         //     .catch(err => {
         //         console.log(err);
         //     })
-    })
+    },[])
 
     const rows = users.map(user => (
 

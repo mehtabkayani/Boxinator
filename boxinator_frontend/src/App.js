@@ -167,9 +167,9 @@ return (
                     }}/>
                     <Route path="/specificShipment"  render={props => {
                         if (isAdminOrUser) {
-                            return <Redirect to="/userAccount"/>
-                        } else {
                             return <SpecificShipment {...props}/>
+                        } else {
+                            return <Redirect to="/userAccount"/>
                         }
                     }}/>
                     <Route exact path="/updateCountry/:id/:name/:number/:code" render={props => <UpdateCountry />}/>
