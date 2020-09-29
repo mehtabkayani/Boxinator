@@ -12,31 +12,34 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import {GET} from '../../api/CRUD';
 
 const AdminMainPage = () => {
     const [shipments, setShipments] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-
     useEffect(() => {
-        axios.get('http://localhost:8080/api/shipments', {headers: {'Authorization': localStorage.getItem('token')}})
-            .then(res => {
-                console.log(res.data);
-                setShipments(res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            })
+
+        GET('/shipments').then(res => setShipments(res.data)).catch(err => console.log(err));
+
+        // axios.get('http://localhost:8080/api/shipments', {headers: {'Authorization': localStorage.getItem('token')}})
+        //     .then(res => {
+        //         // console.log(res.data);
+        //         setShipments(res.data)
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
     }, [])
 
-    function createData(id,to, country, price, weight,creationDate) {
+    function createData(id, to, country, price, weight, boxcolor, creationDate) {
 
-        return { id,to, country, price, weight,creationDate };
+        return { id, to, country, price, weight, boxcolor, creationDate };
     }
 
     const rows = shipments.map(shipment => (
-        createData(shipment.id, shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight, shipment.creation_date)
+        createData(shipment.id, shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight, shipment.boxcolor, shipment.creation_date)
 
     ));
 
@@ -77,6 +80,13 @@ const AdminMainPage = () => {
             format: (value) => value.toLocaleString('en-US'),
         },
         {
+            id: 'boxcolor',
+            label: 'Boxcolor',
+            minWidth: 170,
+            align: 'right',
+            format: (value) => value.toFixed(2),
+        },
+        {
             id: 'creationDate',
             label: 'Creation Date',
             minWidth: 170,
@@ -86,8 +96,9 @@ const AdminMainPage = () => {
     ];
     return (
         <>
+
             <Link to="/country"><Button>Change country cost</Button></Link>
-            <Link to="/allUsers"><Button>Update user</Button></Link>
+            <Link to="/allUsers"><Button>View users</Button></Link>
             <Paper className={classes.root}>
 
                 <TableContainer className={classes.container}>

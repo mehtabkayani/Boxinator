@@ -12,12 +12,14 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import {Link,Redirect} from "react-router-dom";
 import SpecificShipment from '../admin/SpecificShipment';
-import history from '../../history';
-import {READ} from '../../api/CRUD'
+import { useHistory } from "react-router-dom";
+
+import {GET} from '../../api/CRUD'
 
 
 const columns = [
   { id: 'id', label: '#ID', minWidth: 170 },
+  { id: 'color', label: 'Color', minWidth: 170 },
   { id: 'to', label: 'To', minWidth: 170 },
   { id: 'country', label: 'Country', minWidth: 100 },
   {
@@ -41,15 +43,19 @@ const columns = [
     align: 'right',
     format: (value) => value.toFixed(2),
   },
+  {
+    id: 'shipmentStatus',
+    label: 'Shipment Status',
+    minWidth: 170,
+    align: 'right',
+    format: (value) => value.toLocaleString('en-US'),
+  }
 ];
 
-function createData(id,to, country, price, weight,creationDate) {
-  
-  return { id,to, country, price, weight,creationDate };
+function createData(id,color,to, country, price, weight,creationDate,shipmentStatus) {
+
+  return { id,color,to, country, price, weight,creationDate,shipmentStatus};
 }
-
-
-
 
 const useStyles = makeStyles({
   root: {
@@ -61,23 +67,43 @@ const useStyles = makeStyles({
 });
 
 export default function MainPage2() {
+  
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [shipments, setShipments]= useState([]);
   const [shipment, setShipment]= useState({});
   const accountId = localStorage.getItem('id');
+  const [statusOption, setStatusOption] = useState('');
 
   useEffect(()=>{
-          READ(`/shipments/customer/${accountId}`).then(res => setShipments(res.data))
-          .catch(err => console.log(err))
-  },[accountId])
+          allShipments();
+  },[])
 
   const rows = shipments.map(shipment => (
-    createData(shipment.id,shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight,shipment.creation_date)
+    createData(shipment.id,shipment.boxcolor, shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight,shipment.creation_date,shipment.shipmentStatus)
    
 ));
 
+const allShipments = async () => await GET(`/shipments/customer/${accountId}`).then(res => setShipments(res.data)).catch(err => console.log(err))
+
+const apiCall =  async(status) => {
+  
+//let t = localStorage.getItem('token');
+//console.log(t);
+  await GET(`/shipments/${status}`).then(res => setShipments(res.data)).catch(err => console.log(err));
+  //await axios.get(`http://localhost:8080/api/shipments/${status}`, { headers: {'Authorization': eval(localStorage.getItem('token'))} }).then(res => setShipments(res.data))
+
+}
+
+
+const onStatusOptionChanged = (e) =>{
+  if(e.target.value === "all"){
+    allShipments();
+  }else{
+    apiCall(e.target.value);
+  }
+} 
 
 
   const handleChangePage = (event, newPage) => {
@@ -95,13 +121,20 @@ export default function MainPage2() {
    alert("You have cancelled the shipment!")
     
     const body = {shipmentStatus: "CANCELLED" };
+  console.log(localStorage.getItem("token"))
    await axios.put(`http://localhost:8080/api/shipments/${currentShipment.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
+   await allShipments();
 
   }
   
   return (
       <>
             <Link to="/newShipment"><Button variant="contained" color="primary">Add new shipment</Button></Link>
+            <select onChange={onStatusOptionChanged}>
+              <option value="all" defaultChecked>All</option>
+              <option value="complete">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
             <br/>
             <br/>
     <Paper className={classes.root}>
@@ -116,6 +149,7 @@ export default function MainPage2() {
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
+                  
                   {column.label}
                   
                 </TableCell>
@@ -128,6 +162,7 @@ export default function MainPage2() {
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                   {columns.map((column) => {
                     const value = row[column.id];
+                    
                     return (
                       <TableCell key={column.id} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value}
@@ -135,8 +170,8 @@ export default function MainPage2() {
                       
                     );
                   })}        
-                           
-                <Button onClick={() => handleCancelShipment(row.id)}>Cancel</Button>
+                         {(row.shipmentStatus === "CREATED" || row.shipmentStatus === "INSTRANSIT") && <Button onClick={() => handleCancelShipment(row.id)}>Cancel</Button>}  
+                {/* <Button onClick={() => handleCancelShipment(row.id)}>Cancel</Button> */}
                 </TableRow>
               );
             })}

@@ -1,17 +1,18 @@
-import instance from '../configs/axiosConfig';
+import axiosCall from '../configs/axiosConfig';
 import axiosDefault from '../configs/axiosDefault';
 
-export const CREATE = async (endpoint, object) => await instance.post(endpoint, object);
+export const POST = async (endpoint, object) => await axiosCall().post(endpoint, object);
 
-export const READ = async (endpoint, object) => await instance.get(endpoint, object);
+export const GET = async (endpoint, object) => await axiosCall().get(endpoint, object);
 
-export const UPDATE = async (endpoint, object) => await instance.put(endpoint, object);
+export const PUT = async (endpoint, object) => await axiosCall().put(endpoint, object);
 
-export const DELETE = async (endpoint, object) => await instance.delete(endpoint, object);
+export const DELETE = async (endpoint, object) => await axiosCall().delete(endpoint, object);
 
-export const READDEFAULT = async (endpoint, object) => await axiosDefault.get(endpoint, object);
+export const GETDEFAULT = async (endpoint, object) => await axiosDefault.get(endpoint, object);
 
-export const UPDATELOGIN = async (endpoint, object , code) => {
-    await axiosDefault.put(endpoint, object, {headers: {'Authorization': code}});
+export const POSTLOGIN = async (endpoint, object , code) => {
+    await axiosDefault.post(endpoint, object, {headers: {'Authorization': code}});
 }
+export const POSTLOGOUT = async (endpoint) => await axiosCall().post(endpoint);
 
