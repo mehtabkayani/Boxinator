@@ -18,7 +18,7 @@ const NavBar = ({setAuth, isAccountType, isAuthenticated}) => {
     return (
         <div className="navContainer">
             <Navbar bg="dark" variant="dark">
-
+                <h1>{isAccountType}</h1>
                 <Navbar.Brand href="/">Boxinator</Navbar.Brand>
                 {/*Not done yet, just testing !! */}
                 {

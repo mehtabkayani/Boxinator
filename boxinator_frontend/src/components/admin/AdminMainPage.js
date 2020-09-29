@@ -28,13 +28,7 @@ const AdminMainPage = () => {
             .catch(err => {
                 console.log(err);
             })
-<<<<<<< HEAD
-
-
-    },[])
-=======
     }, [])
->>>>>>> 82f86d60a7276ada3303a689094d08de74a434dc
 
     function createData(id,to, country, price, weight,creationDate) {
 
