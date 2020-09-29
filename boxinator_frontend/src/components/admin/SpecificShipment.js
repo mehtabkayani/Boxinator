@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { GET, PUT, GETDEFAULT } from '../../api/CRUD';
-import { useParams } from "react-router";
+import {GET, PUT, GETDEFAULT} from '../../api/CRUD';
+import {useParams} from "react-router";
+import {useHistory} from 'react-router-dom'
 
 const SpecificShipment = () => {
 
-    const { id } = useParams();
-
+    const {id} = useParams();
+    const history = useHistory();
     //Comment out shipmentId and pass in id as props
     //For development use only
     // shipmentId = 78;
@@ -14,13 +15,17 @@ const SpecificShipment = () => {
     const [countryList, setCountryList] = useState([]);
     const [country, setCountry] = useState({});
 
+    //const statusList = ["CREATED", "RECIEVED", "INTRANSIT", "COMPLETED", "CANCELLED"]
+
     useEffect(() => {
-
+        
         GET(`/shipments/${id}`).then(res => {
-            setShipment(res.data);
-            setCountry(res.data.country);
-        }).catch(err => console.log(err))
-
+            setShipment(res.data)
+            setCountry(res.data.country)
+        }
+            )
+            .catch(err => console.log(err))
+        
         GETDEFAULT('/settings/countries').then(res => setCountryList(res.data))
             .catch(err => console.log(err));
 
@@ -32,7 +37,7 @@ const SpecificShipment = () => {
         setShipment(prevState => ({ ...prevState, [name]: value }));
     }
     const onCountryChanged = e => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setCountry(prevState => ({ ...prevState, [name]: value }));
     }
 
@@ -41,12 +46,11 @@ const SpecificShipment = () => {
         console.log(shipment);
 
         //Passing ID recieves error 400 in api endpoint
-        const body = { boxcolor: shipment.boxcolor, country, 
-        shipmentStatus: shipment.shipmentStatus, receiverName: shipment.receiverName, weight: shipment.weight}
+        const body = {boxcolor: shipment.boxcolor, country, shipmentStatus: shipment.shipmentStatus, receiverName: shipment.receiverName, weight: shipment.weight}
 
-        await PUT(`/shipments/${id}`, body).then(res => console.log(res))
-            .catch(err => console.log(err));
-
+        await PUT(`/shipments/${id}`, body).then(res =>history.push("/adminMainPage") )
+                .catch(err=> console.log(err));
+        
     }
 
     //const printStatusList = countryList.map((status, index) => (<option key={index} value={status}>{status}</option>))
@@ -82,6 +86,7 @@ const SpecificShipment = () => {
                 </select>
     
                 <button type="submit">Submit</button>
+                
             </form>
         </div>
     );

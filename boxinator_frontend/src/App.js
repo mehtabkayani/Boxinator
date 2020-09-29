@@ -26,6 +26,7 @@ import SpecificShipment from './components/admin/SpecificShipment';
 import AddCountry from "./components/admin/AddCountry";
 import UpdateCountry from "./components/admin/UpdateCountry";
 import UpdateUser from "./components/admin/updateUser";
+import AdminAccount from "./components/admin/AdminAccount";
 
 function App() {
 
@@ -172,22 +173,34 @@ return (
                         }
                     }}/>
 
+                        <Route exact path="/adminAccount" render={props => {
+
+                        if (userInfo.accountType === "ADMINISTRATOR") {
+
+                            return <AdminAccount/>
+
+                        } else {
+                            return <Redirect to="/"/>
+                        }
+                        }}/>
+
 
 
                     <Route path="/updateUser/:id" component={UpdateUser}/>
-
+                    
                     <Route  path="/updateCountry/:id" component={ UpdateCountry }/>
 
-                    {/* <Route path="/specificShipment/:id"  render={props => {
-                        if (isAdminOrUser) {
-                            return <Redirect to="/userAccount"/>
+
+                    <Route path="/specificShipment/:id"  render={props => {
+                        if (userInfo.accountType === "ADMINISTRATOR") {
+                            return <SpecificShipment/>
                         } else {
-                            return <SpecificShipment {...props}/>
+                            return <Redirect to="/userAccount"/>
                         }
                     }}/> */}
 
                     
-                    <Route exact path="/specificShipment/:id" component={SpecificShipment} />
+                    {/* <Route exact path="/specificShipment/:id" component={SpecificShipment} /> */}
 
                     <Route exact path="/updateCountry/:id/:name/:number/:code" render={props => <UpdateCountry />}/>
 
