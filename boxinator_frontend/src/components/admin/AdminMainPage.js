@@ -17,6 +17,7 @@ const AdminMainPage = () => {
     const [shipments, setShipments] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const url = "/specificShipment";
 
 
     useEffect(() => {
@@ -36,6 +37,7 @@ const AdminMainPage = () => {
     }
 
     const rows = shipments.map(shipment => (
+
         createData(shipment.id, shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight, shipment.boxcolor, shipment.creation_date)
 
     ));
