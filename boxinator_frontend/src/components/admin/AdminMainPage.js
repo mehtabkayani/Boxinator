@@ -12,6 +12,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import {GET} from '../../api/CRUD';
 
 const AdminMainPage = () => {
     const [shipments, setShipments] = useState([]);
@@ -19,16 +20,18 @@ const AdminMainPage = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const url = "/specificShipment";
 
-
     useEffect(() => {
-        axios.get('http://localhost:8080/api/shipments', {headers: {'Authorization': localStorage.getItem('token')}})
-            .then(res => {
-                console.log(res.data);
-                setShipments(res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            })
+
+        GET('/shipments').then(res => setShipments(res.data)).catch(err => console.log(err));
+
+        // axios.get('http://localhost:8080/api/shipments', {headers: {'Authorization': localStorage.getItem('token')}})
+        //     .then(res => {
+        //         // console.log(res.data);
+        //         setShipments(res.data)
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
     }, [])
 
     function createData(id, to, country, price, weight, boxcolor, creationDate) {

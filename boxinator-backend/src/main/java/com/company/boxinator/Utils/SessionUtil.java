@@ -28,11 +28,15 @@ public class SessionUtil {
     }
 
     public void addSession(User user) {
-        Session session = new Session();
+        Session newSession = new Session();
         String token = jwtUtil.createJWT(user.getAccountType(),user.getId());
-        session.setAccount_id(user.getId());
-        session.setToken(token);
-        sessions.add(session);
+        Optional<Session> findSession = sessions.stream().filter(session -> session.getAccount_id() == user.getId()).findFirst();
+        if(!findSession.isPresent()){
+            newSession.setAccount_id(user.getId());
+            newSession.setToken(token);
+            sessions.add(newSession);
+        }
+
     }
 
     public Optional<Session> getSession(Integer userId) {
@@ -42,7 +46,7 @@ public class SessionUtil {
     public boolean isSessionValid(String jwt) {
         boolean isValid = false;
 
-        Optional<Session> optSessions = sessions.stream().filter(session -> session.getToken().equals(jwt)).findFirst();
+        Optional<Session> optSessions = sessions.stream().filter(session -> session.getToken().equals(jwt)).findAny();
 
         if (!optSessions.isPresent()) {
             return isValid;

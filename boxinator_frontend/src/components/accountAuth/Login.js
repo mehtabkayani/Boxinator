@@ -3,8 +3,9 @@ import  {Link} from 'react-router-dom';
 import {Form, Button} from "react-bootstrap";
 import axios from 'axios';
 import history from '../../history';
+import {POSTLOGIN} from '../../api/CRUD'
 
-const Login = ({setAuth, getRouts}) => {
+const Login = ({ getUser}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,6 +16,13 @@ const Login = ({setAuth, getRouts}) => {
 
             const body = { password, email }
 
+            // console.log("Code: ", code);
+            // await POSTLOGIN('/login', body, code).then(res => {
+            //     console.log(res);
+            //     localStorage.setItem('id', res.data.account_id);
+            //     localStorage.setItem('token', res.data.token);
+            //     getUser(res.data.account_id);
+            // }).catch(err => console.log(err));
             await axios.post("http://localhost:8080/api/login", body, { headers: {'Authorization': code} })
             .then(res=>{
                 console.log("token", res)
@@ -26,14 +34,11 @@ const Login = ({setAuth, getRouts}) => {
             // history.push('/mainPage')
             
                if(res.data.token && res.data.account_id){
-                   getRouts(res.data.account_id);
-                   setAuth(true);
+                   getUser(res.data.account_id);
 
                    //window.location = '/mainPage';
 
 
-               }else{
-                   setAuth(false);
                }
 
             })

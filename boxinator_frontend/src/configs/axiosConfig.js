@@ -1,8 +1,14 @@
-import axios from 'axios';
+import axiosDefault from './axiosDefault';
 
-const instance = axios.create({baseURL: "http://localhost:8080/api"});
+const axiosCall = () => {
+    const instance = axiosDefault;
 
-instance.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+    let token = localStorage.getItem('token');
+    
+    instance.defaults.headers.common['Authorization'] = token;
 
-export default instance;
+    return instance;
+}
+
+export default axiosCall;
 
