@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Form, Button} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-
+import {POST} from '../../api/CRUD'
 
 const Register = () => {
 
@@ -18,17 +18,25 @@ const Register = () => {
 
     const onSubmitForm = async e => {
         e.preventDefault();
+
+        const body = {
+            firstname,
+            lastname,
+            email,
+            dateOfBirth,
+            countryOfResidence,
+            zipcode,
+            contactNumber,
+            password
+        };
+
+        // await POST('/user', body).then(res => {
+        //     alert(res.text());
+        //     clearForm();
+        // }).catch(err => console.log(err));
+
         try {
-            const body = {
-                firstname,
-                lastname,
-                email,
-                dateOfBirth,
-                countryOfResidence,
-                zipcode,
-                contactNumber,
-                password
-            };
+            
            await fetch(
                 "http://localhost:8080/api/user",
                 {
@@ -47,6 +55,16 @@ const Register = () => {
             console.error(err.message);
         }
     };
+
+    // const clearForm = () => {
+    //     setFirstname('');
+    //     setLastname('');
+    //     setEmail('');
+    //     setPassword('');
+    //     setBirthDate('');
+    //     setZipcode('');
+    //     setContactNumber('');
+    // }
 
     const onFirstnameChanged = ev => setFirstname(ev.target.value.trim());
     const onLastnameChanged = ev => setLastname(ev.target.value.trim());

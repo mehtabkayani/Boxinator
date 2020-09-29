@@ -14,7 +14,7 @@ import {Link,Redirect} from "react-router-dom";
 import SpecificShipment from '../admin/SpecificShipment';
 import { useHistory } from "react-router-dom";
 
-import {READ} from '../../api/CRUD'
+import {GET} from '../../api/CRUD'
 
 
 const columns = [
@@ -85,13 +85,13 @@ export default function MainPage2() {
    
 ));
 
-const allShipments = async () => await READ(`/shipments/customer/${accountId}`).then(res => setShipments(res.data)).catch(err => console.log(err))
+const allShipments = async () => await GET(`/shipments/customer/${accountId}`).then(res => setShipments(res.data)).catch(err => console.log(err))
 
 const apiCall =  async(status) => {
   
 //let t = localStorage.getItem('token');
 //console.log(t);
-  await READ(`/shipments/${status}`).then(res => setShipments(res.data)).catch(err => console.log(err));
+  await GET(`/shipments/${status}`).then(res => setShipments(res.data)).catch(err => console.log(err));
   //await axios.get(`http://localhost:8080/api/shipments/${status}`, { headers: {'Authorization': eval(localStorage.getItem('token'))} }).then(res => setShipments(res.data))
 
 }
