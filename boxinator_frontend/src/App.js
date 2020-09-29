@@ -25,6 +25,7 @@ import axios from "axios";
 import SpecificShipment from './components/admin/SpecificShipment';
 import AddCountry from "./components/admin/AddCountry";
 import UpdateCountry from "./components/admin/UpdateCountry";
+import UpdateUser from "./components/admin/updateUser";
 
 function App() {
 
@@ -170,9 +171,26 @@ return (
                             return <HomePage/>
                         }
                     }}/>
+
+
+
+                    <Route path="/updateUser/:id" component={UpdateUser}/>
+                    <Route path="/specificShipment" component={SpecificShipment}/>
+                    <Route  path="/updateCountry/:id" component={ UpdateCountry }/>
+
+                    <Route path="/specificShipment"  render={props => {
+                        if (isAdminOrUser) {
+                            return <Redirect to="/userAccount"/>
+                        } else {
+                            return <SpecificShipment {...props}/>
+                        }
+                    }}/>
+
                     
                     <Route exact path="/specificShipment/:id" component={SpecificShipment} />
+
                     <Route exact path="/updateCountry/:id/:name/:number/:code" render={props => <UpdateCountry />}/>
+
                     <Route path="/addShipmentGuest" component={AddShipmentGuest}/>
                     <Route path="/mainPage2" component={MainPage}/>
                     <Route path="/addCountry" component={AddCountry}/>

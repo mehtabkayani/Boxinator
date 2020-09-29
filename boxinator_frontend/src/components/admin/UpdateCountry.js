@@ -5,42 +5,51 @@ import {useParams} from "react-router";
 import {Form, Table} from "react-bootstrap";
 import Button from "@material-ui/core/Button";
 
-const UpdateCountry = ({props, match}) => {
-    const {id, name, number, code} = useParams();
+const UpdateCountry = () => {
+    const {id} = useParams();
+    const [country, setCountry] = useState({});
 
-    const [multiplayerNumb, setNumber] = useState(number);
-    const [countryName, setName] = useState(name);
-    const [countryCode, setCode] = useState(code);
+    useEffect(()=>{
+        axios.get(`http://localhost:8080/api/settings/country/${id}`)
+            .then(res=>{
+                console.log(res.data);
+                setCountry(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+    }, [id])
 
 
-    const body = {multiplyerNumber: multiplayerNumb, countryName: countryName, countryCode: countryCode};
     const uppdateCountries = async (e) => {
         e.preventDefault();
-        await axios.put(`http://localhost:8080/api/settings/countries/${id}`, body, {headers: {'Authorization': localStorage.getItem('token')}})
+        const body = {multiplyerNumber: country.multiplyerNumber, countryName: country.countryName, countryCode: country.countryCode};
+        await axios.put(`http://localhost:8080/api/settings/countries/${country.id}`, body, {headers: {'Authorization': localStorage.getItem('token')}})
             .then(res => {
                 console.log(res.data);
-
             })
             .catch(err => {
                 console.log(err);
             })
     }
-    const onCountryChange = ev => setNumber(ev.target.value.trim());
-    const onNameChange = ev => setName(ev.target.value.trim());
-    const onCodeChange = ev => setCode(ev.target.value.trim());
+    const onCountryChange = e => {
+        const {name, value} = e.target;
+        setCountry(prevState => ({...prevState, [name]: value}));
+    };
+  //  const onCountryChange = ev => setCountry(ev.target.value.trim());
 
-
-    console.log({id, number, name});
-    console.log(multiplayerNumb);
+    console.log(country);
+    console.log();
     return (
-        <div>
+        <div key={country.id}>
 
-            <h5>{countryCode}</h5>
-            <h5>{countryName}</h5>
-            <Form onSubmit={uppdateCountries}>
+            <h5>{country.countryCode}</h5>
+            <h5>{country.countryName}</h5>
+            <Form  onSubmit={uppdateCountries}>
                 {/* <input type="text"  name="code" value={countryCode} onChange={onCodeChange}/>
                 <input type="text"  name="name" value={countryName} onChange={onNameChange}/>*/}
-                <input type="number" name="number" value={multiplayerNumb} onChange={onCountryChange}/>
+                <input type="number" name="multiplyerNumber" value={country.multiplyerNumber} onChange={onCountryChange}/>
                 <Button type="submit">update</Button>
             </Form>
 
