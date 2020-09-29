@@ -27,6 +27,7 @@ const AllUsers = () => {
         <Link
             to={`${url}/${user.id}`}>
             <tr key={user.id}>
+                <td>{user.id}</td>
                 <td>{user.firstname}</td>
                 <td>{user.lastname}</td>
                 <td>{user.dateOfBirth}</td>
