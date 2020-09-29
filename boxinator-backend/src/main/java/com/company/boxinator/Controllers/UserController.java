@@ -2,8 +2,10 @@ package com.company.boxinator.Controllers;
 import com.company.boxinator.Models.AuthToken;
 import com.company.boxinator.Models.Enums.AccountType;
 import com.company.boxinator.Models.Session;
+import com.company.boxinator.Models.Shipment;
 import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.AuthTokenRepository;
+import com.company.boxinator.Repositories.ShipmentRepository;
 import com.company.boxinator.Repositories.UserRepository;
 import com.company.boxinator.Services.Google2FAService;
 import com.company.boxinator.Services.EmailService;
@@ -21,14 +23,19 @@ import org.springframework.web.bind.annotation.*;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
 public class UserController {
     @Autowired
     UserRepository userRepository;
+
     @Autowired
-    private AuthTokenRepository authTokenRepository;
+    AuthTokenRepository authTokenRepository;
+
+    @Autowired
+    ShipmentRepository shipmentRepository;
 
     @Autowired
     private EmailService emailService;
@@ -66,11 +73,12 @@ public class UserController {
         if(!user.isPresent())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-        Optional<AuthToken> Token = authTokenRepository.findByUserId(user.get().getId());
-        if(!Token.isPresent())
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        System.out.println("Generated code from token: " + Token.get().getToken());
-        String sixDigitCode = google2FAService.runGoogle2fa(Token.get().getToken());
+        AuthToken Token = authTokenRepository.findByUserId(user.get().getId());
+//        if(Token)
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        System.out.println("Generated code from token: " + Token.getToken());
+        String sixDigitCode = google2FAService.runGoogle2fa(Token.getToken());
 
         System.out.println("sixDigitCode: " + sixDigitCode);
         System.out.println("Auth code: " + code);
@@ -81,19 +89,21 @@ public class UserController {
         if (sixDigitCode.equals(code) && bCryptPasswordEncoder.matches(userLogin.getPassword(),user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
             System.out.println("In if statement");
             sessionUtil.addSession(user.get());
+            System.out.println(sessionUtil.getSession(user.get().getId()).get());
             return new ResponseEntity<>(sessionUtil.getSession(user.get().getId()).get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 
     }
 
-    @PostMapping("/logout")
+  @PostMapping("/logout")
     public ResponseEntity login(@RequestHeader("Authorization") String jwt){
         System.out.println("JWTOken: "+ jwt);
         Integer userId = jwtUtil.getJwtId(jwt);
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
         try{
             sessionUtil.removeSession(userId);
         }catch(Exception e){
@@ -103,6 +113,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
+
     public ResponseEntity<List<User>> getUsers(@RequestHeader("Authorization") String jwt) {
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -136,6 +147,27 @@ public class UserController {
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+
+    }
+
+    @GetMapping("/loggedInUser")
+    public ResponseEntity<User> getLoggedInUser(@RequestHeader("Authorization") String jwt) {
+
+        if (!sessionUtil.isSessionValid(jwt)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        Integer userId = jwtUtil.getJwtId(jwt);
+        Optional<User> userData = userRepository.findById(userId);
+        if (userData.isPresent()) {
+
+            return new ResponseEntity<>(userData.get(),HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+
 
 
     }
@@ -217,20 +249,30 @@ public class UserController {
     public ResponseEntity deleteUser(@RequestBody User user, @RequestHeader("Authorization") String jwt) {
 
         if (!sessionUtil.isSessionValid(jwt)) {
+            System.out.println("FIRST");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         if (jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
 
             Optional<User> deleteUser = userRepository.findByEmail(user.getEmail());
-
+            System.out.println(user.getEmail());
             if (!deleteUser.isPresent()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
 
+                List<Shipment> listOfShipments = shipmentRepository.findAll();
+                List<Shipment> filteredList = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == deleteUser.get().getId()).collect(Collectors.toList());
+                Integer id = deleteUser.get().getId();
+                AuthToken userAuthToken = authTokenRepository.findByUserId(id);
+
+                shipmentRepository.deleteAll(filteredList);
+                authTokenRepository.delete(userAuthToken);
                 userRepository.delete(deleteUser.get());
-                return ResponseEntity.status(HttpStatus.OK).body(user.getFirstname() + " " + user.getLastname() + " deleted succeded");
+                return ResponseEntity.status(HttpStatus.OK).body(user.getEmail() + " deleted succeded");
             }
         }
+        System.out.println("Second");
+
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
     }
