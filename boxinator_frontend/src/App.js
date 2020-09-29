@@ -26,6 +26,7 @@ import axios from "axios";
 import SpecificShipment from './components/admin/SpecificShipment';
 import AddCountry from "./components/admin/AddCountry";
 import UpdateCountry from "./components/admin/UpdateCountry";
+import UpdateUser from "./components/admin/updateUser";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -147,15 +148,9 @@ function App() {
                         }
                     }}/>
 
-
-                    <Route path="/specificShipment" render={props => {
-                        if (!isAuthenticated) {
-                            return <SpecificShipment {...props}/>
-                        } else {
-                            return <Redirect to="/userAccount"/>
-                        }
-                    }}/>
-                    <Route exact path="/updateCountry/:id/:name/:number/:code" render={props => <UpdateCountry />}/>
+                    <Route path="/updateUser/:id" component={UpdateUser}/>
+                    <Route path="/specificShipment" component={SpecificShipment}/>
+                    <Route  path="/updateCountry/:id" component={ UpdateCountry }/>
                     <Route path="/addShipmentGuest" component={AddShipmentGuest}/>
                     <Route path="/mainPage2" component={MainPage}/>
                     <Route path="/addCountry" component={AddCountry}/>
