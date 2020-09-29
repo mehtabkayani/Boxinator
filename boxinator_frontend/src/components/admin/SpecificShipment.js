@@ -48,7 +48,10 @@ const SpecificShipment = () => {
         //Passing ID recieves error 400 in api endpoint
         const body = {boxcolor: shipment.boxcolor, country, shipmentStatus: shipment.shipmentStatus, receiverName: shipment.receiverName, weight: shipment.weight}
 
-        await PUT(`/shipments/${id}`, body).then(res =>history.push("/adminMainPage") )
+        await PUT(`/shipments/${id}`, body).then(res => {
+            alert("Shipment has been updated!")
+            history.push("/adminMainPage") 
+        } )
                 .catch(err=> console.log(err));
 
         //history.push("/adminMainPage")
