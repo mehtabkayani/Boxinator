@@ -6,10 +6,10 @@ import axios from "axios";
 import {useParams} from "react-router";
 
 const UpdateUser = () => {
-    const {id } = useParams();
+    const {id} = useParams();
     const [userInfo, setUserInfo] = useState({})
     const [errorMessage, setErrorMessage] = useState('');
-    const [password1, setPassword] = useState('');
+    const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
 
@@ -39,7 +39,7 @@ const UpdateUser = () => {
                 dateOfBirth: userInfo.dateOfBirth,
                 countryOfResidence: userInfo.countryOfResidence,
                 accountType: userInfo.accountType,
-                password: userInfo.password
+                password
 
             };
 

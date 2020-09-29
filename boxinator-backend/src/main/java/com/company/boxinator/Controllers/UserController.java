@@ -189,7 +189,12 @@ public class UserController {
             updateUserInDB.setEmail(user.getEmail());
             updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             updateUserInDB.setAccountType(user.getAccountType());
-            userRepository.save(updateUserInDB);
+            try{
+                userRepository.save(updateUserInDB);
+            }catch (Exception ex){
+                return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+            }
+
             return new ResponseEntity<>(updateUserInDB, HttpStatus.OK);
         }
 
