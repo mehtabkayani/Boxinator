@@ -31,34 +31,34 @@ function App() {
 
     const [userInfo, setUserInfo] = useState({});
 
-  const getUser = async accountId=> {
-    let token = localStorage.getItem('token');
-      await axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': token}})
-          .then(res => {
-              console.log(res.data);
-              setUserInfo(res.data);
-          })
-          .catch(err => {
-              console.log(err);
-          })
-  }
+    const getUser = async accountId => {
+        let token = localStorage.getItem('token');
+        await axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': token}})
+            .then(res => {
+                console.log(res.data);
+                setUserInfo(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
-useEffect(()=>{
-   let token = localStorage.getItem('token');
-   let id = localStorage.getItem('id');
-   if(token && id) {
-    getUser(id)
-   }
-},[])
+    useEffect(() => {
+        let token = localStorage.getItem('token');
+        let id = localStorage.getItem('id');
+        if (token && id) {
+            getUser(id)
+        }
+    }, [])
 
     const clearUserInfo = () => {
         setUserInfo({});
     }
-const isAdminOrUser = () => userInfo.accountType === "ADMINISTRATOR" || userInfo.accountType === "REGISTERED_USER";
-const isUser = () => userInfo.accountType === "REGISTERED_USER";
-const isAdmin = () => userInfo.accountType === "ADMINISTRATOR";
+    const isAdminOrUser = () => userInfo.accountType === "ADMINISTRATOR" || userInfo.accountType === "REGISTERED_USER";
+    const isUser = () => userInfo.accountType === "REGISTERED_USER";
+    const isAdmin = () => userInfo.accountType === "ADMINISTRATOR";
 
-return (
+    return (
         <div className="App">
 
             <Router>
@@ -66,24 +66,22 @@ return (
 
                 <Switch>
                     <Route exact path="/login" render={props => {
-                               if (userInfo.accountType === "ADMINISTRATOR") {
-                                   return <Redirect to="/adminMainPage"/>
-                               }
-                               else if (userInfo.accountType === "REGISTERED_USER") {
-                                   return <Redirect to="/mainPage"/>
-                               }
-                               else{
-                                    return <Login{...props} getUser={getUser} />
-                               }
+                        if (userInfo.accountType === "ADMINISTRATOR") {
+                            return <Redirect to="/adminMainPage"/>
+                        } else if (userInfo.accountType === "REGISTERED_USER") {
+                            return <Redirect to="/mainPage"/>
+                        } else {
+                            return <Login{...props} getUser={getUser}/>
+                        }
 
-                           }
-                           }/>
+                    }
+                    }/>
                     <Route exact path="/register" render={props => {
                         if (userInfo.accountType === "ADMINISTRATOR") {
                             return <Redirect to="/adminMainPage"/>
-                        } else if(userInfo.accountType === "REGISTERED_USER") {
+                        } else if (userInfo.accountType === "REGISTERED_USER") {
                             return <Redirect to="/mainPage"/>
-                        }else{
+                        } else {
                             return <Register/>
                         }
                     }}/>
@@ -98,7 +96,7 @@ return (
 
                         if (userInfo.accountType === "REGISTERED_USER") {
 
-                            return <MainPage2 />
+                            return <MainPage2/>
 
                         } else {
                             return <Redirect to="/"/>
@@ -108,7 +106,7 @@ return (
 
                         if (userInfo.accountType === "REGISTERED_USER") {
 
-                            return <NewShipment />
+                            return <NewShipment/>
 
                         } else {
                         }
@@ -117,7 +115,7 @@ return (
 
                         if (userInfo.accountType === "ADMINISTRATOR") {
 
-                            return <AdminMainPage />
+                            return <AdminMainPage/>
 
                         } else {
                             return <Redirect to="/"/>
@@ -127,7 +125,7 @@ return (
 
                         if (userInfo.accountType === "ADMINISTRATOR") {
 
-                            return <CountryCost />
+                            return <CountryCost/>
 
                         } else {
                             return <Redirect to="/login"/>
@@ -137,18 +135,18 @@ return (
 
                         if (userInfo.accountType === "ADMINISTRATOR") {
 
-                            return <AllUsers />
+                            return <AllUsers/>
 
                         } else {
                             return <Redirect to="/login"/>
                         }
                     }}/>
                     <Route exact path="/addShipmentGuest" render={props => {
-                         if (userInfo.accountType === "ADMINISTRATOR") {
+                        if (userInfo.accountType === "ADMINISTRATOR") {
                             return <Redirect to="/adminMainPage"/>
-                        } else if(userInfo.accountType === "REGISTERED_USER") {
+                        } else if (userInfo.accountType === "REGISTERED_USER") {
                             return <Redirect to="/mainPage"/>
-                        }else{
+                        } else {
                             return <AddShipmentGuest/>
                         }
                     }}/>
@@ -160,25 +158,24 @@ return (
                         }
                     }}/> */}
                     <Route exact path="/" render={props => {
-                            if(userInfo.accountType === "ADMINISTRATOR"){
-                                return <Redirect to="/adminMainPage"/>
-                                }else if(userInfo.accountType === "REGISTERED_USER"){
-                                return <Redirect to="/mainPage"/>
-    
-                                }
-                            // return <Redirect to="/userAccount" />
-                         else {
+                        if (userInfo.accountType === "ADMINISTRATOR") {
+                            return <Redirect to="/adminMainPage"/>
+                        } else if (userInfo.accountType === "REGISTERED_USER") {
+                            return <Redirect to="/mainPage"/>
+
+                        }
+                        // return <Redirect to="/userAccount" />
+                        else {
                             return <HomePage/>
                         }
                     }}/>
 
 
-
                     <Route path="/updateUser/:id" component={UpdateUser}/>
                     <Route path="/specificShipment" component={SpecificShipment}/>
-                    <Route  path="/updateCountry/:id" component={ UpdateCountry }/>
+                    <Route path="/updateCountry/:id" component={UpdateCountry}/>
 
-                    <Route path="/specificShipment"  render={props => {
+                    <Route path="/specificShipment" render={props => {
                         if (isAdminOrUser) {
                             return <Redirect to="/userAccount"/>
                         } else {
@@ -186,10 +183,8 @@ return (
                         }
                     }}/>
 
-                    
-                    <Route exact path="/specificShipment/:id" component={SpecificShipment} />
 
-                    <Route exact path="/updateCountry/:id/:name/:number/:code" render={props => <UpdateCountry />}/>
+                    <Route exact path="/specificShipment/:id" component={SpecificShipment}/>
 
                     <Route path="/addShipmentGuest" component={AddShipmentGuest}/>
                     <Route path="/mainPage2" component={MainPage}/>
@@ -201,4 +196,5 @@ return (
         </div>
     );
 }
+
 export default App;
