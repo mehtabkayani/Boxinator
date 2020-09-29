@@ -20,13 +20,14 @@ const AllUsers = () => {
         //     .catch(err => {
         //         console.log(err);
         //     })
-    })
+    },[])
 
     const url = "/updateUser";
     const rows = users.map(user => (
         <Link
             to={`${url}/${user.id}`}>
             <tr key={user.id}>
+                <td>{user.id}</td>
                 <td>{user.firstname}</td>
                 <td>{user.lastname}</td>
                 <td>{user.dateOfBirth}</td>

@@ -125,11 +125,13 @@ const AdminMainPage = () => {
                                         {columns.map((column) => {
                                             const value = row[column.id];
                                             return (
-                                                <TableCell key={column.id} align={column.align}>
+                                                <TableCell key={column.id} align={column.align} style={{backgroundColor: value, color: value}}>
                                                     {column.format && typeof value === 'number' ? column.format(value) : value}
                                                 </TableCell>
+
                                             );
                                         })}
+                                        <Link to={`/specificShipment/${row.id}`}>Update</Link>
                                     </TableRow>
                                 );
                             })}

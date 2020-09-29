@@ -42,7 +42,7 @@ import { useHistory } from "react-router-dom";
                         <Fragment>
                             <Nav className="mr-auto">
                                 <Nav.Link><Link to="/adminMainPage">admin page</Link></Nav.Link>
-                                <Nav.Link><Link to="/userAccount">User account</Link></Nav.Link>
+                                <Nav.Link><Link to="/adminAccount">Admin account</Link></Nav.Link>
                             </Nav>
                             <Form inline>
                                 <Button variant="outline-info" onClick={logout}>Logout</Button>
