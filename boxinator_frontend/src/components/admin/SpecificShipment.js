@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {GET, PUT, GETDEFAULT} from '../../api/CRUD';
 import {useParams} from "react-router";
 import {useHistory} from 'react-router-dom'
+import axios from 'axios';
 
 const SpecificShipment = () => {
 
@@ -51,11 +52,26 @@ const SpecificShipment = () => {
         await PUT(`/shipments/${id}`, body).then(res => {
             alert("Shipment has been updated!")
             history.push("/adminMainPage") 
-        } )
-                .catch(err=> console.log(err));
-
-        //history.push("/adminMainPage")
+        }).catch(err=> console.log(err));
         
+    }
+
+    const handleDelete = async () => {
+        let result = window.confirm(`Do you want to delete the shipment?`);
+
+        if (result) {
+            await axios.delete(`http://localhost:8080/api/shipments/${shipment.id}`,{ headers: {'Authorization': localStorage.getItem('token')} })
+       
+         .then(res => {
+             console.log(res);
+             alert(`You have deleted the shipment`)
+             history.push("/adminMainPage")
+            })
+            .catch(err => {
+                console.log("Error: ", err);
+            }) 
+        }
+
     }
 
     // const printStatusList = countryList.map((status, index) => (<option key={status} value={index}>{status}</option>))
@@ -93,6 +109,8 @@ const SpecificShipment = () => {
                 <button type="submit">Submit</button>
                 
             </form>
+            <button onClick={handleDelete}>Delete</button>
+
         </div>
     );
 }

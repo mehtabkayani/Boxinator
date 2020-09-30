@@ -1,9 +1,23 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import {Button, Form} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+        width: 200
+        
+        
+      },
+    },
+  }));
 
 const UserAccount = () => {
     const [userInfo, setUserInfo] = useState({})

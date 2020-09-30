@@ -101,6 +101,7 @@ const AdminMainPage = () => {
 
             <Link to="/country"><Button>Change country cost</Button></Link>
             <Link to="/allUsers"><Button>View users</Button></Link>
+            <h1>All Shipments</h1>
             <Paper className={classes.root}>
 
                 <TableContainer className={classes.container}>

@@ -56,36 +56,67 @@ const AdminAccount = () => {
     const onConfirmPasswordChanged = ev => setConfirmPassword(ev.target.value.trim());
     return (
         <div className="accountContainer">
-            <h1>Admin Account : </h1>
+           <h1>{userInfo.firstname}'s Account : </h1>
             <br></br>
             <Form key={userInfo.id} onSubmit={onSubmitForm}>
-            
+                <Form.Row>
+                    <Form.Group as={Col}>
+                        <Form.Label>Firstname</Form.Label>
+                        <Form.Control name="firstname" type="text" placeholder={userInfo.firstname} value={userInfo.firstname} onChange={onUserInfoChanged}/>
+                    </Form.Group>
+
+                    <Form.Group as={Col}>
+                        <Form.Label>Lastname</Form.Label>
+                        <Form.Control name="lastname" type="text" placeholder={userInfo.lastname} value={userInfo.lastname} onChange={onUserInfoChanged}/>
+                    </Form.Group>
+                </Form.Row>
                 <Form.Row>
                     <Form.Group as={Col} controlId="formGridEmail">
                         <Form.Label>Email</Form.Label>
                         <Form.Control name="email" type="email" placeholder={userInfo.email} value={userInfo.email} onChange={onUserInfoChanged}/>
                     </Form.Group>
-                </Form.Row>               
-                {/* <Form.Row>
+                </Form.Row>
+                <div>
+                    <label>Date of birth: </label>
+                    <input name="dateOfBirth" type="date" placeholder={userInfo.dateOfBirth} value={userInfo.dateOfBirth} onChange={onUserInfoChanged}/>
+                </div>
+                <Form.Row>
+                    <Form.Group controlId="formGridAddress">
+                        <Form.Label>Country of residence :</Form.Label>
+                        <Form.Control name="countryOfResidence" type="text" placeholder={userInfo.countryOfResidence} value={userInfo.countryOfResidence} onChange={onUserInfoChanged}/>
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="formGridZip">
+                        <Form.Label>Zip code/Postal code :</Form.Label>
+                        <Form.Control name="zipcode" type="text" placeholder={userInfo.zipcode} value={userInfo.zipcode} onChange={onUserInfoChanged}/>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formGridNumber">
+                        <Form.Label>Contact number :</Form.Label>
+                        <Form.Control name="contactNumber" type="text" placeholder={userInfo.contactNumber} value={userInfo.contactNumber} onChange={onUserInfoChanged}/>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
                     {/* <Form.Group as={Col} controlId="formGridPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Enter password..." onChange={onPasswordChanged}/>
+                        <Form.Control type="password" value={userInfo.password} disabled placeholder="Enter password..." onChange={onPasswordChanged}/>
                     </Form.Group>
+
                     <Form.Group as={Col} controlId="formGridPassword2">
                         <Form.Label>Repeat Password</Form.Label>
-                        <Form.Control type="password" placeholder="Confirm password..." onChange={onConfirmPasswordChanged}/>
-                    </Form.Group>
-                </Form.Row> 
+                        <Form.Control type="password"  value={userInfo.password} disabled placeholder="Confirm password..." onChange={onConfirmPasswordChanged}/>
+                    </Form.Group> */}
+                </Form.Row>
+
+                <Form.Row>
+                <select name="accountType" onChange={onUserInfoChanged} value={userInfo.accountType}>
+                        <option key="ADMINISTRATOR" value="ADMINISTRATOR">ADMINISTRATOR</option>
+                        <option key="REGISTERED_USER" value="REGISTERED_USER">REGISTERED_USER</option>
+                    </select>
+                </Form.Row>
                 <div>
                     {errorMessage}
-                </div> */}
-
-                <label>Shipment status</label>
-                <select name="accountType" onChange={onUserInfoChanged}>
-                    {/* {printStatusList} */}
-                    <option key="ADMINISTRATOR" value="ADMINISTRATOR">ADMINISTRATOR</option>
-                    <option key="REGISTERED_USER" value="REGISTERED_USER">REGISTERED_USER</option>                    
-                </select>
+                </div>
                 <br></br>
                 <div>
                     <Button type="submit" variant="secondary">Save changes</Button>

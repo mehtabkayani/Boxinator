@@ -48,7 +48,7 @@ const Register = () => {
 
                 }
             ).then(response => response.text())
-                .then(text => alert(text))
+                .then(text => alert("You have been successfully registered! \n You have to validate your email account before you can log in."))
             document.getElementById("registerForm").reset();//Find a better way
 
         } catch (err) {
