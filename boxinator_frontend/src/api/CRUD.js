@@ -16,3 +16,5 @@ export const POSTLOGIN = async (endpoint, object , code) => {
 }
 export const POSTLOGOUT = async (endpoint) => await axiosCall().post(endpoint);
 
+export const POSTDEFAULT = async (endpoint, object) => await axiosDefault.post(endpoint, object);
+
