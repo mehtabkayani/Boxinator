@@ -198,6 +198,7 @@ public class UserController {
 //            updateUserInDB.setZipcode(user.getZipcode());
             userRepository.save(updateUserInDB);
             System.out.println("UPDATED BY ADMIN");
+
             return new ResponseEntity<>(updateUserInDB, HttpStatus.OK);
         }
 

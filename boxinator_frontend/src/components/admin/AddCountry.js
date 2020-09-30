@@ -1,8 +1,9 @@
 import React, { useState} from "react";
 import {Button, Form} from "react-bootstrap";
+import { withRouter } from 'react-router-dom'
 
 
-const AddCountry = () => {
+const AddCountry = (props) => {
     const [countryName, setCountryName] = useState('');
     const [countryCode, setCountryCode] = useState();
     const [multiplyerNumber, setNumber] = useState();
@@ -23,7 +24,8 @@ const AddCountry = () => {
 
                 }
             ).then(response => response.text())
-                .then(text => alert(text))
+                .then(text => alert(text),  props.history.push("/country")
+            )
 
         } catch (err) {
             console.error(err.message);
@@ -70,4 +72,4 @@ const AddCountry = () => {
         </div>
     );
 }
-export default AddCountry;
+export default withRouter(AddCountry);
