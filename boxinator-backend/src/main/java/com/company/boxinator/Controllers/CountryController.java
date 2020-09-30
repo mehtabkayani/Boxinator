@@ -33,12 +33,6 @@ public class CountryController {
         return countryRepository.findAll();
     }
 
-//    @GetMapping("/country/{id}")
-//    public Country getCountry(@PathVariable ("id") Integer id) {
-//
-//        return countryRepository.findById(id).get();
-//    }
-
     @PostMapping("/countries")
     public ResponseEntity addCountry(@RequestBody Country country, @RequestHeader("Authorization") String jwt){
 
