@@ -25,6 +25,9 @@
     <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AddCountry.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AddCountry.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/updateUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/updateUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +177,7 @@
       <workItem from="1600669503680" duration="49965000" />
       <workItem from="1600853594185" duration="2138000" />
       <workItem from="1600859691520" duration="1310000" />
-      <workItem from="1600861130885" duration="111683000" />
+      <workItem from="1600861130885" duration="117199000" />
     </task>
     <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
       <created>1600094762706</created>
@@ -435,7 +438,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601458426601</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Added is number validation in register form">
+      <created>1601465324853</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1601465324854</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -454,7 +464,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Get shipments for inlogged user, save the token with user id in the localstorage" />
     <MESSAGE value="Fixed the issue with account id" />
     <MESSAGE value="Get user info but not completed, get user-shipments, And get all the shipments in the admin page but it is not completed some parts need to be fixed" />
     <MESSAGE value="Fixed register and view user account in a better way" />
@@ -479,7 +488,8 @@
     <MESSAGE value="Trying to fix validation of register form but not done yet !" />
     <MESSAGE value="fixed merge conflicts" />
     <MESSAGE value="Added passwords match validation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added passwords match validation" />
+    <MESSAGE value="Added is number validation in register form" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added is number validation in register form" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -548,10 +558,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1601103687345" />
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1601458456111">
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1601465337484">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601458456111" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601465337484" />
     <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1601392436907" />
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
       <screen x="-1920" y="0" width="1920" height="1160" />
@@ -569,9 +579,9 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="297" y="151" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1600868666340" />
-    <state x="-1297" y="255" key="search.everywhere.popup" timestamp="1600768038883">
+    <state x="-1297" y="255" width="672" height="678" key="search.everywhere.popup" timestamp="1601470935916">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1297" y="255" key="search.everywhere.popup/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600768038883" />
+    <state x="-1297" y="255" width="672" height="678" key="search.everywhere.popup/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601470935916" />
   </component>
 </project>

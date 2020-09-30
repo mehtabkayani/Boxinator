@@ -91,13 +91,14 @@ const Register = () => {
         /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     );
     const isNumber = RegExp( /^[0-9]*$/);
+    const strongPassword = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
 
     const onFirstnameChanged = ev =>{
         setFirstname(ev.target.value.trim());
         if(firstname.length < 2 ){
-            setError({firstname: 'You must have 2 characters or more !'}) ;
+          return   setError({firstname: 'You must have 2 characters or more !'}) ;
         }else if(firstname.length >= 2) {
-            setError({firstname: ''});
+          return   setError({firstname: ''});
         }
     }
     const onLastnameChanged = ev => {
@@ -118,10 +119,10 @@ const Register = () => {
     }
     const onPasswordChanged = ev => {
         setPassword(ev.target.value.trim());
-        if(password.length < 6 ){
-            setError({password: 'Minimum 6 characters !'}) ;
+        if(password.length > 6 && strongPassword.test(password)){
+            setError({password: ''}) ;
         }else {
-            setError({password: ''});
+            setError({password: 'Weak password !, You must have Minimum 6 characters, lowercase, uppercase and special caracter !'});
         }
     }
     const onConfirmPasswordChanged = ev => {
