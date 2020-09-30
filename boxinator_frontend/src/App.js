@@ -191,19 +191,19 @@ function App() {
 
                     <Route path="/specificShipment/:id"  render={props => {
                         if (userInfo.accountType === "ADMINISTRATOR") {
-                            return <SpecificShipment/>
+                            return <SpecificShipment/>} }}/>
 
-                    <Route path="/specificShipment" component={SpecificShipment}/>
+                 <Route path="/specificShipment" component={SpecificShipment}/>
                     <Route path="/updateCountry/:id" component={UpdateCountry}/>
 
-                    <Route path="/specificShipment" render={props => {
+                   <Route path="/specificShipment" render={props => {
                         if (isAdminOrUser) {
                             return <Redirect to="/userAccount"/>
 
                         } else {
                             return <Redirect to="/userAccount"/>
                         }
-                    }}/>  
+                    }}/>
 
                     {/* <Route exact path="/specificShipment/:id" component={SpecificShipment} /> */}
 
