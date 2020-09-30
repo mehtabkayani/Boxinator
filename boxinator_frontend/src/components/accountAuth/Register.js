@@ -11,14 +11,15 @@ const Register = () => {
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setconfirmPassword] = useState('');
     const [dateOfBirth, setBirthDate] = useState('');
     const [countryOfResidence, setCountry] = useState('');
     const [zipcode, setZipcode] = useState('');
     const [contactNumber, setContactNumber] = useState('');
-    const [errorMessage, setError] = useState({firstname: '', lastname: '', email: '', password: ''});
+    const [errorMessage, setError] = useState({firstname: '', lastname: '', email: '', password: '', confirmPassword:'', contactNumber:'', zipcode:''});
 
     const formValid = (formErrors) => {
-        const formFields = { firstname: firstname, lastname: lastname, email: email, password: password}
+        const formFields = { firstname: firstname, lastname: lastname, email: email, password: password, confirmPassword:confirmPassword, contactNumber:contactNumber, zipcode:zipcode}
         let valid = true;
 
         // validate if form errors is empty
@@ -118,18 +119,20 @@ const Register = () => {
     const emailRegex = RegExp(
         /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     );
+    const isNumber = RegExp( /^[0-9]*$/);
+    const strongPassword = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
 
     const onFirstnameChanged = ev =>{
         setFirstname(ev.target.value.trim());
-        if(firstname.length < 2 && firstname.length > 0 ){
-            setError({firstname: 'You must have 2 characters or more !'}) ;
+        if(firstname.length < 2 ){
+          return   setError({firstname: 'You must have 2 characters or more !'}) ;
         }else if(firstname.length >= 2) {
-            setError({firstname: ''});
+          return   setError({firstname: ''});
         }
     }
     const onLastnameChanged = ev => {
         setLastname(ev.target.value.trim());
-        if(lastname.length < 2 && lastname.length > 0){
+        if(lastname.length < 2){
             setError({lastname: 'You must have 2 characters or more !'}) ;
         }else  if(lastname.length >= 2){
             setError({lastname: ''});
@@ -145,17 +148,41 @@ const Register = () => {
     }
     const onPasswordChanged = ev => {
         setPassword(ev.target.value.trim());
-        if(password.length < 6 && password.length > 0){
-            setError({password: 'Minimum 6 characters !'}) ;
+        if(password.length > 6 && strongPassword.test(password)){
+            setError({password: ''}) ;
         }else {
-            setError({password: ''});
+            setError({password: 'Weak password !, You must have Minimum 6 characters, lowercase, uppercase and special caracter !'});
+        }
+    }
+    const onConfirmPasswordChanged = ev => {
+        setconfirmPassword(ev.target.value.trim());
+        if(confirmPassword !== password){
+            setError({confirmPassword: 'Password do not match !'}) ;
+        }else {
+            setError({confirmPassword: ''});
         }
     }
 
+    const onZipcodeChanged = ev => {
+        setZipcode(ev.target.value.trim());
+        if(isNumber.test(zipcode)){
+            setError({zipcode: ''}) ;
+        }else {
+            setError({zipcode: 'Only numbers allowed!'});
+        }
+    }
+
+    const onContactNumberChanged = ev => {
+        setContactNumber(ev.target.value.trim());
+        if(isNumber.test(contactNumber)){
+            setError({contactNumber: ''}) ;
+        }else {
+            setError({contactNumber: 'Only numbers allowed!'});
+        }
+    }
     const onBirthDateChanged = ev => setBirthDate(ev.target.value.trim());
     const onCountryChanged = ev => setCountry(ev.target.value.trim());
-    const onZipcodeChanged = ev => setZipcode(ev.target.value.trim());
-    const onContactNumberChanged = ev => setContactNumber(ev.target.value.trim());
+
     return (
         <div className="registerContainer">
             <h2>Register new account : </h2>
@@ -165,7 +192,7 @@ const Register = () => {
                     <Form.Group as={Col}>
                         <Form.Label>Firstname</Form.Label>
                         <Form.Control type="text" placeholder="Enter firstname" onChange={onFirstnameChanged}/>
-                       <span className="errorMessage">{errorMessage.firstname}</span>
+                            <span className="errorMessage">{errorMessage.firstname}</span>
                     </Form.Group>
 
                     <Form.Group as={Col}>
@@ -194,6 +221,7 @@ const Register = () => {
                     <Form.Group as={Col} controlId="formGridZip">
                         <Form.Label>Zip code/Postal code :</Form.Label>
                         <Form.Control type="text" placeholder="Zip code" onChange={onZipcodeChanged}/>
+                        <span className="errorMessage">{errorMessage.zipcode}</span>
                     </Form.Group>
                 </Form.Row>
 
@@ -201,6 +229,7 @@ const Register = () => {
                     <Form.Group as={Col} controlId="formGridEmail">
                         <Form.Label>Contact number :</Form.Label>
                         <Form.Control type="text" placeholder="Enter contact number" onChange={onContactNumberChanged}/>
+                        <span className="errorMessage">{errorMessage.contactNumber}</span>
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
@@ -212,7 +241,8 @@ const Register = () => {
 
                     <Form.Group as={Col} controlId="formGridPassword">
                         <Form.Label>Repeat Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" onChange={onPasswordChanged}/>
+                        <Form.Control type="password" placeholder="Password" onChange={onConfirmPasswordChanged}/>
+                        <span className="errorMessage">{errorMessage.confirmPassword}</span>
                     </Form.Group>
                 </Form.Row>
                 <br></br>
