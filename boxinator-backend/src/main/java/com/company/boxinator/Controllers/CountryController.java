@@ -33,7 +33,6 @@ public class CountryController {
         return countryRepository.findAll();
     }
 
-
     @PostMapping("/countries")
     public ResponseEntity addCountry(@RequestBody Country country, @RequestHeader("Authorization") String jwt){
 

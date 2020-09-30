@@ -28,12 +28,12 @@ const SpecificShipment = () => {
         
         GETDEFAULT('/settings/countries').then(res => setCountryList(res.data))
             .catch(err => console.log(err));
-        
-            
+
+
     }, [])
 
     const onShipmentChanged = e => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
         setShipment(prevState => ({ ...prevState, [name]: value }));
     }
     const onCountryChanged = e => {
@@ -53,43 +53,41 @@ const SpecificShipment = () => {
             history.push("/adminMainPage") 
         } )
                 .catch(err=> console.log(err));
-
-        //history.push("/adminMainPage")
         
     }
 
-    // const printStatusList = countryList.map((status, index) => (<option key={status} value={index}>{status}</option>))
+    //const printStatusList = countryList.map((status, index) => (<option key={index} value={status}>{status}</option>))
     const printCountryList = countryList.map(country => (<option key={country.id} value={country.id}>{country.countryName}</option>))
     // const statusList = ["CREATED", "RECIEVED", "INTRANSIT", "COMPLETED", "CANCELLED"]
     return (
         <div className="container">
-            <br/><br/>
+            <br /><br />
 
             <form onSubmit={onSubmitForm}>
                 <label>Receiver</label>
-                <input type="text" name="receiverName" onChange={onShipmentChanged} value={shipment.receiverName}/>
-                <br/><br/>
+                <input type="text" name="receiverName" onChange={onShipmentChanged} value={shipment.receiverName} />
+                <br /><br />
                 <label>BoxColor</label>
-                <input type="text" name="boxcolor" onChange={onShipmentChanged} value={shipment.boxcolor}/>
-                <br/><br/>
+                <input type="text" name="boxcolor" onChange={onShipmentChanged} value={shipment.boxcolor} />
+                <br /><br />
                 <label>Weight</label>
-                <input type="number" name="weight" onChange={onShipmentChanged} value={shipment.weight}/>
-                <br/><br/>
-                
+                <input type="number" name="weight" onChange={onShipmentChanged} value={shipment.weight} />
+                <br /><br />
+
                 <label>Shipment status</label>
                 <select name="shipmentStatus" onChange={onShipmentChanged} value={shipment.shipmentStatus}>
-                    {/* {printStatusList} */}
                     <option key="CREATED" value="CREATED">CREATED</option>
                     <option key="RECIEVED" value="RECIEVED">RECIEVED</option>
                     <option key="INTRANSIT" value="INTRANSIT">INTRANSIT</option>
                     <option key="COMPLETED" value="COMPLETED">COMPLETED</option>
                     <option key="CANCELLED" value="CANCELLED">CANCELLED</option>
                 </select>
-                <br/><br/>
+                <br /><br />
                 <label>Country</label>
                 <select name="id" onChange={onCountryChanged} value={country.id}>
                     {printCountryList}
                 </select>
+    
                 <button type="submit">Submit</button>
                 
             </form>

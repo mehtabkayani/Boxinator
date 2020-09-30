@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Form, Button} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-import {POST} from '../../api/CRUD'
+import {POSTDEFAULT} from '../../api/CRUD'
 
 const Register = () => {
 
@@ -47,34 +47,36 @@ const Register = () => {
             contactNumber,
             password
         };
-
-        // await POST('/user', body).then(res => {
-        //     alert(res.text());
-        //     clearForm();
-        // }).catch(err => console.log(err));
-
-        try {
-            if(formValid(errorMessage)) {
-                await fetch(
-                    "http://localhost:8080/api/user",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-type": "application/json"
-                        },
-                        body: JSON.stringify(body)
-
-                    }
-                ).then(response => response.text())
-                    .then(text => alert(text))
-                document.getElementById("registerForm").reset();//Find a better way
-            }else {
-                alert('Invalid credentials ! Make sure that all the required fields filled')
-                console.error('invalid information !');
-            }
-        } catch (err) {
-            console.error(err.message);
+        if (formValid(errorMessage)) {
+            await POSTDEFAULT('/user', body).then(res => {
+                alert(res.text());
+            }).catch(err => console.log(err));
+        } else {
+            alert('Invalid credentials ! Make sure that all the required fields filled');
         }
+
+        // try {
+        //     if(formValid(errorMessage)) {
+        //         await fetch(
+        //             "http://localhost:8080/api/user",
+        //             {
+        //                 method: "POST",
+        //                 headers: {
+        //                     "Content-type": "application/json"
+        //                 },
+        //                 body: JSON.stringify(body)
+
+        //             }
+        //         ).then(response => response.text())
+        //             .then(text => alert(text))
+        //         document.getElementById("registerForm").reset();//Find a better way
+        //     }else {
+        //         alert('Invalid credentials ! Make sure that all the required fields filled')
+        //         console.error('invalid information !');
+        //     }
+        // } catch (err) {
+        //     console.error(err.message);
+        // }
     };
 
     // const clearForm = () => {
@@ -155,7 +157,7 @@ const Register = () => {
                 </Form.Row>
                 <div>
                     <label>Date of birth: </label>
-                    <input type="date" onChange={onBirthDateChanged}/>
+                    <input type="date" onChange={onBirthDateChanged} defaultValue={Date.now()}/>
                 </div>
                 <Form.Row>
                     <Form.Group controlId="formGridAddress">

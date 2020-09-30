@@ -63,7 +63,7 @@ function App() {
         <div className="App">
 
             <Router>
-                <NavBar userInfo={userInfo} clearUserInfo={clearUserInfo} isUser={isUser} isAdmin={isAdmin}></NavBar>
+                <NavBar userInfo={userInfo} clearUserInfo={clearUserInfo}></NavBar>
 
                 <Switch>
                     <Route exact path="/login" render={props => {
@@ -203,7 +203,7 @@ function App() {
                         } else {
                             return <Redirect to="/userAccount"/>
                         }
-                    }}/>
+                    }}/> */}
 
                     {/* <Route exact path="/specificShipment/:id" component={SpecificShipment} /> */}
 
