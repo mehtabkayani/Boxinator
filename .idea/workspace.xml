@@ -24,8 +24,8 @@
   <component name="ChangeListManager">
     <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/style/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +175,7 @@
       <workItem from="1600669503680" duration="49965000" />
       <workItem from="1600853594185" duration="2138000" />
       <workItem from="1600859691520" duration="1310000" />
-      <workItem from="1600861130885" duration="100613000" />
+      <workItem from="1600861130885" duration="106208000" />
     </task>
     <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
       <created>1600094762706</created>
@@ -408,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601381722785</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Trying to fix validation but not done yet !">
+      <created>1601392424458</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1601392424459</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -427,7 +434,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changed the color of Boxinator in navbar" />
     <MESSAGE value="Added two components, added completed, not completed radio" />
     <MESSAGE value="Fixed token in frontend" />
     <MESSAGE value="Fixed login authentication with jwt token, trying to get the users shipments and render them" />
@@ -452,7 +458,8 @@
     <MESSAGE value="Trying to fix update account" />
     <MESSAGE value="Added withRouter hook to be able to redirect after att country is add" />
     <MESSAGE value="Added withRouter hook to be able to redirect after a country is add" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added withRouter hook to be able to redirect after a country is add" />
+    <MESSAGE value="Trying to fix validation but not done yet !" />
+    <option name="LAST_COMMIT_MESSAGE" value="Trying to fix validation but not done yet !" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -521,11 +528,11 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1601103687345" />
-    <state x="368" y="147" key="Vcs.Push.Dialog.v2" timestamp="1601381733930">
+    <state x="368" y="147" key="Vcs.Push.Dialog.v2" timestamp="1601392436908">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601298779186" />
-    <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1601381733930" />
+    <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1601392436907" />
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>

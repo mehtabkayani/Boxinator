@@ -17,6 +17,23 @@ const Register = () => {
     const [contactNumber, setContactNumber] = useState('');
     const [errorMessage, setError] = useState({firstname: '', lastname: '', email: '', password: ''});
 
+    const formValid = (formErrors) => {
+        const formFields = { firstname: firstname, lastname: lastname, email: email, password: password}
+        let valid = true;
+
+        // validate if form errors is empty
+        Object.values(formErrors).forEach(val => {
+            val.length > 0 && (valid = false);
+        });
+
+        // validate if the form was filled out
+        Object.values(formFields).forEach(val => {
+            val === '' && (valid = false);
+        });
+
+        return valid;
+    };
+
     const onSubmitForm = async e => {
         e.preventDefault();
 
@@ -37,7 +54,7 @@ const Register = () => {
         // }).catch(err => console.log(err));
 
         try {
-            if(formValidate(errorMessage)) {
+            if(formValid(errorMessage)) {
                 await fetch(
                     "http://localhost:8080/api/user",
                     {
@@ -52,21 +69,14 @@ const Register = () => {
                     .then(text => alert(text))
                 document.getElementById("registerForm").reset();//Find a better way
             }else {
-
+                alert('Invalid credentials ! Make sure that all the required fields filled')
+                console.error('invalid information !');
             }
         } catch (err) {
             console.error(err.message);
         }
     };
 
-    const formValidate = formErrors =>{
-        let valid = true;
-        Object.values(formErrors).forEach(val => {
-            val.length > 0 && (valid = false);
-            });
-        return valid;
-
-    }
     // const clearForm = () => {
     //     setFirstname('');
     //     setLastname('');
@@ -82,28 +92,34 @@ const Register = () => {
 
     const onFirstnameChanged = ev =>{
         setFirstname(ev.target.value.trim());
-        if(firstname.length < 3 && firstname.length > 0 ){
-            setError({firstname: 'You must have 3 characters or more !'}) ;
+        if(firstname.length < 2 && firstname.length > 0 ){
+            setError({firstname: 'You must have 2 characters or more !'}) ;
+        }else if(firstname.length >= 2) {
+            setError({firstname: ''});
         }
     }
     const onLastnameChanged = ev => {
         setLastname(ev.target.value.trim());
-        if(lastname.length < 3 && lastname.length > 0){
-            setError({lastname: 'You must have 3 characters or more !'}) ;
+        if(lastname.length < 2 && lastname.length > 0){
+            setError({lastname: 'You must have 2 characters or more !'}) ;
+        }else  if(lastname.length >= 2){
+            setError({lastname: ''});
         }
     }
     const onEmailChanged = ev => {
         setEmail(ev.target.value.trim());
-        if(email.length < 3 && email.length > 0){
-            setError({email: 'You must have 3 characters or more !'}) ;
-        }else if(emailRegex.test(email) && email.length > 5){
-            setError({email: 'Invalid email address !'})
+        if(emailRegex.test(email) && email.length > 0){
+            setError({email: ''})
+        }else {
+            setError({email: 'Invalid email address !'});
         }
     }
     const onPasswordChanged = ev => {
         setPassword(ev.target.value.trim());
         if(password.length < 6 && password.length > 0){
             setError({password: 'Minimum 6 characters !'}) ;
+        }else {
+            setError({password: ''});
         }
     }
 
