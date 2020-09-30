@@ -179,29 +179,37 @@ public class UserController {
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-
         Optional<User> userData = userRepository.findById(id);
         if (!userData.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         User updateUserInDB = userRepository.findById(id).get();
         if (jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
-            updateUserInDB.setEmail(user.getEmail());
-            updateUserInDB.setAccountType(user.getAccountType());
-            //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//            updateUserInDB.setFirstname(user.getFirstname());
-//            updateUserInDB.setLastname(user.getLastname());
-//            updateUserInDB.setContactNumber(user.getContactNumber());
-//            updateUserInDB.setCountryOfResidence(user.getCountryOfResidence());
-//            updateUserInDB.setDateOfBirth(user.getDateOfBirth());
-//            updateUserInDB.setZipcode(user.getZipcode());
-            userRepository.save(updateUserInDB);
-            System.out.println("UPDATED BY ADMIN");
+            if(jwtUtil.getJwtId(jwt) == id){
+                System.out.println("IN ADMIN OWN ACCOUNT UPDATE");
+                updateUserInDB.setEmail(user.getEmail());
+                //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                updateUserInDB.setFirstname(user.getFirstname());
+                updateUserInDB.setLastname(user.getLastname());
+                updateUserInDB.setContactNumber(user.getContactNumber());
+                updateUserInDB.setCountryOfResidence(user.getCountryOfResidence());
+                updateUserInDB.setDateOfBirth(user.getDateOfBirth());
+                updateUserInDB.setZipcode(user.getZipcode());
+                updateUserInDB.setAccountType(user.getAccountType());
+            } else {
+                System.out.println("IN ADMIN BUT ANOTHER ACCOUNT UPDATE");
 
+                updateUserInDB.setEmail(user.getEmail());
+                //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                updateUserInDB.setAccountType(user.getAccountType());
+            }
+            try{
+                userRepository.save(updateUserInDB);
+            }catch (Exception ex){
+                return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+            }
             return new ResponseEntity<>(updateUserInDB, HttpStatus.OK);
         }
-
         Integer userId = jwtUtil.getJwtId(jwt);
         if (userId == id) {
             updateUserInDB.setEmail(user.getEmail());
@@ -213,12 +221,9 @@ public class UserController {
             updateUserInDB.setDateOfBirth(user.getDateOfBirth());
             updateUserInDB.setZipcode(user.getZipcode());
             userRepository.save(updateUserInDB);
-            System.out.println("UPDATED BY REGISTERED_USER :)");
             return new ResponseEntity<>(updateUserInDB, HttpStatus.OK);
         }
-
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-
     }
 
     @PostMapping("/user")
