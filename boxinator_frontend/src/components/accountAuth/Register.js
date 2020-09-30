@@ -11,14 +11,15 @@ const Register = () => {
     const [lastname, setLastname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setconfirmPassword] = useState('');
     const [dateOfBirth, setBirthDate] = useState('');
     const [countryOfResidence, setCountry] = useState('');
     const [zipcode, setZipcode] = useState('');
     const [contactNumber, setContactNumber] = useState('');
-    const [errorMessage, setError] = useState({firstname: '', lastname: '', email: '', password: ''});
+    const [errorMessage, setError] = useState({firstname: '', lastname: '', email: '', password: '', confirmPassword:''});
 
     const formValid = (formErrors) => {
-        const formFields = { firstname: firstname, lastname: lastname, email: email, password: password}
+        const formFields = { firstname: firstname, lastname: lastname, email: email, password: password, confirmPassword:confirmPassword}
         let valid = true;
 
         // validate if form errors is empty
@@ -92,7 +93,7 @@ const Register = () => {
 
     const onFirstnameChanged = ev =>{
         setFirstname(ev.target.value.trim());
-        if(firstname.length < 2 && firstname.length > 0 ){
+        if(firstname.length < 2 ){
             setError({firstname: 'You must have 2 characters or more !'}) ;
         }else if(firstname.length >= 2) {
             setError({firstname: ''});
@@ -100,7 +101,7 @@ const Register = () => {
     }
     const onLastnameChanged = ev => {
         setLastname(ev.target.value.trim());
-        if(lastname.length < 2 && lastname.length > 0){
+        if(lastname.length < 2){
             setError({lastname: 'You must have 2 characters or more !'}) ;
         }else  if(lastname.length >= 2){
             setError({lastname: ''});
@@ -116,10 +117,18 @@ const Register = () => {
     }
     const onPasswordChanged = ev => {
         setPassword(ev.target.value.trim());
-        if(password.length < 6 && password.length > 0){
+        if(password.length < 6 ){
             setError({password: 'Minimum 6 characters !'}) ;
         }else {
             setError({password: ''});
+        }
+    }
+    const onConfirmPasswordChanged = ev => {
+        setconfirmPassword(ev.target.value.trim());
+        if(confirmPassword !== password){
+            setError({confirmPassword: 'Password do not match !'}) ;
+        }else {
+            setError({confirmPassword: ''});
         }
     }
 
@@ -136,7 +145,7 @@ const Register = () => {
                     <Form.Group as={Col}>
                         <Form.Label>Firstname</Form.Label>
                         <Form.Control type="text" placeholder="Enter firstname" onChange={onFirstnameChanged}/>
-                       <span className="errorMessage">{errorMessage.firstname}</span>
+                            <span className="errorMessage">{errorMessage.firstname}</span>
                     </Form.Group>
 
                     <Form.Group as={Col}>
@@ -183,7 +192,8 @@ const Register = () => {
 
                     <Form.Group as={Col} controlId="formGridPassword">
                         <Form.Label>Repeat Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" onChange={onPasswordChanged}/>
+                        <Form.Control type="password" placeholder="Password" onChange={onConfirmPasswordChanged}/>
+                        <span className="errorMessage">{errorMessage.confirmPassword}</span>
                     </Form.Group>
                 </Form.Row>
                 <br></br>
