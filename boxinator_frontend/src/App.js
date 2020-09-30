@@ -63,7 +63,7 @@ return (
         <div className="App">
 
             <Router>
-                <NavBar userInfo={userInfo} clearUserInfo={clearUserInfo} isUser={isUser} isAdmin={isAdmin}></NavBar>
+                <NavBar userInfo={userInfo} clearUserInfo={clearUserInfo}></NavBar>
 
                 <Switch>
                     <Route exact path="/login" render={props => {
