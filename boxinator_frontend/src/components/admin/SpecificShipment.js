@@ -86,7 +86,7 @@ const SpecificShipment = () => {
                 <input type="text" name="receiverName" onChange={onShipmentChanged} value={shipment.receiverName} />
                 <br /><br />
                 <label>BoxColor</label>
-                <input type="text" name="boxcolor" onChange={onShipmentChanged} value={shipment.boxcolor} />
+                <input type="color" name="boxcolor" onChange={onShipmentChanged} value={shipment.boxcolor} />
                 <br /><br />
                 <label>Weight</label>
                 <input type="number" name="weight" onChange={onShipmentChanged} value={shipment.weight} />

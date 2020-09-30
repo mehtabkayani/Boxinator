@@ -35,10 +35,13 @@ const AdminAccount = () => {
         e.preventDefault();
         if(password === confirmPassword){
             setErrorMessage('');
-            const body = {email: userInfo.email, accountType: userInfo.accountType};
+            const body = {email: userInfo.email, accountType: userInfo.accountType,
+                 firstname: userInfo.firstname, lastname: userInfo.lastname, dateOfBirth: userInfo.dateOfBirth, countryOfResidence: userInfo.countryOfResidence, zipCode: userInfo.zipCode, contactNumber: userInfo.contactNumber };
         
             await axios.put(`http://localhost:8080/api/user/${userInfo.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
             .then(res=>{
+                alert("Profile has been updated!")
+                history.push("/adminMainPage")
                console.log(res);
             })
             .catch(err => {
