@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Optional;
@@ -187,16 +188,23 @@ public class UserController {
         User updateUserInDB = userRepository.findById(id).get();
         if (jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
             updateUserInDB.setEmail(user.getEmail());
-            updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             updateUserInDB.setAccountType(user.getAccountType());
+            //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+//            updateUserInDB.setFirstname(user.getFirstname());
+//            updateUserInDB.setLastname(user.getLastname());
+//            updateUserInDB.setContactNumber(user.getContactNumber());
+//            updateUserInDB.setCountryOfResidence(user.getCountryOfResidence());
+//            updateUserInDB.setDateOfBirth(user.getDateOfBirth());
+//            updateUserInDB.setZipcode(user.getZipcode());
             userRepository.save(updateUserInDB);
+            System.out.println("UPDATED BY ADMIN");
             return new ResponseEntity<>(updateUserInDB, HttpStatus.OK);
         }
 
         Integer userId = jwtUtil.getJwtId(jwt);
         if (userId == id) {
             updateUserInDB.setEmail(user.getEmail());
-            updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             updateUserInDB.setFirstname(user.getFirstname());
             updateUserInDB.setLastname(user.getLastname());
             updateUserInDB.setContactNumber(user.getContactNumber());
@@ -204,7 +212,7 @@ public class UserController {
             updateUserInDB.setDateOfBirth(user.getDateOfBirth());
             updateUserInDB.setZipcode(user.getZipcode());
             userRepository.save(updateUserInDB);
-
+            System.out.println("UPDATED BY REGISTERED_USER :)");
             return new ResponseEntity<>(updateUserInDB, HttpStatus.OK);
         }
 
@@ -246,16 +254,15 @@ public class UserController {
     }
 
     @DeleteMapping("/user")
-    public ResponseEntity deleteUser(@RequestBody User user, @RequestHeader("Authorization") String jwt) {
-
+    public ResponseEntity deleteUser(HttpServletRequest  request, @RequestHeader("Authorization") String jwt) {
+        String  email = request.getHeader("data");
         if (!sessionUtil.isSessionValid(jwt)) {
             System.out.println("FIRST");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         if (jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
-
-            Optional<User> deleteUser = userRepository.findByEmail(user.getEmail());
-            System.out.println(user.getEmail());
+            System.out.println(email);
+            Optional<User> deleteUser = userRepository.findByEmail(email);
             if (!deleteUser.isPresent()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
@@ -268,7 +275,7 @@ public class UserController {
                 shipmentRepository.deleteAll(filteredList);
                 authTokenRepository.delete(userAuthToken);
                 userRepository.delete(deleteUser.get());
-                return ResponseEntity.status(HttpStatus.OK).body(user.getEmail() + " deleted succeded");
+                return ResponseEntity.status(HttpStatus.OK).body(email + " deleted succeded");
             }
         }
         System.out.println("Second");
