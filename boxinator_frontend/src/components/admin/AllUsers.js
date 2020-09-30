@@ -1,62 +1,143 @@
 import React, {useEffect, useState} from "react";
-import Table from "react-bootstrap/Table";
 import {Link} from "react-router-dom";
-import {Button} from "react-bootstrap";
 import axios from "axios";
 import {GET} from '../../api/CRUD'
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
 
 const AllUsers = () => {
     const [users, setUsers] = useState([]);
-
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     useEffect(() => {
 
         GET('/users').then(res => setUsers(res.data)).catch(err => console.log(err));
 
-        // axios.get('http://localhost:8080/api/users', {headers: {'Authorization': localStorage.getItem('token')}})
-        //     .then(res => {
-        //         console.log(res.data);
-        //         setUsers(res.data)
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     })
     },[])
 
     const url = "/updateUser";
+
+    function createData(id, firstname, lastname, dateOfBirth, email, countryOfResidence, contactNumber) {
+
+        return { id, firstname, lastname, dateOfBirth, email, countryOfResidence, contactNumber };
+    }
+
     const rows = users.map(user => (
-        <Link
-            to={`${url}/${user.id}`}>
-            <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.firstname}</td>
-                <td>{user.lastname}</td>
-                <td>{user.dateOfBirth}</td>
-                <td>{user.email}</td>
-                <td>{user.countryOfResidence}</td>
-                <td>{user.contactNumber}</td>
-                <Button variant="secondary">Update</Button>
-            </tr>
-        </Link>
+
+        createData(user.id, user.firstname, user.lastname, user.dateOfBirth, user.email, user.countryOfResidence, user.contactNumber)
+
     ));
 
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+    const useStyles = makeStyles({
+        root: {
+            width: '100%',
+        },
+        container: {
+            maxHeight: 440,
+        },
+    });
+    const classes = useStyles();
+    const columns = [
+        { id: 'id', label: '#ID', minWidth: 170 },
+        { id: 'firstname', label: 'Firstname', minWidth: 170 },
+        { id: 'lastname', label: 'Lastname', minWidth: 100 },
+        {
+            id: 'dateOfBirth',
+            label: 'Date Of Birth',
+            minWidth: 170,
+            align: 'right'
+        },
+        {
+            id: 'email',
+            label: 'Email',
+            minWidth: 170,
+            align: 'right',
+            format: (value) => value.toLocaleString('en-US'),
+        },
+        {
+            id: 'countryOfResidence',
+            label: 'Country Of Residence',
+            minWidth: 170,
+            align: 'right',
+            format: (value) => value.toFixed(2),
+        },
+        {
+            id: 'contactNumber',
+            label: 'Contact number',
+            minWidth: 170,
+            align: 'right',
+            format: (value) => value.toFixed(2),
+        },
+    ];
+
     return (
-        <div className="adminPageContainer">
-            <h1>Admin main page : </h1>
-            <br></br>
-            <Table striped bordered hover variant="dark">
-                <thead>
-                <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Date of birth</th>
-                    <th>email</th>
-                    <th>country</th>
-                    <th>contact-number</th>
-                </tr>
-                </thead>
-                <tbody>{rows}</tbody>
-            </Table>
-        </div>
+        <>
+ <h1>All Users</h1>
+            <Paper className={classes.root}>
+
+                <TableContainer className={classes.container}>
+                    <Table stickyHeader aria-label="sticky table">
+                        <TableHead>
+                            <TableRow>
+                                {columns.map((column) => (
+                                    <TableCell
+                                        key={column.id}
+                                        align={column.align}
+                                        style={{minWidth: column.minWidth}}
+                                    >
+                                        {column.label}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                return (
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                        {columns.map((column) => {
+                                            const value = row[column.id];
+                                            return (
+                                                <TableCell key={column.id} align={column.align} style={{backgroundColor: value, color: value}}>
+                                                    {column.format && typeof value === 'number' ? column.format(value) : value}
+                                                </TableCell>
+
+                                            );
+                                        })}
+                                        <Link to={`/updateUser/${row.id}`}>Update</Link>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[10, 25, 100]}
+                    component="div"
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
+            </Paper>
+        </>
     );
 }
 export default AllUsers;

@@ -10,7 +10,6 @@ import {
 } from 'react-router-dom';
 import Login from "./components/accountAuth/Login";
 import Register from "./components/accountAuth/Register";
-import MainPage from "./components/user/MainPage";
 import MainPage2 from "./components/user/MainPage2";
 import NewShipment from "./components/user/NewShipment";
 import UserAccount from "./components/user/UserAccount";
@@ -63,7 +62,7 @@ function App() {
         <div className="App">
 
             <Router>
-                <NavBar userInfo={userInfo} clearUserInfo={clearUserInfo} isUser={isUser} isAdmin={isAdmin}></NavBar>
+                <NavBar userInfo={userInfo} clearUserInfo={clearUserInfo}></NavBar>
 
                 <Switch>
                     <Route exact path="/login" render={props => {
@@ -203,14 +202,14 @@ function App() {
                         } else {
                             return <Redirect to="/userAccount"/>
                         }
-                    }}/>
+                    }}/> */}
 
                     {/* <Route exact path="/specificShipment/:id" component={SpecificShipment} /> */}
 
                     <Route exact path="/specificShipment/:id" component={SpecificShipment}/>
 
                     <Route path="/addShipmentGuest" component={AddShipmentGuest}/>
-                    <Route path="/mainPage2" component={MainPage}/>
+                    <Route path="/mainPage" component={MainPage2}/>
                     <Route path="/addCountry" component={AddCountry}/>
                     <Route path="/" component={HomePage}/>
                 </Switch>
