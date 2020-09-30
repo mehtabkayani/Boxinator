@@ -118,10 +118,16 @@ console.log(userInfo);
                 </Form.Row>
 
                 <Form.Row>
-                    <Form.Group as={Col} controlId="formGridNumber">
+                    {/* <Form.Group as={Col} controlId="formGridNumber">
                         <Form.Label>User Role :</Form.Label>
                         <Form.Control name="accountType" type="text" placeholder={userInfo.accountType} value={userInfo.accountType} onChange={onUserInfoChanged}/>
-                    </Form.Group>
+                    </Form.Group> */}
+
+                    <select name="accountType" onChange={onUserInfoChanged} value={userInfo.accountType}>
+                        <option key="GUEST" value="GUEST">GUEST</option>
+                        <option key="REGISTERED_USER" value="REGISTERED_USER">REGISTERED_USER</option>
+                        <option key="ADMINISTRATOR" value="ADMINISTRATOR">ADMINISTRATOR</option>
+                    </select>
                 </Form.Row>
                 <div>
                     {errorMessage}

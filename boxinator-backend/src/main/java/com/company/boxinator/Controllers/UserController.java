@@ -186,9 +186,22 @@ public class UserController {
 
         User updateUserInDB = userRepository.findById(id).get();
         if (jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
-            updateUserInDB.setEmail(user.getEmail());
-            updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            updateUserInDB.setAccountType(user.getAccountType());
+            if(jwtUtil.getJwtId(jwt) == id){
+                updateUserInDB.setEmail(user.getEmail());
+                //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                updateUserInDB.setFirstname(user.getFirstname());
+                updateUserInDB.setLastname(user.getLastname());
+                updateUserInDB.setContactNumber(user.getContactNumber());
+                updateUserInDB.setCountryOfResidence(user.getCountryOfResidence());
+                updateUserInDB.setDateOfBirth(user.getDateOfBirth());
+                updateUserInDB.setZipcode(user.getZipcode());
+                updateUserInDB.setAccountType(user.getAccountType());
+            } else {
+                updateUserInDB.setEmail(user.getEmail());
+                //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                updateUserInDB.setAccountType(user.getAccountType());
+            }
+
             try{
                 userRepository.save(updateUserInDB);
             }catch (Exception ex){
