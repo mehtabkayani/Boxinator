@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {GET, PUT, GETDEFAULT} from '../../api/CRUD';
 import {useParams} from "react-router";
 import {useHistory} from 'react-router-dom'
+import axios from 'axios';
 
 const SpecificShipment = () => {
 
@@ -51,12 +52,29 @@ const SpecificShipment = () => {
         await PUT(`/shipments/${id}`, body).then(res => {
             alert("Shipment has been updated!")
             history.push("/adminMainPage") 
-        } )
-                .catch(err=> console.log(err));
+        }).catch(err=> console.log(err));
         
     }
 
-    //const printStatusList = countryList.map((status, index) => (<option key={index} value={status}>{status}</option>))
+    const handleDelete = async () => {
+        let result = window.confirm(`Do you want to delete the shipment?`);
+
+        if (result) {
+            await axios.delete(`http://localhost:8080/api/shipments/${shipment.id}`,{ headers: {'Authorization': localStorage.getItem('token')} })
+       
+         .then(res => {
+             console.log(res);
+             alert(`You have deleted the shipment`)
+             history.push("/adminMainPage")
+            })
+            .catch(err => {
+                console.log("Error: ", err);
+            }) 
+        }
+
+    }
+
+    // const printStatusList = countryList.map((status, index) => (<option key={status} value={index}>{status}</option>))
     const printCountryList = countryList.map(country => (<option key={country.id} value={country.id}>{country.countryName}</option>))
     // const statusList = ["CREATED", "RECIEVED", "INTRANSIT", "COMPLETED", "CANCELLED"]
     return (
@@ -68,7 +86,7 @@ const SpecificShipment = () => {
                 <input type="text" name="receiverName" onChange={onShipmentChanged} value={shipment.receiverName} />
                 <br /><br />
                 <label>BoxColor</label>
-                <input type="text" name="boxcolor" onChange={onShipmentChanged} value={shipment.boxcolor} />
+                <input type="color" name="boxcolor" onChange={onShipmentChanged} value={shipment.boxcolor} />
                 <br /><br />
                 <label>Weight</label>
                 <input type="number" name="weight" onChange={onShipmentChanged} value={shipment.weight} />
@@ -91,6 +109,8 @@ const SpecificShipment = () => {
                 <button type="submit">Submit</button>
                 
             </form>
+            <button onClick={handleDelete}>Delete</button>
+
         </div>
     );
 }
