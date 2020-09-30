@@ -174,7 +174,7 @@
       <workItem from="1600669503680" duration="49965000" />
       <workItem from="1600853594185" duration="2138000" />
       <workItem from="1600859691520" duration="1310000" />
-      <workItem from="1600861130885" duration="109698000" />
+      <workItem from="1600861130885" duration="111683000" />
     </task>
     <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
       <created>1600094762706</created>
@@ -428,7 +428,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601455084526</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Added passwords match validation">
+      <created>1601458426601</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1601458426601</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -447,7 +454,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed login authentication with jwt token, trying to get the users shipments and render them" />
     <MESSAGE value="Get shipments for inlogged user, save the token with user id in the localstorage" />
     <MESSAGE value="Fixed the issue with account id" />
     <MESSAGE value="Get user info but not completed, get user-shipments, And get all the shipments in the admin page but it is not completed some parts need to be fixed" />
@@ -472,7 +478,8 @@
     <MESSAGE value="Trying to fix validation but not done yet !" />
     <MESSAGE value="Trying to fix validation of register form but not done yet !" />
     <MESSAGE value="fixed merge conflicts" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed merge conflicts" />
+    <MESSAGE value="Added passwords match validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added passwords match validation" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -541,10 +548,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1601103687345" />
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1601455114631">
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1601458456111">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601455114631" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601458456111" />
     <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1601392436907" />
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
       <screen x="-1920" y="0" width="1920" height="1160" />

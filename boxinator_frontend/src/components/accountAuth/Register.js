@@ -16,10 +16,10 @@ const Register = () => {
     const [countryOfResidence, setCountry] = useState('');
     const [zipcode, setZipcode] = useState('');
     const [contactNumber, setContactNumber] = useState('');
-    const [errorMessage, setError] = useState({firstname: '', lastname: '', email: '', password: '', confirmPassword:''});
+    const [errorMessage, setError] = useState({firstname: '', lastname: '', email: '', password: '', confirmPassword:'', contactNumber:'', zipcode:''});
 
     const formValid = (formErrors) => {
-        const formFields = { firstname: firstname, lastname: lastname, email: email, password: password, confirmPassword:confirmPassword}
+        const formFields = { firstname: firstname, lastname: lastname, email: email, password: password, confirmPassword:confirmPassword, contactNumber:contactNumber, zipcode:zipcode}
         let valid = true;
 
         // validate if form errors is empty
@@ -90,6 +90,7 @@ const Register = () => {
     const emailRegex = RegExp(
         /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     );
+    const isNumber = RegExp( /^[0-9]*$/);
 
     const onFirstnameChanged = ev =>{
         setFirstname(ev.target.value.trim());
@@ -132,10 +133,26 @@ const Register = () => {
         }
     }
 
+    const onZipcodeChanged = ev => {
+        setZipcode(ev.target.value.trim());
+        if(isNumber.test(zipcode)){
+            setError({zipcode: ''}) ;
+        }else {
+            setError({zipcode: 'Only numbers allowed!'});
+        }
+    }
+
+    const onContactNumberChanged = ev => {
+        setContactNumber(ev.target.value.trim());
+        if(isNumber.test(contactNumber)){
+            setError({contactNumber: ''}) ;
+        }else {
+            setError({contactNumber: 'Only numbers allowed!'});
+        }
+    }
     const onBirthDateChanged = ev => setBirthDate(ev.target.value.trim());
     const onCountryChanged = ev => setCountry(ev.target.value.trim());
-    const onZipcodeChanged = ev => setZipcode(ev.target.value.trim());
-    const onContactNumberChanged = ev => setContactNumber(ev.target.value.trim());
+
     return (
         <div className="registerContainer">
             <h2>Register new account : </h2>
@@ -174,6 +191,7 @@ const Register = () => {
                     <Form.Group as={Col} controlId="formGridZip">
                         <Form.Label>Zip code/Postal code :</Form.Label>
                         <Form.Control type="text" placeholder="Zip code" onChange={onZipcodeChanged}/>
+                        <span className="errorMessage">{errorMessage.zipcode}</span>
                     </Form.Group>
                 </Form.Row>
 
@@ -181,6 +199,7 @@ const Register = () => {
                     <Form.Group as={Col} controlId="formGridEmail">
                         <Form.Label>Contact number :</Form.Label>
                         <Form.Control type="text" placeholder="Enter contact number" onChange={onContactNumberChanged}/>
+                        <span className="errorMessage">{errorMessage.contactNumber}</span>
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
