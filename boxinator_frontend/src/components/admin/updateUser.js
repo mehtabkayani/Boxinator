@@ -14,7 +14,8 @@ const UpdateUser = () => {
 
 
     useEffect(()=>{
-        axios.get(`http://localhost:8080/api/user/${id}`, { headers: {'Authorization': localStorage.getItem('token')} })
+      let token =  localStorage.getItem('token')
+        axios.get(`http://localhost:8080/api/user/${id}`, { headers: {'Authorization': token} })
             .then(res=>{
                 console.log(res.data);
                 setUserInfo(res.data)
@@ -91,11 +92,11 @@ console.log(userInfo);
                 <Form.Row>
                     <Form.Group controlId="formGridAddress">
                         <Form.Label>Country of residence :</Form.Label>
-                        <Form.Control name="countryOfResidence" placeholder={userInfo.countryOfResidence} value={userInfo.countryOfResidence} onChange={onUserInfoChanged}/>
+                        <Form.Control name="countryOfResidence" type="text" placeholder={userInfo.countryOfResidence} value={userInfo.countryOfResidence} onChange={onUserInfoChanged}/>
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridZip">
                         <Form.Label>Zip code/Postal code :</Form.Label>
-                        <Form.Control name="zipcode" placeholder={userInfo.zipcode} value={userInfo.zipcode} onChange={onUserInfoChanged}/>
+                        <Form.Control name="zipcode" type="text" placeholder={userInfo.zipcode} value={userInfo.zipcode} onChange={onUserInfoChanged}/>
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
@@ -105,7 +106,7 @@ console.log(userInfo);
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
-                    <Form.Group as={Col} controlId="formGridPassword">
+                    {/* <Form.Group as={Col} controlId="formGridPassword">
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" value={userInfo.password} disabled placeholder="Enter password..." onChange={onPasswordChanged}/>
                     </Form.Group>
@@ -113,12 +114,12 @@ console.log(userInfo);
                     <Form.Group as={Col} controlId="formGridPassword2">
                         <Form.Label>Repeat Password</Form.Label>
                         <Form.Control type="password"  value={userInfo.password} disabled placeholder="Confirm password..." onChange={onConfirmPasswordChanged}/>
-                    </Form.Group>
+                    </Form.Group> */}
                 </Form.Row>
 
                 <Form.Row>
                     <Form.Group as={Col} controlId="formGridNumber">
-                        <Form.Label>Contact number :</Form.Label>
+                        <Form.Label>User Role :</Form.Label>
                         <Form.Control name="accountType" type="text" placeholder={userInfo.accountType} value={userInfo.accountType} onChange={onUserInfoChanged}/>
                     </Form.Group>
                 </Form.Row>

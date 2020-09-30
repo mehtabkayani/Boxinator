@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import {GET, PUT, GETDEFAULT} from '../../api/CRUD';
 import {useParams} from "react-router";
+import {useHistory} from 'react-router-dom'
 
 const SpecificShipment = () => {
 
     const {id} = useParams();
-
+    const history = useHistory();
     //Comment out shipmentId and pass in id as props
     //For development use only
     // shipmentId = 78;
 
     const [shipment, setShipment] = useState({});
     const [countryList, setCountryList] = useState([]);
+    const [country, setCountry] = useState({});
 
     //const statusList = ["CREATED", "RECIEVED", "INTRANSIT", "COMPLETED", "CANCELLED"]
 
     useEffect(() => {
         
-        GET(`/shipments/${id}`).then(res => setShipment(res.data))
+        GET(`/shipments/${id}`).then(res => {
+            setShipment(res.data)
+            setCountry(res.data.country)
+        }
+            )
             .catch(err => console.log(err))
         
         GETDEFAULT('/settings/countries').then(res => setCountryList(res.data))
@@ -30,16 +36,25 @@ const SpecificShipment = () => {
         const {name, value} = e.target;
         setShipment(prevState => ({ ...prevState, [name]: value }));
     }
+    const onCountryChanged = e => {
+        const {name, value} = e.target;
+        setCountry(prevState => ({ ...prevState, [name]: value }));
+    }
 
     const onSubmitForm = async e => {
         e.preventDefault();
         console.log(shipment);
 
         //Passing ID recieves error 400 in api endpoint
-        const body = {boxcolor: shipment.boxcolor, country: {id: shipment.country.id}, shipmentStatus: shipment.shipmentStatus, receiverName: shipment.receiverName}
+        const body = {boxcolor: shipment.boxcolor, country, shipmentStatus: shipment.shipmentStatus, receiverName: shipment.receiverName, weight: shipment.weight}
 
-        await PUT(`/shipments/${id}`, body).then(res => console.log(res))
+        await PUT(`/shipments/${id}`, body).then(res => {
+            alert("Shipment has been updated!")
+            history.push("/adminMainPage") 
+        } )
                 .catch(err=> console.log(err));
+
+        //history.push("/adminMainPage")
         
     }
 
@@ -62,7 +77,7 @@ const SpecificShipment = () => {
                 <br/><br/>
                 
                 <label>Shipment status</label>
-                <select name="shipmentStatus" onChange={onShipmentChanged}>
+                <select name="shipmentStatus" onChange={onShipmentChanged} value={shipment.shipmentStatus}>
                     {/* {printStatusList} */}
                     <option key="CREATED" value="CREATED">CREATED</option>
                     <option key="RECIEVED" value="RECIEVED">RECIEVED</option>
@@ -72,10 +87,11 @@ const SpecificShipment = () => {
                 </select>
                 <br/><br/>
                 <label>Country</label>
-                <select name="country" onChange={onShipmentChanged}>
+                <select name="id" onChange={onCountryChanged} value={country.id}>
                     {printCountryList}
                 </select>
                 <button type="submit">Submit</button>
+                
             </form>
         </div>
     );
