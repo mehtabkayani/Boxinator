@@ -36,8 +36,8 @@ const NewShipment = () => {
         console.log(country)
         e.preventDefault();
 
+        if(formValid(errorMessage, formFields)) {
         try {
-            if(formValid(errorMessage, formFields)) {
             const body = {receiverName, weight, boxcolor, country};
             await fetch(
                 "http://localhost:8080/api/shipment",
@@ -52,11 +52,12 @@ const NewShipment = () => {
                 }
             ).then(response => response.text())
                 .then(text => alert(text))
-        }else{
-                alert('Invalid credentials ! Make sure that all the required fields filled');
-            }
+
         } catch (err) {
             console.error(err.message);
+        }
+        }else{
+            alert('Invalid credentials ! Make sure that all the required fields filled');
         }
     };
 
@@ -86,7 +87,7 @@ const NewShipment = () => {
             <div>
                         <Form.Label>Receiver name : </Form.Label>
                         <Form.Control type="text" placeholder="Enter name" onChange={onReceiverNameChanged} required/>
-                <span className="errorMessage">{errorMessage.receiverName}</span>
+                        <span className="errorMessage">{errorMessage.receiverName}</span>
                     </div>
                     <div>
                         <Form.Label>Weight (kg): </Form.Label>
