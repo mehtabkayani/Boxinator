@@ -129,8 +129,6 @@ const NewShipment = () => {
                     <ShipmentDialog receiverName={receiverName} weight={weight} boxcolor={boxcolor} countryName={countryName} onSubmitForm={onSubmitForm}  />
                 </div>
             </Form>
-            <br></br>
-            <Link to="/mainPage"> <Button variant="secondary">Go back</Button></Link>
         </div>
     );
 }
