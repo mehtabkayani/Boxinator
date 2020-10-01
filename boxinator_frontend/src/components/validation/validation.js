@@ -1,19 +1,9 @@
-import axios from "axios";
+export const emailRegex = RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+export const isNumber = RegExp(/^[0-9]*$/);
+export const strongPassword = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+export const letters = /^[A-Za-z]+$/;
 
-/*
-const emailRegex = RegExp(
-    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-);
-const isNumber = RegExp(/^[0-9]*$/);
-const strongPassword = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
-const formValid = (formErrors) => {
-    const formFields = {
-        firstname: userInfo.firstname,
-        lastname: userInfo.lastname,
-        email: userInfo.email,
-        contactNumber: userInfo.contactNumber,
-        zipcode: userInfo.zipcode
-    }
+export const formValid = (formErrors, formFields) => {
     let valid = true;
 
     // validate if form errors is empty
@@ -28,50 +18,49 @@ const formValid = (formErrors) => {
 
     return valid;
 };
+let error = '';
 
+export const validateName = value => {
+    if (value.match(letters) && value.length >= 2) {
+        error = '';
 
-const onUserInfoChanged = e => {
-    const {name, value} = e.target;
-    setUserInfo(prevState => ({...prevState, [name]: value}));
-
-    switch (name) {
-        case "firstname":
-            if (value.length < 2) {
-                return setErrorMessage({firstname: 'You must have 2 characters or more !'});
-
-            } else if (value.length >= 2) {
-                return setErrorMessage({firstname: ''});
-            }
-            break;
-        case "lastname":
-            if (value.length < 2) {
-                setErrorMessage({lastname: 'You must have 2 characters or more !'});
-            } else if (value.length >= 2) {
-                setErrorMessage({lastname: ''});
-            }
-            break;
-        case "email":
-            if (emailRegex.test(value) && value.length > 0) {
-                setErrorMessage({email: ''})
-            } else {
-                setErrorMessage({email: 'Invalid email address !'});
-            }
-            break;
-        case "contactNumber":
-            if (isNumber.test(value)) {
-                setErrorMessage({contactNumber: ''});
-            } else {
-                setErrorMessage({contactNumber: 'Only numbers allowed!'});
-            }
-            break;
-        case "zipcode":
-            if (isNumber.test(value)) {
-                setErrorMessage({zipcode: ''});
-            } else {
-                setErrorMessage({zipcode: 'Only numbers allowed!'});
-            }
-            break;
-        default:
-            break;
+    } else {
+        error = 'You must have at least 2 characters and only contain letters !';
     }
-};*/
+    return error;
+}
+
+export const validateEmail = value => {
+    if (value.match(emailRegex) && value.length > 0) {
+        error = '';
+    } else {
+        error = 'Invalid email address !';
+    }
+    return error;
+}
+export const validatePassword = value => {
+    if (value.length > 6 && value.match(strongPassword)) {
+        error = '';
+    } else {
+        error = 'Weak password !, You must have Minimum 6 characters, lowercase, uppercase and special caracter !';
+    }
+    return error;
+}
+export const validatePasswordMatch = (value, password) => {
+    if (value === password) {
+        error = '';
+    } else {
+        error = 'Password do not match !';
+    }
+    return error;
+}
+export const validateIsNumber = value => {
+    if (value.match(isNumber)) {
+        error = '';
+    } else {
+        error = 'Only numbers allowed!';
+    }
+    return error
+}
+
+

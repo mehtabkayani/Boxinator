@@ -23,8 +23,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
-      <change afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/validation/validation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/updateUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/updateUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/validation/validation.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/validation/validation.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +177,7 @@
       <workItem from="1600669503680" duration="49965000" />
       <workItem from="1600853594185" duration="2138000" />
       <workItem from="1600859691520" duration="1310000" />
-      <workItem from="1600861130885" duration="119711000" />
+      <workItem from="1600861130885" duration="127771000" />
     </task>
     <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
       <created>1600094762706</created>
@@ -449,7 +452,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601471319554</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="validation component">
+      <created>1601475872806</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1601475872806</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -468,7 +478,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Get user info but not completed, get user-shipments, And get all the shipments in the admin page but it is not completed some parts need to be fixed" />
     <MESSAGE value="Fixed register and view user account in a better way" />
     <MESSAGE value="Added AllUsers component witch renders all the users(only admin kan view them), fixed register method, Deleted code that is not used" />
     <MESSAGE value="Trying with add shipments method, added CORS in countryController, deleted code that is not used" />
@@ -493,7 +502,8 @@
     <MESSAGE value="Added passwords match validation" />
     <MESSAGE value="Added is number validation in register form" />
     <MESSAGE value="Added validation for updateUser, UserAccount and check id password is strong" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added validation for updateUser, UserAccount and check id password is strong" />
+    <MESSAGE value="validation component" />
+    <option name="LAST_COMMIT_MESSAGE" value="validation component" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">

@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import axios from "axios";
 import {useParams} from "react-router";
 import {DELETE} from '../../api/CRUD'
+import {validateName, formValid, validateEmail, validateIsNumber, validatePassword, validatePasswordMatch} from '../validation/validation.js';
 
 const UpdateUser = () => {
     const {id} = useParams();
@@ -13,10 +14,10 @@ const UpdateUser = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const history = useHistory();
 
-    const [password1, setPassword] = useState('');
+    const [password1, setPassword1] = useState('');
   
     const [errorMessage, setErrorMessage] = useState({firstname: '', lastname: '', email: '', contactNumber:'', zipcode:''});
-
+    const formFields = { firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, contactNumber:userInfo.contactNumber, zipcode:userInfo.zipcode}
 
     useEffect(()=>{
       let token =  localStorage.getItem('token')
@@ -31,22 +32,6 @@ const UpdateUser = () => {
 
 
     }, [id])
-    const formValid = (formErrors) => {
-        const formFields = { firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, contactNumber:userInfo.contactNumber, zipcode:userInfo.zipcode}
-        let valid = true;
-
-        // validate if form errors is empty
-        Object.values(formErrors).forEach(val => {
-            val.length > 0 && (valid = false);
-        });
-
-        // validate if the form was filled out
-        Object.values(formFields).forEach(val => {
-            val === '' && (valid = false);
-        });
-
-        return valid;
-    };
     const onSubmitForm = async e => {
         e.preventDefault();
 
@@ -63,7 +48,7 @@ const UpdateUser = () => {
                 password
 
             };
-        if(formValid(errorMessage)) {
+        if(formValid(errorMessage, formFields)) {
             await axios.put(`http://localhost:8080/api/user/${userInfo.id}`, body, {headers: {'Authorization': localStorage.getItem('token')}})
                 .then(res => {
                     console.log(res);
@@ -75,11 +60,6 @@ const UpdateUser = () => {
                 })
         }else {    alert('Invalid credentials ! Make sure that all the required fields filled');}
         }
-    const emailRegex = RegExp(
-        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-    );
-    const isNumber = RegExp( /^[0-9]*$/);
-    const strongPassword = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
 
 
     const onUserInfoChanged = e => {
@@ -88,40 +68,20 @@ const UpdateUser = () => {
 
         switch (name) {
             case "firstname":
-                if(value.length < 2 ){
-                    return   setErrorMessage({firstname: 'You must have 2 characters or more !'}) ;
+                setErrorMessage({firstname: validateName(value)}) ;
 
-                }else if(value.length >= 2) {
-                    return   setErrorMessage({firstname: ''});
-                }
                 break;
             case "lastname":
-                if(value.length < 2){
-                    setErrorMessage({lastname: 'You must have 2 characters or more !'}) ;
-                }else  if(value.length >= 2){
-                    setErrorMessage({lastname: ''});
-                }
+                setErrorMessage({lastname: validateName(value)}) ;
                 break;
             case "email":
-                if(emailRegex.test(value) && value.length > 0){
-                    setErrorMessage({email: ''})
-                }else {
-                    setErrorMessage({email: 'Invalid email address !'});
-                }
+                setErrorMessage({email: validateEmail(value)}) ;
                 break;
             case "contactNumber":
-                if(isNumber.test(value)){
-                    setErrorMessage({contactNumber: ''}) ;
-                }else {
-                    setErrorMessage({contactNumber: 'Only numbers allowed!'});
-                }
+                setErrorMessage({contactNumber: validateIsNumber(value)}) ;
                 break;
             case "zipcode":
-                if(isNumber.test(value)){
-                    setErrorMessage({zipcode: ''}) ;
-                }else {
-                    setErrorMessage({zipcode: 'Only numbers allowed!'});
-                }
+                setErrorMessage({zipcode: validateIsNumber(value)}) ;
                 break;
             default:
                 break;
@@ -164,9 +124,6 @@ const UpdateUser = () => {
     }
     const onPasswordChanged = ev => setPassword(ev.target.value.trim());
     const onConfirmPasswordChanged = ev => setConfirmPassword(ev.target.value.trim());
-
-  
-
 
     return (
        
