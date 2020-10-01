@@ -139,10 +139,10 @@ const Register = () => {
     const onCountryChanged = ev => setCountry(ev.target.value.trim());
 
     return (
-        <div className="registerContainer">
+        <div className="container">
             <h2>Register new account : </h2>
             <br></br>
-            <Form onSubmit={onSubmitForm} id="registerForm">
+            <Form onSubmit={onSubmitForm} id="registerForm" className="form-container register">
                 <Form.Row>
                     <Form.Group as={Col}>
                         <Form.Label>Firstname</Form.Label>
@@ -202,11 +202,12 @@ const Register = () => {
                 </Form.Row>
                 <br></br>
                 <div>
-                    <Button variant="secondary" type="submit">Register</Button>
+                    <Button variant="secondary" type="submit" className="registerBtn">Register</Button>
+                    <Link to="/login">Already registered? Login here</Link>
                 </div>
             </Form>
             <br></br>
-            <Link to="/login">Already registered? Login here</Link>
+
         </div>
     );
 }

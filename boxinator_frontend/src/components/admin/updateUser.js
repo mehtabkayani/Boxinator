@@ -5,11 +5,10 @@ import Col from "react-bootstrap/Col";
 import axios from "axios";
 import {useParams} from "react-router";
 import {DELETE} from '../../api/CRUD'
-<<<<<<< HEAD
+
 import AdminUpdateUserDialog from "../Dialog/AdminUpdateUserDialog";
-=======
+
 import {validateName, formValid, validateEmail, validateIsNumber} from '../validation/validation.js';
->>>>>>> f40d7be05e6bb99fb530595e0ccdab533187c7ea
 
 const UpdateUser = () => {
     const {id} = useParams();

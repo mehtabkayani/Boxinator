@@ -94,10 +94,10 @@ const NewShipment = () => {
             };
 
     return (
-        <div className="newShipmentContainer">
+        <div className="container">
             <h1>New shipment: </h1>
             <br></br>
-            <Form onSubmit={onSubmitForm}>
+            <Form onSubmit={onSubmitForm} className="form-container">
             <div>
                         <Form.Label>Receiver name : </Form.Label>
                         <Form.Control type="text" placeholder="Enter name" onChange={onReceiverNameChanged} required/>
@@ -127,7 +127,7 @@ const NewShipment = () => {
                 <div>
                     {/* <Button variant="outline-danger" type="submit">Add shipment</Button> */}
     
-                    <ShipmentDialog receiverName={receiverName} weight={weight} boxcolor={boxcolor} countryName={countryName} onSubmitForm={onSubmitForm}/>
+                    <ShipmentDialog receiverName={receiverName} weight={weight} boxcolor={boxcolor} countryName={countryName} onSubmitForm={onSubmitForm} />
                 </div>
             </Form>
             <br></br>

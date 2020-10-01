@@ -94,10 +94,10 @@ const UserAccount = () => {
     const onPasswordChanged = ev => setPassword(ev.target.value.trim());
     const onConfirmPasswordChanged = ev => setConfirmPassword(ev.target.value.trim());
     return (
-        <div className="accountContainer">
+        <div className="container">
             <h1>User Account : </h1>
             <br></br>
-            <Form key={userInfo.id} onSubmit={onSubmitForm}>
+            <Form key={userInfo.id} onSubmit={onSubmitForm} className="form-container">
                 <Form.Row>
                     <Form.Group as={Col}>
                         <Form.Label>Firstname</Form.Label>
@@ -152,7 +152,7 @@ const UserAccount = () => {
 
                 <br></br>
                 <div>
-                    <Button type="submit" variant="secondary">Save changes</Button>
+                    <Button type="submit" variant="outline-danger">Save changes</Button>
                 </div>
             </Form>
             <br></br>
