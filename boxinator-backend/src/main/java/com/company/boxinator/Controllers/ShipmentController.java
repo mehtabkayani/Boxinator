@@ -132,6 +132,9 @@ public class ShipmentController {
     @PostMapping("/shipment")
     public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader(value = "Authorization", required = false) String jwt) {
 
+        if(!securityConf.validInputs(shipment.getReceiverName(), shipment.getBoxcolor()))
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+
         if (jwt == null) {
             Optional<Country> country = countryRepository.findById(shipment.getCountry().getId());
             if (!country.isPresent()) {
