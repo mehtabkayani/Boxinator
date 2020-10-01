@@ -214,7 +214,7 @@ public class UserController {
         Integer userId = jwtUtil.getJwtId(jwt);
         if (userId == id) {
             updateUserInDB.setEmail(user.getEmail());
-            updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             updateUserInDB.setFirstname(user.getFirstname());
             updateUserInDB.setLastname(user.getLastname());
             updateUserInDB.setContactNumber(user.getContactNumber());

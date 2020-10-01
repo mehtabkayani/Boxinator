@@ -20,11 +20,9 @@ const SpecificShipment = () => {
     useEffect(() => {
         
         GET(`/shipments/${id}`).then(res => {
-            setShipment(res.data)
-            setCountry(res.data.country)
-        }
-            )
-            .catch(err => console.log(err))
+            setShipment(res.data);
+            setCountry(res.data.country);
+        }).catch(err => console.log(err))
         
         GETDEFAULT('/settings/countries').then(res => setCountryList(res.data))
             .catch(err => console.log(err));
