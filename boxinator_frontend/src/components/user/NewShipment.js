@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link,useHistory} from "react-router-dom";
 import Select from 'react-select';
 import {Button, Form} from "react-bootstrap";
 import axios from "axios";
+import ShipmentDialog from "../Dialog/ShipmentDialog";
 import {formValid, isPositiveNumber, validateName} from "../validation/validation";
 
 const NewShipment = () => {
@@ -10,7 +11,9 @@ const NewShipment = () => {
     const [weight, setWeight] = useState();
     const [boxcolor, setBoxColor] = useState("#050505");
     const [countries, setCountries] = useState([]);
-    const [country, setCountry] = useState({});
+    const [country, setCountry] = useState({})
+    const [countryName, setCountryName] = useState("")
+    const history = useHistory();
     const [errorMessage, setErrorMessage] = useState({receiverName:'', weight:''});
     const formFields = { receiverName: receiverName, weight: weight};
 
@@ -21,6 +24,7 @@ const NewShipment = () => {
                 setCountries(res.data);
                 console.log(res.data[0].id)
                 setCountry({id: res.data[0].id})
+                setCountryName(res.data[0].countryName)
             })
             .catch(err => {
                 console.log(err);
@@ -30,10 +34,7 @@ const NewShipment = () => {
   
 
     const onSubmitForm = async e => {
-        console.log(receiverName)
-        console.log(weight)
-        console.log(boxcolor)
-        console.log(country)
+        
         e.preventDefault();
 
         if(formValid(errorMessage, formFields)) {
@@ -51,7 +52,8 @@ const NewShipment = () => {
 
                 }
             ).then(response => response.text())
-                .then(text => alert(text))
+            .then(history.push("/mainPage"))
+                // .then(text => alert(text))
 
         } catch (err) {
             console.error(err.message);
@@ -60,6 +62,17 @@ const NewShipment = () => {
             alert('Invalid credentials ! Make sure that all the required fields filled');
         }
     };
+
+    const getCountryName = async(id) => {
+    await axios.get(`http://localhost:8080/api/settings/country/${id}`)
+         .then(res=>{
+             console.log(res.data);
+             setCountryName(res.data.countryName)
+         })
+         .catch(err => {
+             console.log(err);
+         })
+    }
 
         const onReceiverNameChanged = e =>{
             setReceiverName(e.target.value.trim());
@@ -77,6 +90,7 @@ const NewShipment = () => {
         const onDestinationCountryChanged = (e) =>{
             let id = parseInt(e.target.value)
              setCountry({id})
+             getCountryName(id)
             };
 
     return (
@@ -111,7 +125,9 @@ const NewShipment = () => {
 
                 <br></br>
                 <div>
-                    <Button variant="outline-danger" type="submit">Add shipment</Button>
+                    {/* <Button variant="outline-danger" type="submit">Add shipment</Button> */}
+    
+                    <ShipmentDialog receiverName={receiverName} weight={weight} boxcolor={boxcolor} countryName={countryName} onSubmitForm={onSubmitForm}/>
                 </div>
             </Form>
             <br></br>

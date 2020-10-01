@@ -64,34 +64,34 @@ const AdminMainPage = () => {
     });
     const classes = useStyles();
     const columns = [
-        { id: 'id', label: '#ID', minWidth: 170 },
-        { id: 'to', label: 'To', minWidth: 170 },
+        { id: 'id', label: '#ID', minWidth: 100 },
+        { id: 'to', label: 'To', minWidth: 100 },
         { id: 'country', label: 'Country', minWidth: 100 },
         {
             id: 'price',
             label: 'Price',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
             format: (value) => value.toLocaleString('en-US'),
         },
         {
             id: 'weight',
             label: 'Weight',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
             format: (value) => value.toLocaleString('en-US'),
         },
         {
             id: 'boxcolor',
             label: 'Boxcolor',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
             format: (value) => value.toFixed(2),
         },
         {
             id: 'creationDate',
             label: 'Creation Date',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
             format: (value) => value.toFixed(2),
         },
@@ -102,6 +102,7 @@ const AdminMainPage = () => {
             <Link to="/country"><Button>Change country cost</Button></Link>
             <Link to="/allUsers"><Button>View users</Button></Link>
             <Link to="/addCountry"><Button>Add new country</Button></Link>
+            <Link to="/newShipment"><Button>Add new shipment</Button></Link>
             <h1>All Shipments</h1>
             <Paper className={classes.root}>
 

@@ -1,8 +1,11 @@
 package com.company.boxinator.Controllers;
 
+import com.company.boxinator.Config.SecurityConf;
 import com.company.boxinator.Models.Country;
+import com.company.boxinator.Models.Enums.AccountType;
 import com.company.boxinator.Repositories.CountryRepository;
 import com.company.boxinator.Utils.CountryUtil;
+import com.company.boxinator.Utils.JwtUtil;
 import com.company.boxinator.Utils.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,10 @@ public class CountryController {
 
     private SessionUtil sessionUtil = SessionUtil.getInstance();
 
+    private JwtUtil jwtUtil = new JwtUtil();
+
+    private SecurityConf securityConf = new SecurityConf();
+
     @GetMapping("/country/{id}")
     public Country getCountry(@PathVariable ("id") Integer id) {
         return countryRepository.findById(id).get();
@@ -35,6 +42,10 @@ public class CountryController {
 
     @PostMapping("/countries")
     public ResponseEntity addCountry(@RequestBody Country country, @RequestHeader("Authorization") String jwt){
+        if(!(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR))
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        if(!(securityConf.validInputs(country.getCountryCode(), country.getCountryName())))
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
 
         try {
             countryRepository.save(country);
@@ -50,6 +61,9 @@ public class CountryController {
         Optional <Country> findCountry = countryRepository.findById(countryId);
         if(!findCountry.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
+        Country updateCountry = countryUtil.setCountry(country, findCountry.get());
+        if(!securityConf.validInputs(updateCountry.getCountryName(), updateCountry.getCountryCode()))
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
 
         try {
             countryRepository.save(countryUtil.setCountry(country, findCountry.get()));
