@@ -23,11 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Register.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AddCountry.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AddCountry.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/updateUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/updateUser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/NewShipment.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/NewShipment.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +69,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/diary-teamorebro" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -177,7 +174,7 @@
       <workItem from="1600669503680" duration="49965000" />
       <workItem from="1600853594185" duration="2138000" />
       <workItem from="1600859691520" duration="1310000" />
-      <workItem from="1600861130885" duration="117199000" />
+      <workItem from="1600861130885" duration="133566000" />
     </task>
     <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
       <created>1600094762706</created>
@@ -445,7 +442,49 @@
       <option name="project" value="LOCAL" />
       <updated>1601465324854</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Added validation for updateUser, UserAccount and check id password is strong">
+      <created>1601471319553</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1601471319554</updated>
+    </task>
+    <task id="LOCAL-00040" summary="validation component">
+      <created>1601475872806</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1601475872806</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Moved validation into its own file and used it in register, UserAccount and UpdateUser">
+      <created>1601539710345</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1601539710346</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Moved validation into AdminAccount.js">
+      <created>1601540751243</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1601540751244</updated>
+    </task>
+    <task id="LOCAL-00043" summary="added validation for add and update shipments forms">
+      <created>1601544464075</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1601544464076</updated>
+    </task>
+    <task id="LOCAL-00044" summary="added validation to add shipment as a guest">
+      <created>1601545101856</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1601545101856</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -464,12 +503,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed the issue with account id" />
-    <MESSAGE value="Get user info but not completed, get user-shipments, And get all the shipments in the admin page but it is not completed some parts need to be fixed" />
-    <MESSAGE value="Fixed register and view user account in a better way" />
-    <MESSAGE value="Added AllUsers component witch renders all the users(only admin kan view them), fixed register method, Deleted code that is not used" />
-    <MESSAGE value="Trying with add shipments method, added CORS in countryController, deleted code that is not used" />
-    <MESSAGE value="Fixed router so that only the users with authenticated role can access their pages" />
     <MESSAGE value="Fixed router so that only the users with authenticated role can access their pages, but when the pages refreshes so gets the user no access anymore&quot;need to be fixed &quot;" />
     <MESSAGE value="Fixed loggout method, changed receiver name in admin page" />
     <MESSAGE value="Fixed the navbar so that right user has the right access but it needs som fixes" />
@@ -489,7 +522,13 @@
     <MESSAGE value="fixed merge conflicts" />
     <MESSAGE value="Added passwords match validation" />
     <MESSAGE value="Added is number validation in register form" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added is number validation in register form" />
+    <MESSAGE value="Added validation for updateUser, UserAccount and check id password is strong" />
+    <MESSAGE value="validation component" />
+    <MESSAGE value="Moved validation into its own file and used it in register, UserAccount and UpdateUser" />
+    <MESSAGE value="Moved validation into AdminAccount.js" />
+    <MESSAGE value="added validation for add and update shipments forms" />
+    <MESSAGE value="added validation to add shipment as a guest" />
+    <option name="LAST_COMMIT_MESSAGE" value="added validation to add shipment as a guest" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -505,10 +544,10 @@
     </state>
     <state x="-1337" y="212" width="1040" height="744" key="DiffContextDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600784345380" />
     <state x="242" y="101" key="DiffContextDialog/0.0.1280.680@0.0.1280.680" timestamp="1600851492304" />
-    <state x="-1180" y="335" key="FileChooserDialogImpl" timestamp="1600421315957">
+    <state x="-1180" y="335" key="FileChooserDialogImpl" timestamp="1601539954676">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1180" y="335" key="FileChooserDialogImpl/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600421315957" />
+    <state x="-1180" y="335" key="FileChooserDialogImpl/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601539954676" />
     <state width="1877" height="139" key="GridCell.Tab.0.bottom" timestamp="1600268171529">
       <screen x="1920" y="0" width="1920" height="1160" />
     </state>
@@ -549,19 +588,19 @@
     </state>
     <state width="1237" height="247" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690496" />
     <state width="1877" height="139" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171530" />
-    <state x="-1204" y="282" key="RollbackChangesDialog" timestamp="1601016854297">
+    <state x="-1204" y="282" key="RollbackChangesDialog" timestamp="1601542923442">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1204" y="282" key="RollbackChangesDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601016854297" />
+    <state x="-1204" y="282" key="RollbackChangesDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601542923442" />
     <state x="477" y="86" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1600860684369" />
     <state x="142" y="0" key="SettingsEditor" timestamp="1601103687345">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1601103687345" />
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1601465337484">
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1601545111832">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601465337484" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601545111832" />
     <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1601392436907" />
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
       <screen x="-1920" y="0" width="1920" height="1160" />
