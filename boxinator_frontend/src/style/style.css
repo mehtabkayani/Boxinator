@@ -8,7 +8,7 @@
 /*Home component*/
 .homeContainer{
     text-align: center;
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 /*User account component*/
@@ -17,6 +17,7 @@
     margin-left: 2%;
 }
 /*Add shipment component*/
+
 
 .container {
     height: 100%;
@@ -37,6 +38,7 @@
     box-shadow: 0px 10px 50px #555;
     background-color: #ffffff;
     margin-bottom: 2%;
+
 }
 .register{
     width: 60%;
@@ -65,7 +67,9 @@
 
 /*Register component*/
 .registerContainer{
-    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
     margin-left: 2%;
 }
 /*NavBar component*/
@@ -76,4 +80,15 @@
 .errorMessage{
     color: red;
     font-size: small;
+}
+
+/* Images */
+
+.trackingLogo{
+    margin-top: 10px;
+    margin-left: 30px;
+    
+    
+    max-width: 30rem;
+    max-height: 30rem;
 }
