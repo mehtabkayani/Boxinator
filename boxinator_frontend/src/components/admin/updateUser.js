@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import axios from "axios";
 import {useParams} from "react-router";
 import {DELETE} from '../../api/CRUD'
-import {validateName, formValid, validateEmail, validateIsNumber, validatePassword, validatePasswordMatch} from '../validation/validation.js';
+import {validateName, formValid, validateEmail, validateIsNumber} from '../validation/validation.js';
 
 const UpdateUser = () => {
     const {id} = useParams();
