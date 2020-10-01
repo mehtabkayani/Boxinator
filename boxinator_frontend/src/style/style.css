@@ -17,12 +17,40 @@
     margin-left: 2%;
 }
 /*Add shipment component*/
-.newShipmentContainer{
-    text-align: center;
-   /* width: 40%; */
-    margin-left: 35%;
-    margin-right: 35%;
+
+
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color : white ;
 }
+
+.form-container{
+    width:50%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 50px #555;
+    background-color: #ffffff;
+    margin-bottom: 2%;
+
+}
+.register{
+    width: 60%;
+}
+.registerBtn{
+    margin-right: 2%;
+
+}
+.floatRightBtn{
+    float: right;
+}
+
 /*Admin main page component*/
 .adminPageContainer{
     width: 70%;

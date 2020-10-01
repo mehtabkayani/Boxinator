@@ -107,10 +107,10 @@ const AddShipmentGuest = () => {
 
      
     return (
-        <div className="newShipmentContainer">
+        <div className="container">
             <h1>Add new shipment as guest: </h1>
             <br></br>
-            <Form onSubmit={onSubmitForm}>
+            <Form onSubmit={onSubmitForm} className="form-container">
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" onChange={onEmailChange} required/>
@@ -147,8 +147,12 @@ const AddShipmentGuest = () => {
             {/* <Link to="/"> <button>Go back</button></Link> */}
                     </div>
                 </Form>
+
             <br></br>
             <img src={sendGuestLogo}></img>
+
+
+
         </div>
     );
 }
