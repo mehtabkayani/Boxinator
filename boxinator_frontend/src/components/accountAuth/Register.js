@@ -5,6 +5,7 @@ import {Form, Button} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import {POSTDEFAULT} from '../../api/CRUD';
 import {validateName, formValid, validateEmail, validateIsNumber, validatePassword, validatePasswordMatch} from '../validation/validation.js';
+import trackingLogo from '../../images/registerPage/RegisterTracking.jpg'
 
 
 const Register = () => {
@@ -139,8 +140,10 @@ const Register = () => {
     const onCountryChanged = ev => setCountry(ev.target.value.trim());
 
     return (
+        <>
+
         <div className="registerContainer">
-            <h2>Register new account : </h2>
+            <div> <h2>Register new account</h2>
             <br></br>
             <Form onSubmit={onSubmitForm} id="registerForm">
                 <Form.Row>
@@ -206,8 +209,15 @@ const Register = () => {
                 </div>
             </Form>
             <br></br>
-            <Link to="/login">Already registered? Login here</Link>
+            <Link to="/login">Already registered? Login here</Link></div>
+            <div> <img src={trackingLogo} className="trackingLogo"></img>
+                    {/* <h3><i>Register and keep track of all your shipments!</i></h3> */}
+                    </div>
+
+           
         </div>
+           
+            </>
     );
 }
 export default Register;
