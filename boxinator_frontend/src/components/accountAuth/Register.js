@@ -210,15 +210,13 @@ const Register = () => {
             </Form>
             <br></br>
 
-            <Link to="/login">Already registered? Login here</Link></div>
+            <Link to="/login">Already registered? Login here</Link>
             <div> <img src={trackingLogo} className="trackingLogo"></img>
                     {/* <h3><i>Register and keep track of all your shipments!</i></h3> */}
                     </div>
 
- 
-        </div>
            
-            </>
+    </div>
     );
 }
 export default Register;
