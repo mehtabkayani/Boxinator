@@ -4,6 +4,7 @@ import Select from 'react-select';
 import {Button, Form} from "react-bootstrap";
 import axios from "axios";
 import ShipmentDialog from "../Dialog/ShipmentDialog";
+import {formValid, isPositiveNumber, validateName} from "../validation/validation";
 
 const NewShipment = () => {
     const [receiverName, setReceiverName] = useState('');
@@ -13,7 +14,8 @@ const NewShipment = () => {
     const [country, setCountry] = useState({})
     const [countryName, setCountryName] = useState("")
     const history = useHistory();
-    // const [shipment, setShipment] = useState({receiverName: "",weight: 0,boxcolor: "",country:{}});
+    const [errorMessage, setErrorMessage] = useState({receiverName:'', weight:''});
+    const formFields = { receiverName: receiverName, weight: weight};
 
 
     useEffect(()=>{
@@ -34,6 +36,8 @@ const NewShipment = () => {
     const onSubmitForm = async e => {
         
         e.preventDefault();
+
+        if(formValid(errorMessage, formFields)) {
         try {
             const body = {receiverName, weight, boxcolor, country};
             await fetch(
@@ -54,6 +58,9 @@ const NewShipment = () => {
         } catch (err) {
             console.error(err.message);
         }
+        }else{
+            alert('Invalid credentials ! Make sure that all the required fields filled');
+        }
     };
 
     const getCountryName = async(id) => {
@@ -65,15 +72,16 @@ const NewShipment = () => {
          .catch(err => {
              console.log(err);
          })
- 
-
     }
+
         const onReceiverNameChanged = e =>{
             setReceiverName(e.target.value.trim());
+            setErrorMessage({receiverName: validateName(e.target.value)}) ;
         } 
 
         const onWeightChanged = e => {
             setWeight(e.target.value);
+            setErrorMessage({weight: isPositiveNumber(e.target.value)}) ;
         }
         const onBoxColorChanged = (e) => {
             setBoxColor(e.target.value);
@@ -93,10 +101,12 @@ const NewShipment = () => {
             <div>
                         <Form.Label>Receiver name : </Form.Label>
                         <Form.Control type="text" placeholder="Enter name" onChange={onReceiverNameChanged} required/>
+                        <span className="errorMessage">{errorMessage.receiverName}</span>
                     </div>
                     <div>
                         <Form.Label>Weight (kg): </Form.Label>
                         <Form.Control type="number" placeholder="Enter weight" onChange={onWeightChanged} required/>
+                        <span className="errorMessage">{errorMessage.weight}</span>
                     </div>
                     <div>
                         <Form.Label>Box colour: </Form.Label>

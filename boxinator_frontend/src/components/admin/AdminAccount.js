@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import AdminUpdateUserDialog from "../Dialog/AdminUpdateUserDialog";
+import {formValid, validateEmail, validateIsNumber, validateName} from "../validation/validation.js";
 
 const AdminAccount = () => {
     const [userInfo, setUserInfo] = useState({})
@@ -17,6 +18,7 @@ const AdminAccount = () => {
     const history = useHistory();
     let UpdateUser = "Update";
 
+    const formFields = { firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, contactNumber:userInfo.contactNumber, zipcode:userInfo.zipcode}
 
     useEffect(()=>{
         console.log("Account id :" ,accountId)
@@ -36,8 +38,7 @@ const AdminAccount = () => {
     }, [])
     const onSubmitForm = async e => {
         e.preventDefault();
-        if(password === confirmPassword){
-            setErrorMessage('');
+        if(formValid(errorMessage, formFields)) {
             const body = {email: userInfo.email, accountType: userInfo.accountType,
                  firstname: userInfo.firstname, lastname: userInfo.lastname, dateOfBirth: userInfo.dateOfBirth, countryOfResidence: userInfo.countryOfResidence, zipcode: userInfo.zipcode, contactNumber: userInfo.contactNumber };
         
@@ -51,12 +52,33 @@ const AdminAccount = () => {
                 console.log("Error: ", err);
             })
         }else{
-            setErrorMessage('Passwords doesnt match');
+            alert('Invalid credentials ! Make sure that all the required fields filled');
         }
     }
     const onUserInfoChanged = e => {
         const {name, value} = e.target;
         setUserInfo(prevState => ({...prevState, [name]: value}));
+
+        switch (name) {
+            case "firstname":
+                setErrorMessage({firstname: validateName(value)}) ;
+
+                break;
+            case "lastname":
+                setErrorMessage({lastname: validateName(value)}) ;
+                break;
+            case "email":
+                setErrorMessage({email: validateEmail(value)}) ;
+                break;
+            case "contactNumber":
+                setErrorMessage({contactNumber: validateIsNumber(value)}) ;
+                break;
+            case "zipcode":
+                setErrorMessage({zipcode: validateIsNumber(value)}) ;
+                break;
+            default:
+                break;
+        }
     };
     const onPasswordChanged = ev => setPassword(ev.target.value.trim());
     const onConfirmPasswordChanged = ev => setConfirmPassword(ev.target.value.trim());
@@ -69,17 +91,19 @@ const AdminAccount = () => {
                     <Form.Group as={Col}>
                         <Form.Label>Firstname</Form.Label>
                         <Form.Control name="firstname" type="text" placeholder={userInfo.firstname} value={userInfo.firstname} onChange={onUserInfoChanged}/>
+                        <span className="errorMessage">{errorMessage.firstname}</span>
                     </Form.Group>
-
                     <Form.Group as={Col}>
                         <Form.Label>Lastname</Form.Label>
                         <Form.Control name="lastname" type="text" placeholder={userInfo.lastname} value={userInfo.lastname} onChange={onUserInfoChanged}/>
+                        <span className="errorMessage">{errorMessage.lastname}</span>
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group as={Col} controlId="formGridEmail">
                         <Form.Label>Email</Form.Label>
                         <Form.Control name="email" type="email" placeholder={userInfo.email} value={userInfo.email} onChange={onUserInfoChanged}/>
+                        <span className="errorMessage">{errorMessage.email}</span>
                     </Form.Group>
                 </Form.Row>
                 <div>
@@ -89,17 +113,19 @@ const AdminAccount = () => {
                 <Form.Row>
                     <Form.Group controlId="formGridAddress">
                         <Form.Label>Country of residence :</Form.Label>
-                        <Form.Control name="countryOfResidence" type="text" placeholder={userInfo.countryOfResidence} value={userInfo.countryOfResidence} onChange={onUserInfoChanged}/>
+                        <Form.Control name="countryOfResidence" placeholder={userInfo.countryOfResidence} value={userInfo.countryOfResidence} onChange={onUserInfoChanged}/>
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridZip">
                         <Form.Label>Zip code/Postal code :</Form.Label>
-                        <Form.Control name="zipcode" type="text" placeholder={userInfo.zipcode} value={userInfo.zipcode} onChange={onUserInfoChanged}/>
+                        <Form.Control name="zipcode" placeholder={userInfo.zipcode} value={userInfo.zipcode} onChange={onUserInfoChanged}/>
+                        <span className="errorMessage">{errorMessage.zipcode}</span>
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group as={Col} controlId="formGridNumber">
                         <Form.Label>Contact number :</Form.Label>
                         <Form.Control name="contactNumber" type="text" placeholder={userInfo.contactNumber} value={userInfo.contactNumber} onChange={onUserInfoChanged}/>
+                        <span className="errorMessage">{errorMessage.contactNumber}</span>
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
@@ -120,9 +146,6 @@ const AdminAccount = () => {
                         <option key="REGISTERED_USER" value="REGISTERED_USER">REGISTERED_USER</option>
                     </select>
                 </Form.Row>
-                <div>
-                    {errorMessage}
-                </div>
                 <br></br>
                 <div>
                     {/* <Button type="submit" variant="secondary">Save changes</Button> */}

@@ -104,11 +104,12 @@ function App() {
                     }}/>
                     <Route exact path="/newShipment" render={props => {
 
-                        if (userInfo.accountType === "REGISTERED_USER") {
+                        if (userInfo.accountType === "REGISTERED_USER" || userInfo.accountType === "ADMINISTRATOR") {
 
                             return <NewShipment/>
 
                         } else {
+                            
                         }
                     }}/>
                     <Route exact path="/adminMainPage" render={props => {
@@ -202,7 +203,7 @@ function App() {
                         } else {
                             return <Redirect to="/userAccount"/>
                         }
-                    }}/> */}
+                    }}/>
 
                     {/* <Route exact path="/specificShipment/:id" component={SpecificShipment} /> */}
 
