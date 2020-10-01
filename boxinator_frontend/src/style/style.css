@@ -45,6 +45,9 @@
     margin-right: 2%;
 
 }
+.floatRightBtn{
+    float: right;
+}
 
 /*Admin main page component*/
 .adminPageContainer{

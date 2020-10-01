@@ -4,10 +4,10 @@ import {Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import Button from "@material-ui/core/Button";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import {validateName, formValid, validateEmail, validateIsNumber} from '../validation/validation.js';
+import Button from "react-bootstrap/Button";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -95,7 +95,7 @@ const UserAccount = () => {
     const onConfirmPasswordChanged = ev => setConfirmPassword(ev.target.value.trim());
     return (
         <div className="container">
-            <h1>User Account : </h1>
+            <h1>{userInfo.firstname}'s Account : </h1>
             <br></br>
             <Form key={userInfo.id} onSubmit={onSubmitForm} className="form-container">
                 <Form.Row>
@@ -152,11 +152,9 @@ const UserAccount = () => {
 
                 <br></br>
                 <div>
-                    <Button type="submit" variant="outline-danger">Save changes</Button>
+                    <Button type="submit" variant="outline-danger" className="floatRightBtn">Save changes</Button>
                 </div>
             </Form>
-            <br></br>
-            <Link to="/"><Button variant="success">Home</Button></Link>
         </div>
     );
 }

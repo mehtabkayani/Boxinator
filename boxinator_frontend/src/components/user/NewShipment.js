@@ -124,10 +124,9 @@ const NewShipment = () => {
                     <br></br>
 
                 <br></br>
-                <div>
+                <div className="floatRightBtn">
                     {/* <Button variant="outline-danger" type="submit">Add shipment</Button> */}
-    
-                    <ShipmentDialog receiverName={receiverName} weight={weight} boxcolor={boxcolor} countryName={countryName} onSubmitForm={onSubmitForm} />
+                    <ShipmentDialog receiverName={receiverName} weight={weight} boxcolor={boxcolor} countryName={countryName} onSubmitForm={onSubmitForm}  />
                 </div>
             </Form>
             <br></br>
