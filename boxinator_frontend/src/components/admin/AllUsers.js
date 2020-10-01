@@ -12,6 +12,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
+import UpdateIcon from '@material-ui/icons/Update';
+import { Tooltip } from '@material-ui/core';
 
 const AllUsers = () => {
     const [users, setUsers] = useState([]);
@@ -120,7 +122,10 @@ const AllUsers = () => {
 
                                             );
                                         })}
-                                        <Link to={`/updateUser/${row.id}`}>Update</Link>
+                                        
+                                        <Link to={`/updateUser/${row.id}`}>
+                                    <Tooltip title="Update"><UpdateIcon color="primary"></UpdateIcon></Tooltip>
+                                    </Link>
                                     </TableRow>
                                 );
                             })}
