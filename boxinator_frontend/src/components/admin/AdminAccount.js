@@ -4,7 +4,7 @@ import {Button, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import {formValid, validateEmail, validateIsNumber, validateName} from "../validation/validation";
+import {formValid, validateEmail, validateIsNumber, validateName} from "../validation/validation.js";
 
 const AdminAccount = () => {
     const [userInfo, setUserInfo] = useState({})

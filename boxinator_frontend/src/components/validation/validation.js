@@ -3,6 +3,7 @@ export const isNumber = RegExp(/^[0-9]*$/);
 export const strongPassword = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
 export const letters = /^[A-Za-z]+$/;
 
+
 export const formValid = (formErrors, formFields) => {
     let valid = true;
 
@@ -59,6 +60,14 @@ export const validateIsNumber = value => {
         error = '';
     } else {
         error = 'Only numbers allowed!';
+    }
+    return error
+}
+export const isPositiveNumber = value => {
+    if (value.match(/^[1-9]\d*$/g )) {
+        error = '';
+    } else {
+        error = 'Only positive numbers allowed!';
     }
     return error
 }

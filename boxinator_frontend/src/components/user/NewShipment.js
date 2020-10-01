@@ -3,13 +3,16 @@ import {Link} from "react-router-dom";
 import Select from 'react-select';
 import {Button, Form} from "react-bootstrap";
 import axios from "axios";
+import {formValid, isPositiveNumber, validateName} from "../validation/validation";
 
 const NewShipment = () => {
     const [receiverName, setReceiverName] = useState('');
     const [weight, setWeight] = useState();
     const [boxcolor, setBoxColor] = useState("#050505");
     const [countries, setCountries] = useState([]);
-    const [country, setCountry] = useState({})
+    const [country, setCountry] = useState({});
+    const [errorMessage, setErrorMessage] = useState({receiverName:'', weight:''});
+    const formFields = { receiverName: receiverName, weight: weight};
 
 
     useEffect(()=>{
@@ -32,7 +35,9 @@ const NewShipment = () => {
         console.log(boxcolor)
         console.log(country)
         e.preventDefault();
+
         try {
+            if(formValid(errorMessage, formFields)) {
             const body = {receiverName, weight, boxcolor, country};
             await fetch(
                 "http://localhost:8080/api/shipment",
@@ -47,19 +52,22 @@ const NewShipment = () => {
                 }
             ).then(response => response.text())
                 .then(text => alert(text))
-
+        }else{
+                alert('Invalid credentials ! Make sure that all the required fields filled');
+            }
         } catch (err) {
             console.error(err.message);
         }
     };
 
-
         const onReceiverNameChanged = e =>{
             setReceiverName(e.target.value.trim());
+            setErrorMessage({receiverName: validateName(e.target.value)}) ;
         } 
 
         const onWeightChanged = e => {
             setWeight(e.target.value);
+            setErrorMessage({weight: isPositiveNumber(e.target.value)}) ;
         }
         const onBoxColorChanged = (e) => {
             setBoxColor(e.target.value);
@@ -78,10 +86,12 @@ const NewShipment = () => {
             <div>
                         <Form.Label>Receiver name : </Form.Label>
                         <Form.Control type="text" placeholder="Enter name" onChange={onReceiverNameChanged} required/>
+                <span className="errorMessage">{errorMessage.receiverName}</span>
                     </div>
                     <div>
                         <Form.Label>Weight (kg): </Form.Label>
                         <Form.Control type="number" placeholder="Enter weight" onChange={onWeightChanged} required/>
+                        <span className="errorMessage">{errorMessage.weight}</span>
                     </div>
                     <div>
                         <Form.Label>Box colour: </Form.Label>
