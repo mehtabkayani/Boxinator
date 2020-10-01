@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import {useHistory} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import CountryDialog from '../Dialog/CountryDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,8 +52,9 @@ const UpdateCountry = () => {
 
             await axios.put(`http://localhost:8080/api/settings/countries/${country.id}`, body, {headers: {'Authorization': localStorage.getItem('token')}})
                 .then(res => {
-                    alert(`${country.countryName} has been updated`)
-                    history.push("/adminMainPage");
+                  
+                    // alert(`${country.countryName} has been updated`)
+                    history.push("/country");
                     console.log(res.data);
                 })
                 .catch(err => {
@@ -143,7 +145,8 @@ const UpdateCountry = () => {
           <TextField helperText={helperMultiplyer} error={errorMultiplyer} label="" id="outlined-size-small" variant="outlined" size="small" name="multiplyerNumber" value={country.multiplyerNumber} 
            placeholder={country.multiplyerNumber} onChange={onCountryMultiplyerChanged} required/>
           <br/>
-             <Button type="submit" variant="contained" color="primary" onClick={updateCountries}>Update country</Button>
+             {/* <Button type="submit" variant="contained" color="primary" onClick={updateCountries}>Update country</Button> */}
+             <CountryDialog countryName={country.countryName} updateCountries={updateCountries}/>
         </div>
        
       </form>

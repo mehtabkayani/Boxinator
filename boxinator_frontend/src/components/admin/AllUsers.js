@@ -55,35 +55,35 @@ const AllUsers = () => {
     });
     const classes = useStyles();
     const columns = [
-        { id: 'id', label: '#ID', minWidth: 170 },
-        { id: 'firstname', label: 'Firstname', minWidth: 170 },
+        { id: 'id', label: '#ID', minWidth: 100 },
+        { id: 'firstname', label: 'Firstname', minWidth: 100 },
         { id: 'lastname', label: 'Lastname', minWidth: 100 },
         {
             id: 'dateOfBirth',
             label: 'Date Of Birth',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right'
         },
         {
             id: 'email',
             label: 'Email',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
             format: (value) => value.toLocaleString('en-US'),
         },
         {
             id: 'countryOfResidence',
             label: 'Country Of Residence',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
-            format: (value) => value.toFixed(2),
+            // format: (value) => value.toFixed(2),
         },
         {
             id: 'contactNumber',
             label: 'Contact number',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
-            format: (value) => value.toFixed(2),
+            // format: (value) => value.toFixed(2),
         },
     ];
 

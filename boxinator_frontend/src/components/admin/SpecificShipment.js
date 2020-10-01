@@ -3,6 +3,9 @@ import {GET, PUT, GETDEFAULT} from '../../api/CRUD';
 import {useParams} from "react-router";
 import {useHistory} from 'react-router-dom'
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
+import AdminUpdateShipmentDialog from '../Dialog/AdminUpdateShipmentDialog';
+
 
 const SpecificShipment = () => {
 
@@ -50,7 +53,7 @@ const SpecificShipment = () => {
         const body = {boxcolor: shipment.boxcolor, country, shipmentStatus: shipment.shipmentStatus, receiverName: shipment.receiverName, weight: shipment.weight}
 
         await PUT(`/shipments/${id}`, body).then(res => {
-            alert("Shipment has been updated!")
+            // alert("Shipment has been updated!")
             history.push("/adminMainPage") 
         }).catch(err=> console.log(err));
         
@@ -83,14 +86,20 @@ const SpecificShipment = () => {
 
             <form onSubmit={onSubmitForm}>
                 <label>Receiver</label>
+                <br />
                 <input type="text" name="receiverName" onChange={onShipmentChanged} value={shipment.receiverName} />
-                <br /><br />
+                <br />
+                <br />
                 <label>BoxColor</label>
+                <br />
                 <input type="color" name="boxcolor" onChange={onShipmentChanged} value={shipment.boxcolor} />
-                <br /><br />
+                <br />
+                <br />
                 <label>Weight</label>
+                <br />
                 <input type="number" name="weight" onChange={onShipmentChanged} value={shipment.weight} />
-                <br /><br />
+                <br />
+                <br />
 
                 <label>Shipment status</label>
                 <select name="shipmentStatus" onChange={onShipmentChanged} value={shipment.shipmentStatus}>
@@ -105,11 +114,16 @@ const SpecificShipment = () => {
                 <select name="id" onChange={onCountryChanged} value={country.id}>
                     {printCountryList}
                 </select>
-    
-                <button type="submit">Submit</button>
+                <br/>
                 
             </form>
-            <button onClick={handleDelete}>Delete</button>
+            {/* <Button type="submit" onClick={onSubmitForm} variant="outlined" color="primary" autoFocus>Save</Button> */}
+           <div style={{display: 'flex'}}>
+            <AdminUpdateShipmentDialog onSubmitForm={onSubmitForm} receiverName={shipment.receiverName} weight={shipment.weight} boxcolor={shipment.boxcolor} countryName={country.countryName}/>
+
+            <Button onClick={handleDelete} variant="outlined" color="secondary" autoFocus>Delete</Button>
+           </div>
+
 
         </div>
     );

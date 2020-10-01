@@ -4,6 +4,7 @@ import {Button, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import AdminUpdateUserDialog from "../Dialog/AdminUpdateUserDialog";
 
 const AdminAccount = () => {
     const [userInfo, setUserInfo] = useState({})
@@ -14,6 +15,8 @@ const AdminAccount = () => {
     const accountId = localStorage.getItem('id');
     let token = localStorage.getItem('token');
     const history = useHistory();
+    let UpdateUser = "Update";
+
 
     useEffect(()=>{
         console.log("Account id :" ,accountId)
@@ -36,11 +39,11 @@ const AdminAccount = () => {
         if(password === confirmPassword){
             setErrorMessage('');
             const body = {email: userInfo.email, accountType: userInfo.accountType,
-                 firstname: userInfo.firstname, lastname: userInfo.lastname, dateOfBirth: userInfo.dateOfBirth, countryOfResidence: userInfo.countryOfResidence, zipCode: userInfo.zipCode, contactNumber: userInfo.contactNumber };
+                 firstname: userInfo.firstname, lastname: userInfo.lastname, dateOfBirth: userInfo.dateOfBirth, countryOfResidence: userInfo.countryOfResidence, zipcode: userInfo.zipcode, contactNumber: userInfo.contactNumber };
         
             await axios.put(`http://localhost:8080/api/user/${userInfo.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
             .then(res=>{
-                alert("Profile has been updated!")
+                // alert("Profile has been updated!")
                 history.push("/adminMainPage")
                console.log(res);
             })
@@ -122,11 +125,12 @@ const AdminAccount = () => {
                 </div>
                 <br></br>
                 <div>
-                    <Button type="submit" variant="secondary">Save changes</Button>
+                    {/* <Button type="submit" variant="secondary">Save changes</Button> */}
+                    <AdminUpdateUserDialog onSubmitForm={onSubmitForm} userInfo={userInfo} operation={UpdateUser}/>                   
                 </div>
             </Form>
             <br></br>
-            <Link to="/"><Button variant="success">Home</Button></Link>
+            {/* <Link to="/"><Button variant="success">Home</Button></Link> */}
         </div>
     );
 }
