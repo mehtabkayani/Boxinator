@@ -13,7 +13,7 @@ const UpdateUser = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const history = useHistory();
 
-    const [password1, setPassword] = useState('');
+    //const [password1, setPassword] = useState('');
   
     const [errorMessage, setErrorMessage] = useState({firstname: '', lastname: '', email: '', contactNumber:'', zipcode:''});
 
