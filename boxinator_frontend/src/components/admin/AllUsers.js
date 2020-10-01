@@ -12,6 +12,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
+import UpdateIcon from '@material-ui/icons/Update';
+import { Tooltip } from '@material-ui/core';
 
 const AllUsers = () => {
     const [users, setUsers] = useState([]);
@@ -55,35 +57,35 @@ const AllUsers = () => {
     });
     const classes = useStyles();
     const columns = [
-        { id: 'id', label: '#ID', minWidth: 170 },
-        { id: 'firstname', label: 'Firstname', minWidth: 170 },
+        { id: 'id', label: '#ID', minWidth: 100 },
+        { id: 'firstname', label: 'Firstname', minWidth: 100 },
         { id: 'lastname', label: 'Lastname', minWidth: 100 },
         {
             id: 'dateOfBirth',
             label: 'Date Of Birth',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right'
         },
         {
             id: 'email',
             label: 'Email',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
             format: (value) => value.toLocaleString('en-US'),
         },
         {
             id: 'countryOfResidence',
             label: 'Country Of Residence',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
-            format: (value) => value.toFixed(2),
+            // format: (value) => value.toFixed(2),
         },
         {
             id: 'contactNumber',
             label: 'Contact number',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
-            format: (value) => value.toFixed(2),
+            // format: (value) => value.toFixed(2),
         },
     ];
 
@@ -120,7 +122,10 @@ const AllUsers = () => {
 
                                             );
                                         })}
-                                        <Link to={`/updateUser/${row.id}`}>Update</Link>
+                                        
+                                        <Link to={`/updateUser/${row.id}`}>
+                                    <Tooltip title="Update"><UpdateIcon color="primary"></UpdateIcon></Tooltip>
+                                    </Link>
                                     </TableRow>
                                 );
                             })}

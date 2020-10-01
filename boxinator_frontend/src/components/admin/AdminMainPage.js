@@ -13,6 +13,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import {GET} from '../../api/CRUD';
+import UpdateIcon from '@material-ui/icons/Update';
+import { Tooltip } from '@material-ui/core';
 
 const AdminMainPage = () => {
     const [shipments, setShipments] = useState([]);
@@ -64,34 +66,34 @@ const AdminMainPage = () => {
     });
     const classes = useStyles();
     const columns = [
-        { id: 'id', label: '#ID', minWidth: 170 },
-        { id: 'to', label: 'To', minWidth: 170 },
+        { id: 'id', label: '#ID', minWidth: 100 },
+        { id: 'to', label: 'To', minWidth: 100 },
         { id: 'country', label: 'Country', minWidth: 100 },
         {
             id: 'price',
             label: 'Price',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
             format: (value) => value.toLocaleString('en-US'),
         },
         {
             id: 'weight',
             label: 'Weight',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
             format: (value) => value.toLocaleString('en-US'),
         },
         {
             id: 'boxcolor',
             label: 'Boxcolor',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
             format: (value) => value.toFixed(2),
         },
         {
             id: 'creationDate',
             label: 'Creation Date',
-            minWidth: 170,
+            minWidth: 100,
             align: 'right',
             format: (value) => value.toFixed(2),
         },
@@ -134,7 +136,10 @@ const AdminMainPage = () => {
 
                                             );
                                         })}
-                                        <Link to={`/specificShipment/${row.id}`}>Update</Link>
+                                        <Link to={`/specificShipment/${row.id}`}>
+                                    <Tooltip title="Update"><UpdateIcon color="primary"></UpdateIcon></Tooltip>
+                                    </Link>
+
                                     </TableRow>
                                 );
                             })}

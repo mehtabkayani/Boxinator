@@ -9,44 +9,47 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
+import CancelIcon from '@material-ui/icons/Cancel';
+import Tooltip from '@material-ui/core/Tooltip';
 import axios from 'axios';
 import {Link,Redirect} from "react-router-dom";
 import SpecificShipment from '../admin/SpecificShipment';
 import { useHistory } from "react-router-dom";
 
 import {GET} from '../../api/CRUD'
+import ConfirmDialog from '../Dialog/CofirmDialog';
 
 
 const columns = [
-  { id: 'id', label: '#ID', minWidth: 170 },
-  { id: 'color', label: 'Color', minWidth: 170 },
-  { id: 'to', label: 'To', minWidth: 170 },
+  { id: 'id', label: '#ID', minWidth: 70 },
+  { id: 'color', label: 'Color', minWidth: 70 },
+  { id: 'to', label: 'To', minWidth: 100 },
   { id: 'country', label: 'Country', minWidth: 100 },
   {
     id: 'price',
     label: 'Price',
-    minWidth: 170,
+    minWidth: 100,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'weight',
     label: 'Weight',
-    minWidth: 170,
+    minWidth: 100,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'creationDate',
     label: 'Creation Date',
-    minWidth: 170,
+    minWidth: 100,
     align: 'right',
     format: (value) => value.toFixed(2),
   },
   {
     id: 'shipmentStatus',
     label: 'Shipment Status',
-    minWidth: 170,
+    minWidth: 100,
     align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   }
@@ -123,7 +126,7 @@ const onStatusOptionChanged = async (e) =>{
   const handleCancelShipment = async (row)=> {
    let s = shipments.filter(shipment => shipment.id === row)
    let currentShipment = s[0];
-   alert("You have cancelled the shipment!")
+  //  alert("You have cancelled the shipment!")
     
     const body = {shipmentStatus: "CANCELLED" };
   console.log(localStorage.getItem("token"))
@@ -180,7 +183,10 @@ const onStatusOptionChanged = async (e) =>{
                       
                     );
                   })}        
-                         {(row.shipmentStatus === "CREATED" || row.shipmentStatus === "INSTRANSIT") && <Button onClick={() => handleCancelShipment(row.id)}>Cancel</Button>}  
+                         {(row.shipmentStatus === "CREATED" || row.shipmentStatus === "INTRANSIT") &&
+                        //  <Tooltip title="Cancel"><CancelIcon color="secondary" onClick={() => handleCancelShipment(row.id)}></CancelIcon></Tooltip>
+                        <ConfirmDialog packetId={row.id} handleCancelShipment={handleCancelShipment}/> 
+                         }  
                 {/* <Button onClick={() => handleCancelShipment(row.id)}>Cancel</Button> */}
                 </TableRow>
               );

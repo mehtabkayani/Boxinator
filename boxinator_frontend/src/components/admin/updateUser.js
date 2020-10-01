@@ -4,7 +4,10 @@ import {Button, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import {useParams} from "react-router";
-import {DELETE} from '../../api/CRUD'
+import {DELETE} from '../../api/CRUD';
+import AdminUpdateUserDialog from "../Dialog/AdminUpdateUserDialog";
+
+
 import {validateName, formValid, validateEmail, validateIsNumber} from '../validation/validation.js';
 
 const UpdateUser = () => {
@@ -13,6 +16,8 @@ const UpdateUser = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const history = useHistory();
+    let DeleteUser = "Delete";
+    let UpdateUser = "Update";
 
     const [password1, setPassword1] = useState('');
   
@@ -52,8 +57,8 @@ const UpdateUser = () => {
             await axios.put(`http://localhost:8080/api/user/${userInfo.id}`, body, {headers: {'Authorization': localStorage.getItem('token')}})
                 .then(res => {
                     console.log(res);
-                    alert(`You have updated ${userInfo.firstname}`)
-                    history.push("/adminMainPage")
+                    //alert(`You have updated ${userInfo.firstname}`)
+                    history.push("/allUsers")
                 })
                 .catch(err => {
                     console.log("Error: ", err);
@@ -104,22 +109,22 @@ const UpdateUser = () => {
 
         };
         console.log(body);
-        let result = window.confirm(`Want to delete? ${userInfo.firstname} ${userInfo.lastname}`);
+        // let result = window.confirm(`Want to delete? ${userInfo.firstname} ${userInfo.lastname}`);
  
    
-        if (result) {
+        // if (result) {
             console.log(userInfo.email)
         axios.delete("http://localhost:8080/api/user", {
             headers: { Authorization: localStorage.getItem('token'), data: userInfo.email}})
          .then(res => {
              console.log(res);
-             alert(`You have deleted ${userInfo.firstname}`)
+            // alert(`You have deleted ${userInfo.firstname}`)
              history.push("/allUsers")
             })
             .catch(err => {
                 console.log("Error: ", err);
             }) 
-        }
+        // }
 
     }
     const onPasswordChanged = ev => setPassword(ev.target.value.trim());
@@ -210,9 +215,13 @@ const UpdateUser = () => {
 
                 </Form.Row>
                 <br></br>
-                <div>
-                    <Button type="submit" variant="secondary">Save changes</Button>
-                    <Button variant="danger" onClick={handleDelete}>Delete</Button>
+                <div style={{display:'flex'}}>
+                    {/* <Button type="submit" variant="secondary">Save changes</Button> */}
+                    
+                    <AdminUpdateUserDialog onSubmitForm={onSubmitForm} userInfo={userInfo} operation={UpdateUser}/>                   
+                    <AdminUpdateUserDialog onSubmitForm={handleDelete} userInfo={userInfo} operation={DeleteUser}/>
+
+                    {/* <Button variant="danger" onClick={handleDelete}>Delete</Button> */}
                 </div>
             </Form>
             {/* <Link to="/"><Button variant="success">Home</Button></Link> */}
