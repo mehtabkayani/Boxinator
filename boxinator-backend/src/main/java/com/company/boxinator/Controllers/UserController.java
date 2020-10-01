@@ -8,6 +8,7 @@ import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.AuthTokenRepository;
 import com.company.boxinator.Repositories.ShipmentRepository;
 import com.company.boxinator.Repositories.UserRepository;
+import com.company.boxinator.Services.FailedSignInService;
 import com.company.boxinator.Services.Google2FAService;
 import com.company.boxinator.Services.EmailService;
 import com.company.boxinator.Utils.JwtUtil;
@@ -45,6 +46,9 @@ public class UserController {
     @Autowired
     private Google2FAService google2FAService;
 
+    @Autowired
+    private FailedSignInService failedSignInService;
+
     private UserUtil userUtil = new UserUtil();
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -79,17 +83,18 @@ public class UserController {
         if(!user.isPresent())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
+        System.out.println(failedSignInService.isUserBan(user.get().getId()));
+//        if(failedSignInService.isUserBan(user.get().getId())){
+//            System.out.println("IN IF STATEMENT");
+//            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+//        }
+
+
         AuthToken Token = authTokenRepository.findByUserId(user.get().getId());
 //        if(Token)
 //            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-        System.out.println("Generated code from token: " + Token.getToken());
         String sixDigitCode = google2FAService.runGoogle2fa(Token.getToken());
-
-        System.out.println("sixDigitCode: " + sixDigitCode);
-        System.out.println("Auth code: " + code);
-
-        System.out.println(sixDigitCode.equals(code));
 
         //sixDigitCode.equals(code) && ADD THIS TO IF STATEMENT LATER
         if (sixDigitCode.equals(code) && bCryptPasswordEncoder.matches(userLogin.getPassword(),user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
@@ -97,7 +102,10 @@ public class UserController {
             sessionUtil.addSession(user.get());
             System.out.println(sessionUtil.getSession(user.get().getId()).get());
             return new ResponseEntity<>(sessionUtil.getSession(user.get().getId()).get(), HttpStatus.OK);
+        }else{
+            failedSignInService.attemptFailed(user.get().getId());
         }
+
         return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 
     }
@@ -245,15 +253,17 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity addUser(@RequestBody User user) {
         Optional<User> userData = userRepository.findByEmail(user.getEmail());
-
+        System.out.println(user.getPassword());
         //Check if there is no email registered then register a new user
         if (!userData.isPresent()) {
             if(!securityConf.validInputs(user.getPassword()))
                 return new ResponseEntity(HttpStatus.FORBIDDEN);
+            System.out.println("PASSES FIRST TWO CHECKS");
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             user.setAccountType(AccountType.REGISTERED_USER);
             userRepository.save(user);
 
+            System.out.println("BEFORE AUTHTOKEN");
             AuthToken authToken = new AuthToken();
             String secret = google2FAService.generateSecretKey();
             authToken.setToken(secret);
