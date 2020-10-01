@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import {validateName, formValid, validateEmail, validateIsNumber} from '../validation/validation.js';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,7 +29,7 @@ const UserAccount = () => {
     let token = localStorage.getItem('token');
     const history = useHistory();
     const [errorMessage, setErrorMessage] = useState({firstname: '', lastname: '', email: '', password: '', confirmPassword:'', contactNumber:'', zipcode:''});
-
+    const formFields = { firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, contactNumber:userInfo.contactNumber, zipcode:userInfo.zipcode}
 
     useEffect(()=>{
         console.log("Account id :" ,accountId)
@@ -47,26 +48,9 @@ const UserAccount = () => {
         }
     }, [])
 
-    const formValid = (formErrors) => {
-        const formFields = { firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, contactNumber:userInfo.contactNumber, zipcode:userInfo.zipcode}
-        let valid = true;
-
-        // validate if form errors is empty
-        Object.values(formErrors).forEach(val => {
-            val.length > 0 && (valid = false);
-        });
-
-        // validate if the form was filled out
-        Object.values(formFields).forEach(val => {
-            val === '' && (valid = false);
-        });
-
-        return valid;
-    };
-
     const onSubmitForm = async e => {
         e.preventDefault();
-        if(formValid(errorMessage)) {
+        if(formValid(errorMessage, formFields)) {
             const body = {firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, zipcode: userInfo.zipcode,
             contactNumber: userInfo.contactNumber, dateOfBirth: userInfo.dateOfBirth, countryOfResidence: userInfo.countryOfResidence, accountType: userInfo.accountType};
         
@@ -81,13 +65,6 @@ const UserAccount = () => {
         alert('Invalid credentials ! Make sure that all the required fields filled');
         }
     }
-    const emailRegex = RegExp(
-        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-    );
-    const isNumber = RegExp( /^[0-9]*$/);
-    const strongPassword = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
-
-
 
     const onUserInfoChanged = e => {
         const {name, value} = e.target;
@@ -95,40 +72,20 @@ const UserAccount = () => {
 
         switch (name) {
             case "firstname":
-                if(value.length < 2 ){
-                    return   setErrorMessage({firstname: 'You must have 2 characters or more !'}) ;
+                setErrorMessage({firstname: validateName(value)}) ;
 
-                }else if(value.length >= 2) {
-                    return   setErrorMessage({firstname: ''});
-                }
                 break;
             case "lastname":
-                if(value.length < 2){
-                    setErrorMessage({lastname: 'You must have 2 characters or more !'}) ;
-                }else  if(value.length >= 2){
-                    setErrorMessage({lastname: ''});
-                }
+                setErrorMessage({lastname: validateName(value)}) ;
                 break;
             case "email":
-                if(emailRegex.test(value) && value.length > 0){
-                    setErrorMessage({email: ''})
-                }else {
-                    setErrorMessage({email: 'Invalid email address !'});
-                }
+                setErrorMessage({email: validateEmail(value)}) ;
                 break;
             case "contactNumber":
-                if(isNumber.test(value)){
-                    setErrorMessage({contactNumber: ''}) ;
-                }else {
-                    setErrorMessage({contactNumber: 'Only numbers allowed!'});
-                }
+                setErrorMessage({contactNumber: validateIsNumber(value)}) ;
                 break;
             case "zipcode":
-                if(isNumber.test(value)){
-                    setErrorMessage({zipcode: ''}) ;
-                }else {
-                    setErrorMessage({zipcode: 'Only numbers allowed!'});
-                }
+                setErrorMessage({zipcode: validateIsNumber(value)}) ;
                 break;
             default:
                 break;

@@ -11,6 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import {formValid, isPositiveNumber, validateEmail, validateName} from "../validation/validation";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -31,7 +32,9 @@ const AddShipmentGuest = () => {
     const [boxcolor, setBoxColor] = useState("#050505");
     const [countries, setCountries] = useState([]);
     const [country, setCountry] = useState({})
-    const [user, setUser] = useState({email : ""})
+    const [user, setUser] = useState({email : ""});
+    const [errorMessage, setErrorMessage] = useState({receiverName:'', weight:'', email:''});
+    const formFields = { receiverName: receiverName, weight: weight, user:user};
 
 
     useEffect (()=>{
@@ -51,6 +54,7 @@ const AddShipmentGuest = () => {
     
         //e.preventDefault();
         try {
+            if(formValid(errorMessage, formFields)) {
             const body = {receiverName, weight,boxcolor,user, country};
             await fetch(
                 "http://localhost:8080/api/shipment",
@@ -64,8 +68,10 @@ const AddShipmentGuest = () => {
                 }
             ).then(response => response.text())
                 .then(text => alert(text))
-              
-                
+
+            }else{
+                alert('Invalid credentials ! Make sure that all the required fields filled');
+            }
         } catch (err) {
             console.error(err.message);
         }
@@ -73,14 +79,16 @@ const AddShipmentGuest = () => {
 
     const onReceiverNameChange = e =>{
         setReceiverName(e.target.value.trim());
-      
+        setErrorMessage({receiverName: validateName(e.target.value)}) ;
         
     } 
     const onEmailChange = e => {
-        setUser({email: e.target.value.trim()})
+        setUser({email: e.target.value.trim()});
+        setErrorMessage({email: validateEmail(e.target.value)}) ;
 };
     const onWeightChange = e => {
         setWeight(e.target.value);
+        setErrorMessage({weight: isPositiveNumber(e.target.value)}) ;
         
     }
     const onBoxColorChange = (e) => {
@@ -105,14 +113,17 @@ const AddShipmentGuest = () => {
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" onChange={onEmailChange} required/>
+                        <span className="errorMessage">{errorMessage.email}</span>
                     </Form.Group>
                     <div>
                         <Form.Label>Receiver name : </Form.Label>
                         <Form.Control type="text" placeholder="Enter name" onChange={onReceiverNameChange} required/>
+                        <span className="errorMessage">{errorMessage.receiverName}</span>
                     </div>
                     <div>
                         <Form.Label>Weight (kg): </Form.Label>
                         <Form.Control type="number" placeholder="Enter weight" onChange={onWeightChange} required/>
+                        <span className="errorMessage">{errorMessage.weight}</span>
                     </div>
                     <div>
                         <Form.Label>Box colour: </Form.Label>

@@ -3,6 +3,8 @@ import {GET, PUT, GETDEFAULT} from '../../api/CRUD';
 import {useParams} from "react-router";
 import {useHistory} from 'react-router-dom'
 import axios from 'axios';
+import {validateName, isPositiveNumber, formValid} from "../validation/validation";
+import {Form} from "react-bootstrap";
 
 const SpecificShipment = () => {
 
@@ -15,6 +17,8 @@ const SpecificShipment = () => {
     const [shipment, setShipment] = useState({});
     const [countryList, setCountryList] = useState([]);
     const [country, setCountry] = useState({});
+    const [errorMessage, setErrorMessage] = useState({receiverName:'', weight:''});
+    const formFields = { receiverName: shipment.receiverName, weight: shipment.weight}
 
     //const statusList = ["CREATED", "RECIEVED", "INTRANSIT", "COMPLETED", "CANCELLED"]
 
@@ -34,6 +38,19 @@ const SpecificShipment = () => {
     const onShipmentChanged = e => {
         const { name, value } = e.target;
         setShipment(prevState => ({ ...prevState, [name]: value }));
+
+        switch (name) {
+            case "receiverName":
+                setErrorMessage({receiverName: validateName(value)}) ;
+
+                break;
+            case "weight":
+                setErrorMessage({weight: isPositiveNumber(value)}) ;
+                break;
+
+            default:
+                break;
+        }
     }
     const onCountryChanged = e => {
         const {name, value} = e.target;
@@ -46,12 +63,14 @@ const SpecificShipment = () => {
 
         //Passing ID recieves error 400 in api endpoint
         const body = {boxcolor: shipment.boxcolor, country, shipmentStatus: shipment.shipmentStatus, receiverName: shipment.receiverName, weight: shipment.weight}
-
+        if(formValid(errorMessage, formFields)) {
         await PUT(`/shipments/${id}`, body).then(res => {
             alert("Shipment has been updated!")
             history.push("/adminMainPage") 
         }).catch(err=> console.log(err));
-        
+        }else{
+            alert('Invalid credentials ! Make sure that all the required fields filled');
+        }
     }
 
     const handleDelete = async () => {
@@ -82,12 +101,14 @@ const SpecificShipment = () => {
             <form onSubmit={onSubmitForm}>
                 <label>Receiver</label>
                 <input type="text" name="receiverName" onChange={onShipmentChanged} value={shipment.receiverName} />
+                <span className="errorMessage">{errorMessage.receiverName}</span>
                 <br /><br />
                 <label>BoxColor</label>
                 <input type="color" name="boxcolor" onChange={onShipmentChanged} value={shipment.boxcolor} />
                 <br /><br />
                 <label>Weight</label>
                 <input type="number" name="weight" onChange={onShipmentChanged} value={shipment.weight} />
+                <span className="errorMessage">{errorMessage.weight}</span>
                 <br /><br />
 
                 <label>Shipment status</label>
