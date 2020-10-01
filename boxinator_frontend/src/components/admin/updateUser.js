@@ -4,7 +4,7 @@ import {Button, Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import {useParams} from "react-router";
-import {DELETE} from '../../api/CRUD
+import {DELETE} from '../../api/CRUD';
 import AdminUpdateUserDialog from "../Dialog/AdminUpdateUserDialog";
 
 
