@@ -1,5 +1,6 @@
 package com.company.boxinator.Controllers;
 
+import com.company.boxinator.Config.SecurityConf;
 import com.company.boxinator.ErrorHandling.HandleError;
 import com.company.boxinator.Models.Country;
 import com.company.boxinator.Models.Enums.AccountType;
@@ -39,6 +40,8 @@ public class ShipmentController {
     private JwtUtil jwtUtil = new JwtUtil();
 
     private HandleError handleError;
+
+    private SecurityConf securityConf = new SecurityConf();
 
     @GetMapping("/shipments")
     public ResponseEntity<List<Shipment>> getAllShipments(@RequestHeader("Authorization") String jwt) {
@@ -129,10 +132,9 @@ public class ShipmentController {
     @PostMapping("/shipment")
     public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader(value = "Authorization", required = false) String jwt) {
 
-        System.out.println(shipment.getCountry().getId());
-        System.out.println(shipment.getBoxcolor());
-        System.out.println(shipment.getReceiverName());
-        System.out.println(shipment.getWeight());
+        if(!securityConf.validInputs(shipment.getReceiverName(), shipment.getBoxcolor()))
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+
         if (jwt == null) {
             Optional<Country> country = countryRepository.findById(shipment.getCountry().getId());
             if (!country.isPresent()) {
@@ -142,10 +144,14 @@ public class ShipmentController {
             if (shipment.getUser().getEmail() == null || shipment.getCountry() == null) {
                 return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a email or country");
             }
+            if(!securityConf.validInputs(shipment.getUser().getEmail()))
+                return new ResponseEntity(HttpStatus.FORBIDDEN);
 
             Optional<User> userDB = userRepository.findByEmail(shipment.getUser().getEmail());
 
             if (userDB.isEmpty() || userDB.get().getAccountType() == AccountType.GUEST) {
+                if(!securityConf.validInputs(shipment.getBoxcolor(), shipment.getReceiverName()))
+                    return new ResponseEntity(HttpStatus.FORBIDDEN);
 
                 User user = shipmentUtil.addGuestUser(shipment);
 
@@ -186,13 +192,13 @@ public class ShipmentController {
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        String userId = jwtUtil.parseJWT(jwt).getBody().getId();
+        Integer userId = jwtUtil.getJwtId(jwt);
         System.out.println(userId);
         Optional<Shipment> shipment = shipmentRepository.findById(shipment_id);
         System.out.println(shipment.get().getUser().getId());
 
 
-        if(shipment.get().getUser().getId() == Integer.parseInt(userId) || jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
+        if(shipment.get().getUser().getId() == userId || jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
             return new ResponseEntity<>(shipment.get(),HttpStatus.OK);
 
         }
@@ -306,9 +312,6 @@ public class ShipmentController {
         if (!sessionUtil.isSessionValid(jwt))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
-        System.out.println("JWT: " + jwt);
-        System.out.println("PathVariable: " + shipment_id);
-        System.out.println(shipment.getShipmentStatus());
         Optional<Shipment> oldShipment = shipmentRepository.findById(shipment_id);
         if (!oldShipment.isPresent())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -319,7 +322,6 @@ public class ShipmentController {
                 shipmentRepository.save(oldShipment.get());
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
-                System.out.println("Forbidden");
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
         }
@@ -336,6 +338,8 @@ public class ShipmentController {
         System.out.println("Found userid: " + user.get().getId());
 
         Shipment newShipment = shipmentUtil.updateShipment(shipment, oldShipment.get(), user.get());
+        if(!securityConf.validInputs(newShipment.getBoxcolor(), newShipment.getReceiverName()))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         try {
             shipmentRepository.save(newShipment);
         } catch (Exception exception) {

@@ -1,4 +1,5 @@
 package com.company.boxinator.Controllers;
+import com.company.boxinator.Config.SecurityConf;
 import com.company.boxinator.Models.AuthToken;
 import com.company.boxinator.Models.Enums.AccountType;
 import com.company.boxinator.Models.Session;
@@ -46,11 +47,12 @@ public class UserController {
 
     private UserUtil userUtil = new UserUtil();
 
-
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     private JwtUtil jwtUtil = new JwtUtil();
     private SessionUtil sessionUtil = SessionUtil.getInstance();
+
+    private SecurityConf securityConf = new SecurityConf();
 
     @PostMapping("/google2fa")
     public ResponseEntity<String> authenticate2fa(@RequestBody(required = false) AuthToken authToken){
@@ -69,6 +71,9 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Session> login(@RequestBody User userLogin, @RequestHeader("Authorization") String code){
+
+        if(!securityConf.validInputs(userLogin.getEmail(), userLogin.getPassword(), code))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         Optional<User> user = userRepository.findByEmail(userLogin.getEmail());
         if(!user.isPresent())
@@ -114,7 +119,6 @@ public class UserController {
     }
 
     @GetMapping("/users")
-
     public ResponseEntity<List<User>> getUsers(@RequestHeader("Authorization") String jwt) {
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -133,6 +137,7 @@ public class UserController {
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
         Optional<User> userData = userRepository.findById(id);
         if (!userData.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -179,6 +184,7 @@ public class UserController {
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+
         Optional<User> userData = userRepository.findById(id);
         if (!userData.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -196,12 +202,19 @@ public class UserController {
                 updateUserInDB.setDateOfBirth(user.getDateOfBirth());
                 updateUserInDB.setZipcode(user.getZipcode());
                 updateUserInDB.setAccountType(user.getAccountType());
+                if(!securityConf.validInputs(updateUserInDB.getEmail(), updateUserInDB.getFirstname(), updateUserInDB.getLastname(),
+                        updateUserInDB.getContactNumber(), updateUserInDB.getCountryOfResidence(),
+                        updateUserInDB.getDateOfBirth()))
+                return new ResponseEntity(HttpStatus.FORBIDDEN);
             } else {
                 System.out.println("IN ADMIN BUT ANOTHER ACCOUNT UPDATE");
 
                 updateUserInDB.setEmail(user.getEmail());
                 //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 updateUserInDB.setAccountType(user.getAccountType());
+
+                if(securityConf.validInputs(updateUserInDB.getEmail()))
+                    return new ResponseEntity(HttpStatus.FORBIDDEN);
             }
             try{
                 userRepository.save(updateUserInDB);
@@ -220,6 +233,9 @@ public class UserController {
             updateUserInDB.setCountryOfResidence(user.getCountryOfResidence());
             updateUserInDB.setDateOfBirth(user.getDateOfBirth());
             updateUserInDB.setZipcode(user.getZipcode());
+            if(!securityConf.validInputs(updateUserInDB.getEmail(), updateUserInDB.getFirstname(), updateUserInDB.getLastname(), updateUserInDB.getContactNumber(),
+                    updateUserInDB.getCountryOfResidence(), updateUserInDB.getDateOfBirth(), updateUserInDB.getZipcode()))
+                return new ResponseEntity(HttpStatus.FORBIDDEN);
             userRepository.save(updateUserInDB);
             return new ResponseEntity<>(updateUserInDB, HttpStatus.OK);
         }
@@ -232,6 +248,8 @@ public class UserController {
 
         //Check if there is no email registered then register a new user
         if (!userData.isPresent()) {
+            if(!securityConf.validInputs(user.getPassword()))
+                return new ResponseEntity(HttpStatus.FORBIDDEN);
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             user.setAccountType(AccountType.REGISTERED_USER);
             userRepository.save(user);
@@ -260,12 +278,15 @@ public class UserController {
     }
 
     @DeleteMapping("/user")
-    public ResponseEntity deleteUser(HttpServletRequest  request, @RequestHeader("Authorization") String jwt) {
-        String  email = request.getHeader("data");
+    public ResponseEntity deleteUser(HttpServletRequest request, @RequestHeader("Authorization") String jwt) {
+        String email = request.getHeader("data");
         if (!sessionUtil.isSessionValid(jwt)) {
             System.out.println("FIRST");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
+        if(!securityConf.validInputs(email))
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
         if (jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
             System.out.println(email);
             Optional<User> deleteUser = userRepository.findByEmail(email);

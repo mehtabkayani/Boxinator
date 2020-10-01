@@ -202,7 +202,7 @@ function App() {
                         } else {
                             return <Redirect to="/userAccount"/>
                         }
-                    }}/> */}
+                    }}/>
 
                     {/* <Route exact path="/specificShipment/:id" component={SpecificShipment} /> */}
 
