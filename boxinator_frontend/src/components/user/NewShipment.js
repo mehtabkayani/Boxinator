@@ -1,12 +1,28 @@
 import React, {useEffect, useState} from "react";
 import {Link,useHistory} from "react-router-dom";
-import Select from 'react-select';
+// import Select from 'react-select';
 import {Button, Form} from "react-bootstrap";
 import axios from "axios";
 import ShipmentDialog from "../Dialog/ShipmentDialog";
 import {formValid, isPositiveNumber, validateName} from "../validation/validation";
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+  }));
 
 const NewShipment = () => {
+    const classes = useStyles();
     const [receiverName, setReceiverName] = useState('');
     const [weight, setWeight] = useState();
     const [boxcolor, setBoxColor] = useState("#050505");
@@ -116,10 +132,26 @@ const NewShipment = () => {
                         <label>Destination country: </label>
                     <br></br>
                         
-                        <select onChange={onDestinationCountryChanged} required>
+                        {/* <select onChange={onDestinationCountryChanged} required>
                         
                             {countries.map(name => (<option key={name.id} value={name.id} required>{name.countryName}</option>))}
-                            </select> 
+                            </select>  */}
+                            <FormControl className={classes.formControl}>
+                                <InputLabel id="demo-simple-select-label">{countryName}</InputLabel>
+                                <Select
+                                labelId="select-label"
+                                id="country-select"
+                                // value={}
+                                required
+                                onChange={onDestinationCountryChanged}
+                                >
+                            {countries.map(name => (
+                                <MenuItem key={name.id} value={name.id} >{name.countryName}</MenuItem>
+
+                            // <option key={name.id} value={name.id} required>{name.countryName}</option>
+                            ))}
+                                </Select>
+                            </FormControl>
                     </div>
                     <br></br>
 

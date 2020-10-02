@@ -36,14 +36,14 @@ const AdminMainPage = () => {
         //     })
     }, [])
 
-    function createData(id, to, country, price, weight, boxcolor, creationDate) {
+    function createData(id, to, country, price, weight, boxcolor, creationDate,status) {
 
-        return { id, to, country, price, weight, boxcolor, creationDate };
+        return { id, to, country, price, weight, boxcolor, creationDate,status };
     }
 
     const rows = shipments.map(shipment => (
 
-        createData(shipment.id, shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight, shipment.boxcolor, shipment.creation_date)
+        createData(shipment.id, shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight, shipment.boxcolor, shipment.creation_date, shipment.shipmentStatus)
 
     ));
 
@@ -73,22 +73,19 @@ const AdminMainPage = () => {
             id: 'price',
             label: 'Price',
             minWidth: 100,
-            align: 'right',
-            format: (value) => value.toLocaleString('en-US'),
+            align: 'right'
         },
         {
             id: 'weight',
             label: 'Weight',
             minWidth: 100,
-            align: 'right',
-            format: (value) => value.toLocaleString('en-US'),
+            align: 'right'
         },
         {
             id: 'boxcolor',
             label: 'Boxcolor',
             minWidth: 100,
-            align: 'right',
-            format: (value) => value.toFixed(2),
+            align: 'right'
         },
         {
             id: 'creationDate',
@@ -97,6 +94,12 @@ const AdminMainPage = () => {
             align: 'right',
             format: (value) => value.toFixed(2),
         },
+        {
+            id: 'status',
+            label: 'Status',
+            minWidth: 100,
+            align: 'right'
+        }
     ];
     return (
         <>
