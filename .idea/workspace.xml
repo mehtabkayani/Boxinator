@@ -24,9 +24,6 @@
   <component name="ChangeListManager">
     <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AddCountry.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AddCountry.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AdminAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AdminAccount.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/SpecificShipment.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/SpecificShipment.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/updateUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/updateUser.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -177,21 +174,7 @@
       <workItem from="1600669503680" duration="49965000" />
       <workItem from="1600853594185" duration="2138000" />
       <workItem from="1600859691520" duration="1310000" />
-      <workItem from="1600861130885" duration="146719000" />
-    </task>
-    <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
-      <created>1600094762706</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1600094762706</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Added some bootstrap">
-      <created>1600257176769</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1600257176770</updated>
+      <workItem from="1600861130885" duration="149391000" />
     </task>
     <task id="LOCAL-00003" summary="Fixed the styl of the 10 components">
       <created>1600262968472</created>
@@ -522,7 +505,21 @@
       <option name="project" value="LOCAL" />
       <updated>1601562916737</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Added the form classname">
+      <created>1601622449264</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1601622449313</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Styled update shipment form">
+      <created>1601625712671</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1601625712677</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -541,8 +538,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed the navbar so that right user has the right access but it needs som fixes" />
-    <MESSAGE value="}" />
     <MESSAGE value="Veiw all countries, tying to update country(not working yet), fixed add country method" />
     <MESSAGE value="fixed add country method" />
     <MESSAGE value="Fixed the issue with that user lose access when the page refreshes" />
@@ -566,7 +561,9 @@
     <MESSAGE value="added validation to add new country" />
     <MESSAGE value="fixed some styles" />
     <MESSAGE value="fixed merge conflicts" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed merge conflicts" />
+    <MESSAGE value="Added the form classname" />
+    <MESSAGE value="Styled update shipment form" />
+    <option name="LAST_COMMIT_MESSAGE" value="Styled update shipment form" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -635,10 +632,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1601103687345" />
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1601562939731">
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1601625750801">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601562939730" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601625750800" />
     <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1601392436907" />
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
       <screen x="-1920" y="0" width="1920" height="1160" />
