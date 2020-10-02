@@ -131,17 +131,10 @@ const UpdateUser = () => {
     const onConfirmPasswordChanged = ev => setConfirmPassword(ev.target.value.trim());
 
     return (
-       
-
-        <div className="accountContainer"  style={{
-            position: 'absolute', 
-            left: '50%', 
-            top: '50%',
-            transform: 'translate(-50%, -50%)'
-        }}>
+        <div className="container">
             {userInfo.firstname ? <h1>{userInfo.firstname}´s Account</h1> : "" }
             <br></br>
-            <Form key={userInfo.id} onSubmit={onSubmitForm}>
+            <Form key={userInfo.id} onSubmit={onSubmitForm} className="form-container">
 
                 <Form.Row>
                     <Form.Group as={Col}>
