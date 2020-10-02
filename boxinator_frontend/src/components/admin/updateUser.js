@@ -153,13 +153,13 @@ const UpdateUser = () => {
                 <Form.Row>
                     <Form.Group as={Col}>
                         <Form.Label>Firstname</Form.Label>
-                        <Form.Control name="firstname" type="text" placeholder={userInfo.firstname} value={userInfo.firstname} onChange={onUserInfoChanged}/>
+                        <Form.Control name="firstname" type="text" placeholder={userInfo.firstname} value={userInfo.firstname} disabled/>
                         <span className="errorMessage">{errorMessage.firstname}</span>
                     </Form.Group>
 
                     <Form.Group as={Col}>
                         <Form.Label>Lastname</Form.Label>
-                        <Form.Control name="lastname" type="text" placeholder={userInfo.lastname} value={userInfo.lastname} onChange={onUserInfoChanged}/>
+                        <Form.Control name="lastname" type="text" placeholder={userInfo.lastname} value={userInfo.lastname} disabled/>
                         <span className="errorMessage">{errorMessage.lastname}</span>
                     </Form.Group>
                 </Form.Row>
@@ -224,12 +224,13 @@ const UpdateUser = () => {
        <FormControl className={classes.formControl}>
             <InputLabel id="select-label">Account role</InputLabel>
         <Select
+            name= "accountType"
           labelId="select-label"
           id="simple-select"
           value={userInfo.accountType}
           onChange={onUserInfoChanged}
         >
-          <MenuItem value={"GUEST"} defaultChecked>Guest</MenuItem>
+          <MenuItem value={"GUEST"}>Guest</MenuItem>
           <MenuItem value={"REGISTERED_USER"}>USER</MenuItem>
           <MenuItem value={"ADMINISTRATOR"}>ADMINISTRATOR</MenuItem>
         </Select>
