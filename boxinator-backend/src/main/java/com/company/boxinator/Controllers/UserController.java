@@ -218,7 +218,7 @@ public class UserController {
                 //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 updateUserInDB.setAccountType(user.getAccountType());
 
-                if(securityConf.validInputs(updateUserInDB.getEmail()))
+                if(!securityConf.validInputs(updateUserInDB.getEmail()))
                     return new ResponseEntity(HttpStatus.FORBIDDEN);
             }
             try{
