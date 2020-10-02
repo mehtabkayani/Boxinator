@@ -3,6 +3,7 @@ import com.company.boxinator.Config.SecurityConf;
 import com.company.boxinator.Models.*;
 import com.company.boxinator.Models.Enums.AccountType;
 import com.company.boxinator.Repositories.AuthTokenRepository;
+import com.company.boxinator.Repositories.BannedAccountRepository;
 import com.company.boxinator.Repositories.ShipmentRepository;
 import com.company.boxinator.Repositories.UserRepository;
 import com.company.boxinator.Services.FailedSignInService;
@@ -45,6 +46,9 @@ public class UserController {
 
     @Autowired
     private FailedSignInService failedSignInService;
+
+    @Autowired
+    private BannedAccountRepository bannedAccountRepository;
 
     private UserUtil userUtil = new UserUtil();
 
@@ -218,7 +222,7 @@ public class UserController {
                 //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 updateUserInDB.setAccountType(user.getAccountType());
 
-                if(securityConf.validInputs(updateUserInDB.getEmail()))
+                if(!securityConf.validInputs(updateUserInDB.getEmail()))
                     return new ResponseEntity(HttpStatus.FORBIDDEN);
             }
             try{
@@ -276,9 +280,16 @@ public class UserController {
         }
         //Check if the email exists and that the account type is a GUEST then register user as Registered_USER
         if (userData.isPresent() && userData.get().getAccountType() == AccountType.GUEST) {
-            User guestUser = userUtil.setUser(userData.get(), new User());
-            userRepository.save(guestUser);
 
+            User guestUser = userUtil.setUser(user,userData.get());
+            userRepository.save(guestUser);
+            AuthToken authToken = new AuthToken();
+            String secret = google2FAService.generateSecretKey();
+            authToken.setToken(secret);
+            authToken.setUser(guestUser);
+            authTokenRepository.save(authToken);
+
+            emailService.sendLoginTwoFactorCode(guestUser,secret);
             return ResponseEntity.status(HttpStatus.CREATED).body(guestUser.getEmail() + " is now registered as a REGISTERED_USER!");
         }
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Something went wrong");
@@ -308,6 +319,10 @@ public class UserController {
 
                 shipmentRepository.deleteAll(filteredList);
                 authTokenRepository.delete(userAuthToken);
+                Optional<BannedAccount> bannedUser = bannedAccountRepository.findBannedAccountByUserId(deleteUser.get().getId());
+                if(bannedUser.isPresent()){
+                    bannedAccountRepository.delete(bannedUser.get());
+                }
                 userRepository.delete(deleteUser.get());
                 return ResponseEntity.status(HttpStatus.OK).body(email + " deleted succeded");
             }
