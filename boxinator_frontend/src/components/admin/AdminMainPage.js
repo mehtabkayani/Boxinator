@@ -13,6 +13,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import {GET} from '../../api/CRUD';
+import UpdateIcon from '@material-ui/icons/Update';
+import { Tooltip } from '@material-ui/core';
 
 const AdminMainPage = () => {
     const [shipments, setShipments] = useState([]);
@@ -134,7 +136,10 @@ const AdminMainPage = () => {
 
                                             );
                                         })}
-                                        <Link to={`/specificShipment/${row.id}`}>Update</Link>
+                                        <Link to={`/specificShipment/${row.id}`}>
+                                    <Tooltip title="Update"><UpdateIcon color="primary"></UpdateIcon></Tooltip>
+                                    </Link>
+
                                     </TableRow>
                                 );
                             })}
