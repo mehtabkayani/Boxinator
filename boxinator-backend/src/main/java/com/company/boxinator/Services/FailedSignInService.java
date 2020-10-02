@@ -27,10 +27,10 @@ public class FailedSignInService {
     private static final Integer MAXLIMIT = 5;
 
     public void attemptFailed(Integer userId){
-        Optional<FailedSignIn> findSession = failedAttempts.stream()
-                .filter(attempt -> attempt.getAccount_id() == userId).findFirst();
+        Optional<FailedSignIn> findSession = findFailedSignInUserId(userId);
 
         if(findSession.isPresent()){
+            System.out.println("findSession isPresent");
             findSession.get().setCounter(findSession.get().getCounter()+1);
             if(findSession.get().getCounter() > MAXLIMIT){
                 System.out.println("ID: " + findSession.get().getAccount_id() + ": " + findSession.get().getCounter());
@@ -38,41 +38,47 @@ public class FailedSignInService {
                 failedAttempts.remove(findSession.get());
             }
         }else{
-           FailedSignIn failedSignIn = new FailedSignIn(userId);
-           failedAttempts.add(failedSignIn);
+           failedAttempts.add(new FailedSignIn(userId));
         }
     }
     private void banAccount(FailedSignIn failedSignIn){
+        System.out.println("In banAccount");
         Optional<User> user = userRepository.findById(failedSignIn.getAccount_id());
         if(user.isPresent()){
+            System.out.println("USER IS PRESENT");
             BannedAccount bannedAccount = new BannedAccount(user.get());
-            bannedAccountRepository.save(bannedAccount);
+            try{
+                bannedAccountRepository.save(new BannedAccount(user.get()));
+            }catch (Exception ex){
+                System.out.println("COULDNT SAVE BANNEDACCOUNT TO DB \nErrorMessage: " + ex.getMessage());
+            }
         }
     }
-    public boolean isUserBan(Integer userId){
-        boolean isBan = true;
+    public boolean isUserBan(Integer userId) {
 
-//        BannedAccount bannedAccount = bannedAccountRepository.findByUserId(userId);
-//        if(bannedAccount.getEndDate().isAfter(LocalDateTime.now())){
-//            bannedAccountRepository.delete(bannedAccount);
-//            isBan = false;
-//        }
-//        else if(bannedAccount == null)
-//            isBan = false;
-
-        try{
-            BannedAccount bannedAccount = bannedAccountRepository.findByUserId(userId);
-            if(bannedAccount.getEndDate().isBefore(LocalDateTime.now())) {
-                bannedAccountRepository.delete(bannedAccount);
-                isBan = false;
-                System.out.println("IN TRY CATCH IF");
-            }else {
-                System.out.println("IN TRY CATCH ELSE");
+        Optional<BannedAccount> bannedAccount = bannedAccountRepository.findBannedAccountByUserId(userId);
+        if (bannedAccount.isPresent()) {
+            BannedAccount foundBannedAccount = bannedAccount.get();
+            if (foundBannedAccount.getEndDate().isBefore(LocalDateTime.now())) {
+                bannedAccountRepository.delete(foundBannedAccount);
+                return false;
+            } else {
+                return true;
             }
-        }catch (Exception ex){
-            System.out.println(ex.getMessage());
         }
+        return false;
+    }
+    public List<FailedSignIn> getFailedAttemptsList(){
+        return failedAttempts;
+    }
 
-        return isBan;
+    public void removeCounter(Integer userId){
+        Optional<FailedSignIn> failedSignIn = findFailedSignInUserId(userId);
+        if(failedSignIn.isPresent())
+            failedAttempts.remove(failedSignIn.get());
+    }
+
+    private Optional<FailedSignIn> findFailedSignInUserId(Integer userId){
+        return failedAttempts.stream().filter(attempt -> attempt.getAccount_id() == userId).findFirst();
     }
 }

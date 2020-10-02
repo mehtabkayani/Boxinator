@@ -1,10 +1,7 @@
 package com.company.boxinator.Controllers;
 import com.company.boxinator.Config.SecurityConf;
-import com.company.boxinator.Models.AuthToken;
+import com.company.boxinator.Models.*;
 import com.company.boxinator.Models.Enums.AccountType;
-import com.company.boxinator.Models.Session;
-import com.company.boxinator.Models.Shipment;
-import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.AuthTokenRepository;
 import com.company.boxinator.Repositories.ShipmentRepository;
 import com.company.boxinator.Repositories.UserRepository;
@@ -58,6 +55,11 @@ public class UserController {
 
     private SecurityConf securityConf = new SecurityConf();
 
+    @GetMapping("/failedAttempts")
+    public List<FailedSignIn> failedAttempts(){
+        return failedSignInService.getFailedAttemptsList();
+    }
+
     @PostMapping("/google2fa")
     public ResponseEntity<String> authenticate2fa(@RequestBody(required = false) AuthToken authToken){
         Google2FAService google2FAService = new Google2FAService();
@@ -84,23 +86,18 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         System.out.println(failedSignInService.isUserBan(user.get().getId()));
-//        if(failedSignInService.isUserBan(user.get().getId())){
-//            System.out.println("IN IF STATEMENT");
-//            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-//        }
+        System.out.println("isUserBan: " + failedSignInService.isUserBan(user.get().getId()));
 
+        if(failedSignInService.isUserBan(user.get().getId())){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
 
         AuthToken Token = authTokenRepository.findByUserId(user.get().getId());
-//        if(Token)
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
         String sixDigitCode = google2FAService.runGoogle2fa(Token.getToken());
 
-        //sixDigitCode.equals(code) && ADD THIS TO IF STATEMENT LATER
         if (sixDigitCode.equals(code) && bCryptPasswordEncoder.matches(userLogin.getPassword(),user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
-            System.out.println("In if statement");
             sessionUtil.addSession(user.get());
-            System.out.println(sessionUtil.getSession(user.get().getId()).get());
+            failedSignInService.removeCounter(user.get().getId());
             return new ResponseEntity<>(sessionUtil.getSession(user.get().getId()).get(), HttpStatus.OK);
         }else{
             failedSignInService.attemptFailed(user.get().getId());

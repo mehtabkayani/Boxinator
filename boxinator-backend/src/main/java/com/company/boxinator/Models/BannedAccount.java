@@ -32,7 +32,7 @@ public class BannedAccount implements Serializable {
 
     public BannedAccount(User user) {
         this.startDate = LocalDate.now();
-        this.endDate = LocalDateTime.now().plusMinutes(1);
+        this.endDate = LocalDateTime.now().plusMinutes(10);
         this.user = user;
     }
 
