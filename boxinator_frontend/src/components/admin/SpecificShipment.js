@@ -101,26 +101,22 @@ const SpecificShipment = () => {
         <div className="container">
             <br /><br />
 
-            <form onSubmit={onSubmitForm} className="form-container">
-                <label>Receiver</label>
-                <br />
-                <input type="text" name="receiverName" onChange={onShipmentChanged} value={shipment.receiverName} />
-                <br />
-                <br />
-                <span className="errorMessage">{errorMessage.receiverName}</span>
-                <br /><br />
-                <label>BoxColor</label>
-                <br />
-                <input type="color" name="boxcolor" onChange={onShipmentChanged} value={shipment.boxcolor} />
-                <br />
-                <br />
-                <label>Weight</label>
-                <br />
-                <input type="number" name="weight" onChange={onShipmentChanged} value={shipment.weight} />
-                <br />
-                <br />
-                <span className="errorMessage">{errorMessage.weight}</span>
-                <br /><br />
+            <Form onSubmit={onSubmitForm} className="form-container">
+
+                <div>
+                    <Form.Label>Receiver name : </Form.Label>
+                    <Form.Control type="text" name="receiverName" placeholder="Enter name" onChange={onShipmentChanged} required value={shipment.receiverName}/>
+                    <span className="errorMessage">{errorMessage.receiverName}</span>
+                </div>
+                <div>
+                    <Form.Label>Weight (kg): </Form.Label>
+                    <Form.Control type="number" name="weight" placeholder="Enter weight" onChange={onShipmentChanged} required value={shipment.weight} />
+                    <span className="errorMessage">{errorMessage.weight}</span>
+                </div>
+                <div>
+                    <Form.Label>Box colour: </Form.Label>
+                    <Form.Control type="color" name="boxcolor"  onChange={onShipmentChanged} required value={shipment.boxcolor}/>
+                </div>
 
                 <label>Shipment status</label>
                 <select name="shipmentStatus" onChange={onShipmentChanged} value={shipment.shipmentStatus}>
@@ -136,16 +132,13 @@ const SpecificShipment = () => {
                     {printCountryList}
                 </select>
                 <br/>
-                
-            </form>
+                <div style={{display: 'flex'}}>
+                    <AdminUpdateShipmentDialog onSubmitForm={onSubmitForm} receiverName={shipment.receiverName} weight={shipment.weight} boxcolor={shipment.boxcolor} countryName={country.countryName}/>
+
+                    <Button onClick={handleDelete} variant="outlined" color="secondary" autoFocus>Delete</Button>
+                </div>
+            </Form>
             {/* <Button type="submit" onClick={onSubmitForm} variant="outlined" color="primary" autoFocus>Save</Button> */}
-           <div style={{display: 'flex'}}>
-            <AdminUpdateShipmentDialog onSubmitForm={onSubmitForm} receiverName={shipment.receiverName} weight={shipment.weight} boxcolor={shipment.boxcolor} countryName={country.countryName}/>
-
-            <Button onClick={handleDelete} variant="outlined" color="secondary" autoFocus>Delete</Button>
-           </div>
-
-
         </div>
     );
 }
