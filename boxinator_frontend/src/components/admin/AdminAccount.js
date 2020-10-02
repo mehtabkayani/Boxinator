@@ -6,8 +6,24 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import AdminUpdateUserDialog from "../Dialog/AdminUpdateUserDialog";
 import {formValid, validateEmail, validateIsNumber, validateName} from "../validation/validation.js";
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+  }));
 
 const AdminAccount = () => {
+  const classes = useStyles();
     const [userInfo, setUserInfo] = useState({})
     const [firstname, setFirstName] = useState('');
     const [password, setPassword] = useState('');
@@ -140,12 +156,25 @@ const AdminAccount = () => {
                     </Form.Group> */}
                 </Form.Row>
 
-                <Form.Row>
+                <FormControl className={classes.formControl}>
+                      <InputLabel id="select-label">Account role</InputLabel>
+                            <Select
+                            labelId="select-label"
+                            id="simple-select"
+                            value={userInfo.accountType}
+                            onChange={onUserInfoChanged}
+                            >
+                            <MenuItem value={"REGISTERED_USER"}>USER</MenuItem>
+                            <MenuItem value={"ADMINISTRATOR"}>ADMINISTRATOR</MenuItem>
+                            </Select>
+                       </FormControl>
+
+                {/* <Form.Row>
                 <select name="accountType" onChange={onUserInfoChanged} value={userInfo.accountType}>
                         <option key="ADMINISTRATOR" value="ADMINISTRATOR">ADMINISTRATOR</option>
                         <option key="REGISTERED_USER" value="REGISTERED_USER">REGISTERED_USER</option>
                     </select>
-                </Form.Row>
+                </Form.Row> */}
                 <br></br>
                 <div>
                     {/* <Button type="submit" variant="secondary">Save changes</Button> */}

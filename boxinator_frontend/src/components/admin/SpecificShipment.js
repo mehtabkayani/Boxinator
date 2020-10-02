@@ -9,8 +9,24 @@ import AdminUpdateShipmentDialog from '../Dialog/AdminUpdateShipmentDialog';
 import {validateName, isPositiveNumber, formValid} from "../validation/validation";
 import {Form} from "react-bootstrap";
 
-const SpecificShipment = () => {
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+  }));
+
+const SpecificShipment = () => {
+    const classes = useStyles();
     const {id} = useParams();
     const history = useHistory();
     //Comment out shipmentId and pass in id as props
@@ -95,7 +111,8 @@ const SpecificShipment = () => {
     }
 
     // const printStatusList = countryList.map((status, index) => (<option key={status} value={index}>{status}</option>))
-    const printCountryList = countryList.map(country => (<option key={country.id} value={country.id}>{country.countryName}</option>))
+    // const printCountryList = countryList.map(country => (<option key={country.id} value={country.id}>{country.countryName}</option>))
+    const printCountryList = countryList.map(country => (<MenuItem key={country.id} value={country.id}>{country.countryName}</MenuItem>))
     // const statusList = ["CREATED", "RECIEVED", "INTRANSIT", "COMPLETED", "CANCELLED"]
     return (
         <div className="container">
@@ -122,19 +139,52 @@ const SpecificShipment = () => {
                 <span className="errorMessage">{errorMessage.weight}</span>
                 <br /><br />
 
-                <label>Shipment status</label>
+                {/* <label>Shipment status</label>
                 <select name="shipmentStatus" onChange={onShipmentChanged} value={shipment.shipmentStatus}>
                     <option key="CREATED" value="CREATED">CREATED</option>
                     <option key="RECIEVED" value="RECIEVED">RECIEVED</option>
                     <option key="INTRANSIT" value="INTRANSIT">INTRANSIT</option>
                     <option key="COMPLETED" value="COMPLETED">COMPLETED</option>
                     <option key="CANCELLED" value="CANCELLED">CANCELLED</option>
-                </select>
+                </select> */}
+                         <FormControl className={classes.formControl}>
+                            <InputLabel id="select-label">{shipment.shipmentStatus}</InputLabel>
+                            <Select
+                            name="shipmentStatus"
+                            labelId="select-label"
+                            id="account-select"
+                            value={shipment.shipmentStatus}
+                            onChange={onShipmentChanged}
+                            >
+                            <MenuItem key="CREATED" value={"CREATED"}>Created</MenuItem>
+                            <MenuItem key="RECIEVED" value={"RECEIVED"}>Received</MenuItem>
+                            <MenuItem key="INTRANSIT" value={"INTRANSIT"}>Intransit</MenuItem>
+                            <MenuItem key="COMPLETED" value={"COMPLETED"}>Completed</MenuItem>
+                            <MenuItem key="CANCELLED" value={"CANCELLED"}>Cancelled</MenuItem>
+                            </Select>
+                        </FormControl>
                 <br /><br />
-                <label>Country</label>
-                <select name="id" onChange={onCountryChanged} value={country.id}>
+                <FormControl className={classes.formControl}>
+                            <InputLabel id="select-label">{country.countryName}</InputLabel>
+                            <Select
+                            name="id"
+                            labelId="select-label"
+                            id="country-select"
+                            value={country.id}
+                            onChange={onCountryChanged}
+                            >
                     {printCountryList}
-                </select>
+                         
+                            </Select>
+                        </FormControl>
+
+                      {/*  <label>Country</label>
+                        
+                 <select name="id" onChange={onCountryChanged} value={country.id}>
+                {printCountryList}
+
+                </select> */}
+
                 <br/>
                 
             </form>

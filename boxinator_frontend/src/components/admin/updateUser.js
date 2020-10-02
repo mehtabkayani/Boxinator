@@ -6,11 +6,25 @@ import axios from "axios";
 import {useParams} from "react-router";
 import {DELETE} from '../../api/CRUD';
 import AdminUpdateUserDialog from "../Dialog/AdminUpdateUserDialog";
-
-
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core/styles';
 import {validateName, formValid, validateEmail, validateIsNumber} from '../validation/validation.js';
 
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(2),
+    },
+  }));
+
 const UpdateUser = () => {
+  const classes = useStyles();
     const {id} = useParams();
     const [userInfo, setUserInfo] = useState({})
     const [password, setPassword] = useState('');
@@ -206,14 +220,28 @@ const UpdateUser = () => {
                 </div> */}
             <br></br>
 
-                  <Form.Row>
+                  {/* <Form.Row>
                 <select name="accountType" onChange={onUserInfoChanged} value={userInfo.accountType}>
                         <option key="GUEST" value="GUEST">GUEST</option>
                         <option key="REGISTERED_USER" value="REGISTERED_USER">REGISTERED_USER</option>
                         <option key="ADMINISTRATOR" value="ADMINISTRATOR">ADMINISTRATOR</option>
                     </select>
 
-                </Form.Row>
+                </Form.Row> */}
+       <FormControl className={classes.formControl}>
+            <InputLabel id="select-label">Account role</InputLabel>
+        <Select
+          labelId="select-label"
+          id="simple-select"
+          value={userInfo.accountType}
+          onChange={onUserInfoChanged}
+        >
+          <MenuItem value={"GUEST"} defaultChecked>Guest</MenuItem>
+          <MenuItem value={"REGISTERED_USER"}>USER</MenuItem>
+          <MenuItem value={"ADMINISTRATOR"}>ADMINISTRATOR</MenuItem>
+        </Select>
+      </FormControl>
+
                 <br></br>
                 <div style={{display:'flex'}}>
                     {/* <Button type="submit" variant="secondary">Save changes</Button> */}
