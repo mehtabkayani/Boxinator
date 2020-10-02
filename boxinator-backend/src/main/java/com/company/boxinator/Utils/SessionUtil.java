@@ -18,44 +18,61 @@ public class SessionUtil {
 
     private List<Session> sessions = new ArrayList<Session>();
 
+    private static volatile SessionUtil single_session = new SessionUtil();
 
-    public void addSession(User user){
-        Session session = new Session();
-        String token = jwtUtil.createJWT(user.getAccountType());
-        session.setAccount_id(user.getId());
-        session.setToken(token);
-        sessions.add(session);
+    private SessionUtil() {
     }
-    public Optional<Session> getSession(Integer userId){
+
+    public static SessionUtil getInstance() {
+        return single_session;
+    }
+
+    public void addSession(User user) {
+        Session newSession = new Session();
+        String token = jwtUtil.createJWT(user.getAccountType(),user.getId());
+        Optional<Session> findSession = sessions.stream().filter(session -> session.getAccount_id() == user.getId()).findFirst();
+        if(!findSession.isPresent()){
+            newSession.setAccount_id(user.getId());
+            newSession.setToken(token);
+            sessions.add(newSession);
+        }
+
+    }
+
+    public Optional<Session> getSession(Integer userId) {
         return sessions.stream().filter(session -> session.getAccount_id() == userId).findFirst();
     }
-    public boolean isSessionValid(String jwt){
+
+    public boolean isSessionValid(String jwt) {
         boolean isValid = false;
 
-        System.out.println("In isSessionValid");
+        Optional<Session> optSessions = sessions.stream().filter(session -> session.getToken().equals(jwt)).findAny();
 
-        Optional<Session> optSessions = sessions.stream().filter(session -> session.getToken().equals(jwt)).findFirst();
-
-        if(!optSessions.isPresent()) {
+        if (!optSessions.isPresent()) {
             return isValid;
         }
-        if(jwtUtil.isJwtValid(optSessions.get().getToken()))
+
+        if (jwtUtil.isJwtValid(optSessions.get().getToken())) {
             isValid = true;
-        else
+        } else {
             sessions.remove(optSessions.get());
+        }
 
         return isValid;
     }
-    public Optional<Session> findSessionByUserId (Integer user_id) {
+
+    public Optional<Session> findSessionByUserId(Integer user_id) {
         return sessions.stream().filter(s -> s.getAccount_id().equals(user_id)).findFirst();
     }
-    public void removeSession(Integer user_id){
+
+    public void removeSession(Integer user_id) {
         System.out.println("Before session set");
         Session session = findSessionByUserId(user_id).get();
         System.out.println("In removeSession: " + session);
         sessions.remove(session);
     }
-    public List<Session> getSessionsList(){
+
+    public List<Session> getSessionsList() {
         return sessions;
     }
 }

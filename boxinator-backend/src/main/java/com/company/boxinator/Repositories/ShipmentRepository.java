@@ -1,8 +1,5 @@
 package com.company.boxinator.Repositories;
 
-import java.util.*;
-
-import com.company.boxinator.Models.Enums.ShipmentStatus;
 import com.company.boxinator.Models.Shipment;
 import com.company.boxinator.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +10,10 @@ import java.util.Optional;
 
 @Repository
 public interface ShipmentRepository extends JpaRepository<Shipment, Integer> {
-    Optional<Shipment> findByUserId(Integer integer);
+
+    Optional<List<Shipment>> findAllByUserId(Integer userId);
+    Optional<Shipment> findByUserId(Integer userId);
+
+    Optional<Shipment> findShipmentByIdAndUser(Integer shipmentId, User user);
+
 }

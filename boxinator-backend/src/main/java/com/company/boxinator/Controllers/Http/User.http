@@ -1,0 +1,92 @@
+###LOGIN Admin
+POST http://localhost:8080/api/login
+Content-Type: application/json
+
+{
+  "email": "stjernqvist.david@gmail.com",
+  "password": "password"
+}
+
+###LOGIN with Google2FA user
+POST http://localhost:8080/api/login
+Content-Type: application/json
+Authorization: 278027
+
+{
+  "email": "mehtab.kayani@gmail.com",
+  "password": "password"
+
+}
+
+###REGISTER
+POST http://localhost:8080/api/user
+Content-Type: application/json
+
+{
+  "firstname": "mehtab",
+  "lastname": "kayani",
+  "email": "david.stjernqvist@outlook.com",
+  "password": "password",
+  "contactNumber": "0786785645",
+  "countryOfResidence": "Sweden",
+  "zipcode": "19535",
+  "dateOfBirth": "19890711"
+}
+
+###ADMIN- get all users
+GET http://localhost:8080/api/users
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjE2LCJpYXQiOjE2MDA2Nzg5MDIsImV4cCI6MTYwMDY3NTMwMn0.b3fhQPll_MsScmKWReLQIiqVx8w2IxruwEt1wy4fcxI
+
+###
+GET http://localhost:8080/api/user/3
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzIiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MTIsImlhdCI6MTYwMDY4ODQxNCwiZXhwIjoxNjAwNjg0ODE0fQ.5lEL1NbR8sah0TBf7BlkEQpokKQE_tpez1aRtvAoX1U
+
+###UPDATE FROM ADMIN
+PUT http://localhost:8080/api/user/26
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjE1LCJpYXQiOjE2MDA2NzkxODksImV4cCI6MTYwMDY3NTU4OX0.1As--cjSdJMD0Pnd57m_Qfd0XOzScjzH7eAiejzORec
+
+{
+  "email": "john@gmail.com",
+  "password": "doe",
+  "accountType": 1
+}
+
+###UPDATE FROM USER
+PUT http://localhost:8080/api/user/29
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyOSIsInN1YiI6IlJFR0lTVEVSRURfVVNFUiIsImxkMjAiOjQsImlhdCI6MTYwMDY4ODc2MiwiZXhwIjoxNjAwNjg1MTYyfQ.NpzgkyYuSLFt7Jjl1xiNBW0FdX9pkR3jDkBlwHaImCI
+
+
+{
+  "firstname": "John",
+  "lastname": "Doe",
+  "email": "johndoe2@gmail.com",
+  "password": "doe",
+  "contactNumber": "0786785645",
+  "countryOfResidence": "Sweden",
+  "zipcode": "19535",
+  "dateOfBirth": "19890711"
+}
+
+###Delete
+DELETE http://localhost:8080/api/user
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyOSIsInN1YiI6IlJFR0lTVEVSRURfVVNFUiIsImxkMjAiOjEyLCJpYXQiOjE2MDA2ODIwNjgsImV4cCI6MTYwMDY3ODQ2OH0.NbfsYvLPm0vi5FThLbPhhMrflhbq70sxFNc0TJDQjHE
+
+{
+  "firstname": "delete",
+  "lastname": "Doe",
+  "email": "delete@gmail.com",
+  "contactNumber": "0786785645",
+  "countryOfResidence": "Sweden",
+  "zipcode": "19535",
+  "dateOfBirth": "19890711"
+}
+
+###Send email user
+GET http://localhost:8080/api/sendemail
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MTYsImlhdCI6MTYwMDc3NjMxNSwiZXhwIjoxNjAwNzcyNzE1fQ.5BiyXYlETPT2gSSA51mE7fBKzuMYxmuQqXVR9Ss7xB8

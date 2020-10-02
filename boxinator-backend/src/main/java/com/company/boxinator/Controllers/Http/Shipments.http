@@ -1,0 +1,102 @@
+###LOGIN Admin
+POST http://localhost:8080/api/login
+Content-Type: application/json
+
+{
+  "email": "kayani@gmail.com",
+  "password": "adam"
+}
+
+###LOGIN normal user
+POST http://localhost:8080/api/login
+Content-Type: application/json
+Authorization: 436386
+
+{
+  "email": "mehtab.kayani@gmail.com",
+  "password": "password"
+}
+
+###Get all shipments
+GET http://localhost:8080/api/shipments
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjIwLCJpYXQiOjE2MDA2ODg0MTQsImV4cCI6MTYwMDY4NDgxNH0.79gvaRjamXS6jkvGh1etbPgbdDX_8IOwud9RTm69eDU
+
+###Get all completed shipments by user
+GET http://localhost:8080/api/shipments/complete
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6NCwiaWF0IjoxNjAwNjgzODI5LCJleHAiOjE2MDA2ODAyMjl9.EM1V53mE9aG1D9XkgbykhSEdmYXUAY8k3o4M0nHUMJ4
+
+###Get all cancelled shipments by user
+GET http://localhost:8080/api/shipments/cancelled
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MywiaWF0IjoxNjAwNjg0MTQ5LCJleHAiOjE2MDA2ODA1NDl9.3WAlPlh0-R-cF0K2DPytStIJflcAzXkra_xBV1dLWNg
+
+###POST Shipment as a Guest user
+POST http://localhost:8080/api/shipment
+Content-Type: application/json
+
+{
+  "recieverName": "Adam",
+  "weight": 12.0,
+  "boxcolor": "Yellow",
+
+  "user": {
+    "email": "gueds@gmail.com"
+  },
+  "country": {
+    "id": 2,
+    "countryCode": "NO",
+    "countryName": "Norway",
+    "multiplyerNumber": 2
+  }
+}
+
+###POST Shipment as a Registered User
+POST http://localhost:8080/api/shipment
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjE3LCJpYXQiOjE2MDA2OTEwNzEsImV4cCI6MTYwMDY4NzQ3MX0.Zsoa4PdglupwBVG5pC2CqLmYT2GVYGZZnl95hsYbHlQ
+
+{
+  "receiverName": "Adam",
+  "weight": 12.0,
+  "boxcolor": "Yellow",
+  "country": {
+    "id": 2,
+    "countryCode": "NO",
+    "countryName": "Norway",
+    "multiplyerNumber": 2
+  }
+}
+
+###Get shipments by shipment id as a USER
+GET http://localhost:8080/api/shipments/23
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4Iiwic3ViIjoiUkVHSVNURVJFRF9VU0VSIiwibGQyMCI6MywiaWF0IjoxNjAwNjkyNDg2LCJleHAiOjE2MDA2ODg4ODZ9.EtHoUa0tZYHsgZULgqSGdUpbzvq2L8nYpUBGzoRYJWQ
+
+###Get shipments by cutomer id as a USER
+GET http://localhost:8080/api/shipments/customer/52
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI1MiIsInN1YiI6IlJFR0lTVEVSRURfVVNFUiIsImxkMjAiOjksImlhdCI6MTYwMDk0ODUyMiwiZXhwIjoxNjAwOTQ0OTIyfQ.12VNLpTbyeBk2czsytAAXEn7FbipAo5eH3O-pZClBm0
+
+###Get details of a single completed shipment by shipment id
+GET http://localhost:8080/api/shipments/complete/26
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjEsImlhdCI6MTYwMDY5MjQ4NiwiZXhwIjoxNjAwNjg4ODg2fQ.oEoCnWo6lJgsUgrwKEnzrqsZt3QwNTSffSIReBZmLj8
+
+###Get details of a single completed shipment by customer id
+GET http://localhost:8080/api/shipments/customer/complete/8
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjExLCJpYXQiOjE2MDA2OTY5MTAsImV4cCI6MTYwMDY5MzMxMH0.-TQ47ywPlUVzNgskg3HwQtAMIFCbspsaW2J9mBiEqoA
+
+
+###Get shipment details by customer id and shipment id
+GET http://localhost:8080/api/shipments/8/26
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjcsImlhdCI6MTYwMDY5ODU2OSwiZXhwIjoxNjAwNjk0OTY5fQ.5nZIBItKrhj429YfgB7Vc65GnyPYbbdUpqOniYHaG0E
+
+
+###Delete shipment by shipment id
+DELETE http://localhost:8080/api/shipments/28
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5Iiwic3ViIjoiQURNSU5JU1RSQVRPUiIsImxkMjAiOjEwLCJpYXQiOjE2MDA3NTc2NjEsImV4cCI6MTYwMDc1NDA2MX0.NcwxuBF483M8mIbLhUBI1Ilj543iXHyacZgX7OuNbQ0

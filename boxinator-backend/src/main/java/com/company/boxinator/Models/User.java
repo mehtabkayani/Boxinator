@@ -2,15 +2,14 @@ package com.company.boxinator.Models;
 
 import com.company.boxinator.Models.Enums.AccountType;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @Entity
-@Table(	name = "user",
+@Table(name = "user",
         uniqueConstraints = {
 
                 @UniqueConstraint(columnNames = "email")
@@ -19,7 +18,7 @@ import javax.persistence.*;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
 )
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -65,6 +64,7 @@ public class User {
         this.contactNumber = contactNumber;
         this.accountType = accountType;
     }
+
     public User(String firstname, String lastname, String email, String password, String dateOfBirth, String countryOfResidence, String zipcode, String contactNumber) {
         this.firstname = firstname;
         this.lastname = lastname;
@@ -112,7 +112,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public String getPassword() {
         return password;

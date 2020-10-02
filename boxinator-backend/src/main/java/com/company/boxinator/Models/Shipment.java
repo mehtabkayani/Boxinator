@@ -1,24 +1,32 @@
 package com.company.boxinator.Models;
 
 import com.company.boxinator.Models.Enums.ShipmentStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id"
-)
-public class Shipment {
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id"
+//)
+public class Shipment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id;
 
     @Column
-    private String recieverName;
+    private String receiverName;
 
     @Column
     private float weight;
@@ -27,7 +35,10 @@ public class Shipment {
     private String boxcolor;
 
     @Column
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime creation_date;
+
 
     @Column
     private ShipmentStatus shipmentStatus;
@@ -35,29 +46,32 @@ public class Shipment {
     @Column
     private double shipmentCost;
 
+    @Column
+    private Integer shipmentMultiplyerNumber;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "country_id", nullable = false)
     private Country country;
 
     public Shipment() {
     }
 
-    public Shipment(String recieverName, float weight, String boxcolor, User user, Country country) {
+    public Shipment(String receiverName, float weight, String boxcolor, User user, Country country) {
 
-        this.recieverName = recieverName;
+        this.receiverName = receiverName;
         this.weight = weight;
         this.boxcolor = boxcolor;
         this.country = country;
         this.user = user;
     }
 
-    public Shipment(Integer id, String recieverName, float weight, String boxcolor, LocalDateTime creation_date, ShipmentStatus shipmentStatus, double shipmentCost, Country country) {
+    public Shipment(Integer id, String receiverName, float weight, String boxcolor, LocalDateTime creation_date, ShipmentStatus shipmentStatus, double shipmentCost, Country country) {
         this.id = id;
-        this.recieverName = recieverName;
+        this.receiverName = receiverName;
         this.weight = weight;
         this.boxcolor = boxcolor;
         this.creation_date = creation_date;
@@ -75,12 +89,12 @@ public class Shipment {
         this.id = id;
     }
 
-    public String getRecieverName() {
-        return recieverName;
+    public String getReceiverName() {
+        return receiverName;
     }
 
-    public void setRecieverName(String recieverName) {
-        this.recieverName = recieverName;
+    public void setReceiverName(String recieverName) {
+        this.receiverName = recieverName;
     }
 
     public float getWeight() {
@@ -97,6 +111,14 @@ public class Shipment {
 
     public void setBoxcolor(String boxcolor) {
         this.boxcolor = boxcolor;
+    }
+
+    public Integer getShipmentMultiplyerNumber() {
+        return shipmentMultiplyerNumber;
+    }
+
+    public void setShipmentMultiplyerNumber(Integer shipmentMultiplyerNumber) {
+        this.shipmentMultiplyerNumber = shipmentMultiplyerNumber;
     }
 
     public LocalDateTime getCreation_date() {

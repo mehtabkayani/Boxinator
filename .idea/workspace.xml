@@ -22,10 +22,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Unversioned files">
-      <change afterPath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Utils/UserUtil.java" afterDir="false" />
+    <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator-backend/src/main/java/com/company/boxinator/Controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/updateUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/updateUser.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,10 +69,11 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/boxinator-backend" />
+    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/diary-teamorebro" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.JavaScript" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -170,15 +170,356 @@
       <option name="presentableId" value="Default" />
       <updated>1600079701765</updated>
       <workItem from="1600079702959" duration="16121000" />
+      <workItem from="1600414522333" duration="21088000" />
+      <workItem from="1600669503680" duration="49965000" />
+      <workItem from="1600853594185" duration="2138000" />
+      <workItem from="1600859691520" duration="1310000" />
+      <workItem from="1600861130885" duration="149391000" />
     </task>
-    <task id="LOCAL-00001" summary="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css">
-      <created>1600094762706</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
+    <task id="LOCAL-00003" summary="Fixed the styl of the 10 components">
+      <created>1600262968472</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1600094762706</updated>
+      <updated>1600262968473</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00004" summary="Fixed the style of new shipment components">
+      <created>1600264102205</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1600264102206</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Changed the color of Boxinator in navbar">
+      <created>1600264274592</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1600264274592</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added two components, added completed, not completed radio">
+      <created>1600353954868</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1600353954869</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fixed token in frontend">
+      <created>1600421649608</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1600421649610</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fixed login authentication with jwt token, trying to get the users shipments and render them">
+      <created>1600439524977</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1600439524978</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Get shipments for inlogged user, save the token with user id in the localstorage">
+      <created>1600681844264</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1600681844266</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Fixed the issue with account id">
+      <created>1600687753419</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1600687753421</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Fixed the issue with account id">
+      <created>1600694002221</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1600694002223</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Get user info but not completed, get user-shipments, And get all the shipments in the admin page but it is not completed some parts need to be fixed">
+      <created>1600697544062</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1600697544064</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Fixed register and view user account in a better way">
+      <created>1600763665969</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1600763665969</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Added AllUsers component witch renders all the users(only admin kan view them), fixed register method, Deleted code that is not used">
+      <created>1600776186113</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1600776186115</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
+      <created>1600784176931</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1600784176932</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Fixed router so that only the users with authenticated role can access their pages">
+      <created>1600873653911</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1600873653911</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Fixed router so that only the users with authenticated role can access their pages">
+      <created>1600873717167</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1600873717167</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Fixed router so that only the users with authenticated role can access their pages, but when the pages refreshes so gets the user no access anymore&quot;need to be fixed &quot;">
+      <created>1600953536388</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1600953536388</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Fixed loggout method, changed receiver name in admin page">
+      <created>1600958467621</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1600958467621</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Fixed the navbar so that right user has the right access but it needs som fixes">
+      <created>1600959326535</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1600959326536</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Fixed the navbar so that right user has the right access but it needs som fixes">
+      <created>1600959387240</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1600959387240</updated>
+    </task>
+    <task id="LOCAL-00022" summary="}">
+      <created>1601015771115</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1601015771115</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Veiw all countries, tying to update country(not working yet), fixed add country method">
+      <created>1601039184062</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1601039184063</updated>
+    </task>
+    <task id="LOCAL-00024" summary="fixed add country method">
+      <created>1601039377741</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1601039377741</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Fixed the issue with that user lose access when the page refreshes">
+      <created>1601045963358</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1601045963358</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Fixed the issue with logout">
+      <created>1601102966699</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1601102966699</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Fixed the countries list">
+      <created>1601279559671</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1601279559698</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Fixed update country multiplayer number, deleted some nor used code, added updateCountry component">
+      <created>1601298753090</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1601298753090</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Fixed update country multiplayer number, deleted some nor used code, added updateCountry component">
+      <created>1601298771720</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1601298771720</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Fixed the issue with update country">
+      <created>1601374117110</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1601374117111</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Fixed the issue with update country">
+      <created>1601374138009</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1601374138009</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Trying to fix update account">
+      <created>1601379250952</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1601379250953</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Added withRouter hook to be able to redirect after a country is add">
+      <created>1601381722784</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1601381722785</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Trying to fix validation but not done yet !">
+      <created>1601392424458</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1601392424459</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Trying to fix validation of register form but not done yet !">
+      <created>1601454138577</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1601454138577</updated>
+    </task>
+    <task id="LOCAL-00036" summary="fixed merge conflicts">
+      <created>1601455084525</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1601455084526</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Added passwords match validation">
+      <created>1601458426601</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1601458426601</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Added is number validation in register form">
+      <created>1601465324853</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1601465324854</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Added validation for updateUser, UserAccount and check id password is strong">
+      <created>1601471319553</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1601471319554</updated>
+    </task>
+    <task id="LOCAL-00040" summary="validation component">
+      <created>1601475872806</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1601475872806</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Moved validation into its own file and used it in register, UserAccount and UpdateUser">
+      <created>1601539710345</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1601539710346</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Moved validation into AdminAccount.js">
+      <created>1601540751243</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1601540751244</updated>
+    </task>
+    <task id="LOCAL-00043" summary="added validation for add and update shipments forms">
+      <created>1601544464075</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1601544464076</updated>
+    </task>
+    <task id="LOCAL-00044" summary="added validation to add shipment as a guest">
+      <created>1601545101856</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1601545101856</updated>
+    </task>
+    <task id="LOCAL-00045" summary="added validation to add new country">
+      <created>1601545742593</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1601545742593</updated>
+    </task>
+    <task id="LOCAL-00046" summary="fixed some styles">
+      <created>1601560979226</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1601560979227</updated>
+    </task>
+    <task id="LOCAL-00047" summary="fixed some styles">
+      <created>1601561609496</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1601561609497</updated>
+    </task>
+    <task id="LOCAL-00048" summary="fixed some styles">
+      <created>1601562289724</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1601562289725</updated>
+    </task>
+    <task id="LOCAL-00049" summary="fixed merge conflicts">
+      <created>1601562916736</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1601562916737</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Added the form classname">
+      <created>1601622449264</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1601622449313</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Styled update shipment form">
+      <created>1601625712671</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1601625712677</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,8 +538,32 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added :&#10;Components: AdminMainPage, login, register, navbar, new shipments, user account, main page,&#10;Added route and style.css" />
+    <MESSAGE value="Veiw all countries, tying to update country(not working yet), fixed add country method" />
+    <MESSAGE value="fixed add country method" />
+    <MESSAGE value="Fixed the issue with that user lose access when the page refreshes" />
+    <MESSAGE value="Fixed the issue with logout" />
+    <MESSAGE value="Fixed the countries list" />
+    <MESSAGE value="Fixed update country multiplayer number, deleted some nor used code, added updateCountry component" />
+    <MESSAGE value="Fixed the issue with update country" />
+    <MESSAGE value="Trying to fix update account" />
+    <MESSAGE value="Added withRouter hook to be able to redirect after att country is add" />
+    <MESSAGE value="Added withRouter hook to be able to redirect after a country is add" />
+    <MESSAGE value="Trying to fix validation but not done yet !" />
+    <MESSAGE value="Trying to fix validation of register form but not done yet !" />
+    <MESSAGE value="Added passwords match validation" />
+    <MESSAGE value="Added is number validation in register form" />
+    <MESSAGE value="Added validation for updateUser, UserAccount and check id password is strong" />
+    <MESSAGE value="validation component" />
+    <MESSAGE value="Moved validation into its own file and used it in register, UserAccount and UpdateUser" />
+    <MESSAGE value="Moved validation into AdminAccount.js" />
+    <MESSAGE value="added validation for add and update shipments forms" />
+    <MESSAGE value="added validation to add shipment as a guest" />
+    <MESSAGE value="added validation to add new country" />
+    <MESSAGE value="fixed some styles" />
+    <MESSAGE value="fixed merge conflicts" />
+    <MESSAGE value="Added the form classname" />
+    <MESSAGE value="Styled update shipment form" />
+    <option name="LAST_COMMIT_MESSAGE" value="Styled update shipment form" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -209,10 +574,15 @@
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
     <state x="-1194" y="382" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600240644769" />
-    <state x="-1180" y="335" key="FileChooserDialogImpl" timestamp="1600177476179">
+    <state x="242" y="101" width="1040" height="744" key="DiffContextDialog" timestamp="1600851492304">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="-1337" y="212" width="1040" height="744" key="DiffContextDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600784345380" />
+    <state x="242" y="101" key="DiffContextDialog/0.0.1280.680@0.0.1280.680" timestamp="1600851492304" />
+    <state x="-1180" y="335" key="FileChooserDialogImpl" timestamp="1601539954676">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1180" y="335" key="FileChooserDialogImpl/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600177476179" />
+    <state x="-1180" y="335" key="FileChooserDialogImpl/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601539954676" />
     <state width="1877" height="139" key="GridCell.Tab.0.bottom" timestamp="1600268171529">
       <screen x="1920" y="0" width="1920" height="1160" />
     </state>
@@ -253,10 +623,39 @@
     </state>
     <state width="1237" height="247" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@0.0.1280.680" timestamp="1600267690496" />
     <state width="1877" height="139" key="GridCell.Tab.1.right/0.0.1280.680/1920.0.1920.1160@1920.0.1920.1160" timestamp="1600268171530" />
-    <state x="368" y="147" key="Vcs.Push.Dialog.v2" timestamp="1600107083819">
+    <state x="-1204" y="282" key="RollbackChangesDialog" timestamp="1601542923442">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1204" y="282" key="RollbackChangesDialog/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601542923442" />
+    <state x="477" y="86" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1600860684369" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1601103687345">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600094778518" />
-    <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1600107083819" />
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1601103687345" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1601625750801">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601625750800" />
+    <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1601392436907" />
+    <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600668436136" />
+    <state x="-1920" y="0" width="1566" height="945" key="dock-window-1" timestamp="1600937523544">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1920" y="0" width="1566" height="945" key="dock-window-1/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600937523544" />
+    <state x="-1253" y="179" width="585" height="801" key="find.popup" timestamp="1600957956692">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1253" y="179" width="585" height="801" key="find.popup/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1600957956692" />
+    <state x="297" y="151" key="run.anything.popup" timestamp="1600868666340">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="297" y="151" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1600868666340" />
+    <state x="-1297" y="255" width="672" height="678" key="search.everywhere.popup" timestamp="1601470935916">
+      <screen x="-1920" y="0" width="1920" height="1160" />
+    </state>
+    <state x="-1297" y="255" width="672" height="678" key="search.everywhere.popup/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601470935916" />
   </component>
 </project>
