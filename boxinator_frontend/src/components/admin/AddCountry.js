@@ -55,10 +55,10 @@ const AddCountry = (props) => {
     }
 
     return (
-        <div >
+        <div className="container" >
             <h1>New country: </h1>
             <br></br>
-            <Form onSubmit={onSubmitForm}>
+            <Form onSubmit={onSubmitForm} className="form-container">
                 <div>
                     <Form.Label>Country name : </Form.Label>
                     <Form.Control type="text" placeholder="Enter name" onChange={onCountryNameChanged} required/>

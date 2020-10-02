@@ -101,7 +101,7 @@ const SpecificShipment = () => {
         <div className="container">
             <br /><br />
 
-            <form onSubmit={onSubmitForm}>
+            <form onSubmit={onSubmitForm} className="form-container">
                 <label>Receiver</label>
                 <br />
                 <input type="text" name="receiverName" onChange={onShipmentChanged} value={shipment.receiverName} />

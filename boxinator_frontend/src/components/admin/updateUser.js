@@ -133,7 +133,7 @@ const UpdateUser = () => {
     return (
        
 
-        <div className="accountContainer"  style={{
+        <div className="container"  style={{
             position: 'absolute', 
             left: '50%', 
             top: '50%',
@@ -141,7 +141,7 @@ const UpdateUser = () => {
         }}>
             {userInfo.firstname ? <h1>{userInfo.firstname}´s Account</h1> : "" }
             <br></br>
-            <Form key={userInfo.id} onSubmit={onSubmitForm}>
+            <Form key={userInfo.id} onSubmit={onSubmitForm} className="form-container">
 
                 <Form.Row>
                     <Form.Group as={Col}>
