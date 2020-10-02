@@ -15,6 +15,10 @@ import axios from 'axios';
 import {Link,Redirect} from "react-router-dom";
 import SpecificShipment from '../admin/SpecificShipment';
 import { useHistory } from "react-router-dom";
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import {GET} from '../../api/CRUD'
 import ConfirmDialog from '../Dialog/CofirmDialog';
@@ -60,14 +64,21 @@ function createData(id,color,to, country, price, weight,creationDate,shipmentSta
   return { id,color,to, country, price, weight,creationDate,shipmentStatus};
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) =>({
   root: {
     width: '100%',
   },
   container: {
     maxHeight: 440,
   },
-});
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 export default function MainPage2() {
   
@@ -88,7 +99,8 @@ export default function MainPage2() {
    
 ));
 
-const allShipments = async () => await GET(`/shipments/customer/${accountId}`).then(res => setShipments(res.data)).catch(err => console.log(err))
+const listAllShipments = async () => await GET(`/shipments/customer/${accountId}`).then(res => setShipments(res.data)).catch(err => console.log(err))
+const allShipments = async () => await GET(`/shipments/`).then(res => setShipments(res.data)).catch(err => console.log(err))
 
 const apiCall =  async(status) => {
   
@@ -106,8 +118,10 @@ let token = localStorage.getItem('token');
 
 
 const onStatusOptionChanged = async (e) =>{
-  if(e.target.value === "all"){
+  if(e.target.value === "default"){
     allShipments();
+  }else if(e.target.value === "all"){
+    listAllShipments();
   }else{
      apiCall(e.target.value);
   }
@@ -138,15 +152,33 @@ const onStatusOptionChanged = async (e) =>{
   
   return (
       <>
-            <Link to="/newShipment"><Button variant="contained" color="primary">Add new shipment</Button></Link>
-            <select onChange={onStatusOptionChanged}>
-              <option value="all" defaultChecked>All</option>
+            <Link style={{float: 'right', marginTop:'10px'}} to="/newShipment"><Button variant="contained" color="primary">Add new shipment</Button></Link>
+            {/* <select onChange={onStatusOptionChanged}>
+              <option value="default" defaultChecked>Shipments</option>
               <option value="created">Created</option>
               <option value="received">Received</option>
               <option value="intransit">Intransit</option>
               <option value="complete">Completed</option>
               <option value="cancelled">Cancelled</option>
-            </select>
+              <option value="all">All</option>
+            </select> */}
+               <FormControl className={classes.formControl}>
+        <InputLabel id="select-label">Filter list</InputLabel>
+        <Select
+          labelId="select-label"
+          id="simple-select"
+          // value={age}
+          onChange={onStatusOptionChanged}
+        >
+          <MenuItem value={"default"} defaultChecked>Shipments</MenuItem>
+          <MenuItem value={"created"}>Created</MenuItem>
+          <MenuItem value={"received"}>Received</MenuItem>
+          <MenuItem value={"intransit"}>Intransit</MenuItem>
+          <MenuItem value={"complete"}>Completed</MenuItem>
+          <MenuItem value={"cancelled"}>Cancelled</MenuItem>
+          <MenuItem value={"all"}>All</MenuItem>
+        </Select>
+      </FormControl>
             <br/>
             <br/>
     <Paper className={classes.root}>
