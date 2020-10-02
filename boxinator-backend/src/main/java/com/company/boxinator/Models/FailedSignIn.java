@@ -2,7 +2,7 @@ package com.company.boxinator.Models;
 
 public class FailedSignIn {
     private Integer account_id;
-    private Integer counter = 0;
+    private Integer counter = 1;
 
     public FailedSignIn(){};
 
