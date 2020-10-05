@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import {validateName, formValid, validateEmail, validateIsNumber} from '../validation/validation.js';
 import Button from "react-bootstrap/Button";
+import {GET, PUT} from '../../api/CRUD';
 import AdminUpdateUserDialog from "../Dialog/AdminUpdateUserDialog";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,19 +35,10 @@ const UserAccount = () => {
     const formFields = { firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, contactNumber:userInfo.contactNumber, zipcode:userInfo.zipcode}
 
     useEffect(()=>{
-        console.log("Account id :" ,accountId)
         if(!accountId){
                 history.push("/homePage");
         }else{
-
-            axios.get(`http://localhost:8080/api/user/${accountId}`, { headers: {'Authorization': token} })
-                .then(res=>{
-                    
-                    setUserInfo(res.data)
-                })
-                .catch(err => {
-                    console.log(err);
-                })
+            GET(`/user/${accountId}`).then(res => setUserInfo(res.data)).catch(err => console.log(err));
         }
     }, [])
 
@@ -54,17 +46,10 @@ const UserAccount = () => {
         e.preventDefault();
         if(formValid(errorMessage, formFields)) {
             const body = {firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, zipcode: userInfo.zipcode,
-            contactNumber: userInfo.contactNumber, dateOfBirth: userInfo.dateOfBirth, countryOfResidence: userInfo.countryOfResidence, accountType: userInfo.accountType};
+            contactNumber: userInfo.contactNumber, dateOfBirth: userInfo.dateOfBirth, countryOfResidence: userInfo.countryOfResidence, 
+            accountType: userInfo.accountType, password};
         
-            await axios.put(`http://localhost:8080/api/user/${userInfo.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
-            .then(res=>{
-
-               console.log(res);
-               history.push("/mainPage")
-            })
-            .catch(err => {
-                console.log("Error: ", err);
-            })
+            await PUT(`/user/${userInfo.id}`, body).then(res => history.push('/mainPage')).catch(err => console.log(err));
         }else{
         alert('Invalid credentials ! Make sure that all the required fields filled');
         }
@@ -77,7 +62,6 @@ const UserAccount = () => {
         switch (name) {
             case "firstname":
                 setErrorMessage({firstname: validateName(value)}) ;
-
                 break;
             case "lastname":
                 setErrorMessage({lastname: validateName(value)}) ;
@@ -141,6 +125,16 @@ const UserAccount = () => {
                         <Form.Label>Contact number :</Form.Label>
                         <Form.Control name="contactNumber" type="text" placeholder={userInfo.contactNumber} value={userInfo.contactNumber} onChange={onUserInfoChanged}/>
                         <span className="errorMessage">{errorMessage.contactNumber}</span>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" placeholder="Enter password..." onChange={onPasswordChanged}/>
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="formGridPassword2">
+                        <Form.Label>Repeat Password</Form.Label>
+                        <Form.Control type="password" placeholder="Confirm password..." onChange={onConfirmPasswordChanged}/>
                     </Form.Group>
                 </Form.Row>
 

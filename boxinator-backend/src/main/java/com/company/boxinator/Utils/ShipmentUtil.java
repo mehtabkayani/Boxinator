@@ -7,7 +7,13 @@ import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.ShipmentRepository;
 import com.company.boxinator.Repositories.UserRepository;
 
+import java.nio.channels.ShutdownChannelGroupException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ShipmentUtil {
     private UserRepository userRepository;
@@ -45,4 +51,23 @@ public class ShipmentUtil {
         newShipment.setShipmentStatus(oldShipment.getShipmentStatus());
         return newShipment;
     }
+    public List<Shipment> orderLatestShipment(List<Shipment> shipments){
+        return shipments.stream()
+                .sorted(Comparator.comparing(Shipment::getCreation_date).reversed())
+                .collect(Collectors.toList());
+    }
+    public List<Shipment> filterByStatus(List<Shipment> shipments, ShipmentStatus shipmentStatus){
+        return shipments.stream().filter(shipment -> shipment.getShipmentStatus() == shipmentStatus).collect(Collectors.toList());
+    }
+    public List<Shipment> filterAdminList(List<Shipment> shipments){
+        return shipments.stream()
+                .filter(shipment -> (shipment.getShipmentStatus() != ShipmentStatus.CANCELLED) && (shipment.getShipmentStatus() != ShipmentStatus.COMPLETED))
+                .collect(Collectors.toList());
+    }
+    public List<Shipment> filterByCompletedOrIntransit(List<Shipment> shipments){
+        return shipments.stream()
+                .filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.INTRANSIT || shipment.getShipmentStatus() == ShipmentStatus.COMPLETED)
+                .collect(Collectors.toList());
+    }
+
 }

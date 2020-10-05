@@ -12,8 +12,11 @@ import java.util.Optional;
 public interface ShipmentRepository extends JpaRepository<Shipment, Integer> {
 
     Optional<List<Shipment>> findAllByUserId(Integer userId);
+
     Optional<Shipment> findByUserId(Integer userId);
 
     Optional<Shipment> findShipmentByIdAndUser(Integer shipmentId, User user);
+
+    List<Shipment> findShipmentsByUserId(Integer userId);
 
 }

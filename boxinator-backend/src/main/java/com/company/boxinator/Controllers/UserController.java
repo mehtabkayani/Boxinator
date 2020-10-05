@@ -134,7 +134,8 @@ public class UserController {
         }
 
         if (jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
-            return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+//            return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(userRepository.findUsersByIdIsNot(jwtUtil.getJwtId(jwt)), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -182,9 +183,6 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         }
-
-
-
     }
     @PutMapping("/user/{id}")
     public ResponseEntity updateUserById(@RequestBody User user, @PathVariable("id") Integer id, @RequestHeader("Authorization") String jwt) {
@@ -203,7 +201,8 @@ public class UserController {
             if(jwtUtil.getJwtId(jwt) == id){
                 System.out.println("IN ADMIN OWN ACCOUNT UPDATE");
                 updateUserInDB.setEmail(user.getEmail());
-                //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                if(!user.getPassword().isBlank())
+                    updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 updateUserInDB.setFirstname(user.getFirstname());
                 updateUserInDB.setLastname(user.getLastname());
                 updateUserInDB.setContactNumber(user.getContactNumber());
@@ -211,14 +210,15 @@ public class UserController {
                 updateUserInDB.setDateOfBirth(user.getDateOfBirth());
                 updateUserInDB.setZipcode(user.getZipcode());
                 updateUserInDB.setAccountType(user.getAccountType());
+
                 if(!securityConf.validInputs(updateUserInDB.getEmail(), updateUserInDB.getFirstname(), updateUserInDB.getLastname(),
                         updateUserInDB.getContactNumber(), updateUserInDB.getCountryOfResidence(),
                         updateUserInDB.getDateOfBirth()))
                 return new ResponseEntity(HttpStatus.FORBIDDEN);
             } else {
-                System.out.println("IN ADMIN BUT ANOTHER ACCOUNT UPDATE");
 
                 updateUserInDB.setEmail(user.getEmail());
+                //UPDATE THIS MAYBE????
                 //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 updateUserInDB.setAccountType(user.getAccountType());
 
@@ -235,7 +235,8 @@ public class UserController {
         Integer userId = jwtUtil.getJwtId(jwt);
         if (userId == id) {
             updateUserInDB.setEmail(user.getEmail());
-            //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            if(!user.getPassword().isBlank())
+                updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             updateUserInDB.setFirstname(user.getFirstname());
             updateUserInDB.setLastname(user.getLastname());
             updateUserInDB.setContactNumber(user.getContactNumber());
@@ -299,14 +300,12 @@ public class UserController {
     public ResponseEntity deleteUser(HttpServletRequest request, @RequestHeader("Authorization") String jwt) {
         String email = request.getHeader("data");
         if (!sessionUtil.isSessionValid(jwt)) {
-            System.out.println("FIRST");
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         if(!securityConf.validInputs(email))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
         if (jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
-            System.out.println(email);
             Optional<User> deleteUser = userRepository.findByEmail(email);
             if (!deleteUser.isPresent()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -315,11 +314,13 @@ public class UserController {
                 List<Shipment> listOfShipments = shipmentRepository.findAll();
                 List<Shipment> filteredList = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == deleteUser.get().getId()).collect(Collectors.toList());
                 Integer id = deleteUser.get().getId();
+
                 shipmentRepository.deleteAll(filteredList);
                 if(deleteUser.get().getAccountType() != AccountType.GUEST){
                     AuthToken userAuthToken = authTokenRepository.findByUserId(id);
                     authTokenRepository.delete(userAuthToken);
                 }
+
                 Optional<BannedAccount> bannedUser = bannedAccountRepository.findBannedAccountByUserId(deleteUser.get().getId());
                 if(bannedUser.isPresent()){
                     bannedAccountRepository.delete(bannedUser.get());
@@ -328,7 +329,6 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.OK).body(email + " deleted succeded");
             }
         }
-        System.out.println("Second");
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 

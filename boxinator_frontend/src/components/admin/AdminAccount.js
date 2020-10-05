@@ -56,7 +56,9 @@ const AdminAccount = () => {
         e.preventDefault();
         if(formValid(errorMessage, formFields)) {
             const body = {email: userInfo.email, accountType: userInfo.accountType,
-                 firstname: userInfo.firstname, lastname: userInfo.lastname, dateOfBirth: userInfo.dateOfBirth, countryOfResidence: userInfo.countryOfResidence, zipcode: userInfo.zipcode, contactNumber: userInfo.contactNumber };
+                 firstname: userInfo.firstname, lastname: userInfo.lastname, dateOfBirth: userInfo.dateOfBirth,
+                countryOfResidence: userInfo.countryOfResidence, zipcode: userInfo.zipcode, 
+                contactNumber: userInfo.contactNumber, password };
         
             await axios.put(`http://localhost:8080/api/user/${userInfo.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
             .then(res=>{
@@ -71,7 +73,7 @@ const AdminAccount = () => {
         }
     }
     const onUserInfoChanged = e => {
-        const {name, value} = e.target;
+        const {name, value} = e.target
         setUserInfo(prevState => ({...prevState, [name]: value}));
 
         switch (name) {
@@ -141,6 +143,24 @@ const AdminAccount = () => {
                         <Form.Label>Contact number :</Form.Label>
                         <Form.Control name="contactNumber" type="text" placeholder={userInfo.contactNumber} value={userInfo.contactNumber} onChange={onUserInfoChanged}/>
                         <span className="errorMessage">{errorMessage.contactNumber}</span>
+                    </Form.Group>
+                </Form.Row>
+
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formGridNumber">
+                        <Form.Label>Contact number :</Form.Label>
+                        <Form.Control name="contactNumber" type="text" placeholder={userInfo.contactNumber} value={userInfo.contactNumber} onChange={onUserInfoChanged}/>
+                        <span className="errorMessage">{errorMessage.contactNumber}</span>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group as={Col} controlId="formGridPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" placeholder="Enter password..." onChange={onPasswordChanged}/>
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="formGridPassword2">
+                        <Form.Label>Repeat Password</Form.Label>
+                        <Form.Control type="password" placeholder="Confirm password..." onChange={onConfirmPasswordChanged}/>
                     </Form.Group>
                 </Form.Row>
 
