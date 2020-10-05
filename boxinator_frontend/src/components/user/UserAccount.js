@@ -9,6 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import {validateName, formValid, validateEmail, validateIsNumber} from '../validation/validation.js';
 import Button from "react-bootstrap/Button";
 import {GET, PUT} from '../../api/CRUD';
+import AdminUpdateUserDialog from "../Dialog/AdminUpdateUserDialog";
+
 const useStyles = makeStyles((theme) => ({
     root: {
       '& .MuiTextField-root': {
@@ -25,6 +27,7 @@ const UserAccount = () => {
     const [firstname, setFirstName] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    let UpdateUser = "Update";
     const accountId = localStorage.getItem('id');
     let token = localStorage.getItem('token');
     const history = useHistory();
@@ -46,7 +49,7 @@ const UserAccount = () => {
             contactNumber: userInfo.contactNumber, dateOfBirth: userInfo.dateOfBirth, countryOfResidence: userInfo.countryOfResidence, 
             accountType: userInfo.accountType, password};
         
-            await PUT(`/user/${userInfo.id}`, body).then(res => console.log(res)).catch(err => console.log(err));
+            await PUT(`/user/${userInfo.id}`, body).then(res => history.push('/mainPage')).catch(err => console.log(err));
         }else{
         alert('Invalid credentials ! Make sure that all the required fields filled');
         }
@@ -137,7 +140,7 @@ const UserAccount = () => {
 
                 <br></br>
                 <div>
-                    <Button type="submit" variant="outline-danger" className="floatRightBtn">Save changes</Button>
+                    <AdminUpdateUserDialog onSubmitForm={onSubmitForm} userInfo={userInfo} operation={UpdateUser}/>
                 </div>
             </Form>
         </div>

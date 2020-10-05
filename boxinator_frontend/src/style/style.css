@@ -47,8 +47,11 @@
     margin-right: 2%;
 
 }
-.floatRightBtn{
-    float: right;
+.registerLinkBtn{
+margin-left: 1170%;
+}
+.floatLeftBtn{
+    float: left;
 }
 
 /*Admin main page component*/

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link,useHistory} from "react-router-dom";
 import axios from "axios";
-import {GET} from '../../api/CRUD'
+import {GET,DELETE} from '../../api/CRUD'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -14,27 +14,34 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import UpdateIcon from '@material-ui/icons/Update';
 import { Tooltip } from '@material-ui/core';
+import CancelIcon from '@material-ui/icons/Cancel';
+
 
 const AllUsers = () => {
+    const history = useHistory();
     const [users, setUsers] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     useEffect(() => {
-
-        GET('/users').then(res => setUsers(res.data)).catch(err => console.log(err));
+        getAllUsers();
 
     },[])
 
+    const getAllUsers = () =>{
+        GET('/users').then(res => setUsers(res.data)).catch(err => console.log(err));
+
+    }
+
     const url = "/updateUser";
 
-    function createData(id, firstname, lastname, dateOfBirth, email, countryOfResidence, contactNumber) {
+    function createData(id, firstname, lastname, dateOfBirth, email, countryOfResidence, contactNumber, accountType) {
 
-        return { id, firstname, lastname, dateOfBirth, email, countryOfResidence, contactNumber };
+        return { id, firstname, lastname, dateOfBirth, email, countryOfResidence, contactNumber, accountType };
     }
 
     const rows = users.map(user => (
 
-        createData(user.id, user.firstname, user.lastname, user.dateOfBirth, user.email, user.countryOfResidence, user.contactNumber)
+        createData(user.id, user.firstname, user.lastname, user.dateOfBirth, user.email, user.countryOfResidence, user.contactNumber, user.accountType)
 
     ));
 
@@ -55,9 +62,26 @@ const AllUsers = () => {
             maxHeight: 440,
         },
     });
+
+    const handleGuestDelete = async (userEmail) => {
+        const body = {    
+            email: userEmail   
+        };
+ 
+        axios.delete("http://localhost:8080/api/guest", {
+            headers: { Authorization: localStorage.getItem('token'), data: userEmail}})
+         .then(res => {
+             console.log(res);
+            getAllUsers();
+            })
+            .catch(err => {
+                console.log("Error: ", err);
+            }) 
+        
+
+    }
     const classes = useStyles();
     const columns = [
-        { id: 'id', label: '#ID', minWidth: 100 },
         { id: 'firstname', label: 'Firstname', minWidth: 100 },
         { id: 'lastname', label: 'Lastname', minWidth: 100 },
         {
@@ -78,15 +102,19 @@ const AllUsers = () => {
             label: 'Country Of Residence',
             minWidth: 100,
             align: 'right',
-            // format: (value) => value.toFixed(2),
         },
         {
             id: 'contactNumber',
             label: 'Contact number',
             minWidth: 100,
             align: 'right',
-            // format: (value) => value.toFixed(2),
         },
+        {
+            id: 'accountType',
+            label: 'Role',
+            minWidth: 100,
+            align: 'right',
+        }
     ];
 
     return (
@@ -124,8 +152,11 @@ const AllUsers = () => {
                                         })}
                                         
                                         <Link to={`/updateUser/${row.id}`}>
-                                    <Tooltip title="Update"><UpdateIcon color="primary"></UpdateIcon></Tooltip>
+                                   {(row.accountType === 'ADMINISTRATOR' || row.accountType === 'REGISTERED_USER') && <Tooltip title="Update"><UpdateIcon color="primary"></UpdateIcon></Tooltip>} 
+                                   
+                                   {row.accountType === 'GUEST' && <Tooltip title="Cancel"><CancelIcon color="secondary"></CancelIcon></Tooltip>} 
                                     </Link>
+                                  
                                     </TableRow>
                                 );
                             })}

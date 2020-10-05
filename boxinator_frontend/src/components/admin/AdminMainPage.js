@@ -71,7 +71,6 @@ const AdminMainPage = () => {
     });
     const classes = useStyles();
     const columns = [
-        { id: 'id', label: '#ID', minWidth: 100 },
         { id: 'to', label: 'To', minWidth: 100 },
         { id: 'country', label: 'Country', minWidth: 100 },
         {
@@ -109,7 +108,7 @@ const AdminMainPage = () => {
     return (
         <>
 
-            <Link to="/country"><Button>Change country cost</Button></Link>
+            <Link to="/country"><Button>View countries</Button></Link>
             <Link to="/allUsers"><Button>View users</Button></Link>
             <Link to="/addCountry"><Button>Add new country</Button></Link>
             <Link to="/newShipment"><Button>Add new shipment</Button></Link>
@@ -135,7 +134,6 @@ const AdminMainPage = () => {
             <br/>
             <br/>
             <Paper className={classes.root}>
-
                 <TableContainer className={classes.container}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
@@ -159,7 +157,7 @@ const AdminMainPage = () => {
                                             const value = row[column.id];
                                             return (
                                                 <TableCell key={column.id} align={column.align} style={{backgroundColor: value, color: value}}>
-                                                    {column.format && typeof value === 'number' ? column.format(value) : value}
+                                                      {column.label === 'Price' ? `${value} kr` : (column.label === 'Weight' ? `${value} kg` : value) }
                                                 </TableCell>
 
                                             );

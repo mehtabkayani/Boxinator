@@ -60,7 +60,6 @@ const AdminAccount = () => {
         
             await axios.put(`http://localhost:8080/api/user/${userInfo.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
             .then(res=>{
-                // alert("Profile has been updated!")
                 history.push("/adminMainPage")
                console.log(res);
             })
@@ -144,17 +143,6 @@ const AdminAccount = () => {
                         <span className="errorMessage">{errorMessage.contactNumber}</span>
                     </Form.Group>
                 </Form.Row>
-                <Form.Row>
-                    {/* <Form.Group as={Col} controlId="formGridPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" value={userInfo.password} disabled placeholder="Enter password..." onChange={onPasswordChanged}/>
-                    </Form.Group>
-
-                    <Form.Group as={Col} controlId="formGridPassword2">
-                        <Form.Label>Repeat Password</Form.Label>
-                        <Form.Control type="password"  value={userInfo.password} disabled placeholder="Confirm password..." onChange={onConfirmPasswordChanged}/>
-                    </Form.Group> */}
-                </Form.Row>
 
                 <FormControl className={classes.formControl}>
                       <InputLabel id="select-label">Account role</InputLabel>
@@ -168,21 +156,12 @@ const AdminAccount = () => {
                             <MenuItem value={"ADMINISTRATOR"}>ADMINISTRATOR</MenuItem>
                             </Select>
                        </FormControl>
-
-                {/* <Form.Row>
-                <select name="accountType" onChange={onUserInfoChanged} value={userInfo.accountType}>
-                        <option key="ADMINISTRATOR" value="ADMINISTRATOR">ADMINISTRATOR</option>
-                        <option key="REGISTERED_USER" value="REGISTERED_USER">REGISTERED_USER</option>
-                    </select>
-                </Form.Row> */}
                 <br></br>
                 <div>
-                    {/* <Button type="submit" variant="secondary">Save changes</Button> */}
                     <AdminUpdateUserDialog onSubmitForm={onSubmitForm} userInfo={userInfo} operation={UpdateUser}/>                   
                 </div>
             </Form>
             <br></br>
-            {/* <Link to="/"><Button variant="success">Home</Button></Link> */}
         </div>
     );
 }

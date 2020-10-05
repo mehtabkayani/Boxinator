@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Link, useHistory} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Form, Button} from "react-bootstrap";
@@ -38,30 +38,6 @@ const Register = () => {
             password
         };
 
-        // await POST('/user', body).then(res => {
-        //     alert(res.text());
-        //     clearForm();
-        // }).catch(err => console.log(err));
-
-        // try {
-            
-        //    await fetch(
-        //         "http://localhost:8080/api/user",
-        //         {
-        //             method: "POST",
-        //             headers: {
-        //                 "Content-type": "application/json"
-        //             },
-        //             body: JSON.stringify(body)
-
-        //         }
-        //     ).then(response => response.text())
-        //         .then(text =>  alert("You have been successfully registered! \n You have to validate your email account before you can log in."))
-        //     document.getElementById("registerForm").reset();//Find a better way
-
-        // } catch (err) {
-        //     console.error(err.message);
-
         if (formValid(errorMessage, formFields)) {
             await POSTDEFAULT('/user', body).then(res => {
                 alert("You have been successfully registered! \n You have to validate your email account before you can log in.")
@@ -72,39 +48,9 @@ const Register = () => {
 
         }
 
-        // try {
-        //     if(formValid(errorMessage)) {
-        //         await fetch(
-        //             "http://localhost:8080/api/user",
-        //             {
-        //                 method: "POST",
-        //                 headers: {
-        //                     "Content-type": "application/json"
-        //                 },
-        //                 body: JSON.stringify(body)
-
-        //             }
-        //         ).then(response => response.text())
-        //             .then(text => alert(text))
-        //         document.getElementById("registerForm").reset();//Find a better way
-        //     }else {
-        //         alert('Invalid credentials ! Make sure that all the required fields filled')
-        //         console.error('invalid information !');
-        //     }
-        // } catch (err) {
-        //     console.error(err.message);
-        // }
     };
 
-    // const clearForm = () => {
-    //     setFirstname('');
-    //     setLastname('');
-    //     setEmail('');
-    //     setPassword('');
-    //     setBirthDate('');
-    //     setZipcode('');
-    //     setContactNumber('');
-    // }
+ 
 
     const onFirstnameChanged = ev =>{
         setFirstname(ev.target.value.trim());
@@ -211,8 +157,7 @@ const Register = () => {
             <br></br>
 
             <Link to="/login">Already registered? Login here</Link>
-            <div> <img src={trackingLogo} className="trackingLogo"></img>
-                    {/* <h3><i>Register and keep track of all your shipments!</i></h3> */}
+            <div> <img src={trackingLogo} alt="" className="trackingLogo"></img>
                     </div>
 
            

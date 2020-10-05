@@ -9,12 +9,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
-import CancelIcon from '@material-ui/icons/Cancel';
-import Tooltip from '@material-ui/core/Tooltip';
+// import CancelIcon from '@material-ui/icons/Cancel';
+// import Tooltip from '@material-ui/core/Tooltip';
 import axios from 'axios';
-import {Link,Redirect} from "react-router-dom";
-import SpecificShipment from '../admin/SpecificShipment';
-import { useHistory } from "react-router-dom";
+import {Link} from "react-router-dom";
+// import SpecificShipment from '../admin/SpecificShipment';
+// import { useHistory } from "react-router-dom";
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -125,6 +125,7 @@ const onStatusOptionChanged = async (e) =>{
   return (
       <>
             <Link style={{float: 'right', marginTop:'10px'}} to="/newShipment"><Button variant="contained" color="primary">Add new shipment</Button></Link>
+
                <FormControl className={classes.formControl}>
         <InputLabel shrink labelId="demo-simple-select-placeholder-label-label">Filter list</InputLabel>
         <Select
@@ -174,16 +175,14 @@ const onStatusOptionChanged = async (e) =>{
                       
                         
                       <TableCell key={column.id} align={column.align} style={{backgroundColor: value, color: value}}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
+                       {column.label === 'Price' ? `${value} kr` : (column.label === 'Weight' ? `${value} kg` : value) }
                       </TableCell>
                       
                     );
                   })}        
                          {(row.shipmentStatus === "CREATED" || row.shipmentStatus === "INTRANSIT") &&
-                        //  <Tooltip title="Cancel"><CancelIcon color="secondary" onClick={() => handleCancelShipment(row.id)}></CancelIcon></Tooltip>
                         <ConfirmDialog packetId={row.id} handleCancelShipment={handleCancelShipment}/> 
                          }  
-                {/* <Button onClick={() => handleCancelShipment(row.id)}>Cancel</Button> */}
                 </TableRow>
               );
             })}

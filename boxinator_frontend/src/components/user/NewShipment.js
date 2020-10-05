@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {Link,useHistory} from "react-router-dom";
-// import Select from 'react-select';
 import {Button, Form} from "react-bootstrap";
 import axios from "axios";
 import ShipmentDialog from "../Dialog/ShipmentDialog";
@@ -69,7 +68,6 @@ const NewShipment = () => {
                 }
             ).then(response => response.text())
             .then(history.push("/mainPage"))
-                // .then(text => alert(text))
 
         } catch (err) {
             console.error(err.message);
@@ -137,13 +135,11 @@ const NewShipment = () => {
                                 <Select
                                 labelId="select-label"
                                 id="country-select"
-                                // value={}
                                 required
                                 onChange={onDestinationCountryChanged}
                                 >
                             {countries.map(name => (
                                 <MenuItem key={name.id} value={name.id} >{name.countryName}</MenuItem>
-
                             ))}
                                 </Select>
                             </FormControl>
