@@ -201,7 +201,8 @@ public class UserController {
             if(jwtUtil.getJwtId(jwt) == id){
                 System.out.println("IN ADMIN OWN ACCOUNT UPDATE");
                 updateUserInDB.setEmail(user.getEmail());
-                //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                if(!user.getPassword().isBlank())
+                    updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 updateUserInDB.setFirstname(user.getFirstname());
                 updateUserInDB.setLastname(user.getLastname());
                 updateUserInDB.setContactNumber(user.getContactNumber());
@@ -209,14 +210,15 @@ public class UserController {
                 updateUserInDB.setDateOfBirth(user.getDateOfBirth());
                 updateUserInDB.setZipcode(user.getZipcode());
                 updateUserInDB.setAccountType(user.getAccountType());
+
                 if(!securityConf.validInputs(updateUserInDB.getEmail(), updateUserInDB.getFirstname(), updateUserInDB.getLastname(),
                         updateUserInDB.getContactNumber(), updateUserInDB.getCountryOfResidence(),
                         updateUserInDB.getDateOfBirth()))
                 return new ResponseEntity(HttpStatus.FORBIDDEN);
             } else {
-                System.out.println("IN ADMIN BUT ANOTHER ACCOUNT UPDATE");
 
                 updateUserInDB.setEmail(user.getEmail());
+                //UPDATE THIS MAYBE????
                 //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 updateUserInDB.setAccountType(user.getAccountType());
 
@@ -233,7 +235,8 @@ public class UserController {
         Integer userId = jwtUtil.getJwtId(jwt);
         if (userId == id) {
             updateUserInDB.setEmail(user.getEmail());
-            //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            if(!user.getPassword().isBlank())
+                updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             updateUserInDB.setFirstname(user.getFirstname());
             updateUserInDB.setLastname(user.getLastname());
             updateUserInDB.setContactNumber(user.getContactNumber());

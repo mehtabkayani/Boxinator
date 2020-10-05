@@ -132,10 +132,6 @@ const NewShipment = () => {
                         <label>Destination country: </label>
                     <br></br>
                         
-                        {/* <select onChange={onDestinationCountryChanged} required>
-                        
-                            {countries.map(name => (<option key={name.id} value={name.id} required>{name.countryName}</option>))}
-                            </select>  */}
                             <FormControl className={classes.formControl}>
                                 <InputLabel id="demo-simple-select-label">{countryName}</InputLabel>
                                 <Select
@@ -148,7 +144,6 @@ const NewShipment = () => {
                             {countries.map(name => (
                                 <MenuItem key={name.id} value={name.id} >{name.countryName}</MenuItem>
 
-                            // <option key={name.id} value={name.id} required>{name.countryName}</option>
                             ))}
                                 </Select>
                             </FormControl>
@@ -157,7 +152,6 @@ const NewShipment = () => {
 
                 <br></br>
                 <div className="floatRightBtn">
-                    {/* <Button variant="outline-danger" type="submit">Add shipment</Button> */}
                     <ShipmentDialog receiverName={receiverName} weight={weight} boxcolor={boxcolor} countryName={countryName} onSubmitForm={onSubmitForm}  />
                 </div>
             </Form>

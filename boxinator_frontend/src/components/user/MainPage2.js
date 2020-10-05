@@ -106,7 +106,6 @@ const onStatusOptionChanged = async (e) =>{
   setStatusOption(e.target.value)
 } 
 
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };

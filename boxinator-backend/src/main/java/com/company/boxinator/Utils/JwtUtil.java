@@ -36,12 +36,10 @@ public class JwtUtil {
     }
     public boolean isJwtValid(String jwt){
         boolean isValid = false;
-        System.out.println("In isJWTValid");
         try{
             parseJWT(jwt);
             isValid = true;
         } catch (Exception ex){
-            System.out.println("In catch");
         }
         return isValid;
     }

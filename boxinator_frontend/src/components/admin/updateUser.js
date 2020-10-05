@@ -32,8 +32,6 @@ const UpdateUser = () => {
     const history = useHistory();
     let DeleteUser = "Delete";
     let UpdateUser = "Update";
-
-    const [password1, setPassword1] = useState('');
   
     const [errorMessage, setErrorMessage] = useState({firstname: '', lastname: '', email: '', contactNumber:'', zipcode:''});
     const formFields = { firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, contactNumber:userInfo.contactNumber, zipcode:userInfo.zipcode}
@@ -170,57 +168,11 @@ const UpdateUser = () => {
                         <Form.Control name="email" type="email" placeholder={userInfo.email} value={userInfo.email} onChange={onUserInfoChanged}/>
                         <span className="errorMessage">{errorMessage.email}</span>
                     </Form.Group>
-                </Form.Row>               
-                {/* <Form.Row>
+                </Form.Row>         
 
-                </Form.Row>
-                <div>
-                    <label>Date of birth: </label>
-                    <input name="dateOfBirth" type="date" placeholder={userInfo.dateOfBirth} value={userInfo.dateOfBirth} onChange={onUserInfoChanged}/>
-                </div>
-                <Form.Row>
-                    <Form.Group controlId="formGridAddress">
-                        <Form.Label>Country of residence :</Form.Label>
-                        <Form.Control name="countryOfResidence" type="text" placeholder={userInfo.countryOfResidence} value={userInfo.countryOfResidence} onChange={onUserInfoChanged}/>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formGridZip">
-                        <Form.Label>Zip code/Postal code :</Form.Label>
-                        <Form.Control name="zipcode" type="text" placeholder={userInfo.zipcode} value={userInfo.zipcode} onChange={onUserInfoChanged}/>
-                        <span className="errorMessage">{errorMessage.zipcode}</span>
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row>
-                    <Form.Group as={Col} controlId="formGridNumber">
-                        <Form.Label>Contact number :</Form.Label>
-                        <Form.Control name="contactNumber" type="text" placeholder={userInfo.contactNumber} value={userInfo.contactNumber} onChange={onUserInfoChanged}/>
-                        <span className="errorMessage">{errorMessage.contactNumber}</span>
-                    </Form.Group>
-                </Form.Row>
-                <Form.Row>
-
-                    {/* <Form.Group as={Col} controlId="formGridPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Enter password..." onChange={onPasswordChanged}/>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formGridPassword2">
-                        <Form.Label>Repeat Password</Form.Label>
-                        <Form.Control type="password" placeholder="Confirm password..." onChange={onConfirmPasswordChanged}/>
-                    </Form.Group>
-
-                </Form.Row> 
-                <div>
-                    {errorMessage}
-                </div> */}
+                
             <br></br>
 
-                  {/* <Form.Row>
-                <select name="accountType" onChange={onUserInfoChanged} value={userInfo.accountType}>
-                        <option key="GUEST" value="GUEST">GUEST</option>
-                        <option key="REGISTERED_USER" value="REGISTERED_USER">REGISTERED_USER</option>
-                        <option key="ADMINISTRATOR" value="ADMINISTRATOR">ADMINISTRATOR</option>
-                    </select>
-
-                </Form.Row> */}
        <FormControl className={classes.formControl}>
             <InputLabel id="select-label">Account role</InputLabel>
         <Select
@@ -230,7 +182,6 @@ const UpdateUser = () => {
           value={userInfo.accountType}
           onChange={onUserInfoChanged}
         >
-          <MenuItem value={"GUEST"}>Guest</MenuItem>
           <MenuItem value={"REGISTERED_USER"}>USER</MenuItem>
           <MenuItem value={"ADMINISTRATOR"}>ADMINISTRATOR</MenuItem>
         </Select>
@@ -238,15 +189,12 @@ const UpdateUser = () => {
 
                 <br></br>
                 <div style={{display:'flex'}}>
-                    {/* <Button type="submit" variant="secondary">Save changes</Button> */}
                     
                     <AdminUpdateUserDialog onSubmitForm={onSubmitForm} userInfo={userInfo} operation={UpdateUser}/>                   
                     <AdminUpdateUserDialog onSubmitForm={handleDelete} userInfo={userInfo} operation={DeleteUser}/>
 
-                    {/* <Button variant="danger" onClick={handleDelete}>Delete</Button> */}
                 </div>
             </Form>
-            {/* <Link to="/"><Button variant="success">Home</Button></Link> */}
         </div>
     );
 }
