@@ -64,7 +64,6 @@ const AllUsers = () => {
     });
 
     const handleGuestDelete = async (userEmail) => {
-        // e.preventDefault();
         const body = {    
             email: userEmail   
         };
@@ -74,7 +73,6 @@ const AllUsers = () => {
          .then(res => {
              console.log(res);
             getAllUsers();
-            //  history.push("/allUsers")
             })
             .catch(err => {
                 console.log("Error: ", err);
@@ -84,7 +82,6 @@ const AllUsers = () => {
     }
     const classes = useStyles();
     const columns = [
-        { id: 'id', label: '#ID', minWidth: 100 },
         { id: 'firstname', label: 'Firstname', minWidth: 100 },
         { id: 'lastname', label: 'Lastname', minWidth: 100 },
         {
@@ -105,21 +102,18 @@ const AllUsers = () => {
             label: 'Country Of Residence',
             minWidth: 100,
             align: 'right',
-            // format: (value) => value.toFixed(2),
         },
         {
             id: 'contactNumber',
             label: 'Contact number',
             minWidth: 100,
             align: 'right',
-            // format: (value) => value.toFixed(2),
         },
         {
             id: 'accountType',
             label: 'Role',
             minWidth: 100,
             align: 'right',
-            // format: (value) => value.toFixed(2),
         }
     ];
 

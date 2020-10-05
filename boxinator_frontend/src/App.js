@@ -3,7 +3,6 @@ import './App.css';
 import history from './history';
 import {
     BrowserRouter as Router,
-    // Router,
     Switch,
     Route,
     Redirect
@@ -151,13 +150,7 @@ function App() {
                             return <AddShipmentGuest/>
                         }
                     }}/>
-                    {/* <Route path="/specificShipment/:id" render={props => {
-                        if (userInfo.accountType === "ADMINISTRATOR" || userInfo.accountType === "REGISTERED_USER") {
-                            return <SpecificShipment />
-                        } else {
-                            return <Redirect to="/"/> 
-                        }
-                    }}/> */}
+                 
                     <Route exact path="/" render={props => {
                         if (userInfo.accountType === "ADMINISTRATOR") {
                             return <Redirect to="/adminMainPage"/>
@@ -165,7 +158,6 @@ function App() {
                             return <Redirect to="/mainPage"/>
 
                         }
-                        // return <Redirect to="/userAccount" />
                         else {
                             return <HomePage/>
                         }
@@ -205,7 +197,6 @@ function App() {
                         }
                     }}/>
 
-                    {/* <Route exact path="/specificShipment/:id" component={SpecificShipment} /> */}
 
                     <Route exact path="/specificShipment/:id" component={SpecificShipment}/>
 

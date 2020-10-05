@@ -35,9 +35,6 @@ export default function AdminUpdateUserDialog({userInfo, onSubmitForm, operation
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          {/* <Button onClick={handleClose} color="primary">
-            Disagree
-          </Button> */}
           <Button onClick={onSubmitForm} color="primary" autoFocus>
             Got it!
           </Button>

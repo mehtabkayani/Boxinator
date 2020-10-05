@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {Link, useHistory} from "react-router-dom";
-import {Button, Form} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import {useParams} from "react-router";
 import {DELETE} from '../../api/CRUD';
 import AdminUpdateUserDialog from "../Dialog/AdminUpdateUserDialog";
 import FormControl from '@material-ui/core/FormControl';
+import Button from "@material-ui/core/Button";
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -51,6 +52,7 @@ const UpdateUser = () => {
 
 
     }, [id])
+    
     const onSubmitForm = async e => {
         e.preventDefault();
 
@@ -71,7 +73,6 @@ const UpdateUser = () => {
             await axios.put(`http://localhost:8080/api/user/${userInfo.id}`, body, {headers: {'Authorization': localStorage.getItem('token')}})
                 .then(res => {
                     console.log(res);
-                    //alert(`You have updated ${userInfo.firstname}`)
                     history.push("/allUsers")
                 })
                 .catch(err => {
@@ -109,7 +110,6 @@ const UpdateUser = () => {
 
 
     const handleDelete = async () => {
-        // e.preventDefault();
         const body = {
             firstname: userInfo.firstname,
             lastname: userInfo.lastname,
@@ -123,22 +123,18 @@ const UpdateUser = () => {
 
         };
         console.log(body);
-        // let result = window.confirm(`Want to delete? ${userInfo.firstname} ${userInfo.lastname}`);
  
    
-        // if (result) {
             console.log(userInfo.email)
         axios.delete("http://localhost:8080/api/user", {
             headers: { Authorization: localStorage.getItem('token'), data: userInfo.email}})
          .then(res => {
              console.log(res);
-            // alert(`You have deleted ${userInfo.firstname}`)
              history.push("/allUsers")
             })
             .catch(err => {
                 console.log("Error: ", err);
             }) 
-        // }
 
     }
     const onPasswordChanged = ev => setPassword(ev.target.value.trim());
@@ -146,6 +142,8 @@ const UpdateUser = () => {
 
 
     return (
+        <div>
+            <Link to="/allUsers" className="floatLeftBtn"><Button variant="outlined" color="primary">All users</Button></Link>
         <div className="container">
         {userInfo.firstname ? <h1>{userInfo.firstname}´s Account</h1> : "" }
 
@@ -235,10 +233,11 @@ const UpdateUser = () => {
         
         </>
  
- }
-
-       
+ }       
     </div>
+
+        </div>
+
     );
 }
 export default UpdateUser;

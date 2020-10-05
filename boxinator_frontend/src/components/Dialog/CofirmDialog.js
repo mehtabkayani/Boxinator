@@ -21,9 +21,6 @@ export default function ConfirmDialog({packetId,handleCancelShipment}) {
 
   return (
     <div>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Cancel
-      </Button> */}
       <Tooltip title="Cancel"><CancelIcon color="secondary" onClick={handleClickOpen}></CancelIcon></Tooltip>
       <Dialog
         open={open}

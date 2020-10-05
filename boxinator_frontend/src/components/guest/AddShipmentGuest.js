@@ -56,7 +56,6 @@ const AddShipmentGuest = () => {
 
     const onSubmitForm = async e => {
     
-        //e.preventDefault();
         try {
             if(formValid(errorMessage, formFields)) {
             const body = {receiverName, weight,boxcolor,user, country};
@@ -138,26 +137,18 @@ const AddShipmentGuest = () => {
                     <div>
                         <label>Destination country: </label>
                     <br></br>
-    
-                        
-                        {/* <select onChange={onDestinationCountryChange} required>
-                        
-                            {countries.map(name => (<option key={name.id} value={name.id} required>{name.countryName}</option>))}
-                            </select>  */}
 
                                 <FormControl className={classes.formControl}>
                                 <InputLabel id="demo-simple-select-label">{countryName}</InputLabel>
                                 <Select
                                 labelId="select-label"
                                 id="country-select"
-                                // value={}
                                 required
                                 onChange={onDestinationCountryChange}
                                 >
                             {countries.map(name => (
                                 <MenuItem key={name.id} value={name.id} >{name.countryName}</MenuItem>
 
-                            // <option key={name.id} value={name.id} required>{name.countryName}</option>
                             ))}
                                 </Select>
                             </FormControl>
@@ -165,12 +156,11 @@ const AddShipmentGuest = () => {
                     <br></br>
                     <div>
                         <Button type="submit" variant="outline-danger">Add shipment</Button>
-            {/* <Link to="/"> <button>Go back</button></Link> */}
                     </div>
                 </Form>
 
             <br></br>
-            <img src={sendGuestLogo}></img>
+            <img src={sendGuestLogo} alt=""></img>
 
 
 
