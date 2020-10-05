@@ -57,7 +57,6 @@ const AllUsers = () => {
     });
     const classes = useStyles();
     const columns = [
-        { id: 'id', label: '#ID', minWidth: 100 },
         { id: 'firstname', label: 'Firstname', minWidth: 100 },
         { id: 'lastname', label: 'Lastname', minWidth: 100 },
         {

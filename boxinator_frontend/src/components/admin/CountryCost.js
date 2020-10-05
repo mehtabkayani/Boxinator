@@ -64,7 +64,6 @@ const CountryCost = () => {
     });
     const classes = useStyles();
     const columns = [
-        { id: 'id', label: '#ID', minWidth: 170 },
         { id: 'countryName', label: 'Country Name', minWidth: 170 },
         { id: 'countryCode', label: 'Country Code', minWidth: 100 },
         {
