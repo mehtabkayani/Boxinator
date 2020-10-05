@@ -72,7 +72,7 @@ const AdminAccount = () => {
         }
     }
     const onUserInfoChanged = e => {
-        const {name, value} = e.target;
+        const {name, value} = e.target
         setUserInfo(prevState => ({...prevState, [name]: value}));
 
         switch (name) {

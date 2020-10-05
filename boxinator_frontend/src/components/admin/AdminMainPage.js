@@ -16,25 +16,30 @@ import {GET} from '../../api/CRUD';
 import UpdateIcon from '@material-ui/icons/Update';
 import { Tooltip } from '@material-ui/core';
 
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+
 const AdminMainPage = () => {
     const [shipments, setShipments] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [statusOption, setStatusOption] = useState('');
+
     const url = "/specificShipment";
 
     useEffect(() => {
 
-        GET('/shipments').then(res => setShipments(res.data)).catch(err => console.log(err));
+        getShipments(statusOption);
 
-        // axios.get('http://localhost:8080/api/shipments', {headers: {'Authorization': localStorage.getItem('token')}})
-        //     .then(res => {
-        //         // console.log(res.data);
-        //         setShipments(res.data)
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     })
-    }, [])
+    }, [statusOption])
+
+    const getShipments = async (status) => await GET(`/shipments/${status}`).then(res => setShipments(res.data)).catch(err => console.log(err));
+
+    const onStatusOptionChanged = async (e) =>{
+        setStatusOption(e.target.value)
+      } 
 
     function createData(id, to, country, price, weight, boxcolor, creationDate,status) {
 
@@ -109,6 +114,26 @@ const AdminMainPage = () => {
             <Link to="/addCountry"><Button>Add new country</Button></Link>
             <Link to="/newShipment"><Button>Add new shipment</Button></Link>
             <h1>All Shipments</h1>
+            <FormControl className={classes.formControl}>
+        <InputLabel shrink labelId="demo-simple-select-placeholder-label-label">Filter list</InputLabel>
+        <Select
+          labelId="demo-simple-select-placeholder-label-label"
+          id="simple-select"
+          value={statusOption}
+          displayEmpty
+          onChange={onStatusOptionChanged}
+          className={classes.selectEmpty}
+        >
+          <MenuItem value="">Shipments</MenuItem>
+          <MenuItem value={"created"}>Created</MenuItem>
+          <MenuItem value={"received"}>Received</MenuItem>
+          <MenuItem value={"intransit"}>Intransit</MenuItem>
+          <MenuItem value={"complete"}>Completed</MenuItem>
+          <MenuItem value={"cancelled"}>Cancelled</MenuItem>
+        </Select>
+      </FormControl>
+            <br/>
+            <br/>
             <Paper className={classes.root}>
 
                 <TableContainer className={classes.container}>

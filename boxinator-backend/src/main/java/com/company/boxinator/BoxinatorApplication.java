@@ -9,7 +9,5 @@ public class BoxinatorApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BoxinatorApplication.class, args);
-//        Google2FA google2FA = new Google2FA();
-//        google2FA.runGoogle2fa("2AFJDAYB5IR6FJ5HDQPERRHTYIARINVL");
     }
 }

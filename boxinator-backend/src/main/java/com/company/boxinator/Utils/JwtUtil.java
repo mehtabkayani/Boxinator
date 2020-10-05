@@ -22,7 +22,6 @@ public class JwtUtil {
                 builder()
                 .setId(id.toString())
                 .setSubject(accountType.toString())
-                .claim("ld20", new Random().nextInt(20) + 1)
                 .setIssuedAt(Date.from(instant))
                 .setExpiration(Date.from(instant.minus(1, ChronoUnit.HOURS)))
                 .signWith(Keys.hmacShaKeyFor(secret))
