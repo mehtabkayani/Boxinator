@@ -167,10 +167,11 @@ const onStatusOptionChanged = async (e) =>{
         <Select
           labelId="select-label"
           id="simple-select"
-          // value={age}
+          defaultValue={"default"}
+          display="default"
           onChange={onStatusOptionChanged}
         >
-          <MenuItem value={"default"} defaultChecked>Shipments</MenuItem>
+          <MenuItem value={"default"}>Shipments</MenuItem>
           <MenuItem value={"created"}>Created</MenuItem>
           <MenuItem value={"received"}>Received</MenuItem>
           <MenuItem value={"intransit"}>Intransit</MenuItem>
