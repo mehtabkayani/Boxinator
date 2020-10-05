@@ -2,6 +2,8 @@ package com.company.boxinator.Models;
 
 import com.company.boxinator.Models.Enums.AccountType;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -113,11 +115,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
-    //@JsonProperty
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }

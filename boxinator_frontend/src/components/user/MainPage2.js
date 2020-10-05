@@ -9,18 +9,18 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
-import CancelIcon from '@material-ui/icons/Cancel';
-import Tooltip from '@material-ui/core/Tooltip';
+// import CancelIcon from '@material-ui/icons/Cancel';
+// import Tooltip from '@material-ui/core/Tooltip';
 import axios from 'axios';
-import {Link,Redirect} from "react-router-dom";
-import SpecificShipment from '../admin/SpecificShipment';
-import { useHistory } from "react-router-dom";
+import {Link} from "react-router-dom";
+// import SpecificShipment from '../admin/SpecificShipment';
+// import { useHistory } from "react-router-dom";
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {GET} from '../../api/CRUD'
+import {GET, PUT} from '../../api/CRUD'
 import ConfirmDialog from '../Dialog/CofirmDialog';
 
 
@@ -87,46 +87,24 @@ export default function MainPage2() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [shipments, setShipments]= useState([]);
   const [shipment, setShipment]= useState({});
-  const accountId = localStorage.getItem('id');
   const [statusOption, setStatusOption] = useState('');
 
   useEffect(()=>{
-          allShipments();
-  },[])
+          getShipments(statusOption);
+  },[statusOption])
 
   const rows = shipments.map(shipment => (
     createData(shipment.id,shipment.boxcolor, shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight,shipment.creation_date,shipment.shipmentStatus)
    
 ));
 
-const listAllShipments = async () => await GET(`/shipments/customer/${accountId}`).then(res => setShipments(res.data)).catch(err => console.log(err))
-const allShipments = async () => await GET(`/shipments/`).then(res => setShipments(res.data)).catch(err => console.log(err))
-
-const apiCall =  async(status) => {
-  
-let token = localStorage.getItem('token');
-
-
-  //await READ(`/shipments/${status}`).then(res => setShipments(res.data)).catch(err => console.log(err));
-  await axios.get(`http://localhost:8080/api/shipments/${status}`, { headers: {'Authorization': token} }).then(res => setShipments(res.data))
-
-  //await GET(`/shipments/${status}`).then(res => setShipments(res.data)).catch(err => console.log(err));
-  //await axios.get(`http://localhost:8080/api/shipments/${status}`, { headers: {'Authorization': eval(localStorage.getItem('token'))} }).then(res => setShipments(res.data))
-
-
-}
+//const listAllShipments = async () => await GET(`/shipments/customer/${accountId}`).then(res => setShipments(res.data)).catch(err => console.log(err))
+const getShipments = async (status) => await GET(`/shipments/${status}`).then(res => setShipments(res.data)).catch(err => console.log(err));
 
 
 const onStatusOptionChanged = async (e) =>{
-  if(e.target.value === "default"){
-    allShipments();
-  }else if(e.target.value === "all"){
-    listAllShipments();
-  }else{
-     apiCall(e.target.value);
-  }
+  setStatusOption(e.target.value)
 } 
-
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -137,47 +115,33 @@ const onStatusOptionChanged = async (e) =>{
     setPage(0);
   };
 
-  const handleCancelShipment = async (row)=> {
-   let s = shipments.filter(shipment => shipment.id === row)
-   let currentShipment = s[0];
-  //  alert("You have cancelled the shipment!")
-    
+  const handleCancelShipment = async (shipmentId) => {
     const body = {shipmentStatus: "CANCELLED" };
-  console.log(localStorage.getItem("token"))
-  let token = localStorage.getItem('token');
-   await axios.put(`http://localhost:8080/api/shipments/${currentShipment.id}`, body, { headers: {'Authorization': token} })
-   await allShipments();
 
+   await PUT(`/shipments/${shipmentId}`, body).then(res => console.log(res)).catch(err => console.log(err));
+   await getShipments(statusOption);
   }
   
   return (
       <>
             <Link style={{float: 'right', marginTop:'10px'}} to="/newShipment"><Button variant="contained" color="primary">Add new shipment</Button></Link>
-            {/* <select onChange={onStatusOptionChanged}>
-              <option value="default" defaultChecked>Shipments</option>
-              <option value="created">Created</option>
-              <option value="received">Received</option>
-              <option value="intransit">Intransit</option>
-              <option value="complete">Completed</option>
-              <option value="cancelled">Cancelled</option>
-              <option value="all">All</option>
-            </select> */}
+
                <FormControl className={classes.formControl}>
-        <InputLabel id="select-label">Filter list</InputLabel>
+        <InputLabel shrink labelId="demo-simple-select-placeholder-label-label">Filter list</InputLabel>
         <Select
-          labelId="select-label"
+          labelId="demo-simple-select-placeholder-label-label"
           id="simple-select"
-          defaultValue={"default"}
-          display="default"
+          value={statusOption}
+          displayEmpty
           onChange={onStatusOptionChanged}
+          className={classes.selectEmpty}
         >
-          <MenuItem value={"default"}>Shipments</MenuItem>
+          <MenuItem value="">Shipments</MenuItem>
           <MenuItem value={"created"}>Created</MenuItem>
           <MenuItem value={"received"}>Received</MenuItem>
           <MenuItem value={"intransit"}>Intransit</MenuItem>
           <MenuItem value={"complete"}>Completed</MenuItem>
           <MenuItem value={"cancelled"}>Cancelled</MenuItem>
-          <MenuItem value={"all"}>All</MenuItem>
         </Select>
       </FormControl>
             <br/>
@@ -211,16 +175,14 @@ const onStatusOptionChanged = async (e) =>{
                       
                         
                       <TableCell key={column.id} align={column.align} style={{backgroundColor: value, color: value}}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
+                       {column.label === 'Price' ? `${value} kr` : (column.label === 'Weight' ? `${value} kg` : value) }
                       </TableCell>
                       
                     );
                   })}        
                          {(row.shipmentStatus === "CREATED" || row.shipmentStatus === "INTRANSIT") &&
-                        //  <Tooltip title="Cancel"><CancelIcon color="secondary" onClick={() => handleCancelShipment(row.id)}></CancelIcon></Tooltip>
                         <ConfirmDialog packetId={row.id} handleCancelShipment={handleCancelShipment}/> 
                          }  
-                {/* <Button onClick={() => handleCancelShipment(row.id)}>Cancel</Button> */}
                 </TableRow>
               );
             })}

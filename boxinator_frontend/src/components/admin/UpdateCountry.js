@@ -57,7 +57,6 @@ const UpdateCountry = () => {
             await axios.put(`http://localhost:8080/api/settings/countries/${country.id}`, body, {headers: {'Authorization': localStorage.getItem('token')}})
                 .then(res => {
 
-                    // alert(`${country.countryName} has been updated`)
                     history.push("/country");
                     console.log(res.data);
                 })
@@ -69,7 +68,6 @@ const UpdateCountry = () => {
         }
     }
     const onCountryNameChanged = e => {
-        // let matches = e.target.value.match(/[a-zA-Z]+/g);
         let letters = /^[A-Za-z]+$/;
         if (e.target.value.match(letters) && e.target.value.length > 2) {
             setHelperName('');
@@ -122,10 +120,7 @@ const UpdateCountry = () => {
             <div className="container">
                 <h1>Update {country.countryName}</h1>
                 <Form noValidate autoComplete="off" className="form-container">
-                        {/* <TextField label="" id="standard-size-normal" value={country.countryName} onChange={onCountryChange} />
-          <TextField label="" id="standard-size-normal" value={country.countryCode}  onChange={onCountryChange}/>
-          <TextField label="" id="standard-size-normal" value={country.multiplyerNumber} onChange={onCountryChange} />
-          <br/> */}
+    
                         <FormLabel>Country Name</FormLabel>
                         <br/>
                         <TextField helperText={helperName} error={errorName} label="" id="outlined-size-small"
@@ -148,30 +143,11 @@ const UpdateCountry = () => {
                                    placeholder={country.multiplyerNumber} onChange={onCountryMultiplyerChanged}
                                    required/>
                         <br/>
-                        {/* <Button type="submit" variant="contained" color="primary" onClick={updateCountries}>Update country</Button> */}
                         <CountryDialog countryName={country.countryName} updateCountries={updateCountries}/>
 
                 </Form>
             </div>
         </div>
-
-            // <div key={country.id}>
-
-
-            // <Form onSubmit={uppdateCountries}>
-            // {/* <input type="text"  name="code" value={countryCode} onChange={onCodeChange}/>
-        //         <input type="text"  name="name" value={countryName} onChange={onNameChange}/>*/}
-            // <input type="number" name="multiplyerNumber" value={country.multiplyerNumber}
-                //      onChange={onCountryChange}/>
-            // <input type="text" name="countryName" value={country.countryName} onChange={onCountryChange}/>
-            // <input type="text" name="countryCode" value={country.countryCode} onChange={onCountryChange}/>
-            // <Button type="submit" color="primary">update</Button>
-            // </Form>
-
-            // <br></br>
-            // <Link to="/adminMainPage"><Button variant="success">Admin main page</Button></Link>
-            // <Link to="/addCountry"><Button variant="contained" color="primary">Add new country</Button></Link>
-            // </div>
 
     )
 }

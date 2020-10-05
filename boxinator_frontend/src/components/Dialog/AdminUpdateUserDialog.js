@@ -31,13 +31,10 @@ export default function AdminUpdateUserDialog({userInfo, onSubmitForm, operation
         <DialogTitle id="alert-dialog-title">{""}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {userInfo.firstname} has been {operation}d!
+            {userInfo.email} has been {operation}d!
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          {/* <Button onClick={handleClose} color="primary">
-            Disagree
-          </Button> */}
           <Button onClick={onSubmitForm} color="primary" autoFocus>
             Got it!
           </Button>
