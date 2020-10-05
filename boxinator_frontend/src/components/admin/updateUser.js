@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {Link, useHistory} from "react-router-dom";
-import {Button, Form} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import {useParams} from "react-router";
 import {DELETE} from '../../api/CRUD';
 import AdminUpdateUserDialog from "../Dialog/AdminUpdateUserDialog";
 import FormControl from '@material-ui/core/FormControl';
+import Button from "@material-ui/core/Button";
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -145,6 +146,8 @@ const UpdateUser = () => {
     const onConfirmPasswordChanged = ev => setConfirmPassword(ev.target.value.trim());
 
     return (
+        <div>
+            <Link to="/allUsers" className="floatLeftBtn"><Button variant="outlined" color="primary">All users</Button></Link>
         <div className="container">
             {userInfo.firstname ? <h1>{userInfo.firstname}´s Account</h1> : "" }
             <br></br>
@@ -247,6 +250,7 @@ const UpdateUser = () => {
                 </div>
             </Form>
             {/* <Link to="/"><Button variant="success">Home</Button></Link> */}
+        </div>
         </div>
     );
 }

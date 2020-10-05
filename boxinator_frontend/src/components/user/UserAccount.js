@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import {validateName, formValid, validateEmail, validateIsNumber} from '../validation/validation.js';
 import Button from "react-bootstrap/Button";
+import AdminUpdateUserDialog from "../Dialog/AdminUpdateUserDialog";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -152,7 +153,7 @@ const UserAccount = () => {
 
                 <br></br>
                 <div>
-                    <Button type="submit" variant="outline-danger" className="floatRightBtn">Save changes</Button>
+                    <AdminUpdateUserDialog onSubmitForm={onSubmitForm} userInfo={userInfo} />
                 </div>
             </Form>
         </div>

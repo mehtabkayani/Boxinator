@@ -65,8 +65,10 @@ import { useHistory } from "react-router-dom";
                         <Fragment>
                             <Nav className="mr-auto">
                                 {/* <Nav.Link><Link to="/">Home</Link></Nav.Link> */}
+                               {/* <Link to="/register" className="registerLinkBtn"><Button variant="outline-info">Register</Button></Link>*/}
                             </Nav>
                             <Form inline>
+                                <Link to="/register"><Button variant="outline-info">Register</Button></Link>
                                 <Link to="/login"><Button variant="outline-info">Login</Button></Link>
                             </Form>
                         </Fragment>
