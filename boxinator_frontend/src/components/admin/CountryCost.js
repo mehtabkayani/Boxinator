@@ -74,13 +74,6 @@ const CountryCost = () => {
         }
     ];
 
-    // const rows = countries.map(country => (
-
-    //     <tr key={country.id}>
-    //         <Link to={`/updateCountry/${country.id}`}>{country.countryName}</Link>
-    //         <td>{country.multiplyerNumber}</td>
-    //     </tr>
-    // ));
     return(
 
         <>
@@ -136,19 +129,7 @@ const CountryCost = () => {
                        />
                    </Paper>
                </>
-        // <div>
-
-        //     <Table>
-        //         <thead>
-        //         <th>Country</th>
-        //         <th>Multiplier</th>
-        //         </thead>
-        //         <tbody>{rows}</tbody>
-        //     </Table>
-        //     <br></br>
-        //     <Link to="/adminMainPage"><Button variant="success">Admin main page</Button></Link>
-        //     <Link to="/addCountry"><Button variant="contained" color="primary">Add new country</Button></Link>
-        // </div>
+   
     )
 }
 export default CountryCost;

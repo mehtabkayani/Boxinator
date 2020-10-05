@@ -26,6 +26,7 @@ const UserAccount = () => {
     const [firstname, setFirstName] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    let UpdateUser = "Update";
     const accountId = localStorage.getItem('id');
     let token = localStorage.getItem('token');
     const history = useHistory();
@@ -57,7 +58,9 @@ const UserAccount = () => {
         
             await axios.put(`http://localhost:8080/api/user/${userInfo.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
             .then(res=>{
+
                console.log(res);
+               history.push("/mainPage")
             })
             .catch(err => {
                 console.log("Error: ", err);
@@ -140,20 +143,10 @@ const UserAccount = () => {
                         <span className="errorMessage">{errorMessage.contactNumber}</span>
                     </Form.Group>
                 </Form.Row>
-                {/* <Form.Row>
-                    <Form.Group as={Col} controlId="formGridPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Enter password..." onChange={onPasswordChanged}/>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formGridPassword2">
-                        <Form.Label>Repeat Password</Form.Label>
-                        <Form.Control type="password" placeholder="Confirm password..." onChange={onConfirmPasswordChanged}/>
-                    </Form.Group>
-                </Form.Row> */}
 
                 <br></br>
                 <div>
-                    <AdminUpdateUserDialog onSubmitForm={onSubmitForm} userInfo={userInfo} />
+                    <AdminUpdateUserDialog onSubmitForm={onSubmitForm} userInfo={userInfo} operation={UpdateUser}/>
                 </div>
             </Form>
         </div>

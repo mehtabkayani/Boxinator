@@ -25,15 +25,6 @@ const AdminMainPage = () => {
     useEffect(() => {
 
         GET('/shipments').then(res => setShipments(res.data)).catch(err => console.log(err));
-
-        // axios.get('http://localhost:8080/api/shipments', {headers: {'Authorization': localStorage.getItem('token')}})
-        //     .then(res => {
-        //         // console.log(res.data);
-        //         setShipments(res.data)
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     })
     }, [])
 
     function createData(id, to, country, price, weight, boxcolor, creationDate,status) {
@@ -132,7 +123,7 @@ const AdminMainPage = () => {
                                             const value = row[column.id];
                                             return (
                                                 <TableCell key={column.id} align={column.align} style={{backgroundColor: value, color: value}}>
-                                                    {column.format && typeof value === 'number' ? column.format(value) : value}
+                                                      {column.label === 'Price' ? `${value} kr` : (column.label === 'Weight' ? `${value} kg` : value) }
                                                 </TableCell>
 
                                             );

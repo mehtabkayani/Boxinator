@@ -16,28 +16,15 @@ const Login = ({ getUser}) => {
 
             const body = { password, email }
 
-            // console.log("Code: ", code);
-            // await POSTLOGIN('/login', body, code).then(res => {
-            //     console.log(res);
-            //     localStorage.setItem('id', res.data.account_id);
-            //     localStorage.setItem('token', res.data.token);
-            //     getUser(res.data.account_id);
-            // }).catch(err => console.log(err));
+   
             await axios.post("http://localhost:8080/api/login", body, { headers: {'Authorization': code} })
             .then(res=>{
                 console.log("token", res)
                localStorage.setItem('id', res.data.account_id);
               localStorage.setItem('token', res.data.token);
-               // localStorage.setItem('user', res.data);
-
-
-            // history.push('/mainPage')
-            
+    
                if(res.data.token && res.data.account_id){
                    getUser(res.data.account_id);
-
-                   //window.location = '/mainPage';
-
 
                }
 

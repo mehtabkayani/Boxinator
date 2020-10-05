@@ -9,12 +9,12 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
-import CancelIcon from '@material-ui/icons/Cancel';
-import Tooltip from '@material-ui/core/Tooltip';
+// import CancelIcon from '@material-ui/icons/Cancel';
+// import Tooltip from '@material-ui/core/Tooltip';
 import axios from 'axios';
-import {Link,Redirect} from "react-router-dom";
-import SpecificShipment from '../admin/SpecificShipment';
-import { useHistory } from "react-router-dom";
+import {Link} from "react-router-dom";
+// import SpecificShipment from '../admin/SpecificShipment';
+// import { useHistory } from "react-router-dom";
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -86,9 +86,9 @@ export default function MainPage2() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [shipments, setShipments]= useState([]);
-  const [shipment, setShipment]= useState({});
+  // const [shipment, setShipment]= useState({});
   const accountId = localStorage.getItem('id');
-  const [statusOption, setStatusOption] = useState('');
+  // const [statusOption, setStatusOption] = useState('');
 
   useEffect(()=>{
           allShipments();
@@ -106,14 +106,7 @@ const apiCall =  async(status) => {
   
 let token = localStorage.getItem('token');
 
-
-  //await READ(`/shipments/${status}`).then(res => setShipments(res.data)).catch(err => console.log(err));
   await axios.get(`http://localhost:8080/api/shipments/${status}`, { headers: {'Authorization': token} }).then(res => setShipments(res.data))
-
-  //await GET(`/shipments/${status}`).then(res => setShipments(res.data)).catch(err => console.log(err));
-  //await axios.get(`http://localhost:8080/api/shipments/${status}`, { headers: {'Authorization': eval(localStorage.getItem('token'))} }).then(res => setShipments(res.data))
-
-
 }
 
 
@@ -140,7 +133,6 @@ const onStatusOptionChanged = async (e) =>{
   const handleCancelShipment = async (row)=> {
    let s = shipments.filter(shipment => shipment.id === row)
    let currentShipment = s[0];
-  //  alert("You have cancelled the shipment!")
     
     const body = {shipmentStatus: "CANCELLED" };
   console.log(localStorage.getItem("token"))
@@ -153,15 +145,7 @@ const onStatusOptionChanged = async (e) =>{
   return (
       <>
             <Link style={{float: 'right', marginTop:'10px'}} to="/newShipment"><Button variant="contained" color="primary">Add new shipment</Button></Link>
-            {/* <select onChange={onStatusOptionChanged}>
-              <option value="default" defaultChecked>Shipments</option>
-              <option value="created">Created</option>
-              <option value="received">Received</option>
-              <option value="intransit">Intransit</option>
-              <option value="complete">Completed</option>
-              <option value="cancelled">Cancelled</option>
-              <option value="all">All</option>
-            </select> */}
+          
                <FormControl className={classes.formControl}>
         <InputLabel id="select-label">Filter list</InputLabel>
         <Select
@@ -211,16 +195,14 @@ const onStatusOptionChanged = async (e) =>{
                       
                         
                       <TableCell key={column.id} align={column.align} style={{backgroundColor: value, color: value}}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
+                       {column.label === 'Price' ? `${value} kr` : (column.label === 'Weight' ? `${value} kg` : value) }
                       </TableCell>
                       
                     );
                   })}        
                          {(row.shipmentStatus === "CREATED" || row.shipmentStatus === "INTRANSIT") &&
-                        //  <Tooltip title="Cancel"><CancelIcon color="secondary" onClick={() => handleCancelShipment(row.id)}></CancelIcon></Tooltip>
                         <ConfirmDialog packetId={row.id} handleCancelShipment={handleCancelShipment}/> 
                          }  
-                {/* <Button onClick={() => handleCancelShipment(row.id)}>Cancel</Button> */}
                 </TableRow>
               );
             })}
