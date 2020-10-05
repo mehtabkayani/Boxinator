@@ -88,7 +88,7 @@ export default function MainPage2() {
   const [shipments, setShipments]= useState([]);
   // const [shipment, setShipment]= useState({});
   const accountId = localStorage.getItem('id');
-  // const [statusOption, setStatusOption] = useState('');
+   const [statusOption, setStatusOption] = useState('');
 
   useEffect(()=>{
           allShipments();
