@@ -1,7 +1,9 @@
 import React, { useState} from "react";
-import {Button, Form} from "react-bootstrap";
+import {Form} from "react-bootstrap";
 import { withRouter } from 'react-router-dom'
 import {formValid, isPositiveNumber, validateName} from "../validation/validation";
+import ShipmentDialog from "../Dialog/ShipmentDialog";
+import AddCountryDialog from "../Dialog/AddCountryDialog";
 
 
 const AddCountry = (props) => {
@@ -78,7 +80,7 @@ const AddCountry = (props) => {
 
                 <br></br>
                 <div>
-                    <Button variant="outline-danger" type="submit">Add country</Button>
+                    <AddCountryDialog countryCode={countryCode} multiplyerNumber={multiplyerNumber} countryName={countryName} onSubmitForm={onSubmitForm}  />
                 </div>
             </Form>
 

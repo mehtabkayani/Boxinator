@@ -29,17 +29,11 @@ const SpecificShipment = () => {
     const classes = useStyles();
     const {id} = useParams();
     const history = useHistory();
-    //Comment out shipmentId and pass in id as props
-    //For development use only
-    // shipmentId = 78;
-
     const [shipment, setShipment] = useState({});
     const [countryList, setCountryList] = useState([]);
     const [country, setCountry] = useState({});
     const [errorMessage, setErrorMessage] = useState({receiverName:'', weight:''});
     const formFields = { receiverName: shipment.receiverName, weight: shipment.weight}
-
-    //const statusList = ["CREATED", "RECIEVED", "INTRANSIT", "COMPLETED", "CANCELLED"]
 
     useEffect(() => {
         
@@ -80,11 +74,9 @@ const SpecificShipment = () => {
         e.preventDefault();
         console.log(shipment);
 
-        //Passing ID recieves error 400 in api endpoint
         const body = {boxcolor: shipment.boxcolor, country, shipmentStatus: shipment.shipmentStatus, receiverName: shipment.receiverName, weight: shipment.weight}
         if(formValid(errorMessage, formFields)) {
         await PUT(`/shipments/${id}`, body).then(res => {
-            // alert("Shipment has been updated!")
             history.push("/adminMainPage") 
         }).catch(err=> console.log(err));
         }else{
@@ -110,10 +102,7 @@ const SpecificShipment = () => {
 
     }
 
-    // const printStatusList = countryList.map((status, index) => (<option key={status} value={index}>{status}</option>))
-    // const printCountryList = countryList.map(country => (<option key={country.id} value={country.id}>{country.countryName}</option>))
     const printCountryList = countryList.map(country => (<MenuItem key={country.id} value={country.id}>{country.countryName}</MenuItem>))
-    // const statusList = ["CREATED", "RECIEVED", "INTRANSIT", "COMPLETED", "CANCELLED"]
     return (
         <div className="container">
             <br /><br />
@@ -135,14 +124,6 @@ const SpecificShipment = () => {
                     <Form.Control type="color" name="boxcolor"  onChange={onShipmentChanged} required value={shipment.boxcolor}/>
                 </div>
 
-                {/* <label>Shipment status</label>
-                <select name="shipmentStatus" onChange={onShipmentChanged} value={shipment.shipmentStatus}>
-                    <option key="CREATED" value="CREATED">CREATED</option>
-                    <option key="RECIEVED" value="RECIEVED">RECIEVED</option>
-                    <option key="INTRANSIT" value="INTRANSIT">INTRANSIT</option>
-                    <option key="COMPLETED" value="COMPLETED">COMPLETED</option>
-                    <option key="CANCELLED" value="CANCELLED">CANCELLED</option>
-                </select> */}
                          <FormControl className={classes.formControl}>
                             <InputLabel id="select-label">{shipment.shipmentStatus}</InputLabel>
                             <Select
@@ -174,13 +155,6 @@ const SpecificShipment = () => {
                             </Select>
                         </FormControl>
 
-                      {/*  <label>Country</label>
-                        
-                 <select name="id" onChange={onCountryChanged} value={country.id}>
-                {printCountryList}
-
-                </select> */}
-
                 <br/>
                 <div style={{display: 'flex'}}>
                     <AdminUpdateShipmentDialog onSubmitForm={onSubmitForm} receiverName={shipment.receiverName} weight={shipment.weight} boxcolor={shipment.boxcolor} countryName={country.countryName}/>
@@ -188,7 +162,6 @@ const SpecificShipment = () => {
                     <Button onClick={handleDelete} variant="outlined" color="secondary" autoFocus>Delete</Button>
                 </div>
             </Form>
-            {/* <Button type="submit" onClick={onSubmitForm} variant="outlined" color="primary" autoFocus>Save</Button> */}
         </div>
     );
 }
