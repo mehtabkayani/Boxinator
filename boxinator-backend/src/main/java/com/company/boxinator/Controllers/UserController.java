@@ -315,10 +315,11 @@ public class UserController {
                 List<Shipment> listOfShipments = shipmentRepository.findAll();
                 List<Shipment> filteredList = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == deleteUser.get().getId()).collect(Collectors.toList());
                 Integer id = deleteUser.get().getId();
-                AuthToken userAuthToken = authTokenRepository.findByUserId(id);
-
                 shipmentRepository.deleteAll(filteredList);
-                authTokenRepository.delete(userAuthToken);
+                if(deleteUser.get().getAccountType() != AccountType.GUEST){
+                    AuthToken userAuthToken = authTokenRepository.findByUserId(id);
+                    authTokenRepository.delete(userAuthToken);
+                }
                 Optional<BannedAccount> bannedUser = bannedAccountRepository.findBannedAccountByUserId(deleteUser.get().getId());
                 if(bannedUser.isPresent()){
                     bannedAccountRepository.delete(bannedUser.get());

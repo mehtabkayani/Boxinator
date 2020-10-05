@@ -33,6 +33,7 @@ const AddShipmentGuest = () => {
     const [boxcolor, setBoxColor] = useState("#050505");
     const [countries, setCountries] = useState([]);
     const [country, setCountry] = useState({})
+    const [countryName, setCountryName] = useState("")
     const [user, setUser] = useState({email : ""});
     const [errorMessage, setErrorMessage] = useState({receiverName:'', weight:'', email:''});
     const formFields = { receiverName: receiverName, weight: weight, user:user};
@@ -44,6 +45,8 @@ const AddShipmentGuest = () => {
             setCountries(res.data);
             console.log(res.data[0].id)
             setCountry({id: res.data[0].id})
+            setCountryName(res.data[0].countryName)
+
         })
         .catch(err => {
             console.log(err);
@@ -104,6 +107,7 @@ const AddShipmentGuest = () => {
          setCountry({id})
    
         };
+        const printCountryList = countries.map(country => (<MenuItem key={country.id} value={country.id}>{country.countryName}</MenuItem>))
 
      
     return (
@@ -136,10 +140,27 @@ const AddShipmentGuest = () => {
                     <br></br>
     
                         
-                        <select onChange={onDestinationCountryChange} required>
+                        {/* <select onChange={onDestinationCountryChange} required>
                         
                             {countries.map(name => (<option key={name.id} value={name.id} required>{name.countryName}</option>))}
-                            </select> 
+                            </select>  */}
+
+                                <FormControl className={classes.formControl}>
+                                <InputLabel id="demo-simple-select-label">{countryName}</InputLabel>
+                                <Select
+                                labelId="select-label"
+                                id="country-select"
+                                // value={}
+                                required
+                                onChange={onDestinationCountryChange}
+                                >
+                            {countries.map(name => (
+                                <MenuItem key={name.id} value={name.id} >{name.countryName}</MenuItem>
+
+                            // <option key={name.id} value={name.id} required>{name.countryName}</option>
+                            ))}
+                                </Select>
+                            </FormControl>
                     </div>
                     <br></br>
                     <div>
