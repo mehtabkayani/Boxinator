@@ -23,13 +23,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
+      <change afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/Dialog/AddCountryDialog.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AdminMainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AdminMainPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AllUsers.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AllUsers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/CountryCost.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/CountryCost.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/UpdateCountry.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/UpdateCountry.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/style/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AddCountry.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AddCountry.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,14 +175,7 @@
       <workItem from="1600669503680" duration="49965000" />
       <workItem from="1600853594185" duration="2138000" />
       <workItem from="1600859691520" duration="1310000" />
-      <workItem from="1600861130885" duration="157835000" />
-    </task>
-    <task id="LOCAL-00004" summary="Fixed the style of new shipment components">
-      <created>1600264102205</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1600264102206</updated>
+      <workItem from="1600861130885" duration="161061000" />
     </task>
     <task id="LOCAL-00005" summary="Changed the color of Boxinator in navbar">
       <created>1600264274592</created>
@@ -524,7 +513,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601628189377</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Added some styles">
+      <created>1601881931805</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1601881931811</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -543,7 +539,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed add country method" />
     <MESSAGE value="Fixed the issue with that user lose access when the page refreshes" />
     <MESSAGE value="Fixed the issue with logout" />
     <MESSAGE value="Fixed the countries list" />
@@ -568,7 +563,8 @@
     <MESSAGE value="Added the form classname" />
     <MESSAGE value="Styled update shipment form" />
     <MESSAGE value="fixed a little styling" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed a little styling" />
+    <MESSAGE value="Added some styles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added some styles" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -637,10 +633,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1601103687345" />
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1601628202880">
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1601881947571">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601628202880" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601881947571" />
     <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1601392436907" />
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
       <screen x="-1920" y="0" width="1920" height="1160" />
