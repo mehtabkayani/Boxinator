@@ -18,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,6 +28,7 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/api")
 public class ShipmentController {
+
     @Autowired
     ShipmentRepository shipmentRepository;
     @Autowired
@@ -45,23 +48,23 @@ public class ShipmentController {
 
     @GetMapping("/shipments")
     public ResponseEntity<List<Shipment>> getAllShipments(@RequestHeader("Authorization") String jwt) {
-        List<Shipment> listOfShipments = shipmentRepository.findAll();
-
+        //List<Shipment> listOfShipments = shipmentUtil.orderLatestShipment(shipmentRepository.findAll());
+        //List<Shipment> listOfShipments = shipmentRepository.findAllByOrderByCreation_dateDesc();
         //ADMIN
-        String accountType = jwtUtil.parseJWT(jwt).toString();
         if (sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
 //            List<Shipment> filteredList = listOfShipments.stream()
 //                    .filter(shipment -> (shipment.getShipmentStatus() != ShipmentStatus.CANCELLED) && (shipment.getShipmentStatus() != ShipmentStatus.COMPLETED)).collect(Collectors.toList());
-            return new ResponseEntity<>(listOfShipments, HttpStatus.OK);
+            System.out.println("ADMIN");
+            return new ResponseEntity<>(shipmentUtil.orderLatestShipment(shipmentRepository.findAll()), HttpStatus.OK);
         }
 
         //User
-        Integer id = jwtUtil.getJwtId(jwt);
         if (sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.REGISTERED_USER) {
-            List<Shipment> userShippingList = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == id).collect(Collectors.toList());
-            List<Shipment> filteredList = userShippingList.stream().filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.INTRANSIT || shipment.getShipmentStatus() == ShipmentStatus.COMPLETED).collect(Collectors.toList());
+            //List<Shipment> userShippingList = listOfShipments.stream().filter(shipment -> shipment.getUser().getId() == id).collect(Collectors.toList());
+            List<Shipment> userShippingList = shipmentRepository.findShipmentsByUserId(jwtUtil.getJwtId(jwt));
+            List<Shipment> filteredList = shipmentUtil.filterByCompletedOrIntransit(userShippingList);
 
-            return new ResponseEntity<>(filteredList, HttpStatus.OK);
+            return new ResponseEntity<>(shipmentUtil.orderLatestShipment(filteredList), HttpStatus.OK);
 
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -71,16 +74,22 @@ public class ShipmentController {
     @GetMapping("shipments/complete")
     public ResponseEntity<List<Shipment>> getCompletedShipments(@RequestHeader("Authorization") String jwt) {
         //Retrieve a list of completed shipments relevant to the authenticated user (as with previous).
-        System.out.println(jwt);
-        String userT = jwtUtil.parseJWT(jwt).getBody().getId();
-        System.out.println(userT);
+
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        String userId = jwtUtil.parseJWT(jwt).getBody().getId();
-        List<Shipment> listOfShipments = shipmentRepository.findAllByUserId(Integer.parseInt(userId)).get();
-        List<Shipment> completedShipments = listOfShipments.stream().filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.COMPLETED).collect(Collectors.toList());
-        return new ResponseEntity<>(completedShipments, HttpStatus.OK);
+
+        if(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
+            List<Shipment> shipmentsAdmin = shipmentRepository.findAll();
+            List<Shipment> filteredShipmentsAdmin = shipmentUtil.filterByStatus(shipmentsAdmin, ShipmentStatus.COMPLETED);
+            return new ResponseEntity<>(shipmentUtil.orderLatestShipment(filteredShipmentsAdmin), HttpStatus.OK);
+        }
+        if(jwtUtil.tokenAccountType(jwt) == AccountType.REGISTERED_USER){
+            List<Shipment> shipmentsUser = shipmentRepository.findShipmentsByUserId(jwtUtil.getJwtId(jwt));
+            List<Shipment> filteredShipmentsUser = shipmentUtil.filterByStatus(shipmentsUser, ShipmentStatus.COMPLETED);
+            return new ResponseEntity<>(shipmentUtil.orderLatestShipment(filteredShipmentsUser), HttpStatus.OK);
+        }
+        return new ResponseEntity("Conflict", HttpStatus.CONFLICT);
     }
 
     @GetMapping("shipments/created")
@@ -89,10 +98,17 @@ public class ShipmentController {
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        String userId = jwtUtil.parseJWT(jwt).getBody().getId();
-        List<Shipment> listOfShipments = shipmentRepository.findAllByUserId(Integer.parseInt(userId)).get();
-        List<Shipment> createdShipments = listOfShipments.stream().filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.CREATED).collect(Collectors.toList());
-        return new ResponseEntity<>(createdShipments, HttpStatus.OK);
+        if(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
+            List<Shipment> shipmentsAdmin = shipmentRepository.findAll();
+            List<Shipment> filteredShipmentsAdmin = shipmentUtil.filterByStatus(shipmentsAdmin, ShipmentStatus.CREATED);
+            return new ResponseEntity<>(shipmentUtil.orderLatestShipment(filteredShipmentsAdmin), HttpStatus.OK);
+        }
+        if(jwtUtil.tokenAccountType(jwt) == AccountType.REGISTERED_USER){
+            List<Shipment> shipmentsUser = shipmentRepository.findShipmentsByUserId(jwtUtil.getJwtId(jwt));
+            List<Shipment> filteredShipmentsUser = shipmentUtil.filterByStatus(shipmentsUser, ShipmentStatus.CREATED);
+            return new ResponseEntity<>(shipmentUtil.orderLatestShipment(filteredShipmentsUser), HttpStatus.OK);
+        }
+        return new ResponseEntity("Conflict", HttpStatus.CONFLICT);
     }
 
     @GetMapping("shipments/received")
@@ -101,10 +117,17 @@ public class ShipmentController {
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        String userId = jwtUtil.parseJWT(jwt).getBody().getId();
-        List<Shipment> listOfShipments = shipmentRepository.findAllByUserId(Integer.parseInt(userId)).get();
-        List<Shipment> receivedShipments = listOfShipments.stream().filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.RECEIVED).collect(Collectors.toList());
-        return new ResponseEntity<>(receivedShipments, HttpStatus.OK);
+        if(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
+            List<Shipment> shipmentsAdmin = shipmentRepository.findAll();
+            List<Shipment> filteredShipmentsAdmin = shipmentUtil.filterByStatus(shipmentsAdmin, ShipmentStatus.RECEIVED);
+            return new ResponseEntity<>(shipmentUtil.orderLatestShipment(filteredShipmentsAdmin), HttpStatus.OK);
+        }
+        if(jwtUtil.tokenAccountType(jwt) == AccountType.REGISTERED_USER){
+            List<Shipment> shipmentsUser = shipmentRepository.findShipmentsByUserId(jwtUtil.getJwtId(jwt));
+            List<Shipment> filteredShipmentsUser = shipmentUtil.filterByStatus(shipmentsUser, ShipmentStatus.RECEIVED);
+            return new ResponseEntity<>(shipmentUtil.orderLatestShipment(filteredShipmentsUser), HttpStatus.OK);
+        }
+        return new ResponseEntity("Conflict", HttpStatus.CONFLICT);
     }
 
     @GetMapping("shipments/intransit")
@@ -113,10 +136,17 @@ public class ShipmentController {
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        String userId = jwtUtil.parseJWT(jwt).getBody().getId();
-        List<Shipment> listOfShipments = shipmentRepository.findAllByUserId(Integer.parseInt(userId)).get();
-        List<Shipment> intransitShipments = listOfShipments.stream().filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.INTRANSIT).collect(Collectors.toList());
-        return new ResponseEntity<>(intransitShipments, HttpStatus.OK);
+        if(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
+            List<Shipment> shipmentsAdmin = shipmentRepository.findAll();
+            List<Shipment> filteredShipmentsAdmin = shipmentUtil.filterByStatus(shipmentsAdmin, ShipmentStatus.INTRANSIT);
+            return new ResponseEntity<>(shipmentUtil.orderLatestShipment(filteredShipmentsAdmin), HttpStatus.OK);
+        }
+        if(jwtUtil.tokenAccountType(jwt) == AccountType.REGISTERED_USER){
+            List<Shipment> shipmentsUser = shipmentRepository.findShipmentsByUserId(jwtUtil.getJwtId(jwt));
+            List<Shipment> filteredShipmentsUser = shipmentUtil.filterByStatus(shipmentsUser, ShipmentStatus.INTRANSIT);
+            return new ResponseEntity<>(shipmentUtil.orderLatestShipment(filteredShipmentsUser), HttpStatus.OK);
+        }
+        return new ResponseEntity("Conflict", HttpStatus.CONFLICT);
     }
 
     @GetMapping("shipments/cancelled")
@@ -125,10 +155,17 @@ public class ShipmentController {
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        String userId = jwtUtil.parseJWT(jwt).getBody().getId();
-        List<Shipment> listOfShipments = shipmentRepository.findAllByUserId(Integer.parseInt(userId)).get();
-        List<Shipment> cancelledShipments = listOfShipments.stream().filter(shipment -> shipment.getShipmentStatus() == ShipmentStatus.CANCELLED).collect(Collectors.toList());
-        return new ResponseEntity<>(cancelledShipments, HttpStatus.OK);
+        if(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR){
+            List<Shipment> shipmentsAdmin = shipmentRepository.findAll();
+            List<Shipment> filteredShipmentsAdmin = shipmentUtil.filterByStatus(shipmentsAdmin, ShipmentStatus.CANCELLED);
+            return new ResponseEntity<>(shipmentUtil.orderLatestShipment(filteredShipmentsAdmin), HttpStatus.OK);
+        }
+        if(jwtUtil.tokenAccountType(jwt) == AccountType.REGISTERED_USER){
+            List<Shipment> shipmentsUser = shipmentRepository.findShipmentsByUserId(jwtUtil.getJwtId(jwt));
+            List<Shipment> filteredShipmentsUser = shipmentUtil.filterByStatus(shipmentsUser, ShipmentStatus.CANCELLED);
+            return new ResponseEntity<>(shipmentUtil.orderLatestShipment(filteredShipmentsUser), HttpStatus.OK);
+        }
+        return new ResponseEntity("Conflict", HttpStatus.CONFLICT);
     }
 
     @PostMapping("/shipment")

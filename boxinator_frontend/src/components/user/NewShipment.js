@@ -130,7 +130,6 @@ const NewShipment = () => {
                         <label>Destination country: </label>
                     <br></br>
                         
-                      
                             <FormControl className={classes.formControl}>
                                 <InputLabel id="demo-simple-select-label">{countryName}</InputLabel>
                                 <Select
@@ -141,7 +140,6 @@ const NewShipment = () => {
                                 >
                             {countries.map(name => (
                                 <MenuItem key={name.id} value={name.id} >{name.countryName}</MenuItem>
-
                             ))}
                                 </Select>
                             </FormControl>

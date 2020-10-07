@@ -33,8 +33,6 @@ const UpdateUser = () => {
     const history = useHistory();
     let DeleteUser = "Delete";
     let UpdateUser = "Update";
-
-    const [password1, setPassword1] = useState('');
   
     const [errorMessage, setErrorMessage] = useState({firstname: '', lastname: '', email: '', contactNumber:'', zipcode:''});
     const formFields = { firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, contactNumber:userInfo.contactNumber, zipcode:userInfo.zipcode}
@@ -110,22 +108,7 @@ const UpdateUser = () => {
 
 
     const handleDelete = async () => {
-        const body = {
-            firstname: userInfo.firstname,
-            lastname: userInfo.lastname,
-            email: userInfo.email,
-            zipcode: userInfo.zipcode,
-            contactNumber: userInfo.contactNumber,
-            dateOfBirth: userInfo.dateOfBirth,
-            countryOfResidence: userInfo.countryOfResidence,
-            accountType: userInfo.accountType,
-            password: userInfo.password
 
-        };
-        console.log(body);
- 
-   
-            console.log(userInfo.email)
         axios.delete("http://localhost:8080/api/user", {
             headers: { Authorization: localStorage.getItem('token'), data: userInfo.email}})
          .then(res => {
@@ -146,13 +129,9 @@ const UpdateUser = () => {
             <Link to="/allUsers" className="floatLeftBtn"><Button variant="outlined" color="primary">All users</Button></Link>
         <div className="container">
         {userInfo.firstname ? <h1>{userInfo.firstname}´s Account</h1> : "" }
-
         {userInfo.accountType !== 'GUEST' ?  
             <>
-
         <br></br>
-        
-
         <Form key={userInfo.id} onSubmit={onSubmitForm} className="form-container">
             <Form.Row>
                 <Form.Group as={Col}>
@@ -193,16 +172,11 @@ const UpdateUser = () => {
                 <AdminUpdateUserDialog onSubmitForm={handleDelete} userInfo={userInfo} operation={DeleteUser}/>
             </div>
         </Form>
-
         </>
  : 
      <>
-
         <br></br>
-        
-
         <Form key={userInfo.id} onSubmit={onSubmitForm} className="form-container">
-    
             <Form.Row>
                 <Form.Group as={Col} controlId="formGridEmail">
                     <Form.Label>Email</Form.Label>
@@ -230,12 +204,9 @@ const UpdateUser = () => {
                 <AdminUpdateUserDialog onSubmitForm={handleDelete} userInfo={userInfo} operation={DeleteUser}/>
             </div>
         </Form>
-        
         </>
- 
  }       
     </div>
-
         </div>
 
     );
