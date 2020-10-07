@@ -110,7 +110,7 @@ const AddShipmentGuest = () => {
 
      
     return (
-        <div className="container">
+        <div className="container divPadding">
             <Form onSubmit={onSubmitForm} className="form-container">
                 <h1>Add new shipment as guest: </h1>
                 <br></br>

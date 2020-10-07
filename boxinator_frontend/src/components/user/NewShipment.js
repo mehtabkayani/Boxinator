@@ -108,7 +108,7 @@ const NewShipment = () => {
             };
 
     return (
-        <div className="container">
+        <div className="container divPadding">
             <Form onSubmit={onSubmitForm} className="form-container">
                 <h1>New shipment: </h1>
                 <br></br>

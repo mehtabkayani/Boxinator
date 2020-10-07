@@ -57,7 +57,7 @@ const AddCountry = (props) => {
     }
 
     return (
-        <div className="container" >
+        <div className="container divPadding" >
             <Form onSubmit={onSubmitForm} className="form-container">
                 <h1>New country: </h1>
                 <br></br>

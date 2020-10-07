@@ -1,3 +1,6 @@
+.divPadding{
+    padding: 2%;
+}
 /*Main page component*/
 .shipmentsTable {
     width: 50%;

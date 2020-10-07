@@ -77,7 +77,7 @@ const CountryCost = () => {
 
     return(
 
-        <>
+        <div className="divPadding">
         <h1>List of all countries</h1>
                    <Paper className={classes.root}>
                        <TableContainer className={classes.container}>
@@ -128,7 +128,7 @@ const CountryCost = () => {
                            onChangeRowsPerPage={handleChangeRowsPerPage}
                        />
                    </Paper>
-               </>
+               </div>
    
     )
 }

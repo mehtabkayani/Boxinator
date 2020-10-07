@@ -125,11 +125,11 @@ const UpdateUser = () => {
 
 
     return (
-        <div>
+        <div className="divPadding">
             <Link to="/allUsers" className="floatLeftBtn"><Button variant="outlined" color="primary">All users</Button></Link>
         <div className="container">
         {userInfo.firstname ? <h1>{userInfo.firstname}´s Account</h1> : "" }
-        {userInfo.accountType !== 'GUEST' ?  
+        {userInfo.accountType !== 'GUEST' ?
             <>
         <br></br>
         <Form key={userInfo.id} onSubmit={onSubmitForm} className="form-container">

@@ -60,7 +60,7 @@ const AllUsers = () => {
             width: '100%',
         },
         container: {
-            maxHeight: 440,
+            maxHeight: '50%',
         },
     });
 
@@ -119,8 +119,9 @@ const AllUsers = () => {
     ];
 
     return (
-        <>
- <h1>All Users</h1>
+        <div className="divPadding">
+         <h1>All Users</h1>
+            <br></br>
             <Paper className={classes.root}>
 
                 <TableContainer className={classes.container}>
@@ -174,7 +175,7 @@ const AllUsers = () => {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
-        </>
+        </div>
     );
 }
 export default AllUsers;

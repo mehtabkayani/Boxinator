@@ -82,7 +82,7 @@ const UserAccount = () => {
     const onPasswordChanged = ev => setPassword(ev.target.value.trim());
     const onConfirmPasswordChanged = ev => setConfirmPassword(ev.target.value.trim());
     return (
-        <div className="container">
+        <div className="container divPadding">
             <Form key={userInfo.id} onSubmit={onSubmitForm} className="form-container">
                 <h1>{userInfo.firstname}'s Account : </h1>
                 <br></br>

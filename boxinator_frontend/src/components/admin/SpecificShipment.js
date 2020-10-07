@@ -104,7 +104,7 @@ const SpecificShipment = () => {
 
     const printCountryList = countryList.map(country => (<MenuItem key={country.id} value={country.id}>{country.countryName}</MenuItem>))
     return (
-        <div>
+        <div className="divPadding">
             <br></br>
             <Link to="/adminMainPage" className="floatLeftBtn"><Button variant="outlined" color="primary">All shipments</Button></Link>
         <div className="container">

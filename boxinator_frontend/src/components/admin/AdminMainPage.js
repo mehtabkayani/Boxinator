@@ -68,7 +68,7 @@ const AdminMainPage = () => {
             width: '100%',
         },
         container: {
-            maxHeight: 440,
+            maxHeight: '50%',
         },
     });
     const classes = useStyles();
@@ -108,12 +108,13 @@ const AdminMainPage = () => {
         }
     ];
     return (
-        <>
-
-            <Link to="/country"><Button>View countries</Button></Link>
-            <Link to="/allUsers"><Button>View users</Button></Link>
-            <Link to="/addCountry"><Button>Add new country</Button></Link>
-            <Link to="/newShipment"><Button>Add new shipment</Button></Link>
+        <div className="divPadding">
+            <div style={{marginLeft:"35%", marginRight:"35%"}}>
+            <Link to="/country"><Button >View countries</Button></Link>
+            <Link to="/allUsers"><Button >View users</Button></Link>
+            <Link to="/addCountry"><Button >Add new country</Button></Link>
+            <Link to="/newShipment"><Button >Add new shipment</Button></Link>
+            </div>
             <h1>All Shipments</h1>
             <FormControl className={classes.formControl}>
         <InputLabel shrink labelId="demo-simple-select-placeholder-label-label">Filter list</InputLabel>
@@ -185,7 +186,7 @@ const AdminMainPage = () => {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
-        </>
+        </div>
     );
 }
 export default AdminMainPage;

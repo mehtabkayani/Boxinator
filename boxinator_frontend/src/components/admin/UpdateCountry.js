@@ -114,7 +114,7 @@ const UpdateCountry = () => {
 
 
     return (
-        <div>
+        <div className="divPadding">
             <Link to="/country" className="floatLeftBtn"><Button variant="outlined" color="primary">All countries</Button></Link>
             <br></br>
             <div className="container">
