@@ -1,7 +1,7 @@
 export const emailRegex = RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
 export const isNumber = RegExp(/^[0-9]*$/);
 export const strongPassword = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
-export const letters = /^[A-Za-z]+$/;
+export const letters = /^[A-Z a-z]+$/;
 
 
 export const formValid = (formErrors, formFields) => {

@@ -87,7 +87,7 @@ const Register = () => {
 
     return (
 
-        <div className="container">
+        <div className="container divPadding">
             <h2>Register new account : </h2>
             <br></br>
             <Form onSubmit={onSubmitForm} id="registerForm" className="form-container register">

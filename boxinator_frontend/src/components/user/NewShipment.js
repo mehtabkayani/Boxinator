@@ -74,18 +74,18 @@ const NewShipment = () => {
 
             const printCountryList = countries.map(country => (<MenuItem key={country.id} value={country.id}>{country.countryName}</MenuItem>))
     return (
-        <div className="container">
-            <h1>New shipment: </h1>
-            <br></br>
+        <div className="container divPadding">
             <Form onSubmit={onSubmitForm} className="form-container">
+                <h1>New shipment: </h1>
+                <br></br>
             <div>
                         <Form.Label>Receiver name : </Form.Label>
-                        <Form.Control type="text" placeholder="Enter name" onChange={onReceiverNameChanged} required/>
+                        <Form.Control type="text" name="receiverName" placeholder="Enter name" onChange={onReceiverNameChanged} required />
                         <span className="errorMessage">{errorMessage.receiverName}</span>
                     </div>
                     <div>
                         <Form.Label>Weight (kg): </Form.Label>
-                        <Form.Control type="number" placeholder="Enter weight" onChange={onWeightChanged} required/>
+                        <Form.Control type="number" name="weight"  placeholder="Enter weight" onChange={onWeightChanged} required/>
                         <span className="errorMessage">{errorMessage.weight}</span>
                     </div>
                     <div>

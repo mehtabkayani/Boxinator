@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import {GET, PUT, GETDEFAULT} from '../../api/CRUD';
 import {useParams} from "react-router";
-import {useHistory} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import AdminUpdateShipmentDialog from '../Dialog/AdminUpdateShipmentDialog';
@@ -104,11 +104,14 @@ const SpecificShipment = () => {
 
     const printCountryList = countryList.map(country => (<MenuItem key={country.id} value={country.id}>{country.countryName}</MenuItem>))
     return (
+        <div className="divPadding">
+            <br></br>
+            <Link to="/adminMainPage" className="floatLeftBtn"><Button variant="outlined" color="primary">All shipments</Button></Link>
         <div className="container">
             <br /><br />
 
             <Form onSubmit={onSubmitForm} className="form-container">
-
+               <h1>Update shipment</h1>
                 <div>
                     <Form.Label>Receiver name : </Form.Label>
                     <Form.Control type="text" name="receiverName" placeholder="Enter name" onChange={onShipmentChanged} required value={shipment.receiverName}/>
@@ -162,6 +165,7 @@ const SpecificShipment = () => {
                     <Button onClick={handleDelete} variant="outlined" color="secondary" autoFocus>Delete</Button>
                 </div>
             </Form>
+        </div>
         </div>
     );
 }
