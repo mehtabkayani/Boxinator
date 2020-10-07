@@ -8,6 +8,7 @@ import {useHistory} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import CountryDialog from '../Dialog/CountryDialog';
+import { GETDEFAULT, PUT } from "../../api/CRUD";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,16 +34,16 @@ const UpdateCountry = () => {
     const [errorMultiplyer, setErrorMultiplyer] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/api/settings/country/${id}`)
-            .then(res => {
-                console.log(res.data);
-                setCountry(res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            })
-
-    }, [id])
+        // axios.get(`http://localhost:8080/api/settings/country/${id}`)
+        //     .then(res => {
+        //         console.log(res.data);
+        //         setCountry(res.data)
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
+            GETDEFAULT(`/settings/country/${id}`).then(res => setCountry(res.data)).catch(err => console.log());
+    }, [])
 
 
     const updateCountries = async (e) => {
@@ -53,16 +54,8 @@ const UpdateCountry = () => {
             countryCode: country.countryCode
         };
         if (!errorName && !errorCode && !errorMultiplyer) {
-
-            await axios.put(`http://localhost:8080/api/settings/countries/${country.id}`, body, {headers: {'Authorization': localStorage.getItem('token')}})
-                .then(res => {
-
-                    history.push("/country");
-                    console.log(res.data);
-                })
-                .catch(err => {
-                    console.log(err);
-                })
+                await PUT(`/settings/countries/${country.id}`, body)
+                        .then(res => history.push("/country")).catch(err => console.log(err));
         } else {
             alert("INVALID INPUT")
         }

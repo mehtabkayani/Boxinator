@@ -16,22 +16,26 @@ const Login = ({ getUser}) => {
 
             const body = { password, email }
 
-   
-            await axios.post("http://localhost:8080/api/login", body, { headers: {'Authorization': code} })
-            .then(res=>{
-                console.log("token", res)
-               localStorage.setItem('id', res.data.account_id);
-              localStorage.setItem('token', res.data.token);
+            await POSTLOGIN('/login', body).then(res => {
+                localStorage.setItem('id', res.data.account_id);
+                localStorage.setItem('token', res.data.token);
+                getUser(res.data.account_id);
+            }).catch(err => console.log(err));
+            // await axios.post("http://localhost:8080/api/login", body, { headers: {'Authorization': code} })
+            // .then(res=>{
+            //     console.log("token", res)
+            //    localStorage.setItem('id', res.data.account_id);
+            //   localStorage.setItem('token', res.data.token);
     
-               if(res.data.token && res.data.account_id){
-                   getUser(res.data.account_id);
+            //    if(res.data.token && res.data.account_id){
+            //        getUser(res.data.account_id);
 
-               }
+            //    }
 
-            })
-            .catch(err => {
-                console.log("Error: ", err);
-            })
+            // })
+            // .catch(err => {
+            //     console.log("Error: ", err);
+            // })
     };
 
 

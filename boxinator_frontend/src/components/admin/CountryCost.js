@@ -13,7 +13,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import UpdateIcon from '@material-ui/icons/Update';
 import { Tooltip } from '@material-ui/core';
-
+import { GETDEFAULT } from '../../api/CRUD';
 
 const CountryCost = () => {
     const [countries, setCountryList] = useState([]);
@@ -21,18 +21,8 @@ const CountryCost = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     useEffect(()=>{
-        axios.get(`http://localhost:8080/api/settings/countries`)
-            .then(res => {
-                console.log(res.data);
-                setCountryList(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        GETDEFAULT('/settings/countries').then(res => setCountryList(res.data)).catch(err => console.log(err));
     },[])
-
-
-    const url = "/updateCountry"
 
     function createData(id, countryName, countryCode, multiplyerNumber) {
 

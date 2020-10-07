@@ -4,9 +4,13 @@ import { withRouter } from 'react-router-dom'
 import {formValid, isPositiveNumber, validateName} from "../validation/validation";
 import ShipmentDialog from "../Dialog/ShipmentDialog";
 import AddCountryDialog from "../Dialog/AddCountryDialog";
-
+import { POST } from "../../api/CRUD";
+import { useHistory } from "react-router-dom";
 
 const AddCountry = (props) => {
+
+    const history = useHistory();
+
     const [countryName, setCountryName] = useState('');
     const [countryCode, setCountryCode] = useState();
     const [multiplyerNumber, setNumber] = useState();
@@ -16,29 +20,12 @@ const AddCountry = (props) => {
     const onSubmitForm = async e => {
         e.preventDefault();
         if(formValid(errorMessage, formFields)) {
-        try {
             const body = {countryName: countryName, countryCode: countryCode, multiplyerNumber: multiplyerNumber};
-            await fetch(
-                "http://localhost:8080/api/settings/countries",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json",
-                        'Authorization': localStorage.getItem('token')
-                    },
-                    body: JSON.stringify(body)
-
-                }
-            ).then(response => response.text())
-                .then(text => alert(text),  props.history.push("/country")
-            )
-
-        } catch (err) {
-            console.error(err.message);
-        }
+            await POST('/settings/countries', body).then(res => history.push('/adminMainPage')).catch(err => console.log(err));
         }else{
             alert('Invalid credentials ! Make sure that all the required fields filled');
         }
+        
     };
 
 
@@ -59,7 +46,7 @@ const AddCountry = (props) => {
     return (
         <div className="container" >
             <h1>New country: </h1>
-            <br></br>
+            <br/>
             <Form onSubmit={onSubmitForm} className="form-container">
                 <div>
                     <Form.Label>Country name : </Form.Label>
@@ -76,9 +63,8 @@ const AddCountry = (props) => {
                     <Form.Control type="number"  onChange={onNumberChanged} required/>
                     <span className="errorMessage">{errorMessage.multiplyerNumber}</span>
                 </div>
-                <br></br>
-
-                <br></br>
+                <br/>
+                <br/>
                 <div>
                     <AddCountryDialog countryCode={countryCode} multiplyerNumber={multiplyerNumber} countryName={countryName} onSubmitForm={onSubmitForm}  />
                 </div>

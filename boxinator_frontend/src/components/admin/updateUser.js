@@ -4,7 +4,7 @@ import {Form} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import {useParams} from "react-router";
-import {DELETE} from '../../api/CRUD';
+import {PUT, GET} from '../../api/CRUD';
 import AdminUpdateUserDialog from "../Dialog/AdminUpdateUserDialog";
 import FormControl from '@material-ui/core/FormControl';
 import Button from "@material-ui/core/Button";
@@ -38,18 +38,8 @@ const UpdateUser = () => {
     const formFields = { firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, contactNumber:userInfo.contactNumber, zipcode:userInfo.zipcode}
 
     useEffect(()=>{
-      let token =  localStorage.getItem('token')
-        axios.get(`http://localhost:8080/api/user/${id}`, { headers: {'Authorization': token} })
-            .then(res=>{
-                console.log(res.data);
-                setUserInfo(res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            })
-
-
-    }, [id])
+            GET(`/user/${id}`).then(res => setUserInfo(res.data)).catch(err => console.log(err));
+    }, []);
     
     const onSubmitForm = async e => {
         e.preventDefault();
@@ -68,14 +58,7 @@ const UpdateUser = () => {
 
             };
         if(formValid(errorMessage, formFields)) {
-            await axios.put(`http://localhost:8080/api/user/${userInfo.id}`, body, {headers: {'Authorization': localStorage.getItem('token')}})
-                .then(res => {
-                    console.log(res);
-                    history.push("/allUsers")
-                })
-                .catch(err => {
-                    console.log("Error: ", err);
-                })
+            await PUT(`/user/${userInfo.id}`, body).then(res => history.push("/allUsers")).catch(err => console.log(err));
         }else {    alert('Invalid credentials ! Make sure that all the required fields filled');}
         }
 

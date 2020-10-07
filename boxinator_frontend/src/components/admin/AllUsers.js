@@ -27,8 +27,8 @@ const AllUsers = () => {
 
     },[])
 
-    const getAllUsers = () =>{
-        GET('/users').then(res => setUsers(res.data)).catch(err => console.log(err));
+    const getAllUsers = async() =>{
+        await GET('/users').then(res => setUsers(res.data)).catch(err => console.log(err));
 
     }
 
