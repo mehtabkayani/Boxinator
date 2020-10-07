@@ -114,13 +114,12 @@ const UpdateCountry = () => {
 
 
     return (
-        <div>
+        <div className="divPadding">
             <Link to="/country" className="floatLeftBtn"><Button variant="outlined" color="primary">All countries</Button></Link>
             <br></br>
             <div className="container">
-                <h1>Update {country.countryName}</h1>
                 <Form noValidate autoComplete="off" className="form-container">
-    
+                    <h1>Update {country.countryName}</h1>
                         <FormLabel>Country Name</FormLabel>
                         <br/>
                         <TextField helperText={helperName} error={errorName} label="" id="outlined-size-small"

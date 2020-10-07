@@ -13,6 +13,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import UpdateIcon from '@material-ui/icons/Update';
 import { Tooltip } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
 
 const CountryCost = () => {
@@ -76,10 +77,9 @@ const CountryCost = () => {
 
     return(
 
-        <>
+        <div className="divPadding">
         <h1>List of all countries</h1>
                    <Paper className={classes.root}>
-       
                        <TableContainer className={classes.container}>
                            <Table stickyHeader aria-label="sticky table">
                                <TableHead>
@@ -110,7 +110,7 @@ const CountryCost = () => {
                                                })}
                                                
                                                <Link to={`/updateCountry/${row.id}`}>
-                                    <Tooltip title="Update"><UpdateIcon color="primary"></UpdateIcon></Tooltip>
+                                    <Tooltip title="Update"><EditIcon color="primary"></EditIcon></Tooltip>
                                     </Link>
                                            </TableRow>
                                        );
@@ -128,7 +128,7 @@ const CountryCost = () => {
                            onChangeRowsPerPage={handleChangeRowsPerPage}
                        />
                    </Paper>
-               </>
+               </div>
    
     )
 }

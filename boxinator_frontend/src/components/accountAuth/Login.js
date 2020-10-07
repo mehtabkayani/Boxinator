@@ -19,17 +19,18 @@ const Login = ({ getUser}) => {
    
             await axios.post("http://localhost:8080/api/login", body, { headers: {'Authorization': code} })
             .then(res=>{
-                console.log("token", res)
+                console.log("token", res);
                localStorage.setItem('id', res.data.account_id);
               localStorage.setItem('token', res.data.token);
-    
+                console.log("token", res);
                if(res.data.token && res.data.account_id){
                    getUser(res.data.account_id);
-
                }
-
-            })
-            .catch(err => {
+            }).catch(err => {
+                if(err.response.status === 406 ){
+                    alert("You failed to login 5 times, try again in 10 minutes !")
+                }
+                console.log("Error: ", err);
                 console.log("Error: ", err);
             })
     };
