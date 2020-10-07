@@ -79,7 +79,9 @@ public class User implements Serializable {
 
     }
 
-    public User(String email, AccountType guest) {
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     public Integer getId() {

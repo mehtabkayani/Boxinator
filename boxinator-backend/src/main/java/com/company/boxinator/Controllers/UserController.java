@@ -82,6 +82,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Session> login(@RequestBody User userLogin, @RequestHeader("Authorization") String code){
 
+
         if(!securityConf.validInputs(userLogin.getEmail(), userLogin.getPassword(), code))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 
@@ -112,7 +113,7 @@ public class UserController {
     }
 
   @PostMapping("/logout")
-    public ResponseEntity login(@RequestHeader("Authorization") String jwt){
+    public ResponseEntity logout(@RequestHeader("Authorization") String jwt){
         System.out.println("JWTOken: "+ jwt);
         Integer userId = jwtUtil.getJwtId(jwt);
         if (!sessionUtil.isSessionValid(jwt)) {
@@ -187,6 +188,15 @@ public class UserController {
     @PutMapping("/user/{id}")
     public ResponseEntity updateUserById(@RequestBody User user, @PathVariable("id") Integer id, @RequestHeader("Authorization") String jwt) {
         System.out.println("In updateUserById");
+        System.out.println("email: " + user.getEmail());
+        System.out.println("password: " + user.getPassword());
+        System.out.println("firstname: " + user.getFirstname());
+        System.out.println("lastname: " + user.getLastname());
+        System.out.println("contactNumber: " + user.getContactNumber());
+        System.out.println("countryOfResidence: " + user.getCountryOfResidence());
+        System.out.println("dateOfBirth: " + user.getDateOfBirth());
+        System.out.println("zipcode: " + user.getZipcode());
+        System.out.println("accountType: " + user.getAccountType());
 
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -255,7 +265,6 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity addUser(@RequestBody User user) {
         Optional<User> userData = userRepository.findByEmail(user.getEmail());
-        System.out.println(user.getPassword());
         //Check if there is no email registered then register a new user
         if (!userData.isPresent()) {
             if(!securityConf.validInputs(user.getPassword()))
@@ -299,6 +308,8 @@ public class UserController {
     @DeleteMapping("/user")
     public ResponseEntity deleteUser(HttpServletRequest request, @RequestHeader("Authorization") String jwt) {
         String email = request.getHeader("data");
+        System.out.println("Email: " + email);
+        System.out.println("JWT: " + jwt);
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
