@@ -7,6 +7,7 @@ import com.company.boxinator.Models.User;
 import com.company.boxinator.Repositories.BannedAccountRepository;
 import com.company.boxinator.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GeneratorType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,7 +26,7 @@ import java.util.Set;
 public class Country implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    public Integer id;
 
     @Column
     private String countryCode;
@@ -39,6 +40,12 @@ public class Country implements Serializable {
     public Country(){};
 
     public Country(String countryCode, String countryName, Integer multiplyerNumber) {
+        this.countryCode = countryCode;
+        this.countryName = countryName;
+        this.multiplyerNumber = multiplyerNumber;
+    };
+    public Country(Integer id, String countryCode, String countryName, Integer multiplyerNumber) {
+        this.id = id;
         this.countryCode = countryCode;
         this.countryName = countryName;
         this.multiplyerNumber = multiplyerNumber;

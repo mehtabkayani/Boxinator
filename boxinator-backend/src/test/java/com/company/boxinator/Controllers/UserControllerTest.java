@@ -21,7 +21,7 @@ public class UserControllerTest {
 
     private Session session;
 
-    private HttpServletRequest httpServletRequest;
+//    private HttpServletRequest httpServletRequest;
 
     @BeforeEach
     public void setUp() throws Exception {
