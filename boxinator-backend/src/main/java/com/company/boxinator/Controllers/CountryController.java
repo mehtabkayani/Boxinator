@@ -54,6 +54,7 @@ public class CountryController {
         }
         return  ResponseEntity.status(HttpStatus.CREATED).body(country.getCountryName() + " added");
     }
+
     @PutMapping("/countries/{country_id}")
     public ResponseEntity getCountryById(@RequestBody Country country,
                                          @PathVariable("country_id") Integer countryId,

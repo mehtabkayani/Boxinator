@@ -28,6 +28,7 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/api")
 public class ShipmentController {
+
     @Autowired
     ShipmentRepository shipmentRepository;
     @Autowired
@@ -53,6 +54,7 @@ public class ShipmentController {
         if (sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
 //            List<Shipment> filteredList = listOfShipments.stream()
 //                    .filter(shipment -> (shipment.getShipmentStatus() != ShipmentStatus.CANCELLED) && (shipment.getShipmentStatus() != ShipmentStatus.COMPLETED)).collect(Collectors.toList());
+            System.out.println("ADMIN");
             return new ResponseEntity<>(shipmentUtil.orderLatestShipment(shipmentRepository.findAll()), HttpStatus.OK);
         }
 
