@@ -11,8 +11,8 @@ export const DELETE = async (endpoint, object) => await axiosCall().delete(endpo
 
 export const GETDEFAULT = async (endpoint, object) => await axiosDefault.get(endpoint, object);
 
-export const POSTLOGIN = async (endpoint, object , code) => {
-    await axiosDefault.post(endpoint, object, {headers: {'Authorization': code}});
+export const POSTLOGIN = async (endpoint, object, code) => {
+    await axiosDefault.post(endpoint, object, { headers: {'Authorization': code}});
 }
 export const POSTLOGOUT = async (endpoint) => await axiosCall().post(endpoint);
 

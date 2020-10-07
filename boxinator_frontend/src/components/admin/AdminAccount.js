@@ -11,6 +11,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
+import { GET, PUT } from "../../api/CRUD";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -37,21 +38,9 @@ const AdminAccount = () => {
     const formFields = { firstname: userInfo.firstname, lastname: userInfo.lastname, email: userInfo.email, contactNumber:userInfo.contactNumber, zipcode:userInfo.zipcode}
 
     useEffect(()=>{
-        console.log("Account id :" ,accountId)
-        if(!accountId){
-                history.push("/homePage");
-        }else{
-
-            axios.get(`http://localhost:8080/api/user/${accountId}`, { headers: {'Authorization': token} })
-                .then(res=>{
-                    
-                    setUserInfo(res.data)
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        }
+            GET(`/user/${accountId}`).then(res => setUserInfo(res.data)).catch(err => console.log(err));
     }, [])
+    
     const onSubmitForm = async e => {
         e.preventDefault();
         if(formValid(errorMessage, formFields)) {
@@ -60,14 +49,7 @@ const AdminAccount = () => {
                 countryOfResidence: userInfo.countryOfResidence, zipcode: userInfo.zipcode, 
                 contactNumber: userInfo.contactNumber, password };
         
-            await axios.put(`http://localhost:8080/api/user/${userInfo.id}`, body, { headers: {'Authorization': localStorage.getItem('token')} })
-            .then(res=>{
-                history.push("/adminMainPage")
-               console.log(res);
-            })
-            .catch(err => {
-                console.log("Error: ", err);
-            })
+            await PUT(`/user/${userInfo.id}`, body).then(res => history.push("/adminMainPage")).catch(err => console.log(err));
         }else{
             alert('Invalid credentials ! Make sure that all the required fields filled');
         }
