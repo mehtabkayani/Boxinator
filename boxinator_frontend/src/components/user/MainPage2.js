@@ -86,8 +86,9 @@ export default function MainPage2() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [shipments, setShipments]= useState([]);
-  const [shipment, setShipment]= useState({});
   const [statusOption, setStatusOption] = useState('');
+  const [shipment, setShipment]= useState({});
+
 
   useEffect(()=>{
           getShipments(statusOption);
