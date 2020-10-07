@@ -111,9 +111,9 @@ const AddShipmentGuest = () => {
      
     return (
         <div className="container">
-            <h1>Add new shipment as guest: </h1>
-            <br></br>
             <Form onSubmit={onSubmitForm} className="form-container">
+                <h1>Add new shipment as guest: </h1>
+                <br></br>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" onChange={onEmailChange} required/>

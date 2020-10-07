@@ -109,9 +109,9 @@ const NewShipment = () => {
 
     return (
         <div className="container">
-            <h1>New shipment: </h1>
-            <br></br>
             <Form onSubmit={onSubmitForm} className="form-container">
+                <h1>New shipment: </h1>
+                <br></br>
             <div>
                         <Form.Label>Receiver name : </Form.Label>
                         <Form.Control type="text" name="receiverName" placeholder="Enter name" onChange={onReceiverNameChanged} required />

@@ -15,11 +15,13 @@ import axios from 'axios';
 import {GET} from '../../api/CRUD';
 import UpdateIcon from '@material-ui/icons/Update';
 import { Tooltip } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import ColorLensOutlinedIcon from '@material-ui/icons/ColorLensOutlined';
 
 const AdminMainPage = () => {
     const [shipments, setShipments] = useState([]);
@@ -162,8 +164,9 @@ const AdminMainPage = () => {
 
                                             );
                                         })}
+
                                         <Link to={`/specificShipment/${row.id}`}>
-                                    <Tooltip title="Update"><UpdateIcon color="primary"></UpdateIcon></Tooltip>
+                                    <Tooltip title="Update"><EditIcon color="primary"></EditIcon></Tooltip>
                                     </Link>
 
                                     </TableRow>

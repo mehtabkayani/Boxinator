@@ -101,9 +101,9 @@ const AdminAccount = () => {
     const onConfirmPasswordChanged = ev => setConfirmPassword(ev.target.value.trim());
     return (
         <div className="container">
-           <h1>{userInfo.firstname}'s Account : </h1>
-            <br></br>
             <Form key={userInfo.id} onSubmit={onSubmitForm} className="form-container">
+                <h1>{userInfo.firstname}'s Account : </h1>
+                <br></br>
                 <Form.Row>
                     <Form.Group as={Col}>
                         <Form.Label>Firstname</Form.Label>

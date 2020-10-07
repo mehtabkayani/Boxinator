@@ -24,8 +24,18 @@
   <component name="ChangeListManager">
     <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AddCountry.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AddCountry.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AdminAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AdminAccount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AdminMainPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AdminMainPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AllUsers.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/AllUsers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/CountryCost.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/CountryCost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/SpecificShipment.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/SpecificShipment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/UpdateCountry.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/admin/UpdateCountry.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/guest/AddShipmentGuest.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/guest/AddShipmentGuest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/navBar/NavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/NewShipment.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/NewShipment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/user/UserAccount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/style/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/style/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,14 +185,7 @@
       <workItem from="1600669503680" duration="49965000" />
       <workItem from="1600853594185" duration="2138000" />
       <workItem from="1600859691520" duration="1310000" />
-      <workItem from="1600861130885" duration="178325000" />
-    </task>
-    <task id="LOCAL-00007" summary="Fixed token in frontend">
-      <created>1600421649608</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1600421649610</updated>
+      <workItem from="1600861130885" duration="182376000" />
     </task>
     <task id="LOCAL-00008" summary="Fixed login authentication with jwt token, trying to get the users shipments and render them">
       <created>1600439524977</created>
@@ -520,7 +523,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601995998703</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="Added a little place between register and login buttons, Added an alert when failed login 5 times">
+      <created>1602061408264</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1602061408269</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -539,7 +549,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed the countries list" />
     <MESSAGE value="Fixed update country multiplayer number, deleted some nor used code, added updateCountry component" />
     <MESSAGE value="Fixed the issue with update country" />
     <MESSAGE value="Trying to fix update account" />
@@ -564,7 +573,8 @@
     <MESSAGE value="Added some styles" />
     <MESSAGE value="Added some styles, added two dialogs" />
     <MESSAGE value="Fixed bug with add shipment validation, fixed so that a user can write name with space between words," />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug with add shipment validation, fixed so that a user can write name with space between words," />
+    <MESSAGE value="Added a little place between register and login buttons, Added an alert when failed login 5 times" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a little place between register and login buttons, Added an alert when failed login 5 times" />
   </component>
   <component name="WindowStateProjectService">
     <state x="-1506" y="235" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600177377489">
@@ -633,10 +643,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="142" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1601103687345" />
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1601996258489">
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2" timestamp="1602061423219">
       <screen x="-1920" y="0" width="1920" height="1160" />
     </state>
-    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1601996258489" />
+    <state x="-1368" y="313" key="Vcs.Push.Dialog.v2/0.0.1280.680/-1920.0.1920.1160@-1920.0.1920.1160" timestamp="1602061423219" />
     <state x="368" y="147" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1601392436907" />
     <state x="-1143" y="494" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600668436136">
       <screen x="-1920" y="0" width="1920" height="1160" />

@@ -33,6 +33,7 @@ import { useHistory } from "react-router-dom";
                                 <Nav.Link><Link to="/adminAccount">Admin account</Link></Nav.Link>
                             </Nav>
                             <Form inline>
+                                <h4  style={{color:"white", paddingRight:12 }}>welcome {userInfo.firstname}</h4>
                                 <Button variant="outline-info" onClick={logout}>Logout</Button>
                             </Form>
                         </Fragment>
@@ -40,7 +41,7 @@ import { useHistory } from "react-router-dom";
                         <Fragment>
                             <Nav className="mr-auto">
                             
-                                <Nav.Link><Link to="/mainPage">Main page</Link></Nav.Link>
+                                <Nav.Link style={{ textDecoration: 'none' }}><Link to="/mainPage" >Main page</Link></Nav.Link>
                                 <Nav.Link><Link to="/userAccount">User account</Link></Nav.Link>
                             </Nav>
 
