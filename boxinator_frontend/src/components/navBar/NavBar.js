@@ -53,7 +53,6 @@ import { useHistory } from "react-router-dom";
                     ) : (
                         <Fragment>
                             <Nav className="mr-auto">
-                                <p>Welcome to Boxinator</p>
                             </Nav>
                             <Form inline>
                                <Link to="/register" style={{paddingRight:12}}><Button variant="outline-info">Register</Button></Link>
