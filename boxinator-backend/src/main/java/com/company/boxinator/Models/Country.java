@@ -44,6 +44,12 @@ public class Country implements Serializable {
         this.countryName = countryName;
         this.multiplyerNumber = multiplyerNumber;
     };
+    public Country(Integer id, String countryCode, String countryName, Integer multiplyerNumber) {
+        this.id = id;
+        this.countryCode = countryCode;
+        this.countryName = countryName;
+        this.multiplyerNumber = multiplyerNumber;
+    };
 
     public Integer getId() {
         return id;

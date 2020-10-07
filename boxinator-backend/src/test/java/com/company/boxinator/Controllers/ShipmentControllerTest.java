@@ -1,26 +1,17 @@
 package com.company.boxinator.Controllers;
 
-import com.company.boxinator.Models.Country;
-import com.company.boxinator.Models.Enums.ShipmentStatus;
 import com.company.boxinator.Models.Session;
 import com.company.boxinator.Models.Shipment;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -41,6 +32,7 @@ class ShipmentControllerTest {
     private JSONObject shipmentObject;
     private JSONObject userObject;
     private Session session;
+
     @BeforeEach
     public void setUp() throws Exception {
         jsonObject = new JSONObject();
@@ -114,7 +106,7 @@ class ShipmentControllerTest {
         assertEquals(shipment.getStatusCode(), HttpStatus.CREATED);
 
     }
-    @Ignore
+      @Disabled
 //    @Test
     public void deleteShipmentById() throws URISyntaxException {
         HttpHeaders httpHeaders = getTokenHeader();
