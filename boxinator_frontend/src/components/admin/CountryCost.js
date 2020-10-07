@@ -13,12 +13,9 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import UpdateIcon from '@material-ui/icons/Update';
 import { Tooltip } from '@material-ui/core';
-<<<<<<< HEAD
 import { GETDEFAULT } from '../../api/CRUD';
-=======
 import EditIcon from '@material-ui/icons/Edit';
 
->>>>>>> 772034c383ae80127abc01e880aad78ad500b121
 
 const CountryCost = () => {
     const [countries, setCountryList] = useState([]);

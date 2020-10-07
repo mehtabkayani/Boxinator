@@ -25,21 +25,23 @@ import AddCountry from "./components/admin/AddCountry";
 import UpdateCountry from "./components/admin/UpdateCountry";
 import UpdateUser from "./components/admin/updateUser";
 import AdminAccount from "./components/admin/AdminAccount";
+import { GET } from './api/CRUD';
 
 function App() {
 
     const [userInfo, setUserInfo] = useState({});
 
     const getUser = async accountId => {
-        let token = localStorage.getItem('token');
-        await axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': token}})
-            .then(res => {
-                console.log(res.data);
-                setUserInfo(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        // let token = localStorage.getItem('token');
+        // await axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': token}})
+        //     .then(res => {
+        //         console.log(res.data);
+        //         setUserInfo(res.data);
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
+            await GET(`/user/${accountId}`).then(res => setUserInfo(res.data)).catch(err => console.log(err));
     }
 
     useEffect(() => {

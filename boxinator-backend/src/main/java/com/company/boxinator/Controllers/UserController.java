@@ -100,6 +100,11 @@ public class UserController {
         AuthToken Token = authTokenRepository.findByUserId(user.get().getId());
         String sixDigitCode = google2FAService.runGoogle2fa(Token.getToken());
 
+        System.out.println(userLogin.getEmail().equals(user.get().getEmail()));
+        System.out.println(bCryptPasswordEncoder.matches(userLogin.getPassword(),user.get().getPassword()));
+        System.out.println(sixDigitCode.equals(code));
+        System.out.println(sixDigitCode);
+        System.out.println(code);
         if (sixDigitCode.equals(code) && bCryptPasswordEncoder.matches(userLogin.getPassword(),user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
             sessionUtil.addSession(user.get());
             failedSignInService.removeCounter(user.get().getId());
