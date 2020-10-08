@@ -29,7 +29,7 @@ const Login = ({ getUser}) => {
             // });
             
    
-            await axios.post("http://localhost:8080/api/login", body, { headers: {'Authorization': code} })
+            await axios.post("https://morning-hamlet-17278.herokuapp.com/api/login", body, { headers: {'Authorization': code} })
             .then(res=>{
 
                localStorage.setItem('id', res.data.account_id);

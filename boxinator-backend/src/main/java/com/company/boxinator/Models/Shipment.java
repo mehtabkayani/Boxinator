@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import static javax.persistence.FetchType.EAGER;
@@ -39,7 +40,7 @@ public class Shipment implements Serializable {
     @Column
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     @JsonFormat (pattern = "yyyy-MM-dd HH:mm:ss",  timezone = "GMT+1")
-    private LocalDateTime creation_date;
+    private String creation_date;
 
 
     @Column
@@ -71,7 +72,7 @@ public class Shipment implements Serializable {
         this.user = user;
     }
 
-    public Shipment(Integer id, String receiverName, float weight, String boxcolor, LocalDateTime creation_date, ShipmentStatus shipmentStatus, double shipmentCost, Country country) {
+    public Shipment(Integer id, String receiverName, float weight, String boxcolor, String creation_date, ShipmentStatus shipmentStatus, double shipmentCost, Country country) {
         this.id = id;
         this.receiverName = receiverName;
         this.weight = weight;
@@ -123,11 +124,11 @@ public class Shipment implements Serializable {
         this.shipmentMultiplyerNumber = shipmentMultiplyerNumber;
     }
 
-    public LocalDateTime getCreation_date() {
+    public String getCreation_date() {
         return creation_date;
     }
 
-    public void setCreation_date(LocalDateTime creation_date) {
+    public void setCreation_date(String creation_date) {
         this.creation_date = creation_date;
     }
 

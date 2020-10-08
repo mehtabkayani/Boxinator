@@ -60,7 +60,9 @@ public class FailedSignInService {
         Optional<BannedAccount> bannedAccount = bannedAccountRepository.findBannedAccountByUserId(userId);
         if (bannedAccount.isPresent()) {
             BannedAccount foundBannedAccount = bannedAccount.get();
-            if (foundBannedAccount.getEndDate().isBefore(LocalDateTime.now())) {
+
+            LocalDateTime localDateTime = LocalDateTime.parse(foundBannedAccount.getEndDate());
+            if (localDateTime.isBefore(LocalDateTime.now())) {
                 bannedAccountRepository.delete(foundBannedAccount);
                 return false;
             } else {
