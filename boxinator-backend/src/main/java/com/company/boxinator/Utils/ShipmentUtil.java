@@ -8,6 +8,7 @@ import com.company.boxinator.Repositories.ShipmentRepository;
 import com.company.boxinator.Repositories.UserRepository;
 
 import java.nio.channels.ShutdownChannelGroupException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -31,7 +32,7 @@ public class ShipmentUtil {
         newShipment.setShipmentCost(cost);
         newShipment.setShipmentMultiplyerNumber(shipment.getCountry().getMultiplyerNumber());
         newShipment.setShipmentStatus(ShipmentStatus.CREATED);
-        newShipment.setCreation_date(LocalDateTime.now().toString());
+        newShipment.setCreation_date(LocalDate.now().toString());
         return newShipment;
     }
     public User addGuestUser(Shipment shipment){
