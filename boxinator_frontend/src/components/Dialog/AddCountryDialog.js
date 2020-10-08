@@ -38,14 +38,14 @@ export default function AddCountryDialog({countryName, countryCode, multiplyerNu
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         <p>Country name: {name}</p>
-                        <p>Country code: {code} kg</p>
+                        <p>Country code: {code}</p>
                         <p>Multiplying number: {multyplyerNumber}</p>
 
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
-                        No,Edit shipment
+                        No,Edit country
                     </Button>
                     <Button onClick={onSubmitForm} color="primary" autoFocus>
                         Place order

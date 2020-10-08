@@ -10,38 +10,24 @@ const Login = ({ getUser}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [code, setCode] = useState('');
+    const [invalidCredentialsMessage, setInvalidCredentialsMessage] = useState('');
 
     const onSubmitForm = async e => {
         e.preventDefault();
 
             const body = { password, email }
-            console.log(code);
-
-            // await POSTLOGIN('/login', body, code).then(res => {
-            //     console.log(res);
-            //     localStorage.setItem('id', res.data.account_id);
-            //     localStorage.setItem('token', res.data.token);
-            //     getUser(res.data.account_id);
-            // }).catch(err => {
-            //     console.log(err);
-            //     if(err.response === 406)
-            //         alert("You failed to login 5 times, try again in 10 minutes!")
-            // });
-            
    
             await axios.post("https://morning-hamlet-17278.herokuapp.com/api/login", body, { headers: {'Authorization': code} })
             .then(res=>{
-
-               localStorage.setItem('id', res.data.account_id);
+                localStorage.setItem('id', res.data.account_id);
                 localStorage.setItem('token', res.data.token);
-
-                   getUser(res.data.account_id);
+                getUser(res.data.account_id);
             }).catch(err => {
                 if(err.response.status === 406 ){
                     alert("You failed to login 5 times, try again in 10 minutes !")
+                }else if(err.response.status === 401){
+                    setInvalidCredentialsMessage('Invalid credentials');
                 }
-                console.log("Error: ", err);
-                console.log("Error: ", err);
             })
     };
 
@@ -73,6 +59,10 @@ const Login = ({ getUser}) => {
                     <Form.Control type="text" placeholder="6-digit code" onChange={onCodeChanged}/>
 
                 </Form.Group>
+                <br/><br/>
+                <div>
+                    {invalidCredentialsMessage}
+                </div>
                 <br></br>
                 <div>
                     <Button type="submit" variant="secondary">Login</Button>
