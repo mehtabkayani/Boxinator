@@ -72,7 +72,6 @@ const SpecificShipment = () => {
 
     const onSubmitForm = async e => {
         e.preventDefault();
-        console.log(shipment);
 
         const body = {boxcolor: shipment.boxcolor, country, shipmentStatus: shipment.shipmentStatus, receiverName: shipment.receiverName, weight: shipment.weight}
         if(formValid(errorMessage, formFields)) {

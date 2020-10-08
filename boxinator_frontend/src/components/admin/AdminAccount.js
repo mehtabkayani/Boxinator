@@ -120,13 +120,6 @@ const AdminAccount = () => {
                         <span className="errorMessage">{errorMessage.zipcode}</span>
                     </Form.Group>
                 </Form.Row>
-                <Form.Row>
-                    <Form.Group as={Col} controlId="formGridNumber">
-                        <Form.Label>Contact number :</Form.Label>
-                        <Form.Control name="contactNumber" type="text" placeholder={userInfo.contactNumber} value={userInfo.contactNumber} onChange={onUserInfoChanged}/>
-                        <span className="errorMessage">{errorMessage.contactNumber}</span>
-                    </Form.Group>
-                </Form.Row>
 
                 <Form.Row>
                     <Form.Group as={Col} controlId="formGridNumber">
