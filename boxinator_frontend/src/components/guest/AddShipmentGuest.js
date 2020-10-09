@@ -50,7 +50,8 @@ const AddShipmentGuest = () => {
         const body = {receiverName, weight,boxcolor,user, country};
         
         if(formValid(errorMessage, formFields))
-            await POSTDEFAULT('/shipment', body).then(res => history.push("/")).catch(err => console.log(err));
+            await axios.post("https://quiet-fortress-17098.herokuapp.com/api/shipment", body)
+                .then(res=> history.push('/')).catch(err => console.log(err));
         else
             alert('Invalid credentials ! Make sure that all the required fields filled');
     };
