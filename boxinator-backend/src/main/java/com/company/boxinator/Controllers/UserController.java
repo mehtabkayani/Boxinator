@@ -59,11 +59,6 @@ public class UserController {
 
     private SecurityConf securityConf = new SecurityConf();
 
-    @GetMapping("/failedAttempts")
-    public List<FailedSignIn> failedAttempts(){
-        return failedSignInService.getFailedAttemptsList();
-    }
-
     @PostMapping("/google2fa")
     public ResponseEntity<String> authenticate2fa(@RequestBody(required = false) AuthToken authToken){
         Google2FAService google2FAService = new Google2FAService();
@@ -313,8 +308,7 @@ public class UserController {
     @DeleteMapping("/user")
     public ResponseEntity deleteUser(HttpServletRequest request, @RequestHeader("Authorization") String jwt) {
         String email = request.getHeader("data");
-        System.out.println("Email: " + email);
-        System.out.println("JWT: " + jwt);
+
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -345,36 +339,6 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.OK).body(email + " deleted succeded");
             }
         }
-
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-
-    }
-
-    @GetMapping("/jwt/{jwtw}")
-    public boolean isSessionValid(@PathVariable("jwtw") String jwt) {
-        return sessionUtil.isSessionValid(jwt);
-    }
-
-    @GetMapping("/sessions")
-    public List<Session> sessions() {
-        return sessionUtil.getSessionsList();
-    }
-
-    @GetMapping("/removesession/{session_id}")
-    public void s(@PathVariable("session_id") Integer id) {
-        sessionUtil.removeSession(id);
-    }
-    @GetMapping("/sendemail")
-    public ResponseEntity sendEmail(@RequestHeader("Authorization") String jwt){
-        Optional<User> user = userRepository.findById(jwtUtil.getJwtId(jwt));
-        if(!user.isPresent())
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Couldnt find");
-
-        try{
-            emailService.sendAuthenticationEmail(user.get());
-        } catch (MailException | MalformedURLException e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
-        return ResponseEntity.status(HttpStatus.OK).body("Check email");
     }
 }

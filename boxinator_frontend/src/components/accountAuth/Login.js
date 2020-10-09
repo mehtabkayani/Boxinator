@@ -17,7 +17,7 @@ const Login = ({ getUser}) => {
 
             const body = { password, email }
    
-            await axios.post("https://quiet-fortress-17098.herokuapp.com/api/login", body, { headers: {'Authorization': code} })
+            await axios.post("https://boxinator-backend-spring.herokuapp.com/api/login", body, { headers: {'Authorization': code} })
             .then(res=>{
                 localStorage.setItem('id', res.data.account_id);
                 localStorage.setItem('token', res.data.token);

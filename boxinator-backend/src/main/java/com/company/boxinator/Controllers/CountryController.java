@@ -30,14 +30,15 @@ public class CountryController {
 
     private SecurityConf securityConf = new SecurityConf();
 
+
     @GetMapping("/country/{id}")
-    public Country getCountry(@PathVariable ("id") Integer id) {
-        return countryRepository.findById(id).get();
+    public ResponseEntity<Country> getCountry(@PathVariable ("id") Integer id) {
+        return new ResponseEntity<>(countryRepository.findById(id).get(), HttpStatus.OK);
     }
 
     @GetMapping("/countries")
-    public List<Country> getCountries() {
-        return countryRepository.findAll();
+    public ResponseEntity<List<Country>> getCountries() {
+        return new ResponseEntity<>(countryRepository.findAll(), HttpStatus.OK);
     }
 
     @PostMapping("/countries")
@@ -59,7 +60,7 @@ public class CountryController {
     public ResponseEntity getCountryById(@RequestBody Country country,
                                          @PathVariable("country_id") Integer countryId,
                                          @RequestHeader("Authorization") String jwt){
-        Optional <Country> findCountry = countryRepository.findById(countryId);
+        Optional<Country> findCountry = countryRepository.findById(countryId);
         if(!findCountry.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
         Country updateCountry = countryUtil.setCountry(country, findCountry.get());

@@ -34,6 +34,7 @@ const AdminMainPage = () => {
     useEffect(() => {
 
         getShipments(statusOption);
+        
 
     }, [statusOption])
 
@@ -48,10 +49,9 @@ const AdminMainPage = () => {
         return { id, to, country, price, weight, boxcolor, creationDate,status };
     }
 
+    
     const rows = shipments.map(shipment => (
-
         createData(shipment.id, shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight, shipment.boxcolor, shipment.creation_date, shipment.shipmentStatus)
-
     ));
 
 
