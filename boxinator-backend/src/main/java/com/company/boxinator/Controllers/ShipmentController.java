@@ -372,11 +372,18 @@ public class ShipmentController {
 
         Optional<Country> country = countryRepository.findById(shipment.getCountry().getId());
         if(!country.isPresent())
-            return null;
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         shipment.setCountry(country.get());
         System.out.println("Found userid: " + user.get().getId());
 
-        Shipment newShipment = shipmentUtil.updateShipment(shipment, oldShipment.get(), user.get());
+        Optional<Shipment> findShipment = shipmentRepository.findShipmentByIdAndUser(shipment_id,user.get());
+        Shipment newShipment = new Shipment();
+        if(findShipment.isPresent()) {
+            newShipment = shipmentUtil.updateShipment(shipment, oldShipment.get(), user.get());
+        } else{
+            newShipment = shipmentUtil.updateShipment(shipment, oldShipment.get(), oldShipment.get().getUser());
+        }
+
         if(!securityConf.validInputs(newShipment.getBoxcolor(), newShipment.getReceiverName()))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         try {
