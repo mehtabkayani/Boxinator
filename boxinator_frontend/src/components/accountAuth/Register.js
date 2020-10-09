@@ -50,8 +50,6 @@ const Register = () => {
 
     };
 
- 
-
     const onFirstnameChanged = ev =>{
         setFirstname(ev.target.value.trim());
         setError({firstname:validateName(ev.target.value)});

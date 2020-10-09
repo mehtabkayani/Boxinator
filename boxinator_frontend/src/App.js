@@ -32,15 +32,6 @@ function App() {
     const [userInfo, setUserInfo] = useState({});
 
     const getUser = async accountId => {
-        // let token = localStorage.getItem('token');
-        // await axios.get('http://localhost:8080/api/user/ ' + accountId, {headers: {'Authorization': token}})
-        //     .then(res => {
-        //         console.log(res.data);
-        //         setUserInfo(res.data);
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     })
             await GET(`/user/${accountId}`).then(res => setUserInfo(res.data)).catch(err => console.log(err));
     }
 

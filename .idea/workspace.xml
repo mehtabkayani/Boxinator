@@ -22,7 +22,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Trying with add shipments method, added CORS in countryController, deleted code that is not used" />
+    <list default="true" id="dad10ca3-21bb-4021-8428-8a22248edcf9" name="Default Changelist" comment="Trying with add shipments method, added CORS in countryController, deleted code that is not used">
+      <change beforePath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/boxinator_frontend/src/components/accountAuth/Login.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
