@@ -103,7 +103,7 @@ public class ShipmentController {
         }
         return new ResponseEntity("Conflict", HttpStatus.CONFLICT);
     }
-
+//Admin receives all received shipments, user receives their received shipments.
     @GetMapping("shipments/received")
     public ResponseEntity<List<Shipment>> getReceivedShipments(@RequestHeader("Authorization") String jwt) {
         //Retrieve  a  list  of *completed||cancelled?* shipments  relevant  to  the authenticated user (as with previous)
@@ -122,7 +122,7 @@ public class ShipmentController {
         }
         return new ResponseEntity("Conflict", HttpStatus.CONFLICT);
     }
-
+//Admin receives all intransit shipments, user receives their intransit shipments.
     @GetMapping("shipments/intransit")
     public ResponseEntity<List<Shipment>> getIntransitShipments(@RequestHeader("Authorization") String jwt) {
         //Retrieve  a  list  of *completed||cancelled?* shipments  relevant  to  the authenticated user (as with previous)
@@ -141,7 +141,7 @@ public class ShipmentController {
         }
         return new ResponseEntity("Conflict", HttpStatus.CONFLICT);
     }
-
+//Admin receives all completed shipments, user receives their completed shipments.
     @GetMapping("shipments/cancelled")
     public ResponseEntity<List<Shipment>> getCancelledShipments(@RequestHeader("Authorization") String jwt) {
         //Retrieve  a  list  of *completed||cancelled?* shipments  relevant  to  the authenticated user (as with previous)
@@ -161,17 +161,20 @@ public class ShipmentController {
         return new ResponseEntity("Conflict", HttpStatus.CONFLICT);
     }
 
+//Creates a new Shipment depending on the status.
     @PostMapping("/shipment")
     public ResponseEntity addShipment(@RequestBody Shipment shipment, @RequestHeader(value = "Authorization", required = false) String jwt) {
 
         if(!securityConf.validInputs(shipment.getReceiverName(), shipment.getBoxcolor()))
             return new ResponseEntity(HttpStatus.FORBIDDEN);
 
+        //Checks if jwt exists
         if (jwt == null) {
             Optional<Country> country = countryRepository.findById(shipment.getCountry().getId());
             if (!country.isPresent()) {
                 return new ResponseEntity(HttpStatus.CONFLICT);
             }
+            //Sets the country
             shipment.setCountry(country.get());
             if (shipment.getUser().getEmail() == null || shipment.getCountry() == null) {
                 return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("You are missing a email or country");
@@ -218,7 +221,7 @@ public class ShipmentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user.getEmail() + " added a new shipment");
     }
 
-
+//Gets a specific shipment. Admin has access to all shipments. User has access to the ones they have created.
     @GetMapping("/shipments/{shipment_id}")
     public ResponseEntity<Shipment> getShipmentByShipmentId(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt) {
         if (!sessionUtil.isSessionValid(jwt)) {
@@ -235,10 +238,9 @@ public class ShipmentController {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
-
+//Gets a specific shipment. Admin has access to all shipments. User has access to the ones they have created.
     @GetMapping("/shipments/complete/{shipment_id}")
     public ResponseEntity<Shipment> getOneCompletedShipment(@PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt) {
-        //Retrieve the details of a single completed shipment
 
         if (sessionUtil.isSessionValid(jwt) && jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
             Optional<Shipment> shipment = shipmentRepository.findById(shipment_id);
@@ -254,10 +256,9 @@ public class ShipmentController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
     }
-
+//Admin can retrieve the details of all the shipments a given customer has made.
     @GetMapping("/shipments/customer/{customer_id}")
     public ResponseEntity<List<Shipment>> getShipmentsUserById(@PathVariable("customer_id") Integer customer_id, @RequestHeader(value = "Authorization") String jwt) {
-        // Retrieve the details of all the shipments a given customer has made.
 
         if(!sessionUtil.isSessionValid(jwt))
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -279,16 +280,12 @@ public class ShipmentController {
             return shipmentDetail;
         }).collect(Collectors.toList());
 
-
-
         return new ResponseEntity<>(result, HttpStatus.OK);
-
     }
 
-
+//Admin can retrieve the details of all the completed shipments a given customer has made.
     @GetMapping("/shipments/customer/complete/{customer_id}")
     public ResponseEntity<Shipment> getAllCompletedShipmentsByCustomerId(@PathVariable("customer_id") Integer customer_id, @RequestHeader("Authorization") String jwt) {
-        //Retrieve the details of all the completed shipments a given customer has made.
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -306,13 +303,11 @@ public class ShipmentController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
     }
-
+    //Retrieve the details of a specific shipment made by a specific customer
     @GetMapping("/shipments/{customer_id}/{shipment_id}")
     public ResponseEntity<Shipment> getShipmentByCustomerIdAndShipmentId(@PathVariable("customer_id") Integer customer_id,
                                                                          @PathVariable("shipment_id") Integer shipment_id,
                                                                          @RequestHeader("Authorization") String jwt) {
-        //Retrieve the details of a specific shipment made by a specific customer
-
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -333,7 +328,7 @@ public class ShipmentController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
     }
-
+//Update a specific shipment. Admin can update all shipments. User can only update their own shipments.
     @PutMapping("/shipments/{shipment_id}")
     public ResponseEntity<Shipment> updateAShipmentById(@RequestBody Shipment shipment, @PathVariable("shipment_id") Integer shipment_id, @RequestHeader("Authorization") String jwt) {
         if (!sessionUtil.isSessionValid(jwt))
@@ -362,7 +357,6 @@ public class ShipmentController {
         if(!country.isPresent())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         shipment.setCountry(country.get());
-        System.out.println("Found userid: " + user.get().getId());
 
         Optional<Shipment> findShipment = shipmentRepository.findShipmentByIdAndUser(shipment_id,user.get());
         Shipment newShipment = new Shipment();

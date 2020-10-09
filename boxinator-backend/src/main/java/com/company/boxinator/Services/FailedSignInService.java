@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class FailedSignInService {
     @Autowired
@@ -27,11 +28,11 @@ public class FailedSignInService {
 
     private static final Integer MAXLIMIT = 5;
 
+    //Failed attempt for user, add to list
     public void attemptFailed(Integer userId){
         Optional<FailedSignIn> findSession = findFailedSignInUserId(userId);
 
         if(findSession.isPresent()){
-            System.out.println("findSession isPresent");
             findSession.get().setCounter(findSession.get().getCounter()+1);
             if(findSession.get().getCounter() > MAXLIMIT){
                 System.out.println("ID: " + findSession.get().getAccount_id() + ": " + findSession.get().getCounter());
@@ -42,19 +43,19 @@ public class FailedSignInService {
            failedAttempts.add(new FailedSignIn(userId));
         }
     }
+    //Bans the account
     private void banAccount(FailedSignIn failedSignIn){
-        System.out.println("In banAccount");
+
         Optional<User> user = userRepository.findById(failedSignIn.getAccount_id());
         if(user.isPresent()){
-            System.out.println("USER IS PRESENT");
             BannedAccount bannedAccount = new BannedAccount(user.get());
             try{
                 bannedAccountRepository.save(new BannedAccount(user.get()));
             }catch (Exception ex){
-                System.out.println("COULDNT SAVE BANNEDACCOUNT TO DB \nErrorMessage: " + ex.getMessage());
             }
         }
     }
+    //Checks if the user is banned
     public boolean isUserBan(Integer userId) {
 
         Optional<BannedAccount> bannedAccount = bannedAccountRepository.findBannedAccountByUserId(userId);
@@ -71,16 +72,13 @@ public class FailedSignInService {
         }
         return false;
     }
-    public List<FailedSignIn> getFailedAttemptsList(){
-        return failedAttempts;
-    }
-
+    //Removes the counter
     public void removeCounter(Integer userId){
         Optional<FailedSignIn> failedSignIn = findFailedSignInUserId(userId);
         if(failedSignIn.isPresent())
             failedAttempts.remove(failedSignIn.get());
     }
-
+    //Finds the user with the id in the list
     private Optional<FailedSignIn> findFailedSignInUserId(Integer userId){
         return failedAttempts.stream().filter(attempt -> attempt.getAccount_id() == userId).findFirst();
     }
