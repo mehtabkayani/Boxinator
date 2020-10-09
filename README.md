@@ -9,9 +9,15 @@ Our solution can be found on this heroku link:
 [https://boxinator-frontend.herokuapp.com/](https://boxinator-frontend.herokuapp.com/).
 
 ## API Documentation
-LINK TO API DOCS -->
+You can find the link to the API documentation below:
 
 [https://docs.google.com/document/d/1o0B3SBzOb7Jyxzkjh1RR3eGUrDCsSTKUtx5I2OBb2H8/edit?usp=sharing](https://docs.google.com/document/d/1o0B3SBzOb7Jyxzkjh1RR3eGUrDCsSTKUtx5I2OBb2H8/edit?usp=sharing)
+
+## User manual
+You can find the link to the user manual below:
+
+[https://docs.google.com/document/d/1OBorx2BlTkqooeMvJm3oWpMEl2tgh5ALw4wwWalcFkM/edit?usp=sharing] (https://docs.google.com/document/d/1OBorx2BlTkqooeMvJm3oWpMEl2tgh5ALw4wwWalcFkM/edit?usp=sharing)
+
 
 ## :boom: Project, install, run, compile and deploy
 
