@@ -59,24 +59,9 @@ public class UserController {
 
     private SecurityConf securityConf = new SecurityConf();
 
-    @PostMapping("/google2fa")
-    public ResponseEntity<String> authenticate2fa(@RequestBody(required = false) AuthToken authToken){
-        Google2FAService google2FAService = new Google2FAService();
-
-        String code = google2FAService.runGoogle2fa(authToken.getToken());
-
-
-        if(code.equals(authToken.getToken())){
-            System.out.println("Generated code: " + code);
-            return new ResponseEntity<>(HttpStatus.OK);
-
-        }
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-    }
-
+    //A user can login with a 2fa authorization code
     @PostMapping("/login")
     public ResponseEntity<Session> login(@RequestBody User userLogin, @RequestHeader("Authorization") String code){
-
 
         if(!securityConf.validInputs(userLogin.getEmail(), userLogin.getPassword(), code))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
@@ -95,11 +80,6 @@ public class UserController {
         AuthToken Token = authTokenRepository.findByUserId(user.get().getId());
         String sixDigitCode = google2FAService.runGoogle2fa(Token.getToken());
 
-        System.out.println(userLogin.getEmail().equals(user.get().getEmail()));
-        System.out.println(bCryptPasswordEncoder.matches(userLogin.getPassword(),user.get().getPassword()));
-        System.out.println(sixDigitCode.equals(code));
-        System.out.println(sixDigitCode);
-        System.out.println(code);
         if (sixDigitCode.equals(code) && bCryptPasswordEncoder.matches(userLogin.getPassword(),user.get().getPassword()) && userLogin.getEmail().equals(user.get().getEmail())) {
             sessionUtil.addSession(user.get());
             failedSignInService.removeCounter(user.get().getId());
@@ -111,10 +91,9 @@ public class UserController {
         return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 
     }
-
+    //Logout
   @PostMapping("/logout")
     public ResponseEntity logout(@RequestHeader("Authorization") String jwt){
-        System.out.println("JWTOken: "+ jwt);
         Integer userId = jwtUtil.getJwtId(jwt);
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -127,7 +106,7 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    //Admin gets a list of all users
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers(@RequestHeader("Authorization") String jwt) {
         if (!sessionUtil.isSessionValid(jwt)) {
@@ -135,13 +114,12 @@ public class UserController {
         }
 
         if (jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR) {
-//            return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
             return new ResponseEntity<>(userRepository.findUsersByIdIsNot(jwtUtil.getJwtId(jwt)), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
-
+//Admin gets details about a user by the given id
     @GetMapping("/user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable("id") int id, @RequestHeader("Authorization") String jwt) {
 
@@ -167,36 +145,9 @@ public class UserController {
 
 
     }
-
-    @GetMapping("/loggedInUser")
-    public ResponseEntity<User> getLoggedInUser(@RequestHeader("Authorization") String jwt) {
-
-        if (!sessionUtil.isSessionValid(jwt)) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-
-        Integer userId = jwtUtil.getJwtId(jwt);
-        Optional<User> userData = userRepository.findById(userId);
-        if (userData.isPresent()) {
-
-            return new ResponseEntity<>(userData.get(),HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        }
-    }
+//Admin can update any user by the given id, user can only update themself
     @PutMapping("/user/{id}")
     public ResponseEntity updateUserById(@RequestBody User user, @PathVariable("id") Integer id, @RequestHeader("Authorization") String jwt) {
-        System.out.println("In updateUserById");
-        System.out.println("email: " + user.getEmail());
-        System.out.println("password: " + user.getPassword());
-        System.out.println("firstname: " + user.getFirstname());
-        System.out.println("lastname: " + user.getLastname());
-        System.out.println("contactNumber: " + user.getContactNumber());
-        System.out.println("countryOfResidence: " + user.getCountryOfResidence());
-        System.out.println("dateOfBirth: " + user.getDateOfBirth());
-        System.out.println("zipcode: " + user.getZipcode());
-        System.out.println("accountType: " + user.getAccountType());
 
         if (!sessionUtil.isSessionValid(jwt)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -228,8 +179,6 @@ public class UserController {
             } else {
 
                 updateUserInDB.setEmail(user.getEmail());
-                //UPDATE THIS MAYBE????
-                //updateUserInDB.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 updateUserInDB.setAccountType(user.getAccountType());
 
                 if(!securityConf.validInputs(updateUserInDB.getEmail()))
@@ -261,7 +210,7 @@ public class UserController {
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
-
+//User can register them self's
     @PostMapping("/user")
     public ResponseEntity addUser(@RequestBody User user) {
         Optional<User> userData = userRepository.findByEmail(user.getEmail());
@@ -269,12 +218,10 @@ public class UserController {
         if (!userData.isPresent()) {
             if(!securityConf.validInputs(user.getPassword()))
                 return new ResponseEntity(HttpStatus.FORBIDDEN);
-            System.out.println("PASSES FIRST TWO CHECKS");
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             user.setAccountType(AccountType.REGISTERED_USER);
             userRepository.save(user);
 
-            System.out.println("BEFORE AUTHTOKEN");
             AuthToken authToken = new AuthToken();
             String secret = google2FAService.generateSecretKey();
             authToken.setToken(secret);
@@ -304,7 +251,7 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Something went wrong");
     }
-
+//Admin can delete a user in specific situations
     @DeleteMapping("/user")
     public ResponseEntity deleteUser(HttpServletRequest request, @RequestHeader("Authorization") String jwt) {
         String email = request.getHeader("data");
