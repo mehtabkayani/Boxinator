@@ -92,7 +92,7 @@ const UpdateUser = () => {
 
     const handleDelete = async () => {
 
-        axios.delete("http://localhost:8080/api/user", {
+        axios.delete("https://boxinator-backend-spring.herokuapp.com/api/user", {
             headers: { Authorization: localStorage.getItem('token'), data: userInfo.email}})
          .then(res => {
              console.log(res);

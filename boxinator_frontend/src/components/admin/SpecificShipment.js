@@ -87,7 +87,7 @@ const SpecificShipment = () => {
         let result = window.confirm(`Do you want to delete the shipment?`);
 
         if (result) {
-            await axios.delete(`https://quiet-fortress-17098.herokuapp.com/api/shipments/${shipment.id}`,{ headers: {'Authorization': localStorage.getItem('token')} })
+            await axios.delete(`https://boxinator-backend-spring.herokuapp.com/api/shipments/${shipment.id}`,{ headers: {'Authorization': localStorage.getItem('token')} })
        
          .then(res => {
              console.log(res);
