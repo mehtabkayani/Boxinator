@@ -1,6 +1,7 @@
 import axiosCall from '../configs/axiosConfig';
 import axiosDefault from '../configs/axiosDefault';
 
+
 export const POST = async (endpoint, object) => await axiosCall().post(endpoint, object);
 
 export const GET = async (endpoint, object) => await axiosCall().get(endpoint, object);

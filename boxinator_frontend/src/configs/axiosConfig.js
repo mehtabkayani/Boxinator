@@ -1,5 +1,6 @@
 import axiosDefault from './axiosDefault';
 
+//Adds authorization header to the axios call.
 const axiosCall = () => {
     const instance = axiosDefault;
 

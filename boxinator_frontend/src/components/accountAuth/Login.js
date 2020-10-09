@@ -12,6 +12,7 @@ const Login = ({ getUser}) => {
     const [code, setCode] = useState('');
     const [invalidCredentialsMessage, setInvalidCredentialsMessage] = useState('');
 
+
     const onSubmitForm = async e => {
         e.preventDefault();
 
@@ -23,8 +24,10 @@ const Login = ({ getUser}) => {
                 localStorage.setItem('token', res.data.token);
                 getUser(res.data.account_id);
             }).catch(err => {
+                //If the response from the backend is 406 that means that the one who trying to login is blocked
                 if(err.response.status === 406 ){
-                    alert("You failed to login 5 times, try again in 10 minutes !")
+                    alert("You failed to login 5 times, try again in 10 minutes !");
+                    //if
                 }else if(err.response.status === 401){
                     setInvalidCredentialsMessage('Invalid credentials');
                 }
