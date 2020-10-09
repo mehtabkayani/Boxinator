@@ -1,3 +1,6 @@
+.divPadding{
+    padding: 2%;
+}
 /*Main page component*/
 .shipmentsTable {
     width: 50%;
@@ -79,6 +82,7 @@ margin-left: 1170%;
 .navContainer{
     width: 100%;
 }
+
 
 .errorMessage{
     color: red;

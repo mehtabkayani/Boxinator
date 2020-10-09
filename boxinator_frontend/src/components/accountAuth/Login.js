@@ -10,27 +10,27 @@ const Login = ({ getUser}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [code, setCode] = useState('');
+    const [invalidCredentialsMessage, setInvalidCredentialsMessage] = useState('');
+
 
     const onSubmitForm = async e => {
         e.preventDefault();
 
             const body = { password, email }
-
    
-            await axios.post("http://localhost:8080/api/login", body, { headers: {'Authorization': code} })
+            await axios.post("https://boxinator-backend-spring.herokuapp.com/api/login", body, { headers: {'Authorization': code} })
             .then(res=>{
-                console.log("token", res)
-               localStorage.setItem('id', res.data.account_id);
-              localStorage.setItem('token', res.data.token);
-    
-               if(res.data.token && res.data.account_id){
-                   getUser(res.data.account_id);
-
-               }
-
-            })
-            .catch(err => {
-                console.log("Error: ", err);
+                localStorage.setItem('id', res.data.account_id);
+                localStorage.setItem('token', res.data.token);
+                getUser(res.data.account_id);
+            }).catch(err => {
+                //If the response from the backend is 406 that means that the one who trying to login is blocked
+                if(err.response.status === 406 ){
+                    alert("You failed to login 5 times, try again in 10 minutes !");
+                    //if
+                }else if(err.response.status === 401){
+                    setInvalidCredentialsMessage('Invalid credentials');
+                }
             })
     };
 
@@ -62,6 +62,10 @@ const Login = ({ getUser}) => {
                     <Form.Control type="text" placeholder="6-digit code" onChange={onCodeChanged}/>
 
                 </Form.Group>
+                <br/><br/>
+                <div>
+                    {invalidCredentialsMessage}
+                </div>
                 <br></br>
                 <div>
                     <Button type="submit" variant="secondary">Login</Button>

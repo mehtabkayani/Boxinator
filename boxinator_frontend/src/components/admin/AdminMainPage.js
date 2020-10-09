@@ -15,11 +15,13 @@ import axios from 'axios';
 import {GET} from '../../api/CRUD';
 import UpdateIcon from '@material-ui/icons/Update';
 import { Tooltip } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import ColorLensOutlinedIcon from '@material-ui/icons/ColorLensOutlined';
 
 const AdminMainPage = () => {
     const [shipments, setShipments] = useState([]);
@@ -32,6 +34,7 @@ const AdminMainPage = () => {
     useEffect(() => {
 
         getShipments(statusOption);
+        
 
     }, [statusOption])
 
@@ -46,10 +49,9 @@ const AdminMainPage = () => {
         return { id, to, country, price, weight, boxcolor, creationDate,status };
     }
 
+    
     const rows = shipments.map(shipment => (
-
         createData(shipment.id, shipment.receiverName, shipment.country.countryName, shipment.shipmentCost, shipment.weight, shipment.boxcolor, shipment.creation_date, shipment.shipmentStatus)
-
     ));
 
 
@@ -66,7 +68,7 @@ const AdminMainPage = () => {
             width: '100%',
         },
         container: {
-            maxHeight: 440,
+            maxHeight: '50%',
         },
     });
     const classes = useStyles();
@@ -106,12 +108,13 @@ const AdminMainPage = () => {
         }
     ];
     return (
-        <>
-
-            <Link to="/country"><Button>View countries</Button></Link>
-            <Link to="/allUsers"><Button>View users</Button></Link>
-            <Link to="/addCountry"><Button>Add new country</Button></Link>
-            <Link to="/newShipment"><Button>Add new shipment</Button></Link>
+        <div className="divPadding">
+            <div style={{marginLeft:"35%", marginRight:"35%"}}>
+            <Link to="/country"><Button >View countries</Button></Link>
+            <Link to="/allUsers"><Button >View users</Button></Link>
+            <Link to="/addCountry"><Button >Add new country</Button></Link>
+            <Link to="/newShipment"><Button >Add new shipment</Button></Link>
+            </div>
             <h1>All Shipments</h1>
             <FormControl className={classes.formControl}>
         <InputLabel shrink labelId="demo-simple-select-placeholder-label-label">Filter list</InputLabel>
@@ -162,8 +165,9 @@ const AdminMainPage = () => {
 
                                             );
                                         })}
+
                                         <Link to={`/specificShipment/${row.id}`}>
-                                    <Tooltip title="Update"><UpdateIcon color="primary"></UpdateIcon></Tooltip>
+                                    <Tooltip title="Update"><EditIcon color="primary"></EditIcon></Tooltip>
                                     </Link>
 
                                     </TableRow>
@@ -182,7 +186,7 @@ const AdminMainPage = () => {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
-        </>
+        </div>
     );
 }
 export default AdminMainPage;

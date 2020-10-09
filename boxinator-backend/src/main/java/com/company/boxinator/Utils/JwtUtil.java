@@ -34,6 +34,7 @@ public class JwtUtil {
                 .setSigningKey(Keys.hmacShaKeyFor(secret))
                 .parseClaimsJws(jwt);
     }
+    //Checks if the token is valid
     public boolean isJwtValid(String jwt){
         boolean isValid = false;
         try{
@@ -44,6 +45,7 @@ public class JwtUtil {
         return isValid;
     }
 
+    //Checks which accounttype associated with the jwt token
     public AccountType tokenAccountType(String jwt) {
         switch (parseJWT(jwt).getBody().getSubject()) {
             case "ADMINISTRATOR":
@@ -55,7 +57,7 @@ public class JwtUtil {
                 return null;
         }
     }
-
+    //Gets the id from the jwt token
     public Integer getJwtId(String jwt){
         return Integer.parseInt(parseJWT(jwt).getBody().getId());
     }

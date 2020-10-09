@@ -18,6 +18,7 @@ public class SessionUtil {
 
     private List<Session> sessions = new ArrayList<Session>();
 
+    //Creates singleton to only make one instance to store values in the list
     private static volatile SessionUtil single_session = new SessionUtil();
 
     private SessionUtil() {
@@ -26,7 +27,7 @@ public class SessionUtil {
     public static SessionUtil getInstance() {
         return single_session;
     }
-
+    //Creates and adds a session with the user and belonging token
     public void addSession(User user) {
         Session newSession = new Session();
         String token = jwtUtil.createJWT(user.getAccountType(),user.getId());
@@ -38,11 +39,11 @@ public class SessionUtil {
         }
 
     }
-
+    //Gets the session based on the user id
     public Optional<Session> getSession(Integer userId) {
         return sessions.stream().filter(session -> session.getAccount_id() == userId).findFirst();
     }
-
+    //Checks if the session is valid
     public boolean isSessionValid(String jwt) {
         boolean isValid = false;
 
@@ -66,13 +67,8 @@ public class SessionUtil {
     }
 
     public void removeSession(Integer user_id) {
-        System.out.println("Before session set");
         Session session = findSessionByUserId(user_id).get();
-        System.out.println("In removeSession: " + session);
         sessions.remove(session);
     }
 
-    public List<Session> getSessionsList() {
-        return sessions;
-    }
 }

@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) =>({
     width: '100%',
   },
   container: {
-    maxHeight: 440,
+    maxHeight: '50%',
   },
   formControl: {
     margin: theme.spacing(1),
@@ -86,8 +86,9 @@ export default function MainPage2() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [shipments, setShipments]= useState([]);
-  const [shipment, setShipment]= useState({});
   const [statusOption, setStatusOption] = useState('');
+  const [shipment, setShipment]= useState({});
+
 
   useEffect(()=>{
           getShipments(statusOption);
@@ -123,7 +124,7 @@ const onStatusOptionChanged = async (e) =>{
   }
   
   return (
-      <>
+      <div className="divPadding">
             <Link style={{float: 'right', marginTop:'10px'}} to="/newShipment"><Button variant="contained" color="primary">Add new shipment</Button></Link>
 
                <FormControl className={classes.formControl}>
@@ -199,6 +200,6 @@ const onStatusOptionChanged = async (e) =>{
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
     </Paper>
-    </>
+    </div>
   );
 }

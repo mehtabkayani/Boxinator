@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import UpdateIcon from '@material-ui/icons/Update';
 import { Tooltip } from '@material-ui/core';
 import CancelIcon from '@material-ui/icons/Cancel';
+import EditIcon from '@material-ui/icons/Edit';
 
 
 const AllUsers = () => {
@@ -27,8 +28,8 @@ const AllUsers = () => {
 
     },[])
 
-    const getAllUsers = () =>{
-        GET('/users').then(res => setUsers(res.data)).catch(err => console.log(err));
+    const getAllUsers = async() =>{
+        await GET('/users').then(res => setUsers(res.data)).catch(err => console.log(err));
 
     }
 
@@ -59,7 +60,7 @@ const AllUsers = () => {
             width: '100%',
         },
         container: {
-            maxHeight: 440,
+            maxHeight: '50%',
         },
     });
 
@@ -118,8 +119,9 @@ const AllUsers = () => {
     ];
 
     return (
-        <>
- <h1>All Users</h1>
+        <div className="divPadding">
+         <h1>All Users</h1>
+            <br></br>
             <Paper className={classes.root}>
 
                 <TableContainer className={classes.container}>
@@ -152,7 +154,7 @@ const AllUsers = () => {
                                         })}
                                         
                                         <Link to={`/updateUser/${row.id}`}>
-                                   {(row.accountType === 'ADMINISTRATOR' || row.accountType === 'REGISTERED_USER') && <Tooltip title="Update"><UpdateIcon color="primary"></UpdateIcon></Tooltip>} 
+                                   {(row.accountType === 'ADMINISTRATOR' || row.accountType === 'REGISTERED_USER') && <Tooltip title="Update"><EditIcon color="primary"></EditIcon></Tooltip>}
                                    
                                    {row.accountType === 'GUEST' && <Tooltip title="Cancel"><CancelIcon color="secondary"></CancelIcon></Tooltip>} 
                                     </Link>
@@ -173,7 +175,7 @@ const AllUsers = () => {
                     onChangeRowsPerPage={handleChangeRowsPerPage}
                 />
             </Paper>
-        </>
+        </div>
     );
 }
 export default AllUsers;

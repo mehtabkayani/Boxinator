@@ -50,8 +50,6 @@ const Register = () => {
 
     };
 
- 
-
     const onFirstnameChanged = ev =>{
         setFirstname(ev.target.value.trim());
         setError({firstname:validateName(ev.target.value)});
@@ -87,7 +85,7 @@ const Register = () => {
 
     return (
 
-        <div className="container">
+        <div className="container divPadding">
             <h2>Register new account : </h2>
             <br></br>
             <Form onSubmit={onSubmitForm} id="registerForm" className="form-container register">

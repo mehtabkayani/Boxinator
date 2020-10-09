@@ -30,16 +30,17 @@ public class CountryController {
 
     private SecurityConf securityConf = new SecurityConf();
 
+//Get a specific country
     @GetMapping("/country/{id}")
-    public Country getCountry(@PathVariable ("id") Integer id) {
-        return countryRepository.findById(id).get();
+    public ResponseEntity<Country> getCountry(@PathVariable ("id") Integer id) {
+        return new ResponseEntity<>(countryRepository.findById(id).get(), HttpStatus.OK);
     }
-
+//Get all countries
     @GetMapping("/countries")
-    public List<Country> getCountries() {
-        return countryRepository.findAll();
+    public ResponseEntity<List<Country>> getCountries() {
+        return new ResponseEntity<>(countryRepository.findAll(), HttpStatus.OK);
     }
-
+//Admin and registered_user can add a new country
     @PostMapping("/countries")
     public ResponseEntity addCountry(@RequestBody Country country, @RequestHeader("Authorization") String jwt){
         if(!(jwtUtil.tokenAccountType(jwt) == AccountType.ADMINISTRATOR))
@@ -54,11 +55,12 @@ public class CountryController {
         }
         return  ResponseEntity.status(HttpStatus.CREATED).body(country.getCountryName() + " added");
     }
+    //Update specific country
     @PutMapping("/countries/{country_id}")
     public ResponseEntity getCountryById(@RequestBody Country country,
                                          @PathVariable("country_id") Integer countryId,
                                          @RequestHeader("Authorization") String jwt){
-        Optional <Country> findCountry = countryRepository.findById(countryId);
+        Optional<Country> findCountry = countryRepository.findById(countryId);
         if(!findCountry.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not found");
         Country updateCountry = countryUtil.setCountry(country, findCountry.get());

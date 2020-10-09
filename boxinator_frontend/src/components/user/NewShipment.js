@@ -9,6 +9,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
+import { GETDEFAULT, POST } from "../../api/CRUD";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -27,23 +28,13 @@ const NewShipment = () => {
     const [boxcolor, setBoxColor] = useState("#050505");
     const [countries, setCountries] = useState([]);
     const [country, setCountry] = useState({})
-    const [countryName, setCountryName] = useState("")
     const history = useHistory();
     const [errorMessage, setErrorMessage] = useState({receiverName:'', weight:''});
     const formFields = { receiverName: receiverName, weight: weight};
 
 
     useEffect(()=>{
-        axios.get('http://localhost:8080/api/settings/countries ', { headers: {'Authorization': localStorage.getItem('token')} })
-            .then(res=>{
-                setCountries(res.data);
-                console.log(res.data[0].id)
-                setCountry({id: res.data[0].id})
-                setCountryName(res.data[0].countryName)
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        GETDEFAULT('/settings/countries').then(res => setCountries(res.data)).catch(err => console.log(err));
     },[])
 
   
@@ -52,41 +43,16 @@ const NewShipment = () => {
         
         e.preventDefault();
 
-        if(formValid(errorMessage, formFields)) {
-        try {
-            const body = {receiverName, weight, boxcolor, country};
-            await fetch(
-                "http://localhost:8080/api/shipment",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-type": "application/json",
-            'Authorization': localStorage.getItem('token')
-        },
-                    body: JSON.stringify(body)
-
-                }
-            ).then(response => response.text())
-            .then(history.push("/mainPage"))
-
-        } catch (err) {
-            console.error(err.message);
-        }
-        }else{
+        const body = {receiverName, weight, boxcolor, country};
+        if(formValid(errorMessage, formFields))
+            await POST('/shipment', body).then(res => history.push("/")).catch(err => console.log(err));
+        else
             alert('Invalid credentials ! Make sure that all the required fields filled');
-        }
     };
 
-    const getCountryName = async(id) => {
-    await axios.get(`http://localhost:8080/api/settings/country/${id}`)
-         .then(res=>{
-             console.log(res.data);
-             setCountryName(res.data.countryName)
-         })
-         .catch(err => {
-             console.log(err);
-         })
-    }
+    const getCountry = async(id) => await GETDEFAULT(`/settings/country/${id}`)
+                                            .then(res => setCountry(res.data))
+                                            .catch(err => console.log(err));
 
         const onReceiverNameChanged = e =>{
             setReceiverName(e.target.value.trim());
@@ -103,23 +69,23 @@ const NewShipment = () => {
     
         const onDestinationCountryChanged = (e) =>{
             let id = parseInt(e.target.value)
-             setCountry({id})
-             getCountryName(id)
+             setCountry(getCountry(id));
             };
 
+            const printCountryList = countries.map(country => (<MenuItem key={country.id} value={country.id}>{country.countryName}</MenuItem>))
     return (
-        <div className="container">
-            <h1>New shipment: </h1>
-            <br></br>
+        <div className="container divPadding">
             <Form onSubmit={onSubmitForm} className="form-container">
+                <h1>New shipment: </h1>
+                <br></br>
             <div>
                         <Form.Label>Receiver name : </Form.Label>
-                        <Form.Control type="text" placeholder="Enter name" onChange={onReceiverNameChanged} required/>
+                        <Form.Control type="text" name="receiverName" placeholder="Enter name" onChange={onReceiverNameChanged} required />
                         <span className="errorMessage">{errorMessage.receiverName}</span>
                     </div>
                     <div>
                         <Form.Label>Weight (kg): </Form.Label>
-                        <Form.Control type="number" placeholder="Enter weight" onChange={onWeightChanged} required/>
+                        <Form.Control type="number" name="weight"  placeholder="Enter weight" onChange={onWeightChanged} required/>
                         <span className="errorMessage">{errorMessage.weight}</span>
                     </div>
                     <div>
@@ -131,16 +97,14 @@ const NewShipment = () => {
                     <br></br>
                         
                             <FormControl className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-label">{countryName}</InputLabel>
+                                <InputLabel id="demo-simple-select-label">Country</InputLabel>
                                 <Select
                                 labelId="select-label"
                                 id="country-select"
                                 required
                                 onChange={onDestinationCountryChanged}
                                 >
-                            {countries.map(name => (
-                                <MenuItem key={name.id} value={name.id} >{name.countryName}</MenuItem>
-                            ))}
+                            {printCountryList}
                                 </Select>
                             </FormControl>
                     </div>
@@ -148,7 +112,7 @@ const NewShipment = () => {
 
                 <br></br>
                 <div className="floatRightBtn">
-                    <ShipmentDialog receiverName={receiverName} weight={weight} boxcolor={boxcolor} countryName={countryName} onSubmitForm={onSubmitForm}  />
+                    <ShipmentDialog receiverName={receiverName} weight={weight} boxcolor={boxcolor} countryName={country.countryName} onSubmitForm={onSubmitForm}  />
                 </div>
             </Form>
         </div>

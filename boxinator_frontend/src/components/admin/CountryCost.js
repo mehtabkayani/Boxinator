@@ -13,6 +13,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import UpdateIcon from '@material-ui/icons/Update';
 import { Tooltip } from '@material-ui/core';
+import { GETDEFAULT } from '../../api/CRUD';
+import EditIcon from '@material-ui/icons/Edit';
 
 
 const CountryCost = () => {
@@ -21,18 +23,8 @@ const CountryCost = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     useEffect(()=>{
-        axios.get(`http://localhost:8080/api/settings/countries`)
-            .then(res => {
-                console.log(res.data);
-                setCountryList(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        GETDEFAULT('/settings/countries').then(res => setCountryList(res.data)).catch(err => console.log(err));
     },[])
-
-
-    const url = "/updateCountry"
 
     function createData(id, countryName, countryCode, multiplyerNumber) {
 
@@ -76,10 +68,9 @@ const CountryCost = () => {
 
     return(
 
-        <>
+        <div className="divPadding">
         <h1>List of all countries</h1>
                    <Paper className={classes.root}>
-       
                        <TableContainer className={classes.container}>
                            <Table stickyHeader aria-label="sticky table">
                                <TableHead>
@@ -110,7 +101,7 @@ const CountryCost = () => {
                                                })}
                                                
                                                <Link to={`/updateCountry/${row.id}`}>
-                                    <Tooltip title="Update"><UpdateIcon color="primary"></UpdateIcon></Tooltip>
+                                    <Tooltip title="Update"><EditIcon color="primary"></EditIcon></Tooltip>
                                     </Link>
                                            </TableRow>
                                        );
@@ -128,7 +119,7 @@ const CountryCost = () => {
                            onChangeRowsPerPage={handleChangeRowsPerPage}
                        />
                    </Paper>
-               </>
+               </div>
    
     )
 }

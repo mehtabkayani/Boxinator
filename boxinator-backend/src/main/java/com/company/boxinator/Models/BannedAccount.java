@@ -19,10 +19,10 @@ public class BannedAccount implements Serializable {
     private Integer id;
 
     @Column
-    private LocalDate startDate;
+    private String startDate;
 
     @Column
-    private LocalDateTime endDate;
+    private String endDate;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -31,8 +31,8 @@ public class BannedAccount implements Serializable {
     public BannedAccount(){ }
 
     public BannedAccount(User user) {
-        this.startDate = LocalDate.now();
-        this.endDate = LocalDateTime.now().plusMinutes(10);
+        this.startDate = LocalDate.now().toString();
+        this.endDate = LocalDateTime.now().plusMinutes(10).toString();
         this.user = user;
     }
 
@@ -45,19 +45,19 @@ public class BannedAccount implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
